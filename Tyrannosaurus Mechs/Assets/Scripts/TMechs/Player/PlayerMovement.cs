@@ -13,10 +13,19 @@ namespace TMechs.Player
         [Name("AA Camera")]
         public Transform aaCamera;
 
+        [Header("Forces")]
         public float movementSpeed = 10F;
+        public float jumpForce = 2 * 9.8F;
+
+        public int maxJumps = 2;
         
         // State
         private float intendedY;
+
+        private new Collider collider;
+        private Rigidbody rb;
+
+        private int jumps;
         
         private void Awake()
         {
@@ -29,6 +38,9 @@ namespace TMechs.Player
             }
 
             intendedY = transform.eulerAngles.y;
+
+            collider = GetComponentInChildren<Collider>();
+            rb = GetComponent<Rigidbody>();
         }
 
         private void Update()
@@ -58,6 +70,17 @@ namespace TMechs.Player
             }
 
             transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
+
+            if (jumps > 0 && IsGrounded())
+                jumps = 0;
+
+            if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
+            {
+                rb.velocity = Vector3.up * jumpForce;
+                jumps++;
+            }
         }
+
+        private bool IsGrounded() => Physics.Raycast(collider.bounds.center, -transform.up, collider.bounds.extents.y + .025F);
     }
 }
