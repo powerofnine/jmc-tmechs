@@ -1,5 +1,7 @@
 ﻿using System;
+using TMechs.InspectorAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static TMechs.Controls.Action;
 
 namespace TMechs.Player
@@ -8,7 +10,8 @@ namespace TMechs.Player
     {
         public static Rewired.Player Input { get; private set; }
 
-        public new Transform camera;
+        [Name("AA Camera")]
+        public Transform aaCamera;
 
         public float movementSpeed = 10F;
         
@@ -19,10 +22,10 @@ namespace TMechs.Player
         {
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
-            if (!camera)
+            if (!aaCamera)
             {
                 Debug.LogWarning("Camera not given to player, expect unintended gameplay");
-                camera = transform;
+                aaCamera = transform;
             }
 
             intendedY = transform.eulerAngles.y;
@@ -31,7 +34,9 @@ namespace TMechs.Player
         private void Update()
         {
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            movement = Quaternion.Euler(0F, camera.eulerAngles.y, 0F) * movement;
+            
+            // Multiply movement by camera quaternion so that it is relative to the camera
+            movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
             
             float movementMag = movement.sqrMagnitude;
             
@@ -55,5 +60,4 @@ namespace TMechs.Player
             transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
         }
     }
-    //Vector2 cam = Input.GetAxis2D(Controls.Action.CAMERA_HORIZONTAL, Controls.Action.CAMERA_VERTICAL);
 }
