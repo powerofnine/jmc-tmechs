@@ -41,7 +41,7 @@ namespace TMechs.Player
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
             
             // Move towards the player in the local z axis
-            transform.Translate(0F, 0F, playerDelta.z, Space.Self);
+            transform.Translate(0F, playerDelta.y, playerDelta.z, Space.Self);
 
             Vector3 playerCamPos = player.position.Remove(Utility.Axis.Y);
             Vector3 camCamPos = aaRig.position.Remove(Utility.Axis.Y);
