@@ -1,4 +1,3 @@
-using System.Xml;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -42,7 +41,9 @@ namespace TMechs.Player
         }
 
         private void LateUpdate()
-        {           
+        {
+            state.ClampState();
+            
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
             
@@ -91,6 +92,20 @@ namespace TMechs.Player
                     Mathf.SmoothDampAngle(parent.verticalRig.localEulerAngles.x, rotationX, ref xVelocity, parent.dampening.x);
 
             public float DampedY => Mathf.SmoothDampAngle(parent.transform.localEulerAngles.y, rotationY, ref yVelocity, parent.dampening.y);
+
+            public void ClampState()
+            {
+                // Loops x and y rotations between -360 and 360
+                while (rotationX >= 360F)
+                    rotationX -= 360F;
+                while (rotationX <= -360F)
+                    rotationX += 360F;
+
+                while (rotationY >= 360F)
+                    rotationY -= 360F;
+                while (rotationY <= -360F)
+                    rotationY += 360F;
+            }
         }
     }
 }
