@@ -58,7 +58,14 @@ namespace TMechs.Player
 
             rotationX += input.y * cameraSpeed * Time.deltaTime;
             rotationX = Mathf.Clamp(rotationX, minX, maxX);
-            
+
+            if (PlayerMovement.Input.GetButton(LOCK_ON))
+            {
+                rotationX = 0F;
+
+                transform.eulerAngles = player.eulerAngles;
+            }
+
             verticalRig.localEulerAngles = new Vector3(rotationX, 0F, 0F);
         }
     }

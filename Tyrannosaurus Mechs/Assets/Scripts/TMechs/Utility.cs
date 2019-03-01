@@ -129,7 +129,7 @@ namespace TMechs
         {
             return Remap(source, Axis.X, 0, Axis.Y);
         }
-
+        
         private static float GetComponent(this Vector3 source, Axis component)
         {
             switch (component)
