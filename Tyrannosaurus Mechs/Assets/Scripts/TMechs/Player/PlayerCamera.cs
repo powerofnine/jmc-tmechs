@@ -1,3 +1,4 @@
+using System.Xml;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -16,10 +17,15 @@ namespace TMechs.Player
         public Transform aaRig;
         public Transform verticalRig;
 
-        private float rotationX;
+        [Space]
+        public Vector2 dampening;
+
+        private CameraState state;
 
         private void Awake()
         {
+            state.parent = this;
+            
             if (!aaRig)
             {
                 Debug.LogWarning("Missing axis aligned rig reference, expect camera errors");
@@ -32,7 +38,7 @@ namespace TMechs.Player
                 verticalRig = new GameObject("Vertical Stand-in").transform;
             }
             
-            rotationX = verticalRig.localEulerAngles.x;
+            state.rotationX = verticalRig.localEulerAngles.x;
         }
 
         private void LateUpdate()
@@ -51,22 +57,40 @@ namespace TMechs.Player
             
             // Rotate around the aa rig to face the player
             transform.RotateAround(camCamPos, Vector3.up, -offsetAngle);
-
-            Vector2 input = PlayerMovement.Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
+            if(Mathf.Abs(offsetAngle) > 1F)
+                state.rotationY = transform.localEulerAngles.y;
             
-            transform.Rotate(0F, -input.x * cameraSpeed * Time.deltaTime, 0F);
+            Vector2 input = PlayerMovement.Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
-            rotationX += input.y * cameraSpeed * Time.deltaTime;
-            rotationX = Mathf.Clamp(rotationX, minX, maxX);
+            state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
+            
+            state.rotationX += input.y * cameraSpeed * Time.deltaTime;
+            state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
-            if (PlayerMovement.Input.GetButton(LOCK_ON))
+            if (PlayerMovement.Input.GetButtonDown(LOCK_ON))
             {
-                rotationX = 0F;
-
-                transform.eulerAngles = player.eulerAngles;
+                state.rotationX = 0F;
+                state.rotationY = player.eulerAngles.y;
             }
 
-            verticalRig.localEulerAngles = new Vector3(rotationX, 0F, 0F);
+            transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
+            verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
+        }
+
+        private struct CameraState
+        {
+            public PlayerCamera parent;
+            
+            public float rotationX;
+            public float rotationY;
+
+            private float xVelocity;
+            private float yVelocity;
+            
+            public float DampedX => 
+                    Mathf.SmoothDampAngle(parent.verticalRig.localEulerAngles.x, rotationX, ref xVelocity, parent.dampening.x);
+
+            public float DampedY => Mathf.SmoothDampAngle(parent.transform.localEulerAngles.y, rotationY, ref yVelocity, parent.dampening.y);
         }
     }
 }
