@@ -5,6 +5,8 @@ namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
     {
+        public Rewired.Player Input => PlayerMovement.Input;
+        
         public Transform player;
         public float cameraSpeed = 10F;
 
@@ -61,14 +63,14 @@ namespace TMechs.Player
             if(Mathf.Abs(offsetAngle) > 1F)
                 state.rotationY = transform.localEulerAngles.y;
             
-            Vector2 input = PlayerMovement.Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
+            Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
             state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
             
             state.rotationX += input.y * cameraSpeed * Time.deltaTime;
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
-            if (PlayerMovement.Input.GetButtonDown(LOCK_ON))
+            if (Input.GetButtonDown(LOCK_ON))
             {
                 state.rotationX = 0F;
                 state.rotationY = player.eulerAngles.y;
