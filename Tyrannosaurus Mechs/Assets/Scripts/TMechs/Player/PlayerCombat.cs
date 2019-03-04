@@ -3,23 +3,29 @@ using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
+    [RequireComponent(typeof(Animator))]
     public class PlayerCombat : MonoBehaviour
     {
         public Rewired.Player Input => PlayerMovement.Input;
+        
+        private Animator animator;
 
         //TODO state engine
         private float shoulderCharge;
         
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
         private void Update()
         {
-            if (shoulderCharge <= Mathf.Epsilon && Input.GetButtonDown(SHOULDER_CHARGE))
-                shoulderCharge = .25F;
+            animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(SHOULDER_CHARGE));
+        }
 
-            if (shoulderCharge > 0F)
-            {
-                shoulderCharge -= Time.deltaTime;
-                transform.Translate(Vector3.forward * 30F * Time.deltaTime);
-            }
+        private struct Anim
+        {
+            public static readonly int SHOULDER_CHARGE = Animator.StringToHash("Shoulder Charge");
         }
     }
 }

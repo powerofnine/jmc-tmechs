@@ -172,8 +172,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 541286266}
+  - component: {fileID: 541286269}
   - component: {fileID: 541286265}
   - component: {fileID: 541286267}
+  - component: {fileID: 541286268}
   m_Layer: 0
   m_Name: TRex
   m_TagString: Untagged
@@ -228,6 +230,37 @@ MonoBehaviour:
   movementSpeed: 10
   jumpForce: 5.5
   maxJumps: 2
+--- !u!114 &541286268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541286264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c0f9eb1dd1a49fd9c29b5d3365863f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &541286269
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541286264}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 648adcef7703b8a4a8340dc6e3e2b595, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1032635400
 GameObject:
   m_ObjectHideFlags: 0
