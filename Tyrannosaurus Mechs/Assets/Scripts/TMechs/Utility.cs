@@ -129,6 +129,24 @@ namespace TMechs
         {
             return Remap(source, Axis.X, 0, Axis.Y);
         }
+
+        /// <summary>
+        /// Sets the vector values and returns it
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="value"></param>
+        /// <param name="axis"></param>
+        public static Vector3 Set(this Vector3 vector, float value, Axis axis)
+        {
+            if (axis.HasFlag(Axis.X))
+                vector.x = value;
+            if (axis.HasFlag(Axis.Y))
+                vector.y = value;
+            if (axis.HasFlag(Axis.Z))
+                vector.z = value;
+
+            return vector;
+        }
         
         private static float GetComponent(this Vector3 source, Axis component)
         {

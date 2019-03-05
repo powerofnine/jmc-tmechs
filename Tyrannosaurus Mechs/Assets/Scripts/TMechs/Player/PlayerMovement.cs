@@ -26,9 +26,14 @@ namespace TMechs.Player
         private Rigidbody rb;
 
         private int jumps;
+
+        private Animator animator;
         
         private void Awake()
         {
+            animator = GetComponent<Animator>();
+            animator.SetFloat("Player Speed", movementSpeed);
+            
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
             if (!aaCamera)
