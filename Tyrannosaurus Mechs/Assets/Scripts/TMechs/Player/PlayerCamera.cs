@@ -5,7 +5,7 @@ namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
     {
-        public Rewired.Player Input => PlayerMovement.Input;
+        private Rewired.Player Input => PlayerMovement.Input;
         
         public Transform player;
         public float cameraSpeed = 10F;
@@ -67,7 +67,7 @@ namespace TMechs.Player
 
             state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
             
-            state.rotationX += input.y * cameraSpeed * Time.deltaTime;
+            state.rotationX += -input.y * cameraSpeed * Time.deltaTime;
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
             if (Input.GetButtonDown(LOCK_ON))
