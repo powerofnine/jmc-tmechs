@@ -66,14 +66,13 @@ namespace TMechs.Player
             Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
             state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
-            
             state.rotationX += -input.y * cameraSpeed * Time.deltaTime;
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
             if (Input.GetButtonDown(CAMERA_CENTER))
             {
                 state.rotationX = 0F;
-                state.rotationY = player.eulerAngles.y;
+                state.rotationY = player.localEulerAngles.y;
             }
 
             transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);

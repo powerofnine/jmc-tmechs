@@ -9,6 +9,5 @@ namespace TMechs.Environment.Targets
         public override int GetPriority() => 0;
         public override Color GetColor() => Color.green;
         public override Color GetHardLockColor() => throw new System.NotImplementedException();
-        public override bool CanHardLock() => false;
     }
 }
