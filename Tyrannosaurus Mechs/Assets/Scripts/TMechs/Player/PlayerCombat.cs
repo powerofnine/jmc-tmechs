@@ -7,6 +7,9 @@ namespace TMechs.Player
     public class PlayerCombat : MonoBehaviour
     {
         public Rewired.Player Input => PlayerMovement.Input;
+
+        [HideInInspector]
+        public bool isLockedOn = false;
         
         private Animator animator;
 
@@ -20,6 +23,9 @@ namespace TMechs.Player
 
         private void Update()
         {
+            if (Input.GetButtonDown(LOCK_ON))
+                isLockedOn = !isLockedOn;
+            
             animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(SHOULDER_CHARGE));
         }
 

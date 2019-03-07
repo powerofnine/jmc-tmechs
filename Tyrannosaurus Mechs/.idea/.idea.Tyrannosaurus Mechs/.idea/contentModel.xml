@@ -186,6 +186,13 @@
             <e p="Enemy" t="Include">
               <e p="EnemyBasic.cs" t="Include" />
             </e>
+            <e p="Environment" t="Include">
+              <e p="Targets" t="Include">
+                <e p="BaseTarget.cs" t="Include" />
+                <e p="CamLockTarget.cs" t="Include" />
+                <e p="GrappleTarget.cs" t="Include" />
+              </e>
+            </e>
             <e p="InspectorAttributes" t="Include">
               <e p="NameAttribute.cs" t="Include" />
             </e>
@@ -197,6 +204,7 @@
               <e p="PlayerCamera.cs" t="Include" />
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
+              <e p="TargetController.cs" t="Include" />
             </e>
             <e p="RewiredConsts.cs" t="Include" />
             <e p="Utility.cs" t="Include" />
