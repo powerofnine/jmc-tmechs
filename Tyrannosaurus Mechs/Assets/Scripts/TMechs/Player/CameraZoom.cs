@@ -18,10 +18,10 @@ namespace TMechs.Player
         {
             float distance = maxDistance;
 
-            float zoom = PlayerMovement.Input.GetAxisRaw(ZOOM);
-
-            if (zoom > float.Epsilon)
-                distance = Mathf.Lerp(maxDistance, zoomDistance, zoom);
+//            float zoom = PlayerMovement.Input.GetAxisRaw(ZOOM);
+//
+//            if (zoom > float.Epsilon)
+//                distance = Mathf.Lerp(maxDistance, zoomDistance, zoom);
 
             if (Physics.Raycast(cameraRig.position, -transform.forward, out RaycastHit hit, maxDistance))
                 distance = Mathf.Min(distance, hit.distance + distanceOffset);

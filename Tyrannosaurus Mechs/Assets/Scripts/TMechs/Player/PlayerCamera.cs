@@ -70,7 +70,7 @@ namespace TMechs.Player
             state.rotationX += -input.y * cameraSpeed * Time.deltaTime;
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
-            if (Input.GetButtonDown(LOCK_ON))
+            if (Input.GetButtonDown(CAMERA_CENTER))
             {
                 state.rotationX = 0F;
                 state.rotationY = player.eulerAngles.y;

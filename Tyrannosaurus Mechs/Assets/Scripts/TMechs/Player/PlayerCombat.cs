@@ -26,7 +26,7 @@ namespace TMechs.Player
             if (Input.GetButtonDown(LOCK_ON))
                 isLockedOn = !isLockedOn;
             
-            animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(SHOULDER_CHARGE));
+            animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(DASH));
         }
 
         private struct Anim
