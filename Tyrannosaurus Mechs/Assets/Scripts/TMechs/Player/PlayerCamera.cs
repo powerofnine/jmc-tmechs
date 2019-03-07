@@ -1,3 +1,4 @@
+using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -44,8 +45,27 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
-            state.ClampState();
+            CamLockTarget locked = TargetController.Instance.GetLock();
             
+            if(locked)
+                LockedCamera(locked);
+            else
+                FreeCamera();
+            
+            state.ClampState();
+            transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
+            verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
+        }
+
+        public void LockedCamera(CamLockTarget target)
+        {
+            transform.position = player.position;
+            state.rotationX = 0F;
+            state.rotationY = player.localEulerAngles.y;
+        }
+
+        public void FreeCamera()
+        {            
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
             
@@ -74,11 +94,8 @@ namespace TMechs.Player
                 state.rotationX = 0F;
                 state.rotationY = player.localEulerAngles.y;
             }
-
-            transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
-            verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
         }
-
+        
         private struct CameraState
         {
             public PlayerCamera parent;

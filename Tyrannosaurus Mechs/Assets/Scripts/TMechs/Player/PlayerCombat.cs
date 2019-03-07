@@ -8,14 +8,8 @@ namespace TMechs.Player
     {
         public Rewired.Player Input => PlayerMovement.Input;
 
-        [HideInInspector]
-        public bool isLockedOn = false;
-        
         private Animator animator;
 
-        //TODO state engine
-        private float shoulderCharge;
-        
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -24,8 +18,13 @@ namespace TMechs.Player
         private void Update()
         {
             if (Input.GetButtonDown(LOCK_ON))
-                isLockedOn = !isLockedOn;
-            
+            {
+                if (TargetController.Instance.GetLock())
+                    TargetController.Instance.Unlock();
+                else
+                    TargetController.Instance.HardLock();
+            }
+
             animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(DASH));
         }
 

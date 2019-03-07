@@ -1,4 +1,5 @@
 ﻿using System;
+using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -63,17 +64,7 @@ namespace TMechs.Player
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
-
-            Vector3 rot = transform.eulerAngles;
-            if (Math.Abs(rot.y - intendedY) > float.Epsilon)
-            {
-                float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);
-
-                transform.eulerAngles = transform.eulerAngles.Set(inRot, Utility.Axis.Y);
-            }
-
-            rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
-
+            
             RaycastHit? ground = GetGround();
             
             if (jumps > 0 && ground != null)
@@ -85,6 +76,27 @@ namespace TMechs.Player
                     jumps++;
                 rb.velocity = rb.velocity.Set(jumpForce, Utility.Axis.Y);
             }
+
+            rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
+            
+            CamLockTarget target = TargetController.Instance.GetLock();
+
+            if (target)
+            {
+                transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));
+                intendedY = transform.eulerAngles.y;
+                return;
+            }
+            
+            Vector3 rot = transform.eulerAngles;
+            if (Math.Abs(rot.y - intendedY) > float.Epsilon)
+            {
+                float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);
+
+                transform.eulerAngles = transform.eulerAngles.Set(inRot, Utility.Axis.Y);
+            }
+
+
         }
 
         private RaycastHit? GetGround()
