@@ -11,7 +11,7 @@ namespace TMechs.Player
         
         public Bounds box;
 
-        private CamLockTarget currentTarget;
+        private EnemyTarget currentTarget;
         private readonly HashSet<BaseTarget> targetsInRange = new HashSet<BaseTarget>();
         
         private static readonly HashSet<BaseTarget> REGISTERED_TARGETS = new HashSet<BaseTarget>();
@@ -48,15 +48,15 @@ namespace TMechs.Player
             }
         }
 
-        public BaseTarget GetTarget(bool requireLock = false)
+        public BaseTarget GetTarget(bool enemyOnly = false)
         {
             if (currentTarget && targetsInRange.Contains(currentTarget))
                 return currentTarget;
             currentTarget = null;
 
             IEnumerable<BaseTarget> targets = targetsInRange.Where(x => x);
-            if (requireLock)
-                targets = targets.Where(x => x is CamLockTarget);
+            if (enemyOnly)
+                targets = targets.Where(x => x is EnemyTarget);
 
             targets = targets
                     .OrderByDescending(x => x.GetPriority())
@@ -65,7 +65,7 @@ namespace TMechs.Player
             return targets.FirstOrDefault();
         }
 
-        public CamLockTarget GetLock()
+        public EnemyTarget GetLock()
         {
             if (!targetsInRange.Contains(currentTarget))
                 currentTarget = null;
@@ -73,9 +73,9 @@ namespace TMechs.Player
             return currentTarget;
         }
 
-        public CamLockTarget HardLock()
+        public EnemyTarget HardLock()
         {
-            currentTarget = (CamLockTarget)GetTarget(true);
+            currentTarget = (EnemyTarget)GetTarget(true);
             return currentTarget;
         }
 

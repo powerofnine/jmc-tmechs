@@ -25,12 +25,18 @@ namespace TMechs.Player
                     TargetController.Instance.HardLock();
             }
 
-            animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(DASH));
+            animator.SetBool(Anim.HAS_ENEMY, TargetController.Instance.GetTarget(true));
+            animator.SetBool(Anim.ANGERY, Input.GetButton(ANGERY));
+            animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
+            animator.SetBool(Anim.ATTACK, Input.GetButtonDown(ATTACK));
         }
 
         private struct Anim
         {
-            public static readonly int SHOULDER_CHARGE = Animator.StringToHash("Shoulder Charge");
+            public static readonly int HAS_ENEMY = Animator.StringToHash("Has Enemy");
+            public static readonly int ANGERY = Animator.StringToHash("ANGERY");
+            public static readonly int DASH = Animator.StringToHash("Dash");
+            public static readonly int ATTACK = Animator.StringToHash("Attack");
         }
     }
 }

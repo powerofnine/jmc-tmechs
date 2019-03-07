@@ -45,7 +45,7 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
-            CamLockTarget locked = TargetController.Instance.GetLock();
+            EnemyTarget locked = TargetController.Instance.GetLock();
             
             if(locked)
                 LockedCamera(locked);
@@ -57,7 +57,7 @@ namespace TMechs.Player
             verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
         }
 
-        public void LockedCamera(CamLockTarget target)
+        public void LockedCamera(EnemyTarget target)
         {
             transform.position = player.position;
             state.rotationX = 0F;

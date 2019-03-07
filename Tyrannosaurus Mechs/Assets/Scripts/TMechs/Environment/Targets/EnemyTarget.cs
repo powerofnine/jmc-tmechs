@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TMechs.Environment.Targets
 {
-    public class CamLockTarget : BaseTarget
+    public class EnemyTarget : BaseTarget
     {
         public override int GetPriority() => 100;
         public override Color GetHardLockColor() => Color.red;

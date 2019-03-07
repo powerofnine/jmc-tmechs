@@ -79,7 +79,7 @@ namespace TMechs.Player
 
             rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
             
-            CamLockTarget target = TargetController.Instance.GetLock();
+            EnemyTarget target = TargetController.Instance.GetLock();
 
             if (target)
             {
