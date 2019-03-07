@@ -1,3 +1,4 @@
+using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -44,8 +45,27 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
-            state.ClampState();
+            EnemyTarget locked = TargetController.Instance.GetLock();
             
+            if(locked)
+                LockedCamera(locked);
+            else
+                FreeCamera();
+            
+            state.ClampState();
+            transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
+            verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
+        }
+
+        public void LockedCamera(EnemyTarget target)
+        {
+            transform.position = player.position;
+            state.rotationX = 0F;
+            state.rotationY = player.localEulerAngles.y;
+        }
+
+        public void FreeCamera()
+        {            
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
             
@@ -66,20 +86,16 @@ namespace TMechs.Player
             Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
             state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
-            
             state.rotationX += -input.y * cameraSpeed * Time.deltaTime;
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
-            if (Input.GetButtonDown(LOCK_ON))
+            if (Input.GetButtonDown(CAMERA_CENTER))
             {
                 state.rotationX = 0F;
-                state.rotationY = player.eulerAngles.y;
+                state.rotationY = player.localEulerAngles.y;
             }
-
-            transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
-            verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
         }
-
+        
         private struct CameraState
         {
             public PlayerCamera parent;

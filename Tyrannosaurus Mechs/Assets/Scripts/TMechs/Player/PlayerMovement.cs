@@ -1,4 +1,5 @@
 ﻿using System;
+using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,10 +16,11 @@ namespace TMechs.Player
         [Header("Forces")] public float movementSpeed = 10F;
         public float jumpForce = 2 * 9.8F;
 
-        public int maxJumps = 2;
+        public int maxJumps = 1;
 
         // State
         private float intendedY;
+        private float yDampVelocity;
 
         private new Collider collider;
         private Rigidbody rb;
@@ -62,31 +64,46 @@ namespace TMechs.Player
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
-
-            Vector3 rot = transform.eulerAngles;
-            if (Math.Abs(rot.y - intendedY) > float.Epsilon)
-            {
-                Vector3 inRot = rot;
-                inRot.y = intendedY;
-
-                transform.rotation =
-                    Quaternion.Lerp(Quaternion.Euler(rot), Quaternion.Euler(inRot), 15 * Time.deltaTime);
-            }
-
-            transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
-
-            if (jumps > 0 && IsGrounded())
+            
+            RaycastHit? ground = GetGround();
+            
+            if (jumps > 0 && ground != null)
                 jumps = 0;
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                if (!IsGrounded())
+                if (ground == null)
                     jumps++;
-                rb.velocity = Vector3.up * jumpForce;
+                rb.velocity = rb.velocity.Set(jumpForce, Utility.Axis.Y);
             }
+
+            rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
+            
+            EnemyTarget target = TargetController.Instance.GetLock();
+
+            if (target)
+            {
+                transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));
+                intendedY = transform.eulerAngles.y;
+                return;
+            }
+            
+            Vector3 rot = transform.eulerAngles;
+            if (Math.Abs(rot.y - intendedY) > float.Epsilon)
+            {
+                float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);
+
+                transform.eulerAngles = transform.eulerAngles.Set(inRot, Utility.Axis.Y);
+            }
+
+
         }
 
-        private bool IsGrounded() =>
-            Physics.Raycast(collider.bounds.center, -transform.up, collider.bounds.extents.y + .025F);
+        private RaycastHit? GetGround()
+        {
+            if (Physics.Raycast(collider.bounds.center, -transform.up, out RaycastHit hit, collider.bounds.extents.y + .1F))
+                return hit;
+            return null;
+        }
     }
 }

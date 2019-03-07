@@ -7,12 +7,9 @@ namespace TMechs.Player
     public class PlayerCombat : MonoBehaviour
     {
         public Rewired.Player Input => PlayerMovement.Input;
-        
+
         private Animator animator;
 
-        //TODO state engine
-        private float shoulderCharge;
-        
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -20,12 +17,26 @@ namespace TMechs.Player
 
         private void Update()
         {
-            animator.SetBool(Anim.SHOULDER_CHARGE, Input.GetButtonDown(SHOULDER_CHARGE));
+            if (Input.GetButtonDown(LOCK_ON))
+            {
+                if (TargetController.Instance.GetLock())
+                    TargetController.Instance.Unlock();
+                else
+                    TargetController.Instance.HardLock();
+            }
+
+            animator.SetBool(Anim.HAS_ENEMY, TargetController.Instance.GetTarget(true));
+            animator.SetBool(Anim.ANGERY, Input.GetButton(ANGERY));
+            animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
+            animator.SetBool(Anim.ATTACK, Input.GetButtonDown(ATTACK));
         }
 
         private struct Anim
         {
-            public static readonly int SHOULDER_CHARGE = Animator.StringToHash("Shoulder Charge");
+            public static readonly int HAS_ENEMY = Animator.StringToHash("Has Enemy");
+            public static readonly int ANGERY = Animator.StringToHash("ANGERY");
+            public static readonly int DASH = Animator.StringToHash("Dash");
+            public static readonly int ATTACK = Animator.StringToHash("Attack");
         }
     }
 }

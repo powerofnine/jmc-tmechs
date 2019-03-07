@@ -147,6 +147,22 @@ namespace TMechs
 
             return vector;
         }
+
+        /// <summary>
+        /// Calls <see cref="UnityEngine.Mathf.SmoothDampAngle(float,float,ref float,float)"/> on each component of the source vector
+        /// </summary>
+        /// <param name="from">The vector to damp</param>
+        /// <param name="to">The target values of the vector</param>
+        /// <param name="velocity">The current velocity reference</param>
+        /// <param name="smoothTime">The damp time</param>
+        /// <returns>The angle damped vector</returns>
+        public static Vector3 SmoothDampAngle(this Vector3 from, Vector3 to, ref Vector3 velocity, float smoothTime)
+        {
+            return new Vector3(
+                    Mathf.SmoothDampAngle(from.x, to.x, ref velocity.x, smoothTime),
+                    Mathf.SmoothDampAngle(from.y, to.y, ref velocity.y, smoothTime),
+                    Mathf.SmoothDampAngle(from.z, to.z, ref velocity.z, smoothTime));
+        }
         
         private static float GetComponent(this Vector3 source, Axis component)
         {
