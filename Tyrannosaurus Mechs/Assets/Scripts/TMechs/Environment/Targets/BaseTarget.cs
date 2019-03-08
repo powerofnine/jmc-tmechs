@@ -48,7 +48,7 @@ namespace TMechs.Environment.Targets
             if(player)
                 lookAnchor.transform.LookAt(player);
             
-            target.transform.Rotate(0F, 0F, 10F * Time.deltaTime);
+            target.transform.Rotate(0F, 0F, 25F * Time.deltaTime);
         }
 
         public void Ping(bool hardLock = false)

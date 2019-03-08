@@ -1,4 +1,5 @@
-﻿using TMechs.Player;
+﻿using TMechs.Environment.Targets;
+using TMechs.Player;
 using UnityEngine;
 
 namespace TMechs.Entity
@@ -19,7 +20,7 @@ namespace TMechs.Entity
         private void Awake()
         {
             anchor = Player.Player.Instance.rocketFistAnchor;
-            target = TargetController.Instance.GetTarget(true).transform;
+            target = TargetController.Instance.GetTarget<EnemyTarget>().transform;
 
             transform.position = anchor.position;
             transform.forward = anchor.forward;
