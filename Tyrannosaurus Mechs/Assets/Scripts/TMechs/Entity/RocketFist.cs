@@ -45,7 +45,10 @@ namespace TMechs.Entity
 
             maxTime -= Time.deltaTime;
             if (maxTime <= 0F)
+            {
                 isReturning = true;
+                rotateDamp = 0F;
+            }
 
             if (Vector3.Distance(transform.position, target.position) < 1F)
             {
