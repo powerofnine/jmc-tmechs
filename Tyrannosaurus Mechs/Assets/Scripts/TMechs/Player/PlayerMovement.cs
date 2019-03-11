@@ -88,15 +88,17 @@ namespace TMechs.Player
                 return;
             }
             
-            Vector3 rot = transform.eulerAngles;
-            if (Math.Abs(rot.y - intendedY) > float.Epsilon)
+            if (Math.Abs(transform.eulerAngles.y - intendedY) > float.Epsilon)
             {
                 float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);
-
                 transform.eulerAngles = transform.eulerAngles.Set(inRot, Utility.Axis.Y);
             }
 
-
+            if (transform.up != Vector3.up)
+            {
+                transform.up = Vector3.up;
+                transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
+            }
         }
 
         private RaycastHit? GetGround()
