@@ -81,7 +81,7 @@ namespace TMechs.Player.Behaviour
             SetDisableTypeState(animator, true);
         }
 
-        private void SetDisableTypeState(Animator animator, bool enabled)
+        private void SetDisableTypeState(Component animator, bool enabled)
         {
             foreach (Component c in DISABLE_TYPES.Select(animator.GetComponent))
             {

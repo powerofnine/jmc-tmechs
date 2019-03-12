@@ -28,11 +28,12 @@ namespace TMechs.Player
         private int jumps;
 
         private Animator animator;
+        private static readonly int ANIM_PLAYER_SPEED = Animator.StringToHash("Player Speed");
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            animator.SetFloat("Player Speed", movementSpeed);
+            animator.SetFloat(ANIM_PLAYER_SPEED, movementSpeed);
 
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
