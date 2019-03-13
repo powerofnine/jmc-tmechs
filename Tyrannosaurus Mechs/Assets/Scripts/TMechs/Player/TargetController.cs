@@ -8,18 +8,18 @@ namespace TMechs.Player
     public class TargetController : MonoBehaviour
     {
         public static TargetController Instance { get; private set; }
-        
+
         public Bounds box;
 
         private EnemyTarget currentTarget;
         private readonly HashSet<BaseTarget> targetsInRange = new HashSet<BaseTarget>();
-        
+
         private static readonly HashSet<BaseTarget> REGISTERED_TARGETS = new HashSet<BaseTarget>();
 
         private void Awake()
         {
             Instance = this;
-            
+
             InvokeRepeating(nameof(GC), 0F, 2F);
         }
 
@@ -34,9 +34,9 @@ namespace TMechs.Player
 
             foreach (BaseTarget target in REGISTERED_TARGETS)
             {
-                if(!target)
+                if (!target)
                     continue;
-                
+
                 Vector3 point = transform.InverseTransformPoint(target.transform.position) - box.center;
                 Vector3 extents = box.extents;
 
@@ -48,34 +48,39 @@ namespace TMechs.Player
             }
         }
 
-        public BaseTarget GetTarget(bool enemyOnly = false)
+        public BaseTarget GetTarget(System.Type type = null)
         {
             if (currentTarget && targetsInRange.Contains(currentTarget))
                 return currentTarget;
             currentTarget = null;
 
             IEnumerable<BaseTarget> targets = targetsInRange.Where(x => x);
-            if (enemyOnly)
-                targets = targets.Where(x => x is EnemyTarget);
+            if (type != null)
+                targets = targets.Where(type.IsInstanceOfType);
 
             targets = targets
-                    .OrderByDescending(x => x.GetPriority())
-                    .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
+                .OrderByDescending(x => x.GetPriority())
+                .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
 
             return targets.FirstOrDefault();
+        }
+
+        public T GetTarget<T>() where T : BaseTarget
+        {
+            return (T)GetTarget(typeof(T));
         }
 
         public EnemyTarget GetLock()
         {
             if (!targetsInRange.Contains(currentTarget))
                 currentTarget = null;
-            
+
             return currentTarget;
         }
 
         public EnemyTarget HardLock()
         {
-            currentTarget = (EnemyTarget)GetTarget(true);
+            currentTarget = (EnemyTarget) GetTarget<EnemyTarget>();
             return currentTarget;
         }
 
@@ -99,7 +104,7 @@ namespace TMechs.Player
         {
             REGISTERED_TARGETS.Remove(target);
         }
-        
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.green;
