@@ -163,6 +163,16 @@ namespace TMechs
                     Mathf.SmoothDampAngle(from.y, to.y, ref velocity.y, smoothTime),
                     Mathf.SmoothDampAngle(from.z, to.z, ref velocity.z, smoothTime));
         }
+
+        /// <summary>
+        /// Sets each component of the vector to the inverse of itself ( 1 / val )
+        /// </summary>
+        /// <param name="source">The vector to inverse</param>
+        /// <returns>The inversed vector</returns>
+        public static Vector3 InverseScale(this Vector3 source)
+        {
+            return new Vector3(1F / source.x, 1F / source.y, 1F / source.z);
+        }
         
         private static float GetComponent(this Vector3 source, Axis component)
         {

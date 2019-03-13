@@ -62,7 +62,16 @@ namespace TMechs.Player
                 .OrderByDescending(x => x.GetPriority())
                 .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
 
-            return targets.FirstOrDefault();
+            // Raycast to ensure we can see the target
+            return targets.FirstOrDefault(x =>
+            {
+                Vector3 heading = x.transform.position - transform.position;
+                float distance = heading.magnitude;
+
+                bool wasHit = Physics.Raycast(transform.position, heading / distance, out RaycastHit hit, distance);
+                
+                return !wasHit || (hit.rigidbody && hit.rigidbody.transform == x.transform) || hit.transform == x.transform;
+            });;
         }
 
         public T GetTarget<T>() where T : BaseTarget
