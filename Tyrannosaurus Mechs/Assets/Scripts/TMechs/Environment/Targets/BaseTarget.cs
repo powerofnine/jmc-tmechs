@@ -35,6 +35,9 @@ namespace TMechs.Environment.Targets
             target = Instantiate(Resources.Load<GameObject>("Prefabs/TargetRender"), lookAnchor).GetComponent<SpriteRenderer>();
             target.gameObject.SetActive(false);
 
+            target.transform.localScale = target.transform.lossyScale.InverseScale();
+            target.sharedMaterial = Resources.Load<Material>("Sprite-AlwaysOnTop");
+            
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
