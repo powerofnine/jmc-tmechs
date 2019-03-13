@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TMechs.Environment.Targets;
+using UnityEngine;
 
 namespace TMechs.Player
 {
@@ -10,6 +12,10 @@ namespace TMechs.Player
 
         [Header("Anchors")]
         public Transform rocketFistAnchor;
+        public Transform pickupAnchor;
+
+        [NonSerialized]
+        public EnemyTarget pickedUp;
 
         private void Awake()
         {

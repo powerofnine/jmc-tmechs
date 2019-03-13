@@ -21,6 +21,8 @@ namespace TMechs.Environment.Targets
         private void OnDisable()
         {
             TargetController.Remove(this);
+            
+            target.gameObject.SetActive(false);
         }
 
         public abstract int GetPriority();

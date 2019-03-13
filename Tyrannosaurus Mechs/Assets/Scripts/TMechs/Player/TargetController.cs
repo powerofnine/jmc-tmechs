@@ -11,6 +11,9 @@ namespace TMechs.Player
 
         public Bounds box;
 
+        [HideInInspector]
+        public bool isStopped = false;
+        
         private EnemyTarget currentTarget;
         private readonly HashSet<BaseTarget> targetsInRange = new HashSet<BaseTarget>();
 
@@ -50,6 +53,9 @@ namespace TMechs.Player
 
         public BaseTarget GetTarget(System.Type type = null)
         {
+            if (isStopped)
+                return null;
+            
             if (currentTarget && targetsInRange.Contains(currentTarget))
                 return currentTarget;
             currentTarget = null;
@@ -81,6 +87,9 @@ namespace TMechs.Player
 
         public EnemyTarget GetLock()
         {
+            if (isStopped)
+                return null;
+            
             if (!targetsInRange.Contains(currentTarget))
                 currentTarget = null;
 
@@ -89,7 +98,7 @@ namespace TMechs.Player
 
         public EnemyTarget HardLock()
         {
-            currentTarget = (EnemyTarget) GetTarget<EnemyTarget>();
+            currentTarget = GetTarget<EnemyTarget>();
             return currentTarget;
         }
 

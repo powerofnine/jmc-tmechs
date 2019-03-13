@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 233548595997932613}
   - component: {fileID: 233548595997932614}
   - component: {fileID: 233548595997932615}
+  - component: {fileID: 2964632607553644741}
   m_Layer: 0
   m_Name: EnemyBasic
   m_TagString: Untagged
@@ -160,6 +161,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 15
+--- !u!114 &2964632607553644741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233548595997932601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3adcc268a1624f7ebe23322ea5d3f4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickup: 1
 --- !u!1 &6101699834634919572
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +185,6 @@ GameObject:
   - component: {fileID: 1180906857681918337}
   - component: {fileID: 8961281979898831514}
   - component: {fileID: 6698818255813532088}
-  - component: {fileID: 2494844454376308587}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -238,16 +251,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2494844454376308587
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6101699834634919572}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

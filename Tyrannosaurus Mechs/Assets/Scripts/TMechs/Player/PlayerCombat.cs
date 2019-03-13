@@ -9,6 +9,8 @@ namespace TMechs.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerCombat : MonoBehaviour
     {
+        public float grappleRadius = 10F;
+        
         private CombatState combat;
         
         private static Rewired.Player Input => PlayerMovement.Input;
@@ -35,6 +37,8 @@ namespace TMechs.Player
 
         private void Update()
         {
+            BaseTarget target = TargetController.Instance.GetTarget();
+            
             if (Input.GetButtonDown(LOCK_ON))
             {
                 if (TargetController.Instance.GetLock())
@@ -43,8 +47,8 @@ namespace TMechs.Player
                     TargetController.Instance.HardLock();
             }
 
-            animator.SetBool(Anim.HAS_ENEMY, TargetController.Instance.GetTarget() is EnemyTarget);
-            animator.SetBool(Anim.HAS_GRAPPLE, TargetController.Instance.GetTarget() is GrappleTarget);
+            animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
+            animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
             
             animator.SetBool(Anim.ANGERY, Input.GetButton(ANGERY));
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
@@ -53,6 +57,15 @@ namespace TMechs.Player
             
             if(Input.GetButtonDown(ATTACK))
                 animator.SetTrigger(Anim.ATTACK);
+
+            if (target is EnemyTarget && Vector3.Distance(transform.position, target.transform.position) < grappleRadius)
+            {
+                EnemyTarget enemy = (EnemyTarget) target;
+                
+                animator.SetInteger(Anim.PICKUP_TARGET_TYPE, (int)enemy.pickup);
+            }
+            else
+                animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
         }
 
         public void OnHitboxTrigger(PlayerHitBox hitbox, EnemyHealth enemy)
@@ -83,6 +96,12 @@ namespace TMechs.Player
             combat.damage = damage;
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, grappleRadius);
+        }
+
         public struct Anim
         {
             public static readonly int HAS_ENEMY = Animator.StringToHash("Has Enemy");
@@ -92,6 +111,7 @@ namespace TMechs.Player
             public static readonly int ATTACK = Animator.StringToHash("Attack");
             public static readonly int GRAPPLE = Animator.StringToHash("Grapple");
             public static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
+            public static readonly int PICKUP_TARGET_TYPE = Animator.StringToHash("Pickup Target Type");
         }
 
         private struct CombatState
