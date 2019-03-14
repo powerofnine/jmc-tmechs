@@ -79,7 +79,7 @@ namespace TMechs.Player
             if (controller.isGrounded)
             {
                 jumps = 0;
-                yVelocity = float.Epsilon;
+                yVelocity = -.5F;
             }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
