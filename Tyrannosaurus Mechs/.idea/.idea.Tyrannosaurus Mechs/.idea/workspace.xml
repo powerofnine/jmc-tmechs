@@ -2,7 +2,445 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1656afc-ab2f-4e5a-a6ab-2693ccd2f8bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animation.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animation/Player.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animation/Player/Player.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animation/Player/Player.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderColorsStorage.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderColorsStorage.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderPlatformsStorage.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderPlatformsStorage.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderTagsStorage.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderTagsStorage.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderTypesStorage.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/FolderTypesStorage.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/RainbowFoldersSettings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Data/RainbowFoldersSettings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/blue_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/blue_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/blue_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/blue_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/bondi_blue_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/bondi_blue_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/bondi_blue_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/bondi_blue_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/green_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/green_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/green_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/green_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/indigo_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/indigo_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/indigo_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/indigo_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/lime_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/lime_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/lime_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/lime_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/magenta_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/magenta_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/magenta_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/magenta_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/orange_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/orange_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/orange_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/orange_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/red_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/red_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/red_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/red_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/vermilion_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/vermilion_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/vermilion_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/vermilion_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/violet_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/violet_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/violet_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/violet_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_orange_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_orange_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_orange_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Colors/yellow_orange_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/blue_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/blue_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/blue_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/blue_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/cyan_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/cyan_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/cyan_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/cyan_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/dark_blue_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/dark_blue_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/dark_blue_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/dark_blue_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/green_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/green_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/green_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/green_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/lime_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/lime_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/lime_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/lime_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/magenta_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/magenta_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/magenta_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/magenta_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/orange_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/orange_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/orange_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/orange_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/red_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/red_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/red_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/red_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/vermillion_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/vermillion_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/vermillion_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/vermillion_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/violet_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/violet_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/violet_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/violet_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_orange_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_orange_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_orange_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_orange_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_tag_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_tag_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_tag_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Tags/yellow_tag_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/android_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/android_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/android_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/android_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/ios_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/ios_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/ios_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/ios_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/mac_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/mac_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/mac_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/mac_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/webgl_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/webgl_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/webgl_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/webgl_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/win_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/win_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/win_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Platforms/win_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/editor_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/editor_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/editor_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/editor_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/resources_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/resources_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/resources_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/Special/resources_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/animations_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/animations_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/animations_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/animations_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/audio_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/audio_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/audio_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/audio_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/brackets_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/brackets_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/brackets_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/brackets_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/extensions_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/extensions_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/extensions_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/extensions_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/fonts_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/fonts_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/fonts_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/fonts_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/materials_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/materials_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/materials_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/materials_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/meshes_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/meshes_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/meshes_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/meshes_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/physics_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/physics_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/physics_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/physics_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/plugins_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/plugins_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/plugins_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/plugins_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/prefabs_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/prefabs_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/prefabs_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/prefabs_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/rainbow_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/rainbow_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/rainbow_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/rainbow_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scenes_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scenes_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scenes_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scenes_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scripts_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scripts_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scripts_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/scripts_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/shaders_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/shaders_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/shaders_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/shaders_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/terrains_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/terrains_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/terrains_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/terrains_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/textures_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/textures_icon_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/textures_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Icons/Types/textures_icon_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Helpers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Helpers/RainbowFoldersEditorUtility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Helpers/RainbowFoldersEditorUtility.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Info.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Info/AssetInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Info/AssetInfo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorName.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorsStorage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorsStorage.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorsStorageEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Colors/FolderColorsStorageEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/FolderIconPair.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/FolderIconPair.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatform.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatform.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformName.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformsStorage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformsStorage.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformsStorageEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Platforms/FolderPlatformsStorageEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/RainbowFoldersContextMenu.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/RainbowFoldersContextMenu.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/RainbowFoldersPresetsMenu.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/RainbowFoldersPresetsMenu.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTag.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTag.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagName.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagsStorage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagsStorage.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagsStorageEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Tags/FolderTagsStorageEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypeName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypeName.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypesStorage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypesStorage.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypesStorageEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Menu/Types/FolderTypesStorageEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Prefs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Prefs/RainbowFoldersPreferences.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Prefs/RainbowFoldersPreferences.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/RainbowFoldersBrowserIcons.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/RainbowFoldersBrowserIcons.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMenuBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMenuBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMenuCommandAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMenuCommandAttribute.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMeta.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/ElementAdderMeta.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/GenericElementAdderMenu.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/GenericElementAdderMenu.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/GenericElementAdderMenuBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/GenericElementAdderMenuBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenu.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenu.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenuBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenuBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenuCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Element Adder Menu/IElementAdderMenuCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/GenericListAdaptor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/GenericListAdaptor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/IReorderableListAdaptor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/IReorderableListAdaptor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/IReorderableListDropTarget.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/IReorderableListDropTarget.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/GUIHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/GUIHelper.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/ReorderableListResources.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/ReorderableListResources.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/SerializedPropertyUtility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/Internal/SerializedPropertyUtility.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListControl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListControl.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListFlags.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListFlags.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListGUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListGUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListStyles.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/ReorderableListStyles.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/SerializedPropertyAdaptor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Editor/SerializedPropertyAdaptor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/LICENSE.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Properties.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Properties/AssemblyInfo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/README.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/API Reference.chm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/API Reference.chm.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/API Reference.chw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/API Reference.chw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/Resources.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/Resources.zip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/User Guide.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/ReorderableList/Support/User Guide.pdf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFolder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFolder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFolderDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFolderDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFoldersSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFoldersSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFoldersSettingsEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Settings/RainbowFoldersSettingsEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/DraggablePopupWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/DraggablePopupWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/RainbowFoldersPopup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/RainbowFoldersPopup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/RainbowFoldersWelcome.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Scripts/Windows/RainbowFoldersWelcome.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_free_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_free_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_free_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_free_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_pro_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_pro_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_pro_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/collab_bg_pro_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_delete_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_delete_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_edit_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_edit_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_edit_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_edit_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_presets_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_presets_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_settings_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/icon_settings_16.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/rainbow_logo_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Editor/Textures/rainbow_logo_64.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Android.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Android/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Android/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Audio.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Audio/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Audio/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Editor/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Editor/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Extensions.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Extensions/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Extensions/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Fonts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Fonts/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Fonts/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Mac.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Mac/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Mac/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Materials/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Materials/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Meshes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Meshes/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Meshes/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Plugins.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Plugins/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Plugins/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Prefabs/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Prefabs/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Project.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Project/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Project/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Resources/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Resources/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scenes/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scenes/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scripts/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Scripts/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Shaders/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Shaders/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Terrains.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Terrains/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Terrains/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Textures/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Textures/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/WebGL.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/WebGL/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/WebGL/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Windows.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Windows/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/Windows/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/iOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/iOS/stub.file" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/Examples/iOS/stub.file.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/QuickStart.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/RainbowFolders/QuickStart.pdf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +453,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerMovement.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-60">
+            <state relative-caret-position="1365">
               <caret line="100" column="20" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
               <folding>
                 <marker date="1552559473384" expanded="false" signature="6:170" ph="..." />
@@ -39,7 +477,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
+            <state relative-caret-position="420">
               <caret line="35" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <marker date="1552560887019" expanded="false" signature="6:134" ph="..." />
@@ -66,8 +504,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/FX/Rotator.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+            <state relative-caret-position="195">
+              <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
               <folding>
                 <marker date="1552561480506" expanded="true" signature="39:258" ph="{...}" />
                 <marker date="1552561480506" expanded="true" signature="82:256" ph="{...}" />
@@ -80,7 +518,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TestPendulum.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
+            <state relative-caret-position="525">
               <caret line="42" column="29" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="90" />
               <folding>
                 <marker date="1552557151712" expanded="false" signature="6:111" ph="..." />
@@ -98,7 +536,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Anim.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="75">
               <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
               <folding>
                 <marker date="1552556955057" expanded="true" signature="36:836" ph="{...}" />
@@ -135,6 +573,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31353B3F-2D2E-4345-95CB-FE07FBEC4072/d1/aff7b133/CollisionFlags.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/GrappleTarget.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Plugins/RainbowAssets/!Core/ReorderableList/Editor/ReorderableListControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/RewiredConsts.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31353B3F-2D2E-4345-95CB-FE07FBEC4072/49/4da23dd5/CharacterController.cs" root0="SKIP_HIGHLIGHTING" />
@@ -226,6 +665,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="FileSystemExplorer" />
       <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <subPane>
@@ -273,7 +713,6 @@
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
-      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <option name="show-all-files" value="false" />
       </pane>
@@ -352,11 +791,12 @@
       <workItem from="1552371394725" duration="3292000" />
       <workItem from="1552481902471" duration="7724000" />
       <workItem from="1552530330392" duration="27714000" />
+      <workItem from="1552564727662" duration="58000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119300000" />
+    <option name="totallyTimeSpent" value="119358000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -369,9 +809,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18123667" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18283582" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -427,7 +866,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5BECDA66-1E88-42F0-BA99-2CCECD9D79A2/1a/e968cd9b/HashSet`1.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/CameraZoom.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -833,36 +1271,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Anim.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-          <folding>
-            <marker date="1552556955057" expanded="true" signature="36:836" ph="{...}" />
-            <marker date="1552556955057" expanded="true" signature="67:834" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TestPendulum.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="42" column="29" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="90" />
-          <folding>
-            <marker date="1552557151712" expanded="false" signature="6:111" ph="..." />
-            <marker date="1552557151712" expanded="true" signature="154:1597" ph="{...}" />
-            <marker date="1552557151712" expanded="true" signature="318:517" ph="{...}" />
-            <marker date="1552557151712" expanded="true" signature="345:452" ph="{...}" />
-            <marker date="1552557151712" expanded="true" signature="544:1248" ph="{...}" />
-            <marker date="1552557151712" expanded="true" signature="1299:1398" ph="{...}" />
-            <marker date="1552557151712" expanded="true" signature="1435:1595" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerMovement.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60">
+        <state relative-caret-position="1365">
           <caret line="100" column="20" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
           <folding>
             <marker date="1552559473384" expanded="false" signature="6:170" ph="..." />
@@ -884,7 +1295,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
+        <state relative-caret-position="420">
           <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
             <marker date="1552560887019" expanded="false" signature="6:134" ph="..." />
@@ -907,10 +1318,305 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TestPendulum.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="42" column="29" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="90" />
+          <folding>
+            <marker date="1552557151712" expanded="false" signature="6:111" ph="..." />
+            <marker date="1552557151712" expanded="true" signature="154:1597" ph="{...}" />
+            <marker date="1552557151712" expanded="true" signature="318:517" ph="{...}" />
+            <marker date="1552557151712" expanded="true" signature="345:452" ph="{...}" />
+            <marker date="1552557151712" expanded="true" signature="544:1248" ph="{...}" />
+            <marker date="1552557151712" expanded="true" signature="1299:1398" ph="{...}" />
+            <marker date="1552557151712" expanded="true" signature="1435:1595" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Anim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+          <folding>
+            <marker date="1552556955057" expanded="true" signature="36:836" ph="{...}" />
+            <marker date="1552556955057" expanded="true" signature="67:834" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Plugins/RainbowAssets/!Core/ReorderableList/Editor/ReorderableListControl.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="566" selection-start-line="566" selection-end-line="566" />
+          <folding>
+            <marker date="1518236758000" expanded="true" signature="0:126" ph="/* Copyright (c) Rotorz Limited. All rights reserved. ... */" />
+            <marker date="1518236758000" expanded="false" signature="134:239" ph="..." />
+            <marker date="1518236758000" expanded="true" signature="275:61306" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="280:362" ph="/// Base class for custom reorderable list control. ... " />
+            <marker date="1518236758000" expanded="true" signature="400:61303" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="405:2319" ph="/// Invoked to draw list item. ... " />
+            <marker date="1518236758000" expanded="true" signature="2381:4012" ph="/// Invoked to draw content for empty list. ... " />
+            <marker date="1518236758000" expanded="true" signature="4051:4217" ph="/// Invoked to draw content for empty list with absolute positioning. ... " />
+            <marker date="1518236758000" expanded="false" signature="4278:5321" ph="Custom Styles" />
+            <marker date="1518236758000" expanded="true" signature="4303:4377" ph="/// Background color of anchor list item. ... " />
+            <marker date="1518236758000" expanded="true" signature="4434:4527" ph="/// Background color of target slot when dragging list item. ... " />
+            <marker date="1518236758000" expanded="true" signature="4585:4678" ph="/// Style for right-aligned label for element number prefix. ... " />
+            <marker date="1518236758000" expanded="true" signature="4766:5307" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="5007:5149" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="5149:5303" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="5325:7011" ph="Utility" />
+            <marker date="1518236758000" expanded="true" signature="5497:5586" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="5590:5878" ph="/// Generate and draw control from state object. ... " />
+            <marker date="1518236758000" expanded="true" signature="6003:6246" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="6250:6596" ph="/// Generate and draw control from state object. ... " />
+            <marker date="1518236758000" expanded="true" signature="6744:6997" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="7015:7099" ph="/// Position of mouse upon anchoring item for drag. ... " />
+            <marker date="1518236758000" expanded="true" signature="7146:7222" ph="/// Zero-based index of anchored list item. ... " />
+            <marker date="1518236758000" expanded="true" signature="7266:7355" ph="/// Zero-based index of target list item for reordering. ... " />
+            <marker date="1518236758000" expanded="true" signature="7400:7567" ph="/// Unique ID of list control which should be automatically focused. A value ... " />
+            <marker date="1518236758000" expanded="true" signature="7617:7703" ph="/// Zero-based index of item which should be focused. ... " />
+            <marker date="1518236758000" expanded="true" signature="7775:7939" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="7877:7935" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="7967:8147" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="8077:8143" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="8151:8262" ph="/// Represents the current stack of nested reorderable list control positions. ... " />
+            <marker date="1518236758000" expanded="true" signature="8319:8418" ph="/// Represents the current stack of nested reorderable list items. ... " />
+            <marker date="1518236758000" expanded="true" signature="8475:8574" ph="/// Gets the control ID of the list that is currently being drawn. ... " />
+            <marker date="1518236758000" expanded="true" signature="8616:8676" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="8680:9040" ph="/// Gets the position of the list control that is currently being drawn. ... " />
+            <marker date="1518236758000" expanded="true" signature="9082:9141" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="9145:9430" ph="/// Gets the zero-based index of the list item that is currently being drawn; ... " />
+            <marker date="1518236758000" expanded="true" signature="9470:9530" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="9534:9929" ph="/// Gets the total position of the list item that is currently being drawn. ... " />
+            <marker date="1518236758000" expanded="true" signature="9976:10039" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="10043:13268" ph="Properties" />
+            <marker date="1518236758000" expanded="true" signature="10105:10194" ph="/// Gets or sets flags which affect behavior of control. ... " />
+            <marker date="1518236758000" expanded="true" signature="10231:10289" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="10293:10399" ph="/// Gets a value indicating whether one or more footer buttons are shown. ... " />
+            <marker date="1518236758000" expanded="true" signature="10432:10489" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="10492:10581" ph="/// Gets a value indicating whether add button is shown. ... " />
+            <marker date="1518236758000" expanded="true" signature="10610:10685" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="10688:10782" ph="/// Gets a value indicating whether add menu button is shown. ... " />
+            <marker date="1518236758000" expanded="true" signature="10832:10926" ph="/// Gets a value indicating whether remove buttons are shown. ... " />
+            <marker date="1518236758000" expanded="true" signature="10959:11038" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="11155:11307" ph="/// Gets or sets style used to draw background of list control. ... " />
+            <marker date="1518236758000" expanded="true" signature="11341:11417" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="11420:11563" ph="/// Gets or sets style used to draw footer buttons. ... " />
+            <marker date="1518236758000" expanded="true" signature="11600:11682" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="11685:11854" ph="/// Gets or sets style used to draw list item buttons (like the remove button). ... " />
+            <marker date="1518236758000" expanded="true" signature="11889:11967" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="12102:12217" ph="/// Gets or sets the color of the horizontal lines that appear between list items. ... " />
+            <marker date="1518236758000" expanded="true" signature="12253:12339" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="12343:12674" ph="/// Gets or sets a boolean value indicating whether a horizontal line should be ... " />
+            <marker date="1518236758000" expanded="true" signature="12711:12801" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="12805:13133" ph="/// Gets or sets a boolean value indicating whether a horizontal line should be ... " />
+            <marker date="1518236758000" expanded="true" signature="13168:13254" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="13272:16095" ph="Events" />
+            <marker date="1518236758000" expanded="true" signature="13401:13612" ph="/// Occurs when add menu button is clicked. ... " />
+            <marker date="1518236758000" expanded="true" signature="13670:14034" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="13679:13849" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="13860:14030" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="14038:14170" ph="/// Raises event when add menu button is clicked. ... " />
+            <marker date="1518236758000" expanded="true" signature="14243:14313" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="14317:14403" ph="/// Occurs after list item is inserted or duplicated. ... " />
+            <marker date="1518236758000" expanded="true" signature="14461:14603" ph="/// Raises event after list item is inserted or duplicated. ... " />
+            <marker date="1518236758000" expanded="true" signature="14672:14736" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="14740:14862" ph="/// Occurs before list item is removed and allowing for remove operation to be cancelled. ... " />
+            <marker date="1518236758000" expanded="true" signature="14920:15083" ph="/// Raises event before list item is removed and provides oppertunity to cancel. ... " />
+            <marker date="1518236758000" expanded="true" signature="15152:15216" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="15220:15346" ph="/// Occurs immediately before list item is moved allowing for move operation to be cancelled. ... " />
+            <marker date="1518236758000" expanded="true" signature="15400:15573" ph="/// Raises event immediately before list item is moved and provides oppertunity to cancel. ... " />
+            <marker date="1518236758000" expanded="true" signature="15638:15698" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="15702:15777" ph="/// Occurs after list item has been moved. ... " />
+            <marker date="1518236758000" expanded="true" signature="15829:15960" ph="/// Raises event after list item has been moved. ... " />
+            <marker date="1518236758000" expanded="true" signature="16023:16081" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="16099:16819" ph="Construction" />
+            <marker date="1518236758000" expanded="true" signature="16123:16227" ph="/// Initializes a new instance of &lt;see cref=&quot;ReorderableListControl&quot;/&gt;. ... " />
+            <marker date="1518236758000" expanded="true" signature="16262:16513" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="16517:16704" ph="/// Initializes a new instance of &lt;see cref=&quot;ReorderableListControl&quot;/&gt;. ... " />
+            <marker date="1518236758000" expanded="true" signature="16777:16805" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="16823:18744" ph="Control State" />
+            <marker date="1518236758000" expanded="true" signature="16848:16906" ph="/// Unique Id of control. ... " />
+            <marker date="1518236758000" expanded="true" signature="16935:17001" ph="/// Visible rectangle of control. ... " />
+            <marker date="1518236758000" expanded="true" signature="17033:17127" ph="/// Width of index label in pixels (zero indicates no label). ... " />
+            <marker date="1518236758000" expanded="true" signature="17164:17266" ph="/// Indicates whether item is currently being dragged within control. ... " />
+            <marker date="1518236758000" expanded="true" signature="17295:17367" ph="/// Indicates if reordering is allowed. ... " />
+            <marker date="1518236758000" expanded="true" signature="17404:17502" ph="/// A boolean value indicating whether drop insertion is allowed. ... " />
+            <marker date="1518236758000" expanded="true" signature="17541:17655" ph="/// Zero-based index for drop insertion when applicable; othewise, a value of -1. ... " />
+            <marker date="1518236758000" expanded="true" signature="17689:17776" ph="/// Position of drop insertion on Y-axis in GUI space. ... " />
+            <marker date="1518236758000" expanded="true" signature="17816:18019" ph="/// Prepare initial state for list control. ... " />
+            <marker date="1518236758000" expanded="true" signature="18096:18609" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="18446:18568" ph="/* The value of this field is reset each time the control is drawn and may ... */" />
+            <marker date="1518236758000" expanded="true" signature="18656:18730" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="18748:47164" ph="Event Handling" />
+            <marker date="1518236758000" expanded="true" signature="18917:19179" ph="/// Indicate that first control of list item should be automatically focused ... " />
+            <marker date="1518236758000" expanded="true" signature="19239:19384" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="19302:19380" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="19388:19679" ph="/// Draw remove button. ... " />
+            <marker date="1518236758000" expanded="true" signature="19739:20037" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="20094:20330" ph="/// Begin tracking drag and drop within list. ... " />
+            <marker date="1518236758000" expanded="true" signature="20408:20587" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="20591:20656" ph="/// Stop tracking drag and drop. ... " />
+            <marker date="1518236758000" expanded="true" signature="20705:20786" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="20790:21084" ph="/// Gets a value indicating whether item in current list is currently being tracked. ... " />
+            <marker date="1518236758000" expanded="true" signature="21140:21224" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="21228:21345" ph="/// Accept reordering. ... " />
+            <marker date="1518236758000" expanded="true" signature="21412:21713" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="21421:21660" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="21672:21709" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="21954:25065" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="22452:22528" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="22596:22902" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="23010:25013" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="23158:23980" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="23412:23637" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="23739:23974" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="23792:23967" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="24410:24694" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="24792:25008" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="24924:25002" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="25025:25061" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="25162:26577" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="25212:26511" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="26581:26775" ph="/* Counter is incremented whenever a reorderable list control reacts as a drop ... */" />
+            <marker date="1518236758000" expanded="true" signature="26831:27030" ph="/// Draw list container and items. ... " />
+            <marker date="1518236758000" expanded="true" signature="27120:34894" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="27816:27889" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="27928:28257" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="28281:29499" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="28345:28480" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="28568:28816" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="28921:28989" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="29081:29325" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="29135:29232" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="29247:29318" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="29947:33076" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="30092:30588" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="30169:30271" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="30278:30398" ph="/* Do not draw item if it is currently being dragged. ... */" />
+            <marker date="1518236758000" expanded="true" signature="30588:31014" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="30930:31008" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="31055:31674" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="31151:31274" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="31308:31425" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="31432:31668" ph="/* if (s_DragItemPosition.y &gt; itemPosition.y &amp;&amp; s_DragItemPosition.y &lt;= midpoint) ... */" />
+            <marker date="1518236758000" expanded="true" signature="31825:32004" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="31832:31945" ph="/* We assume that it was this item which was removed, so --i allows us ... */" />
+            <marker date="1518236758000" expanded="true" signature="32111:33071" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="32137:33065" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="32235:32684" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="32445:32675" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="32699:33058" ph="/* DEBUG ... */" />
+            <marker date="1518236758000" expanded="true" signature="33106:33313" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="33370:33482" ph="/* Assume that drop insertion is not allowed at this time; we can change our ... */" />
+            <marker date="1518236758000" expanded="true" signature="33630:34248" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="33658:33977" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="33784:33901" ph="/* Force repaint to occur so that dragging rectangle is visible. ... */" />
+            <marker date="1518236758000" expanded="true" signature="34034:34243" ph="/* DEBUG ... */" />
+            <marker date="1518236758000" expanded="true" signature="34248:34623" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="34416:34618" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="34474:34567" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="34947:35046" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="35088:36117" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="35505:36113" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="36202:37155" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="36377:37151" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="36445:36962" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="37159:37403" ph="/// Draws drop insertion indicator. ... " />
+            <marker date="1518236758000" expanded="true" signature="37462:37501" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="37505:37606" ph="/// Checks to see if list control needs to be automatically focused. ... " />
+            <marker date="1518236758000" expanded="true" signature="37649:37940" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="37787:37936" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="37946:38185" ph="/// Draw additional controls below list control and highlight drop target. ... " />
+            <marker date="1518236758000" expanded="true" signature="38268:40152" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="38295:40148" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="38689:39616" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="38758:39183" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="39510:39610" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="39648:40143" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="39798:40137" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="40156:40241" ph="/// Cache of container heights mapped by control ID. ... " />
+            <marker date="1518236758000" expanded="true" signature="40427:40932" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="40559:40667" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="40667:40799" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="40936:41224" ph="/// Do layout version of list field. ... " />
+            <marker date="1518236758000" expanded="true" signature="41308:41850" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="41562:41736" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="41748:41793" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="41854:42170" ph="/// Draw content for empty list (layout version). ... " />
+            <marker date="1518236758000" expanded="true" signature="42260:42940" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="42526:42694" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="42707:42745" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="42944:43166" ph="/// Draw content for empty list (layout version). ... " />
+            <marker date="1518236758000" expanded="true" signature="43247:43554" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="43558:43653" ph="/// Correct if for some reason one or more styles are missing! ... " />
+            <marker date="1518236758000" expanded="true" signature="43681:44134" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="43950:44130" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="44138:44409" ph="/// Draw layout version of list control. ... " />
+            <marker date="1518236758000" expanded="true" signature="44499:44838" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="44986:45081" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="45208:45298" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="45302:45651" ph="/// Draw list control with absolute positioning. ... " />
+            <marker date="1518236758000" expanded="true" signature="45764:46409" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="46000:46314" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="46182:46286" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="46326:46362" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="46413:46697" ph="/// Draw list control with absolute positioning. ... " />
+            <marker date="1518236758000" expanded="true" signature="46794:46899" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="47050:47150" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="47168:51790" ph="Context Menu" />
+            <marker date="1518236758000" expanded="true" signature="47192:47263" ph="/// Content for &quot;Move to Top&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="47355:47429" ph="/// Content for &quot;Move to Bottom&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="47527:47599" ph="/// Content for &quot;Insert Above&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="47694:47766" ph="/// Content for &quot;Insert Below&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="47861:47930" ph="/// Content for &quot;Duplicate&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="48020:48086" ph="/// Content for &quot;Remove&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="48170:48239" ph="/// Content for &quot;Clear All&quot; command. ... " />
+            <marker date="1518236758000" expanded="true" signature="48679:48902" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="48906:49787" ph="/// Default functionality to handle context command. ... " />
+            <marker date="1518236758000" expanded="true" signature="49959:50268" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="50272:50568" ph="/// Invoked to generate context menu for list item. ... " />
+            <marker date="1518236758000" expanded="true" signature="50675:51776" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="50739:51490" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="51114:51485" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="51517:51772" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="51794:55684" ph="Command Handling" />
+            <marker date="1518236758000" expanded="true" signature="51822:53436" ph="/// Invoked to handle context command. ... " />
+            <marker date="1518236758000" expanded="true" signature="53544:54172" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="53570:54168" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="54176:54735" ph="/// Call to manually perform command. ... " />
+            <marker date="1518236758000" expanded="true" signature="54828:54989" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="54895:54969" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="54993:55517" ph="/// Call to manually perform command. ... " />
+            <marker date="1518236758000" expanded="true" signature="55610:55670" ph="{...}" />
+            <marker date="1518236758000" expanded="false" signature="55688:61299" ph="Methods" />
+            <marker date="1518236758000" expanded="true" signature="55707:55920" ph="/// Calculate height of list control in pixels. ... " />
+            <marker date="1518236758000" expanded="true" signature="55989:56427" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="56431:56710" ph="/// Calculate height of list control in pixels. ... " />
+            <marker date="1518236758000" expanded="true" signature="56779:57088" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="57092:57390" ph="/// Move item from source index to destination index. ... " />
+            <marker date="1518236758000" expanded="true" signature="57482:58019" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="57710:57968" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="58023:58194" ph="/// Add item at end of list and raises the event &lt;see cref=&quot;ItemInserted&quot;/&gt;. ... " />
+            <marker date="1518236758000" expanded="true" signature="58253:58506" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="58510:58752" ph="/// Insert item at specified index and raises the event &lt;see cref=&quot;ItemInserted&quot;/&gt;. ... " />
+            <marker date="1518236758000" expanded="true" signature="58829:59078" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="59082:59318" ph="/// Duplicate specified item and raises the event &lt;see cref=&quot;ItemInserted&quot;/&gt;. ... " />
+            <marker date="1518236758000" expanded="true" signature="59398:59657" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="59661:60109" ph="/// Remove specified item. ... " />
+            <marker date="1518236758000" expanded="true" signature="60186:60434" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="60438:60851" ph="/// Remove all items from list. ... " />
+            <marker date="1518236758000" expanded="true" signature="60911:61285" ph="{...}" />
+            <marker date="1518236758000" expanded="true" signature="61076:61172" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/FX/Rotator.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        <state relative-caret-position="195">
+          <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding>
             <marker date="1552561480506" expanded="true" signature="39:258" ph="{...}" />
             <marker date="1552561480506" expanded="true" signature="82:256" ph="{...}" />
