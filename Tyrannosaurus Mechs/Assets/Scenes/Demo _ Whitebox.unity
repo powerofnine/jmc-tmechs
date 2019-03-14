@@ -90,7 +90,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 112000000, guid: 62431d2c93e51d943bebbf540416c360,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2139,6 +2139,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 134111295}
+  - {fileID: 696199773}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7088,7 +7089,7 @@ GameObject:
   - component: {fileID: 696199770}
   - component: {fileID: 696199769}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TestSwing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7107,7 +7108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSwing: 1
-  radius: 10
+  radius: 20
 --- !u!65 &696199770
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7173,12 +7174,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696199768}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 140.08875, y: 33.45893, z: 143.79271}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22.984528, y: 24.390228, z: 33.88127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 313230200}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697469968
 GameObject:

@@ -78,13 +78,13 @@ namespace TMechs.Player
 
             velocity.y -= 9.8F * Time.deltaTime;
 
-            controller.Move((movement * movementSpeed + Vector3.up * velocity.y) * Time.deltaTime);
+            controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
             GroundedCheck();
             
             if (isGrounded)
             {
                 jumps = 0;
-                velocity.y = -.5F;
+                velocity = Vector3.zero + Vector3.down * .5F;
             }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
