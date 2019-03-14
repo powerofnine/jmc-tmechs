@@ -52,7 +52,9 @@ namespace TMechs.Player
         private void Update()
         {
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-
+            if(animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+                movement = Vector3.zero;
+            
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
 
