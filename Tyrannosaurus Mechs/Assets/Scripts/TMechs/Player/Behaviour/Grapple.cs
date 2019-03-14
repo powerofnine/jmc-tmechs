@@ -12,7 +12,8 @@ namespace TMechs.Player.Behaviour
         private static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
         private static readonly int GRAPPLE_END = Animator.StringToHash("Grapple End");
 
-        public float transitionVelocity = 50F;
+        public float pullSpeed = 50F;
+        public float pullExitDistance = 2F;
         
         private GrappleTarget target;
         private Types grappleType;
@@ -32,17 +33,6 @@ namespace TMechs.Player.Behaviour
             radius = target.radius;
             
             grappleType = target.isSwing ? Types.SWING : Types.PULL;
-
-            switch (grappleType)
-            {
-                case Types.PULL:
-                    animator.SetTrigger(GRAPPLE_END);
-                    break;
-                case Types.SWING:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -52,7 +42,8 @@ namespace TMechs.Player.Behaviour
             switch (grappleType)
             {
                 case Types.PULL:
-                    animator.SetTrigger(GRAPPLE_END);
+                    if (PullPhysics(animator.transform, target.transform))
+                        animator.SetTrigger(GRAPPLE_END);
                     break;
                 case Types.SWING:
                     if (!animator.GetBool(GRAPPLE_DOWN))
@@ -76,6 +67,20 @@ namespace TMechs.Player.Behaviour
             animator.GetComponent<PlayerMovement>().velocity = velocity;
         }
 
+        public bool PullPhysics(Transform ball, Transform anchor)
+        {
+            Vector3 heading = anchor.position - ball.position;
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance;
+
+            if (distance > pullExitDistance)
+                ball.position += direction * pullSpeed * Time.deltaTime;
+            else
+                return true;
+
+            return false;
+        }
+        
         private void SwingPhysics(Transform ball, Transform anchor)
         {
             if (!transitionComplete)
@@ -86,7 +91,7 @@ namespace TMechs.Player.Behaviour
                 
                 if (distance > target.radius)
                 {
-                    ball.position += direction * transitionVelocity * Time.deltaTime;
+                    ball.position += direction * pullSpeed * Time.deltaTime;
 
                     distance = Vector3.Distance(ball.position, anchor.position);
                     if (distance <= target.radius)
