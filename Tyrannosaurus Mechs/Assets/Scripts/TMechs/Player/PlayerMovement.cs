@@ -24,8 +24,6 @@ namespace TMechs.Player
         private float intendedY;
         private float yDampVelocity;
 
-        private new Collider collider;
-        private Rigidbody rb;
         private CharacterController controller;
 
         private int jumps;
@@ -54,8 +52,6 @@ namespace TMechs.Player
 
             intendedY = transform.eulerAngles.y;
 
-            collider = GetComponentInChildren<Collider>();
-            rb = GetComponent<Rigidbody>();
             controller = GetComponent<CharacterController>();
         }
 
