@@ -10,8 +10,7 @@ namespace TMechs.Player.Behaviour
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Player.Instance.Rigidbody.velocity = Player.Instance.Rigidbody.velocity.Isolate(Utility.Axis.Y) + 
-                                                 animator.transform.forward * animator.GetFloat(PLAYER_SPEED) * speedMultiplier;
+            Player.Instance.Controller.Move(animator.transform.forward * animator.GetFloat(PLAYER_SPEED) * speedMultiplier * Time.deltaTime);
         }
     }
 }

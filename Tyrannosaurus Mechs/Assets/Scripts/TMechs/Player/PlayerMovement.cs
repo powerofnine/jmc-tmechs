@@ -11,9 +11,11 @@ namespace TMechs.Player
     {
         public static Rewired.Player Input { get; private set; }
 
-        [Name("AA Camera")] public Transform aaCamera;
+        [Name("AA Camera")]
+        public Transform aaCamera;
 
-        [Header("Forces")] public float movementSpeed = 10F;
+        [Header("Forces")]
+        public float movementSpeed = 10F;
         public float jumpForce = 2 * 9.8F;
 
         public int maxJumps = 1;
@@ -24,12 +26,15 @@ namespace TMechs.Player
 
         private new Collider collider;
         private Rigidbody rb;
+        private CharacterController controller;
 
         private int jumps;
 
         private Animator animator;
         private static readonly int ANIM_PLAYER_SPEED = Animator.StringToHash("Player Speed");
 
+        private float yVelocity;
+        
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -47,14 +52,15 @@ namespace TMechs.Player
 
             collider = GetComponentInChildren<Collider>();
             rb = GetComponent<Rigidbody>();
+            controller = GetComponent<CharacterController>();
         }
 
         private void Update()
         {
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            if(animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 movement = Vector3.zero;
-            
+
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
 
@@ -67,20 +73,23 @@ namespace TMechs.Player
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
-            
-            RaycastHit? ground = GetGround();
-            
-            if (jumps > 0 && ground != null)
+
+            yVelocity -= 9.8F * Time.deltaTime;
+
+            if (controller.isGrounded)
+            {
                 jumps = 0;
+                yVelocity = float.Epsilon;
+            }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                if (ground == null)
+                if (!controller.isGrounded)
                     jumps++;
-                rb.velocity = rb.velocity.Set(jumpForce, Utility.Axis.Y);
+                yVelocity = jumpForce;
             }
-
-            rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
+            
+            controller.Move((movement * movementSpeed + Vector3.up * yVelocity) * Time.deltaTime);
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
@@ -90,7 +99,7 @@ namespace TMechs.Player
                 intendedY = transform.eulerAngles.y;
                 return;
             }
-            
+
             if (Math.Abs(transform.eulerAngles.y - intendedY) > float.Epsilon)
             {
                 float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);

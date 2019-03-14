@@ -9,6 +9,7 @@ namespace TMechs.Player
         public static Player Instance { get; private set; }
         public Animator Animator { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
+        public CharacterController Controller { get; private set; }
 
         [Header("Anchors")]
         public Transform rocketFistAnchor;
@@ -23,6 +24,7 @@ namespace TMechs.Player
 
             Animator = GetComponent<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
+            Controller = GetComponent<CharacterController>();
         }
     }
 }
