@@ -33,8 +33,12 @@ namespace TMechs.Player
         private Animator animator;
         private static readonly int ANIM_PLAYER_SPEED = Animator.StringToHash("Player Speed");
 
+        // Movement
         private float yVelocity;
-        
+        private bool isGrounded;
+        private Vector3 contactPoint;
+        private bool playerControl = true;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -58,7 +62,7 @@ namespace TMechs.Player
         private void Update()
         {
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove") || !playerControl)
                 movement = Vector3.zero;
 
             // Multiply movement by camera quaternion so that it is relative to the camera
@@ -76,7 +80,10 @@ namespace TMechs.Player
 
             yVelocity -= 9.8F * Time.deltaTime;
 
-            if (controller.isGrounded)
+            controller.Move((movement * movementSpeed + Vector3.up * yVelocity) * Time.deltaTime);
+            GroundedCheck();
+            
+            if (isGrounded)
             {
                 jumps = 0;
                 yVelocity = -.5F;
@@ -84,12 +91,10 @@ namespace TMechs.Player
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                if (!controller.isGrounded)
+                if (!isGrounded)
                     jumps++;
                 yVelocity = jumpForce;
             }
-            
-            controller.Move((movement * movementSpeed + Vector3.up * yVelocity) * Time.deltaTime);
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
@@ -113,11 +118,41 @@ namespace TMechs.Player
             }
         }
 
-        private RaycastHit? GetGround()
+        private void GroundedCheck()
         {
-            if (Physics.Raycast(collider.bounds.center, -transform.up, out RaycastHit hit, collider.bounds.extents.y + .1F))
-                return hit;
-            return null;
+            isGrounded = controller.isGrounded;
+            playerControl = true;
+            
+            if (!isGrounded)
+                return;
+
+            bool sliding = false;
+
+            if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
+                if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
+                    return;
+            
+            if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
+                sliding = true;
+
+            playerControl = !sliding;
+            
+            if (!sliding)
+                return;
+
+            isGrounded = false;
+
+            Vector3 normal = hit.normal;
+            Vector3 direction = new Vector3(normal.x, 0F, normal.z);
+            Vector3.OrthoNormalize(ref normal, ref direction);
+
+            intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            controller.Move(direction * movementSpeed * Time.deltaTime);
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            contactPoint = hit.point;
         }
     }
 }
