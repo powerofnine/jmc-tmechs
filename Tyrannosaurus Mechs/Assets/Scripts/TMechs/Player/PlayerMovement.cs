@@ -151,8 +151,6 @@ namespace TMechs.Player
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            contactPoint = hit.point;
-        }
+            => contactPoint = hit.point;
     }
 }
