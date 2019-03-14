@@ -29,10 +29,9 @@ namespace TMechs.Player
         private int jumps;
 
         private Animator animator;
-        private static readonly int ANIM_PLAYER_SPEED = Animator.StringToHash("Player Speed");
 
         // Movement
-        private float yVelocity;
+        public Vector3 velocity;
         private bool isGrounded;
         private Vector3 contactPoint;
         private bool playerControl = true;
@@ -40,7 +39,7 @@ namespace TMechs.Player
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            animator.SetFloat(ANIM_PLAYER_SPEED, movementSpeed);
+            animator.SetFloat(Anim.PLAYER_SPEED, movementSpeed);
 
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
@@ -57,8 +56,11 @@ namespace TMechs.Player
 
         private void Update()
         {
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+                return;
+            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove") || !playerControl)
+            if (!playerControl)
                 movement = Vector3.zero;
 
             // Multiply movement by camera quaternion so that it is relative to the camera
@@ -74,22 +76,22 @@ namespace TMechs.Player
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
 
-            yVelocity -= 9.8F * Time.deltaTime;
+            velocity.y -= 9.8F * Time.deltaTime;
 
-            controller.Move((movement * movementSpeed + Vector3.up * yVelocity) * Time.deltaTime);
+            controller.Move((movement * movementSpeed + Vector3.up * velocity.y) * Time.deltaTime);
             GroundedCheck();
             
             if (isGrounded)
             {
                 jumps = 0;
-                yVelocity = -.5F;
+                velocity.y = -.5F;
             }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
                 if (!isGrounded)
                     jumps++;
-                yVelocity = jumpForce;
+                velocity.y = jumpForce;
             }
             
             EnemyTarget target = TargetController.Instance.GetLock();

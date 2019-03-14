@@ -11,23 +11,18 @@ namespace TMechs.Player.Behaviour
     {
         private static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
         private static readonly int GRAPPLE_END = Animator.StringToHash("Grapple End");
-        private static readonly Type[] DISABLE_TYPES =
-        {
-                typeof(PlayerMovement),
-                typeof(Collider)
-        };
 
+        private GrappleTarget target;
         private Types grappleType;
-
-        private ConfigurableJoint joint;
-        private Rigidbody rb;
+        private Vector3 velocity;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
-            rb = animator.GetComponent<Rigidbody>();
+
+            velocity = Vector3.zero;
             
-            GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
+            target = TargetController.Instance.GetTarget<GrappleTarget>();
             grappleType = target.isSwing ? Types.SWING : Types.PULL;
 
             switch (grappleType)
@@ -36,18 +31,11 @@ namespace TMechs.Player.Behaviour
                     animator.SetTrigger(GRAPPLE_END);
                     break;
                 case Types.SWING:
-                    joint = animator.gameObject.AddComponent<ConfigurableJoint>();
-                    ConfigureJoint(joint);
-                    joint.anchor = animator.transform.InverseTransformPoint(target.transform.position);
 
-                    rb.constraints = RigidbodyConstraints.None;
-                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            SetDisableTypeState(animator, false);
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -60,9 +48,14 @@ namespace TMechs.Player.Behaviour
                     animator.SetTrigger(GRAPPLE_END);
                     break;
                 case Types.SWING:
-                    if(!animator.GetBool(GRAPPLE_DOWN))
+                    if (!animator.GetBool(GRAPPLE_DOWN))
+                    {
                         animator.SetTrigger(GRAPPLE_END);
-                    
+                        return;
+                    }
+
+                    SwingPhysics(animator.transform, target.transform);
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,44 +65,34 @@ namespace TMechs.Player.Behaviour
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
-            
-            if(joint)
-                Destroy(joint);
 
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-            
-            SetDisableTypeState(animator, true);
+            animator.GetComponent<PlayerMovement>().velocity = velocity;
         }
 
-        private void SetDisableTypeState(Component animator, bool enabled)
+        private void SwingPhysics(Transform ball, Transform anchor)
         {
-            foreach (Component c in DISABLE_TYPES.Select(animator.GetComponent))
-            {
-                switch (c)
-                {
-                    case UnityEngine.Behaviour behaviour:
-                        behaviour.enabled = enabled;
-                        break;
-                    case Collider collider:
-                        collider.enabled = enabled;
-                        break;
-                }
-            }
-        }
+            velocity.y -= 9.9F * Time.deltaTime;
 
-        // TODO: load joint from preset (will need custom preset loader cause presets are editor-only for some stupid reason
-        private static void ConfigureJoint(ConfigurableJoint joint)
-        {
-            joint.axis = Vector3.one;
-            
-            joint.xMotion = ConfigurableJointMotion.Locked;
-            joint.yMotion = ConfigurableJointMotion.Locked;
-            joint.zMotion = ConfigurableJointMotion.Locked;
-            joint.angularXMotion = ConfigurableJointMotion.Free;
-            joint.angularYMotion = ConfigurableJointMotion.Free;
-            joint.angularZMotion = ConfigurableJointMotion.Free;
+            Vector3 tensionDir = (anchor.position - ball.position).normalized;
+            Vector3 sideDir = (Quaternion.Euler(0F, 90F, 0F) * tensionDir).Remove(Utility.Axis.Y);
+            sideDir.Normalize();
+
+            float incline = Vector3.Angle(ball.position - anchor.position, Vector3.down);
+
+            float tensionForce = 9.81F * Mathf.Cos(incline * Mathf.Deg2Rad);
+            float centripetalForce = Mathf.Pow(velocity.magnitude, 2) / target.radius;
+            tensionForce += centripetalForce;
+
+            velocity += tensionDir * tensionForce * Time.deltaTime;
+
+            ball.position = ClampPosition(anchor.position, ball.position + velocity * Time.deltaTime);
         }
         
+        private Vector3 ClampPosition(Vector3 anchorPos, Vector3 newPos)
+        {
+            return anchorPos + target.radius * Vector3.Normalize(newPos - anchorPos);
+        }
+
         private enum Types
         {
             PULL,

@@ -40,13 +40,12 @@ public class TestPendulum : MonoBehaviour
 
         velocity += tensionDir * tensionForce * Time.deltaTime;
 
-        transform.position = GetPointOnLine(parent.position, transform.position + velocity * Time.deltaTime, radius);
-        Debug.Log(velocity);
+        transform.position = ClampPosition(transform.position + velocity * Time.deltaTime);
     }
 
-    private Vector3 GetPointOnLine(Vector3 start, Vector3 end, float distanceFromStart)
+    private Vector3 ClampPosition(Vector3 newPos)
     {
-        return start + (distanceFromStart * Vector3.Normalize(end - start));
+        return parent.position + radius * Vector3.Normalize(newPos - parent.position);
     }
     
     private void OnDrawGizmos()
