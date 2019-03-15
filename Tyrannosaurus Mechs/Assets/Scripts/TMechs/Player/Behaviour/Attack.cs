@@ -27,8 +27,6 @@ namespace TMechs.Player.Behaviour
             base.OnStateExit(animator, stateInfo, layerIndex);
 
             combat.SetHitbox(null, 0F);
-            
-            Debug.Log("Exit " + hitboxId);
         }
     }
 }
