@@ -57,8 +57,11 @@ namespace TMechs.Player
         private void Update()
         {
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+            {
+                animator.SetFloat(Anim.MOVE_DELTA, 0F);
                 return;
-            
+            }
+
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
             if (!playerControl)
                 movement = Vector3.zero;
@@ -78,7 +81,12 @@ namespace TMechs.Player
 
             velocity.y -= 9.8F * Time.deltaTime;
 
+            if (Input.GetButton(ANGERY))
+                movement *= 2F;
+
+            
             controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
             GroundedCheck();
             
             if (isGrounded)

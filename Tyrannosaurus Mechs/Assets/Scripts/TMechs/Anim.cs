@@ -13,5 +13,6 @@ namespace TMechs
         public static readonly int GRAPPLE = Animator.StringToHash("Grapple");
         public static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
         public static readonly int PICKUP_TARGET_TYPE = Animator.StringToHash("Pickup Target Type");
+        public static readonly int MOVE_DELTA = Animator.StringToHash("MoveDelta");
     }
 }

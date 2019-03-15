@@ -50,6 +50,9 @@ namespace TMechs.Player
             animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
             animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
             
+            if(animator.GetBool(Anim.ANGERY) != Input.GetButton(ANGERY))
+                animator.ResetTrigger(Anim.ATTACK);
+            
             animator.SetBool(Anim.ANGERY, Input.GetButton(ANGERY));
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
             animator.SetBool(Anim.GRAPPLE, Input.GetButtonDown(GRAPPLE));
