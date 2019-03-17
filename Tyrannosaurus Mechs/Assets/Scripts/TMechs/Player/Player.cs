@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TMechs.Environment.Targets;
+using UnityEngine;
 
 namespace TMechs.Player
 {
@@ -7,9 +9,14 @@ namespace TMechs.Player
         public static Player Instance { get; private set; }
         public Animator Animator { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
+        public CharacterController Controller { get; private set; }
 
         [Header("Anchors")]
         public Transform rocketFistAnchor;
+        public Transform pickupAnchor;
+
+        [NonSerialized]
+        public EnemyTarget pickedUp;
 
         private void Awake()
         {
@@ -17,6 +24,7 @@ namespace TMechs.Player
 
             Animator = GetComponent<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
+            Controller = GetComponent<CharacterController>();
         }
     }
 }

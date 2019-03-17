@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMechs.Enemy;
 using TMechs.Environment.Targets;
 using TMechs.Player;
 using UnityEngine;
@@ -9,14 +10,12 @@ namespace TMechs.Entity
     {
         public float maxTime = 5F;
         public float speed = 10F;
-        public float rotateDamp = .25F;
+        public float damage = 10F;
         
         private Transform anchor;
         private Transform target;
 
         private bool isReturning;
-
-        private Vector3 dampVelocity;
 
         private bool done;
         
@@ -35,30 +34,23 @@ namespace TMechs.Entity
         {
             if (done)
                 return;
-            
-            Transform target = this.target;
-            if (isReturning)
-                target = anchor;
+
+            Transform target = GetTarget();
 
             Vector3 relativePos = target.position - transform.position;
             if (isReturning)
                 relativePos = -relativePos;
             Quaternion rotation = transform.rotation;
             rotation.SetLookRotation(relativePos);
-            Vector3 rot = rotation.eulerAngles;
+            transform.eulerAngles = rotation.eulerAngles;
             
-            transform.eulerAngles = transform.eulerAngles.SmoothDampAngle(rot, ref dampVelocity, rotateDamp);
-
             transform.Translate(Vector3.forward * speed * Time.deltaTime * (isReturning ? -1 : 1));
 
             maxTime -= Time.deltaTime;
             if (maxTime <= 0F)
-            {
                 isReturning = true;
-                rotateDamp = 0F;
-            }
 
-            if (Vector3.Distance(transform.position, target.position) < 1F)
+            if (Vector3.Distance(transform.position, target.position) < 2F)
             {
                 transform.position = target.position;
                 if (!isReturning)
@@ -78,12 +70,12 @@ namespace TMechs.Entity
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
             
-            while (progress < 1F)
+            while (progress <= 1F)
             {
-                progress += Time.deltaTime / 2F;
+                progress += Time.deltaTime * 2F;
 
                 transform.position = Vector3.Lerp(startPos, target.position, progress);
-                transform.rotation = Quaternion.Lerp(startRot, target.rotation, progress);
+                transform.rotation = Quaternion.Slerp(startRot, target.rotation, progress);
 
                 yield return null;
             }
@@ -92,11 +84,19 @@ namespace TMechs.Entity
             Destroy(gameObject);
         }
 
+        private Transform GetTarget() => isReturning ? anchor : target;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
                 return;
-            isReturning = true;
+
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if(enemy)
+                enemy.Damage(damage);
+            
+            if(other.transform == GetTarget())
+                isReturning = true;
         }
     }
 }

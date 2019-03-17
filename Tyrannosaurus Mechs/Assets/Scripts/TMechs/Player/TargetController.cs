@@ -11,6 +11,9 @@ namespace TMechs.Player
 
         public Bounds box;
 
+        [HideInInspector]
+        public bool isStopped = false;
+        
         private EnemyTarget currentTarget;
         private readonly HashSet<BaseTarget> targetsInRange = new HashSet<BaseTarget>();
 
@@ -50,6 +53,9 @@ namespace TMechs.Player
 
         public BaseTarget GetTarget(System.Type type = null)
         {
+            if (isStopped)
+                return null;
+            
             if (currentTarget && targetsInRange.Contains(currentTarget))
                 return currentTarget;
             currentTarget = null;
@@ -62,7 +68,16 @@ namespace TMechs.Player
                 .OrderByDescending(x => x.GetPriority())
                 .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
 
-            return targets.FirstOrDefault();
+            // Raycast to ensure we can see the target
+            return targets.FirstOrDefault(x =>
+            {
+                Vector3 heading = x.transform.position - transform.position;
+                float distance = heading.magnitude;
+
+                bool wasHit = Physics.Raycast(Player.Instance.Rigidbody.worldCenterOfMass, heading / distance, out RaycastHit hit, distance);
+                
+                return !wasHit || (hit.rigidbody && hit.rigidbody.transform == x.transform) || hit.transform == x.transform;
+            });;
         }
 
         public T GetTarget<T>() where T : BaseTarget
@@ -72,6 +87,9 @@ namespace TMechs.Player
 
         public EnemyTarget GetLock()
         {
+            if (isStopped)
+                return null;
+            
             if (!targetsInRange.Contains(currentTarget))
                 currentTarget = null;
 
@@ -80,7 +98,7 @@ namespace TMechs.Player
 
         public EnemyTarget HardLock()
         {
-            currentTarget = (EnemyTarget) GetTarget<EnemyTarget>();
+            currentTarget = GetTarget<EnemyTarget>();
             return currentTarget;
         }
 

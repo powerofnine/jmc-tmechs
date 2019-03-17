@@ -14,6 +14,11 @@ namespace TMechs.Player.Behaviour
             
             animator.transform.Find("T_MechsProto_RocketFist").gameObject.SetActive(false);
         }
+        
+        private void RocketFistBegin()
+        {
+            
+        }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
         {

@@ -11,9 +11,11 @@ namespace TMechs.Player
     {
         public static Rewired.Player Input { get; private set; }
 
-        [Name("AA Camera")] public Transform aaCamera;
+        [Name("AA Camera")]
+        public Transform aaCamera;
 
-        [Header("Forces")] public float movementSpeed = 10F;
+        [Header("Forces")]
+        public float movementSpeed = 10F;
         public float jumpForce = 2 * 9.8F;
 
         public int maxJumps = 1;
@@ -22,18 +24,22 @@ namespace TMechs.Player
         private float intendedY;
         private float yDampVelocity;
 
-        private new Collider collider;
-        private Rigidbody rb;
+        private CharacterController controller;
 
         private int jumps;
 
         private Animator animator;
-        private static readonly int ANIM_PLAYER_SPEED = Animator.StringToHash("Player Speed");
+
+        // Movement
+        public Vector3 velocity;
+        private bool isGrounded;
+        private Vector3 contactPoint;
+        private bool playerControl = true;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            animator.SetFloat(ANIM_PLAYER_SPEED, movementSpeed);
+            animator.SetFloat(Anim.PLAYER_SPEED, movementSpeed);
 
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
@@ -45,13 +51,20 @@ namespace TMechs.Player
 
             intendedY = transform.eulerAngles.y;
 
-            collider = GetComponentInChildren<Collider>();
-            rb = GetComponent<Rigidbody>();
+            controller = GetComponent<CharacterController>();
         }
 
         private void Update()
         {
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+            {
+                animator.SetFloat(Anim.MOVE_DELTA, 0F);
+                return;
+            }
+
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
+            if (!playerControl)
+                movement = Vector3.zero;
 
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
@@ -65,20 +78,29 @@ namespace TMechs.Player
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
+
+            velocity.y -= 9.8F * Time.deltaTime;
+
+            if (Input.GetButton(ANGERY))
+                movement *= 2F;
+
             
-            RaycastHit? ground = GetGround();
+            controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
+            GroundedCheck();
             
-            if (jumps > 0 && ground != null)
+            if (isGrounded)
+            {
                 jumps = 0;
+                velocity = Vector3.zero + Vector3.down * .5F;
+            }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                if (ground == null)
+                if (!isGrounded)
                     jumps++;
-                rb.velocity = rb.velocity.Set(jumpForce, Utility.Axis.Y);
+                velocity.y = jumpForce;
             }
-
-            rb.velocity = rb.velocity.Isolate(Utility.Axis.Y) + movement * movementSpeed;
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
@@ -88,7 +110,7 @@ namespace TMechs.Player
                 intendedY = transform.eulerAngles.y;
                 return;
             }
-            
+
             if (Math.Abs(transform.eulerAngles.y - intendedY) > float.Epsilon)
             {
                 float inRot = Mathf.SmoothDampAngle(transform.eulerAngles.y, intendedY, ref yDampVelocity, .1F);
@@ -102,11 +124,39 @@ namespace TMechs.Player
             }
         }
 
-        private RaycastHit? GetGround()
+        private void GroundedCheck()
         {
-            if (Physics.Raycast(collider.bounds.center, -transform.up, out RaycastHit hit, collider.bounds.extents.y + .1F))
-                return hit;
-            return null;
+            isGrounded = controller.isGrounded;
+            playerControl = true;
+            
+            if (!isGrounded)
+                return;
+
+            bool sliding = false;
+
+            if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
+                if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
+                    return;
+            
+            if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
+                sliding = true;
+
+            playerControl = !sliding;
+            
+            if (!sliding)
+                return;
+
+            isGrounded = false;
+
+            Vector3 normal = hit.normal;
+            Vector3 direction = new Vector3(normal.x, 0F, normal.z);
+            Vector3.OrthoNormalize(ref normal, ref direction);
+
+            intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            controller.Move(direction * movementSpeed * Time.deltaTime);
         }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+            => contactPoint = hit.point;
     }
 }
