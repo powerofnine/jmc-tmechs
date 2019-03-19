@@ -91,9 +91,9 @@ namespace TMechs.Entity
             if (other.CompareTag("Player"))
                 return;
 
-            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-            if(enemy)
-                enemy.Damage(damage);
+            EntityHealth entity = other.GetComponent<EntityHealth>();
+            if(entity)
+                entity.Damage(damage);
             
             if(other.transform == GetTarget())
                 isReturning = true;

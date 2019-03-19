@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMechs.Enemy;
+using TMechs.Entity;
 using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
@@ -71,12 +72,12 @@ namespace TMechs.Player
                 animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
         }
 
-        public void OnHitboxTrigger(PlayerHitBox hitbox, EnemyHealth enemy)
+        public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)
         {
             if (hitbox != combat.activeHitbox)
                 return;
             
-            enemy.Damage(combat.damage);
+            entity.Damage(combat.damage);
         }
 
         public void SetHitbox(string hitbox, float damage)

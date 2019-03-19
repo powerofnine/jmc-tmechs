@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace TMechs.Enemy
+namespace TMechs.Entity
 {
-    public class EnemyHealth : MonoBehaviour
+    public class EntityHealth : MonoBehaviour
     {
         public float Health
         {
@@ -17,11 +17,16 @@ namespace TMechs.Enemy
         public float maxHealth;
 
         private float health = 1F;
+        private bool isDead = false;
 
         private void UpdateHealth()
         {
-            if(health <= 0F)
+            if (health <= 0F && !isDead)
+            {
+                isDead = true;
+                SendMessage("OnDied", SendMessageOptions.DontRequireReceiver);
                 Destroy(gameObject);
+            }
         }
 
         public void Damage(float damage)

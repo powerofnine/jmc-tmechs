@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4024953151756316420}
   m_Layer: 0
   m_Name: TMechs
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketFistAnchor: {fileID: 6614788874366341524}
-  pickupAnchor: {fileID: 0}
+  pickupAnchor: {fileID: 8548035342049863800}
 --- !u!114 &5774778910163799640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +537,21 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 8548035342049863952}
+    - target: {fileID: 1438288217173197922, guid: 4f940c44ea835f647a4acd60bff9f8fb,
+        type: 3}
+      propertyPath: aaRig
+      value: 
+      objectReference: {fileID: 5996704746580931528}
+    - target: {fileID: 1438288217173197922, guid: 4f940c44ea835f647a4acd60bff9f8fb,
+        type: 3}
+      propertyPath: verticalRig
+      value: 
+      objectReference: {fileID: 5996704746301999360}
+    - target: {fileID: 1438288216028189410, guid: 4f940c44ea835f647a4acd60bff9f8fb,
+        type: 3}
+      propertyPath: cameraRig
+      value: 
+      objectReference: {fileID: 5996704746301999360}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f940c44ea835f647a4acd60bff9f8fb, type: 3}
 --- !u!4 &5996704745327221833 stripped
@@ -548,6 +563,12 @@ Transform:
 --- !u!4 &5996704746580931528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1438288215739411436, guid: 4f940c44ea835f647a4acd60bff9f8fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4669459526013802532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5996704746301999360 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1438288215997354276, guid: 4f940c44ea835f647a4acd60bff9f8fb,
     type: 3}
   m_PrefabInstance: {fileID: 4669459526013802532}
   m_PrefabAsset: {fileID: 0}
