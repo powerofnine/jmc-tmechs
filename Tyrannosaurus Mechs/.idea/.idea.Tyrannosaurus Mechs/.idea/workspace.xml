@@ -4,11 +4,6 @@
     <list default="true" id="c1656afc-ab2f-4e5a-a6ab-2693ccd2f8bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/EnemyHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Entity/EntityHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/EnemyHealth.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Entity/EntityHealth.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Entity/RocketFist.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Entity/RocketFist.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCombat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCombat.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerHitBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerHitBox.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,31 +13,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCombat.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="58" column="12" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="12" />
-              <folding>
-                <marker date="1552975329003" expanded="false" signature="6:164" ph="..." />
-                <marker date="1552975329003" expanded="true" signature="189:3812" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="278:3810" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="631:1167" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="776:1157" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="843:1025" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="1198:2643" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="1338:1558" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="2367:2551" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="2722:2868" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="2928:3496" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="3207:3337" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="3541:3669" ph="{...}" />
-                <marker date="1552975329003" expanded="true" signature="3705:3804" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/TargetController.cs">
           <provider selected="true" editor-type-id="text-editor">
@@ -121,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InstantiateOnDie.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
-              <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+              <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
               <folding>
                 <marker date="1552976390106" expanded="true" signature="48:1131" ph="{...}" />
                 <marker date="1552976390106" expanded="true" signature="100:1129" ph="{...}" />
@@ -132,15 +102,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/KillOnEmpty.cs">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiComponent.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+              <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
               <folding>
-                <marker date="1552976683505" expanded="true" signature="48:242" ph="{...}" />
-                <marker date="1552976683505" expanded="true" signature="95:240" ph="{...}" />
-                <marker date="1552976683505" expanded="true" signature="135:234" ph="{...}" />
+                <marker date="1552982275107" expanded="true" signature="45:236" ph="{...}" />
+                <marker date="1552982275107" expanded="true" signature="101:234" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+              <folding>
+                <marker date="1552982324869" expanded="true" signature="6:37" ph="..." />
+                <marker date="1552982324869" expanded="true" signature="64:605" ph="{...}" />
+                <marker date="1552982324869" expanded="true" signature="109:603" ph="{...}" />
+                <marker date="1552982324869" expanded="true" signature="195:314" ph="{...}" />
+                <marker date="1552982324869" expanded="true" signature="345:597" ph="{...}" />
+                <marker date="1552982324869" expanded="true" signature="413:587" ph="{...}" />
+                <marker date="1552982324869" expanded="true" signature="471:573" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -225,6 +212,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerHitBox.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/TargetController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31353B3F-2D2E-4345-95CB-FE07FBEC4072/d7/62c5665c/Rigidbody.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InstantiateOnDie.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/EnemyTarget.cs" root0="FORCE_HIGHLIGHTING" />
@@ -237,6 +225,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F14757B7-7D9F-44E8-90FC-E2545BCA0FE5/26/ac569a45/StateMachineBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiComponent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/KillOnEmpty.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/CameraZoom.cs" root0="FORCE_HIGHLIGHTING" />
@@ -288,6 +277,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerHitBox.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InstantiateOnDie.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/KillOnEmpty.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AIComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiManager.cs" />
       </list>
     </option>
   </component>
@@ -442,12 +434,12 @@
       <workItem from="1552607811029" duration="2768000" />
       <workItem from="1552654011713" duration="630000" />
       <workItem from="1552815762582" duration="8000" />
-      <workItem from="1552975167783" duration="1515000" />
+      <workItem from="1552975167783" duration="2901000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124279000" />
+    <option name="totallyTimeSpent" value="125665000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -460,7 +452,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1913646" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -518,8 +509,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C8EA872B-C6C3-4547-B28C-904F5E42F85A/c3/c9bab14c/Type.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Scenes/Upright.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Presets/Scripting/SwingJoint.preset" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/561ADD7E-4817-44F1-929F-ACB5D2845B32/24/55c87bea/Preset.cs" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DC10DD4A-D9F3-4AA9-8E69-1E49A48C7111/65/2bee597d/TextAsset.cs" />
@@ -868,10 +857,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/KillOnEmpty.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+          <folding>
+            <marker date="1552976683505" expanded="true" signature="48:242" ph="{...}" />
+            <marker date="1552976683505" expanded="true" signature="95:240" ph="{...}" />
+            <marker date="1552976683505" expanded="true" signature="135:234" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InstantiateOnDie.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
-          <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
           <folding>
             <marker date="1552976390106" expanded="true" signature="48:1131" ph="{...}" />
             <marker date="1552976390106" expanded="true" signature="100:1129" ph="{...}" />
@@ -881,14 +882,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/KillOnEmpty.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiComponent.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+          <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
           <folding>
-            <marker date="1552976683505" expanded="true" signature="48:242" ph="{...}" />
-            <marker date="1552976683505" expanded="true" signature="95:240" ph="{...}" />
-            <marker date="1552976683505" expanded="true" signature="135:234" ph="{...}" />
+            <marker date="1552982275107" expanded="true" signature="45:236" ph="{...}" />
+            <marker date="1552982275107" expanded="true" signature="101:234" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/AI/AiManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <folding>
+            <marker date="1552982324869" expanded="true" signature="6:37" ph="..." />
+            <marker date="1552982324869" expanded="true" signature="64:605" ph="{...}" />
+            <marker date="1552982324869" expanded="true" signature="109:603" ph="{...}" />
+            <marker date="1552982324869" expanded="true" signature="195:314" ph="{...}" />
+            <marker date="1552982324869" expanded="true" signature="345:597" ph="{...}" />
+            <marker date="1552982324869" expanded="true" signature="413:587" ph="{...}" />
+            <marker date="1552982324869" expanded="true" signature="471:573" ph="{...}" />
           </folding>
         </state>
       </provider>
