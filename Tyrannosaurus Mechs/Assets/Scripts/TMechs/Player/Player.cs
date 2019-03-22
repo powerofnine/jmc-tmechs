@@ -11,12 +11,26 @@ namespace TMechs.Player
         public Rigidbody Rigidbody { get; private set; }
         public CharacterController Controller { get; private set; }
 
+        public int maxHealth;
+
         [Header("Anchors")]
         public Transform rocketFistAnchor;
         public Transform pickupAnchor;
 
         [NonSerialized]
         public EnemyTarget pickedUp;
+
+        public float Health
+        {
+            get => health;
+            set
+            {
+                health = value;
+                UpdateHealth();
+            }
+        }
+
+        private float health = 1F;
 
         private void Awake()
         {
@@ -25,6 +39,13 @@ namespace TMechs.Player
             Animator = GetComponent<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
+        }
+
+        public void Damage(int damage)
+            => Health -= (float) damage / maxHealth;
+
+        private void UpdateHealth()
+        {
         }
     }
 }
