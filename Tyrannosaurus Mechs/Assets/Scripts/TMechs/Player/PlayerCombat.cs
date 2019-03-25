@@ -16,6 +16,7 @@ namespace TMechs.Player
         public float rocketFistDamageBase;
         public float rocketFistDamageMax;
         public float rocketFistChargeMax;
+        public float rocketFistRechargeSpeedMultiplier = 2F;
         [NonSerialized]
         public float rocketFistCharge;
 
@@ -84,7 +85,7 @@ namespace TMechs.Player
 
             int stateHash = animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).shortNameHash;
             if (!Anim.RAINBOW.ContainsKey(stateHash) || !Anim.RAINBOW[stateHash].StartsWith("Rocket Fist"))
-                rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime, 0F, rocketFistChargeMax);
+                rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime * rocketFistRechargeSpeedMultiplier, 0F, rocketFistChargeMax);
         }
 
         public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)
