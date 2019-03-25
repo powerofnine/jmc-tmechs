@@ -10,7 +10,8 @@ namespace TMechs.Player.Behaviour
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            Instantiate(template);
+            Entity.RocketFist rf = Instantiate(template).GetComponent<Entity.RocketFist>();
+            rf.damage = Player.Instance.Combat.RocketFistDamage;
             
             animator.transform.Find("T_MechsProto_RocketFist").gameObject.SetActive(false);
         }

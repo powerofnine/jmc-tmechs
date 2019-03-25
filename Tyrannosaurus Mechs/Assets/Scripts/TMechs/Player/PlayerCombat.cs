@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using TMechs.Enemy;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
 using UnityEngine;
@@ -11,6 +11,15 @@ namespace TMechs.Player
     public class PlayerCombat : MonoBehaviour
     {
         public float grappleRadius = 10F;
+
+        [Header("Rocket Fist")]
+        public float rocketFistDamageBase;
+        public float rocketFistDamageMax;
+        public float rocketFistChargeMax;
+        [NonSerialized]
+        public float rocketFistCharge;
+
+        public float RocketFistDamage => Mathf.Lerp(rocketFistDamageBase, rocketFistDamageMax, rocketFistCharge / rocketFistChargeMax);
         
         private CombatState combat;
         
@@ -58,6 +67,8 @@ namespace TMechs.Player
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
             animator.SetBool(Anim.GRAPPLE, Input.GetButtonDown(GRAPPLE));
             animator.SetBool(Anim.GRAPPLE_DOWN, Input.GetButton(GRAPPLE));
+            animator.SetBool(Anim.ATTACK_HELD, Input.GetButton(ATTACK));
+            animator.SetBool(Anim.ROCKET_READY, rocketFistCharge <= 0F);
             
             if(Input.GetButtonDown(ATTACK))
                 animator.SetTrigger(Anim.ATTACK);
@@ -70,6 +81,10 @@ namespace TMechs.Player
             }
             else
                 animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
+
+            int stateHash = animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).shortNameHash;
+            if (!Anim.RAINBOW.ContainsKey(stateHash) || !Anim.RAINBOW[stateHash].StartsWith("Rocket Fist"))
+                rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime, 0F, rocketFistChargeMax);
         }
 
         public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)

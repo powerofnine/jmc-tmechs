@@ -10,6 +10,7 @@ namespace TMechs.Player
         public Animator Animator { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public CharacterController Controller { get; private set; }
+        public PlayerCombat Combat { get; private set; }
 
         public int maxHealth;
 
@@ -39,6 +40,7 @@ namespace TMechs.Player
             Animator = GetComponent<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
+            Combat = GetComponent<PlayerCombat>();
         }
 
         public void Damage(int damage)

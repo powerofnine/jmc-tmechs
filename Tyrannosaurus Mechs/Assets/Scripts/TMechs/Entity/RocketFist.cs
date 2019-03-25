@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMechs.Enemy;
 using TMechs.Environment.Targets;
 using TMechs.Player;
@@ -10,6 +11,7 @@ namespace TMechs.Entity
     {
         public float maxTime = 5F;
         public float speed = 10F;
+        [NonSerialized]
         public float damage = 10F;
         
         private Transform anchor;
@@ -19,8 +21,6 @@ namespace TMechs.Entity
 
         private bool done;
         
-        private static readonly int ANIM_RETURN = Animator.StringToHash("Rocket Fist Return");
-
         private void Awake()
         {
             anchor = Player.Player.Instance.rocketFistAnchor;
@@ -80,7 +80,7 @@ namespace TMechs.Entity
                 yield return null;
             }
             
-            Player.Player.Instance.Animator.SetTrigger(ANIM_RETURN);
+            Player.Player.Instance.Animator.SetTrigger(Anim.ROCKET_RETURN);
             Destroy(gameObject);
         }
 
