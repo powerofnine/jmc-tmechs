@@ -15,7 +15,8 @@ namespace TMechs.Entity
         public float damage = 10F;
         
         private Transform anchor;
-        private Transform target;
+        [HideInInspector]
+        public Transform target;
 
         private bool isReturning;
 
@@ -24,7 +25,6 @@ namespace TMechs.Entity
         private void Awake()
         {
             anchor = Player.Player.Instance.rocketFistAnchor;
-            target = TargetController.Instance.GetTarget<EnemyTarget>().transform;
 
             transform.position = anchor.position;
             transform.forward = anchor.forward;
