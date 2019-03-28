@@ -35,6 +35,9 @@ namespace TMechs.Entity
             if (done)
                 return;
 
+            if (!this.target)
+                isReturning = true;
+
             Transform target = GetTarget();
 
             Vector3 relativePos = target.position - transform.position;
