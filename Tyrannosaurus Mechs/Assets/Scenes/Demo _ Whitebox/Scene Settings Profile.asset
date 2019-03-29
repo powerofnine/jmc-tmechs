@@ -88,7 +88,7 @@ MonoBehaviour:
     m_Value: 2
   fogType:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 3
 --- !u!114 &114756782827381086
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -151,13 +151,13 @@ MonoBehaviour:
     max: 5
   skyTint:
     m_OverrideState: 1
-    m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_Value: {r: 1, g: 0.97503275, b: 0.9386792, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
   groundColor:
     m_OverrideState: 1
-    m_Value: {r: 0.369, g: 0.349, b: 0.341, a: 1}
+    m_Value: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
@@ -193,7 +193,7 @@ MonoBehaviour:
     max: 1
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 5000
+    m_Value: 30
     min: 0
   mipFogMaxMip:
     m_OverrideState: 0
@@ -210,24 +210,24 @@ MonoBehaviour:
     min: 0
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 1, g: 0.8676494, b: 0.8254717, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 1000000
+    m_Value: 200
     min: 1
   baseHeight:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 50
   meanHeight:
-    m_OverrideState: 1
-    m_Value: 10
+    m_OverrideState: 0
+    m_Value: 100
     min: 1
   anisotropy:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.68
     min: -1
     max: 1
   globalLightProbeDimmer:
