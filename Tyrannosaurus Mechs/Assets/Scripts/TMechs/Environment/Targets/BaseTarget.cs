@@ -6,8 +6,8 @@ namespace TMechs.Environment.Targets
     public abstract class BaseTarget : MonoBehaviour
     {
         private Transform player;
-        
-        private float lastPing = -1337F;
+
+        private byte lastPing;
         private bool hardLock;
 
         private Transform lookAnchor;
@@ -45,7 +45,7 @@ namespace TMechs.Environment.Targets
 
         private void LateUpdate()
         {
-            bool shouldShow = Time.time - lastPing < 1;
+            bool shouldShow = lastPing > 0;
             if (shouldShow != target.gameObject.activeSelf)
                 target.gameObject.SetActive(shouldShow);
             target.color = hardLock ? GetHardLockColor() : GetColor();
@@ -54,12 +54,15 @@ namespace TMechs.Environment.Targets
                 lookAnchor.transform.LookAt(player);
             
             target.transform.Rotate(0F, 0F, 25F * Time.deltaTime);
+
+            if(shouldShow)
+                lastPing--;
         }
 
         public void Ping(bool hardLock = false)
         {
             this.hardLock = hardLock;
-            lastPing = Time.time;
+            lastPing = 2;
         }
     }
 }
