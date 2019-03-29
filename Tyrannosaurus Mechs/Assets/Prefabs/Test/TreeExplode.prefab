@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2256042476297922944}
   - component: {fileID: 4284787237465530714}
   - component: {fileID: 5405223022762848661}
+  - component: {fileID: 8261774613162201168}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -122,6 +123,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: 1
+--- !u!208 &8261774613162201168
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2690379930840557461}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5175903057437798835
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +153,7 @@ GameObject:
   - component: {fileID: 4307559513465726625}
   - component: {fileID: 6067830322892641183}
   - component: {fileID: 2999426247010817139}
+  - component: {fileID: 7462150086546716955}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -244,6 +262,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: 1
+--- !u!208 &7462150086546716955
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5175903057437798835}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5707353229832929719
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +352,7 @@ GameObject:
   - component: {fileID: 2106040476901969342}
   - component: {fileID: 4535185378699005520}
   - component: {fileID: 1826601347644904765}
+  - component: {fileID: 1275148030585876485}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -426,3 +461,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: 1
+--- !u!208 &1275148030585876485
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603759746998959381}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

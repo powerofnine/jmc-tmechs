@@ -208,7 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3585cc5b8ffd6ba409343cebdc08551f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 10
+  throwForce: 40
+  launchAngle: 45
 --- !u!114 &114699641055671460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,7 +235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5362e48d05b2a469869e0f6981f048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullSpeed: 50
+  pullSpeedMin: 50
+  pullSpeedAcceleration: 9.81
+  pullSpeedMax: 100
   pullExitDistance: 2
 --- !u!114 &114936051976331834
 MonoBehaviour:
