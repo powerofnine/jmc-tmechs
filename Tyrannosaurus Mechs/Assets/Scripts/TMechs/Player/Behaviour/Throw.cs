@@ -20,13 +20,14 @@ namespace TMechs.Player.Behaviour
             grabbed.HandleThrow();
             grabbed.transform.SetParent(null);
 
-            if (!target)
-            {
-                grabbed.GetComponent<Rigidbody>().velocity = (animator.transform.forward + animator.transform.up) * throwForce;
-                return;
-            }
+            Vector3 ballisticVelocity;
 
-            grabbed.GetComponent<Rigidbody>().velocity = BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
+            if (target)
+                ballisticVelocity = BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
+            else
+                ballisticVelocity = BallisticVelocity(grabbed.transform.position, animator.transform.position + animator.transform.forward * throwForce, launchAngle);
+            
+            grabbed.GetComponent<Rigidbody>().velocity = ballisticVelocity;
         }
 
         private Vector3 BallisticVelocity(Vector3 source, Vector3 target, float angle)

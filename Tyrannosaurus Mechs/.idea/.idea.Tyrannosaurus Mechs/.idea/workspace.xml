@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1656afc-ab2f-4e5a-a6ab-2693ccd2f8bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/BaseTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/BaseTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/BaseTarget.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="58" column="16" lean-forward="true" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+            <state relative-caret-position="150">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <marker date="1553825774012" expanded="false" signature="6:39" ph="..." />
                 <marker date="1553825774012" expanded="true" signature="77:1978" ph="{...}" />
@@ -100,18 +100,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+            <state relative-caret-position="390">
+              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
               <folding>
-                <marker date="1553825231010" expanded="false" signature="6:52" ph="..." />
-                <marker date="1553825231010" expanded="true" signature="87:1666" ph="{...}" />
-                <marker date="1553825231010" expanded="true" signature="136:1664" ph="{...}" />
-                <marker date="1553825231010" expanded="true" signature="334:1055" ph="{...}" />
-                <marker date="1553825231010" expanded="true" signature="720:900" ph="{...}" />
-                <marker date="1553825231010" expanded="true" signature="1143:1658" ph="{...}" />
+                <marker date="1553826180316" expanded="false" signature="6:52" ph="..." />
+                <marker date="1553826180316" expanded="true" signature="87:1776" ph="{...}" />
+                <marker date="1553826180316" expanded="true" signature="136:1774" ph="{...}" />
+                <marker date="1553826180316" expanded="true" signature="334:1165" ph="{...}" />
+                <marker date="1553826180316" expanded="true" signature="1253:1768" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -296,9 +295,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/RocketFist.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Entity/RocketFist.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Utility.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Grapple.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/BaseTarget.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" />
       </list>
     </option>
   </component>
@@ -459,12 +458,12 @@
       <workItem from="1553508991836" duration="3331000" />
       <workItem from="1553584934667" duration="129000" />
       <workItem from="1553750465674" duration="2716000" />
-      <workItem from="1553825665124" duration="107000" />
+      <workItem from="1553825665124" duration="513000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136186000" />
+    <option name="totallyTimeSpent" value="136592000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -763,25 +762,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding>
-            <marker date="1553825231010" expanded="false" signature="6:52" ph="..." />
-            <marker date="1553825231010" expanded="true" signature="87:1666" ph="{...}" />
-            <marker date="1553825231010" expanded="true" signature="136:1664" ph="{...}" />
-            <marker date="1553825231010" expanded="true" signature="334:1055" ph="{...}" />
-            <marker date="1553825231010" expanded="true" signature="720:900" ph="{...}" />
-            <marker date="1553825231010" expanded="true" signature="1143:1658" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerHitBox.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="16" column="54" selection-start-line="16" selection-start-column="54" selection-end-line="16" selection-end-column="54" />
+          <folding>
+            <marker date="1553220635510" expanded="false" signature="6:59" ph="..." />
+            <marker date="1553220635510" expanded="true" signature="84:616" ph="{...}" />
+            <marker date="1553220635510" expanded="true" signature="132:614" ph="{...}" />
+            <marker date="1553220635510" expanded="true" signature="240:375" ph="{...}" />
+            <marker date="1553220635510" expanded="true" signature="428:608" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -859,8 +850,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/Targets/BaseTarget.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="58" column="16" lean-forward="true" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+        <state relative-caret-position="150">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
             <marker date="1553825774012" expanded="false" signature="6:39" ph="..." />
             <marker date="1553825774012" expanded="true" signature="77:1978" ph="{...}" />
@@ -870,6 +861,20 @@
             <marker date="1553825774012" expanded="true" signature="738:1325" ph="{...}" />
             <marker date="1553825774012" expanded="true" signature="1360:1837" ph="{...}" />
             <marker date="1553825774012" expanded="true" signature="1886:1970" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+          <folding>
+            <marker date="1553826180316" expanded="false" signature="6:52" ph="..." />
+            <marker date="1553826180316" expanded="true" signature="87:1776" ph="{...}" />
+            <marker date="1553826180316" expanded="true" signature="136:1774" ph="{...}" />
+            <marker date="1553826180316" expanded="true" signature="334:1165" ph="{...}" />
+            <marker date="1553826180316" expanded="true" signature="1253:1768" ph="{...}" />
           </folding>
         </state>
       </provider>
