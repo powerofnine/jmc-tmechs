@@ -7,6 +7,8 @@ namespace TMechs
     [PublicAPI]
     public static class Utility
     {
+        public const float GRAVITY = 9.81F;
+        
         /// <summary>
         /// Isolates the given <paramref name="axis"/>
         /// </summary>

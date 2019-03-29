@@ -1,4 +1,5 @@
 ﻿using TMechs.Enemy;
+using TMechs.Entity;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -18,10 +19,10 @@ namespace TMechs.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            EntityHealth entity = other.GetComponent<EntityHealth>();
             
-            if(enemy)
-                combat.OnHitboxTrigger(this, enemy);
+            if(entity)
+                combat.OnHitboxTrigger(this, entity);
         }
     }
 }

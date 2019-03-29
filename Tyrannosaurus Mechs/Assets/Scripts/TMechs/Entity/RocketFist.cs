@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMechs.Enemy;
 using TMechs.Environment.Targets;
 using TMechs.Player;
@@ -10,21 +11,20 @@ namespace TMechs.Entity
     {
         public float maxTime = 5F;
         public float speed = 10F;
+        [NonSerialized]
         public float damage = 10F;
         
         private Transform anchor;
-        private Transform target;
+        [HideInInspector]
+        public Transform target;
 
         private bool isReturning;
 
         private bool done;
         
-        private static readonly int ANIM_RETURN = Animator.StringToHash("Rocket Fist Return");
-
         private void Awake()
         {
             anchor = Player.Player.Instance.rocketFistAnchor;
-            target = TargetController.Instance.GetTarget<EnemyTarget>().transform;
 
             transform.position = anchor.position;
             transform.forward = anchor.forward;
@@ -34,6 +34,9 @@ namespace TMechs.Entity
         {
             if (done)
                 return;
+
+            if (!this.target)
+                isReturning = true;
 
             Transform target = GetTarget();
 
@@ -80,7 +83,7 @@ namespace TMechs.Entity
                 yield return null;
             }
             
-            Player.Player.Instance.Animator.SetTrigger(ANIM_RETURN);
+            Player.Player.Instance.Animator.SetTrigger(Anim.ROCKET_RETURN);
             Destroy(gameObject);
         }
 
@@ -91,9 +94,9 @@ namespace TMechs.Entity
             if (other.CompareTag("Player"))
                 return;
 
-            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-            if(enemy)
-                enemy.Damage(damage);
+            EntityHealth entity = other.GetComponent<EntityHealth>();
+            if(entity)
+                entity.Damage(damage);
             
             if(other.transform == GetTarget())
                 isReturning = true;

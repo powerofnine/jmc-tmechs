@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMechs.Environment.Targets;
+using UnityEngine;
 
 namespace TMechs.Player.Behaviour
 {
@@ -10,7 +11,17 @@ namespace TMechs.Player.Behaviour
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            Instantiate(template);
+            EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
+
+            if (!target)
+            {
+                animator.SetTrigger(Anim.ROCKET_RETURN);
+                return;
+            }
+
+            Entity.RocketFist rf = Instantiate(template).GetComponent<Entity.RocketFist>();
+            rf.damage = Player.Instance.Combat.RocketFistDamage;
+            rf.target = target.transform;
             
             animator.transform.Find("T_MechsProto_RocketFist").gameObject.SetActive(false);
         }

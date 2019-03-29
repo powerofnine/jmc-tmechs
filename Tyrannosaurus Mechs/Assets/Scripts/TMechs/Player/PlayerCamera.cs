@@ -5,7 +5,7 @@ using static TMechs.Controls.Action;
 namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
-    {
+    {    
         private Rewired.Player Input => PlayerMovement.Input;
         
         public Transform player;
@@ -69,6 +69,9 @@ namespace TMechs.Player
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
             
+            #if TMECHS_CAMERA_PAN
+            transform.Translate(playerDelta.x, playerDelta.y, playerDelta.z, Space.Self);
+            #else
             // Move towards the player in the local z axis
             transform.Translate(0F, playerDelta.y, playerDelta.z, Space.Self);
 
@@ -82,6 +85,7 @@ namespace TMechs.Player
             transform.RotateAround(camCamPos, Vector3.up, -offsetAngle);
             if(Mathf.Abs(offsetAngle) > 1F)
                 state.rotationY = transform.localEulerAngles.y;
+            #endif
             
             Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 

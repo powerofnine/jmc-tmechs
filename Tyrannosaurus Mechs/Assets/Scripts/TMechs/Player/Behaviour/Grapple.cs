@@ -11,7 +11,9 @@ namespace TMechs.Player.Behaviour
         private static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
         private static readonly int GRAPPLE_END = Animator.StringToHash("Grapple End");
 
-        public float pullSpeed = 50F;
+        public float pullSpeedMin = 50F;
+        public float pullSpeedAcceleration = 9.81F;
+        public float pullSpeedMax = 100F;
         public float pullExitDistance = 2F;
         
         private GrappleTarget target;
@@ -20,6 +22,8 @@ namespace TMechs.Player.Behaviour
 
         private bool transitionComplete;
         private float radius;
+
+        private float pullSpeed;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -30,6 +34,7 @@ namespace TMechs.Player.Behaviour
             
             target = TargetController.Instance.GetTarget<GrappleTarget>();
             radius = target.radius;
+            pullSpeed = pullSpeedMin;
             
             grappleType = target.isSwing ? Types.SWING : Types.PULL;
         }
@@ -66,17 +71,22 @@ namespace TMechs.Player.Behaviour
             animator.GetComponent<PlayerMovement>().velocity = velocity;
         }
 
-        public bool PullPhysics(Transform ball, Transform anchor)
+        public bool PullPhysics(Transform ball, Transform anchor, float exitDistance = float.NegativeInfinity)
         {
+            if (float.IsNegativeInfinity(exitDistance))
+                exitDistance = pullExitDistance;
+            
             Vector3 heading = anchor.position - ball.position;
             float distance = heading.magnitude;
             Vector3 direction = heading / distance;
 
-            if (distance > pullExitDistance)
+            if (distance > exitDistance)
                 ball.position += direction * pullSpeed * Time.deltaTime;
             else
                 return true;
 
+            pullSpeed = Mathf.Clamp(pullSpeed + pullSpeedAcceleration, pullSpeedMin, pullSpeedMax);
+            
             return false;
         }
         
@@ -84,31 +94,16 @@ namespace TMechs.Player.Behaviour
         {
             if (!transitionComplete)
             {
-                Vector3 heading = anchor.position - ball.position;
-                float distance = heading.magnitude;
-                Vector3 direction = heading / distance;
-                
-                if (distance > target.radius)
+                if (PullPhysics(ball, anchor, target.radius))
                 {
-                    ball.position += direction * pullSpeed * Time.deltaTime;
-
-                    distance = Vector3.Distance(ball.position, anchor.position);
-                    if (distance <= target.radius)
-                    {
-                        ball.position += -direction * distance;
-                        transitionComplete = true;
-                        return;
-                    }
-                } else if (distance < target.radius)
-                {
-                    radius = distance;
+                    radius = Vector3.Distance(ball.position, anchor.position);
                     transitionComplete = true;
                 }
-                
+              
                 return;
             }
             
-            velocity.y -= 9.9F * Time.deltaTime;
+            velocity.y -= (Utility.GRAVITY + .1F) * Time.deltaTime;
 
             Vector3 tensionDir = (anchor.position - ball.position).normalized;
             Vector3 sideDir = (Quaternion.Euler(0F, 90F, 0F) * tensionDir).Remove(Utility.Axis.Y);
@@ -116,7 +111,7 @@ namespace TMechs.Player.Behaviour
 
             float incline = Vector3.Angle(ball.position - anchor.position, Vector3.down);
 
-            float tensionForce = 9.81F * Mathf.Cos(incline * Mathf.Deg2Rad);
+            float tensionForce = Utility.GRAVITY * Mathf.Cos(incline * Mathf.Deg2Rad);
             float centripetalForce = Mathf.Pow(velocity.magnitude, 2) / radius;
             tensionForce += centripetalForce;
 
