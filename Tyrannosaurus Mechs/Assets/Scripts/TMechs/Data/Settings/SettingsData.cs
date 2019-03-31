@@ -63,7 +63,7 @@ namespace TMechs.Data.Settings
                 try
                 {
                     if (PlayerPrefs.HasKey("settings:" + provider.FullName))
-                        obj = JsonConvert.DeserializeObject("settings:" + provider.FullName, provider);
+                        obj = JsonConvert.DeserializeObject(PlayerPrefs.GetString("settings:" + provider.FullName), provider);
                 }
                 catch (Exception e)
                 {
