@@ -33,6 +33,8 @@ namespace TMechs.Data.Settings
                 
                 PlayerPrefs.SetString("settings:" + provider.FullName, JsonConvert.SerializeObject(values[provider]));
             }
+            
+            PlayerPrefs.Save();
         }
 
         private static object CreateInstance(Type t)
@@ -45,7 +47,7 @@ namespace TMechs.Data.Settings
             return constructor.Invoke(new object[0]);
         }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Init()
         {
             IEnumerable<Type> discoveredProviders = 
