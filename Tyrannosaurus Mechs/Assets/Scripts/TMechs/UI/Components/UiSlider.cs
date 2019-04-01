@@ -84,6 +84,13 @@ namespace TMechs.UI.Components
             return base.OnCancel();
         }
 
+        protected override void OnDeselect()
+        {
+            base.OnDeselect();
+
+            locked = false;
+        }
+
         public override bool NavigateLeft()
         {
             if(locked)
