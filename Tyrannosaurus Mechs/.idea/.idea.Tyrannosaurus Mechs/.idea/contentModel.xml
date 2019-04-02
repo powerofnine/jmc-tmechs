@@ -197,7 +197,9 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Editor" t="Include">
+            <e p="IdAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
+            <e p="ReadOnlyAttributeDrawer.cs" t="Include" />
           </e>
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
@@ -221,6 +223,8 @@
               <e p="RocketFist.cs" t="Include" />
             </e>
             <e p="Environment" t="Include">
+              <e p="Checkpoint.cs" t="Include" />
+              <e p="CheckpointRegistry.cs" t="Include" />
               <e p="InstantiateOnDie.cs" t="Include" />
               <e p="KillOnEmpty.cs" t="Include" />
               <e p="Targets" t="Include">
@@ -233,7 +237,9 @@
               <e p="Rotator.cs" t="Include" />
             </e>
             <e p="InspectorAttributes" t="Include">
+              <e p="IdAttribute.cs" t="Include" />
               <e p="NameAttribute.cs" t="Include" />
+              <e p="ReadOnlyAttribute.cs" t="Include" />
             </e>
             <e p="Player" t="Include">
               <e p="Behaviour" t="Include">
