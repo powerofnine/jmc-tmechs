@@ -78,7 +78,7 @@ namespace TMechs.UI.Components
             {
                 locked = false;
                 UpdateState_Pre();
-                return false;
+                return true;
             }
 
             return base.OnCancel();

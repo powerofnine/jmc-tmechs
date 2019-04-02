@@ -2,7 +2,7 @@ using TMechs.Data.Settings;
 using TMechs.UI.Components;
 using UnityEngine;
 
-namespace TMechs.UI.Settings
+namespace TMechs.UI.Controllers
 {
     public class SoundSettingsUi : MonoBehaviour
     {

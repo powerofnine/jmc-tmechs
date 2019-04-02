@@ -16,6 +16,21 @@
               <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
             </e>
           </e>
+          <e p="Event Delegate System" t="Include">
+            <e p="UI" t="Include">
+              <e p="EventDelegate" t="Include">
+                <e p="EDFlagAttribute.cs" t="Include" />
+                <e p="Editor" t="Include">
+                  <e p="DrawerTools.cs" t="Include" />
+                  <e p="EventDelegateDrawer.cs" t="Include" />
+                  <e p="FlagDrawer.cs" t="Include" />
+                  <e p="ReorderableDelegateDrawer.cs" t="Include" />
+                </e>
+                <e p="EventDelegate.cs" t="Include" />
+                <e p="ReorderableList.cs" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="Json.NET" t="Include">
             <e p="Newtonsoft.Json.xml" t="Include" />
           </e>
@@ -262,18 +277,24 @@
             <e p="RewiredConsts.cs" t="Include" />
             <e p="UI" t="Include">
               <e p="Components" t="Include">
+                <e p="UiButton.cs" t="Include" />
                 <e p="UiCheckbox.cs" t="Include" />
                 <e p="UIComponent.cs" t="Include" />
                 <e p="UiSlider.cs" t="Include" />
+              </e>
+              <e p="ConditionalDisplay.cs" t="Include" />
+              <e p="Controllers" t="Include">
+                <e p="CameraSettingsUi.cs" t="Include" />
+                <e p="LoadGameUi.cs" t="Include" />
+                <e p="SaveSlotProperties.cs" t="Include" />
+                <e p="SoundSettingsUi.cs" t="Include" />
               </e>
               <e p="FX" t="Include">
                 <e p="UiFade.cs" t="Include" />
               </e>
               <e p="MainUIController.cs" t="Include" />
-              <e p="Settings" t="Include">
-                <e p="CameraSettingsUi.cs" t="Include" />
-                <e p="SoundSettingsUi.cs" t="Include" />
-              </e>
+              <e p="MenuActions.cs" t="Include" />
+              <e p="MenuController.cs" t="Include" />
               <e p="UiNavigation.cs" t="Include" />
             </e>
             <e p="Utility.cs" t="Include" />

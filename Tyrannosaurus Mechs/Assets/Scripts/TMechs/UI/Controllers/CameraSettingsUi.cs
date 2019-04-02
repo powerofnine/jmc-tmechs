@@ -2,7 +2,7 @@
 using TMechs.UI.Components;
 using UnityEngine;
 
-namespace TMechs.UI.Settings
+namespace TMechs.UI.Controllers
 {
     public class CameraSettingsUi : MonoBehaviour
     {

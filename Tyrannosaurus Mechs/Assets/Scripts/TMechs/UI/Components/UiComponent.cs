@@ -10,6 +10,7 @@ namespace TMechs.UI.Components
     public abstract class UiComponent : UIBehaviour, IPointerClickHandler
     {
         public Graphic highlight;
+        [HideInInspector]
         public ValueChangedEvent onValueChange;
         
         [NonSerialized]
@@ -27,7 +28,7 @@ namespace TMechs.UI.Components
         public virtual bool NavigateLeft() => false;
         public virtual bool NavigateRight() => false;
 
-        public void OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
             OnSubmit();
         }

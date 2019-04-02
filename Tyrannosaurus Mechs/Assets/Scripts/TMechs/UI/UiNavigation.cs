@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Rewired;
 using TMechs.UI.Components;
 using TMPro;
@@ -12,6 +14,9 @@ namespace TMechs.UI
 {
     public class UiNavigation : UIBehaviour
     {
+        public NavigationShouldCloseEvent closeAction;
+        
+        [Header("Tabs (optional)")]
         public GameObject[] tabs;
         public string[] tabNames;
 
@@ -31,51 +36,53 @@ namespace TMechs.UI
             {
                 if (components.Length == 0)
                     return null;
+
+                List<UiComponent> active = ActiveComponents;
                 
-                if(currentComponent[currentTab] < 0 || currentComponent[currentTab] > components.Length)
+                if(currentComponent[currentTab] < 0 || currentComponent[currentTab] > active.Count)
                     SetComponent(0);
                 
-                return components[currentComponent[currentTab]];
+                return active[currentComponent[currentTab]];
             }
         }
-
+        private List<UiComponent> ActiveComponents => components.Where(x => x && x.IsActive()).ToList();
+        
         protected override void Start()
         {
             base.Start();
 
             controller = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
-            
+
             if (tabs == null || tabs.Length == 0)
-                throw new ArgumentException("No tabs given");
-            if(!tabView)
-                throw new ArgumentException("No tab view provided");
-            if(!tabTemplate)
-                throw new ArgumentException("No tab template provided");
+                tabs = new GameObject[] { gameObject };
             
             toggles = new Toggle[tabs.Length];
-            currentComponent = new int[tabs.Length];
-            
-            for (int i = 0; i < tabs.Length; i++)
+            currentComponent = new int[tabs.Length > 0 ? tabs.Length : 1];
+
+            if (tabView)
             {
-                string name = tabs[i].name;
-                if (tabNames != null && i < tabNames.Length)
-                    name = tabNames[i];
-
-                RectTransform tab = Instantiate(tabTemplate, tabView).GetComponent<RectTransform>();
-                
-                
-                TextMeshProUGUI text = tab.GetComponentInChildren<TextMeshProUGUI>();
-                if (text)
+                for (int i = 0; i < tabs.Length; i++)
                 {
-                    text.text = name;
-                    text.ForceMeshUpdate();
-                    
-                    tab.sizeDelta = new Vector2(text.preferredWidth + 20F, tab.sizeDelta.y);
-                }
+                    string name = tabs[i].name;
+                    if (tabNames != null && i < tabNames.Length)
+                        name = tabNames[i];
 
-                toggles[i] = tab.GetComponent<Toggle>();
-                SetTab(0);
+                    RectTransform tab = Instantiate(tabTemplate, tabView).GetComponent<RectTransform>();
+
+                    TextMeshProUGUI text = tab.GetComponentInChildren<TextMeshProUGUI>();
+                    if (text)
+                    {
+                        text.text = name;
+                        text.ForceMeshUpdate();
+
+                        tab.sizeDelta = new Vector2(text.preferredWidth + 20F, tab.sizeDelta.y);
+                    }
+
+                    toggles[i] = tab.GetComponent<Toggle>();
+                }
             }
+
+            SetTab(0);
         }
 
         private void Update()
@@ -86,11 +93,6 @@ namespace TMechs.UI
                 tab++;
             else if (controller.GetNegativeButtonDown(Action.UIHORIZONTAL) && (!CurrentComponent || !CurrentComponent.NavigateLeft()))
                 tab--;
-
-            if (tab < 0)
-                tab = tabs.Length - 1;
-            else if (tab >= tabs.Length)
-                tab = 0;
 
             if (tab != currentTab)
             {
@@ -104,11 +106,6 @@ namespace TMechs.UI
                 component--;
             else if (controller.GetNegativeButtonDown(Action.UIVERTICAL) && (!CurrentComponent || !CurrentComponent.NavigateUp()))
                 component++;
-
-            if (component < 0)
-                component = components.Length - 1;
-            if (component >= components.Length)
-                component = 0;
 
             if (component != currentComponent[currentTab])
             {
@@ -124,12 +121,18 @@ namespace TMechs.UI
             
             if (controller.GetButtonDown(Action.UICANCEL) && (!CurrentComponent || !CurrentComponent.OnCancel()))
             {
-                // TODO: exit settings screen
+                if (closeAction != null)
+                    closeAction.Invoke();
             }
         }
 
         private void SetTab(int id)
         {
+            if (id < 0)
+                id = tabs.Length - 1;
+            else if (id >= tabs.Length)
+                id = 0;
+            
             for (int i = 0; i < tabs.Length; i++)
             {
                 tabs[i].SetActive(id == i);
@@ -149,13 +152,21 @@ namespace TMechs.UI
 
         private void SetComponent(int id, bool noTransition = false)
         {
+            List<UiComponent> active = ActiveComponents;
+            
+            if (id < 0)
+                id = active.Count - 1;
+            if (id >= active.Count)
+                id = 0;
+            
             if(CurrentComponent)
                 CurrentComponent.OnDeselect(noTransition);
             currentComponent[currentTab] = id;
             if(CurrentComponent)
                 CurrentComponent.OnSelect(noTransition);
         }
-
-
+        
+        [Serializable]
+        public class NavigationShouldCloseEvent : UnityEvent{}
     }
 }
