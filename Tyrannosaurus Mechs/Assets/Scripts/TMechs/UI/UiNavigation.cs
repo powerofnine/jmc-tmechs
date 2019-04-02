@@ -43,7 +43,7 @@ namespace TMechs.UI
         {
             base.Start();
 
-            controller = ReInput.players.GetSystemPlayer();
+            controller = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
             
             if (tabs == null || tabs.Length == 0)
                 throw new ArgumentException("No tabs given");
