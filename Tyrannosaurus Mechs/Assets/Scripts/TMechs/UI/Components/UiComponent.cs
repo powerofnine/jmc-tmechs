@@ -99,7 +99,6 @@ namespace TMechs.UI.Components
 
         protected override void OnEnable()
         {
-            
             UpdateState_Pre(true);
         }
 

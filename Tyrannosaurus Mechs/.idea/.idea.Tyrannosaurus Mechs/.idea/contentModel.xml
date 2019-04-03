@@ -218,10 +218,14 @@
           </e>
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
+            <e p="Attributes" t="Include">
+              <e p="FriendlyName.cs" t="Include" />
+            </e>
             <e p="Data" t="Include">
               <e p="SaveSystem.cs" t="Include" />
               <e p="Settings" t="Include">
                 <e p="CameraSettings.cs" t="Include" />
+                <e p="ControllerSettings.cs" t="Include" />
                 <e p="SettingsData.cs" t="Include" />
                 <e p="SettingsProviderAttribute.cs" t="Include" />
                 <e p="SoundSettings.cs" t="Include" />
@@ -280,17 +284,24 @@
                 <e p="UiButton.cs" t="Include" />
                 <e p="UiCheckbox.cs" t="Include" />
                 <e p="UIComponent.cs" t="Include" />
+                <e p="UiSelectable.cs" t="Include" />
+                <e p="UiSelection.cs" t="Include" />
                 <e p="UiSlider.cs" t="Include" />
               </e>
               <e p="ConditionalDisplay.cs" t="Include" />
               <e p="Controllers" t="Include">
                 <e p="CameraSettingsUi.cs" t="Include" />
+                <e p="ControllerSettingsUi.cs" t="Include" />
                 <e p="LoadGameUi.cs" t="Include" />
                 <e p="SaveSlotProperties.cs" t="Include" />
                 <e p="SoundSettingsUi.cs" t="Include" />
               </e>
               <e p="FX" t="Include">
                 <e p="UiFade.cs" t="Include" />
+              </e>
+              <e p="GamePad" t="Include">
+                <e p="ButtonDisplayController.cs" t="Include" />
+                <e p="ControllerDef.cs" t="Include" />
               </e>
               <e p="MainUIController.cs" t="Include" />
               <e p="MenuActions.cs" t="Include" />

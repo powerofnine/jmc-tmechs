@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -5,14 +6,11 @@ using UnityEngine.UI;
 
 namespace TMechs.UI.Components
 {
-    public class UiSlider : UiComponent
+    public class UiSlider : UiSelectable
     {
         public Image bar;
         public TextMeshProUGUI percentage;
         public int valueIncrement = 5;
-
-        [ColorUsage(false)]
-        public Color lockedMultiply = Color.red;
 
         public int Value
         {
@@ -26,7 +24,6 @@ namespace TMechs.UI.Components
         }
 
         private int value;
-        private bool locked;
 
         public void SetInstant(int value)
         {
@@ -36,15 +33,13 @@ namespace TMechs.UI.Components
         
         protected override void UpdateState(bool instant)
         {
+            base.UpdateState(instant);
+            
             if (bar)
                 StartCoroutine(TransitionBar(instant));
 
             if (percentage)
                 percentage.text = value + "%";
-
-            highlightMultiply = locked ? lockedMultiply : Color.white;
-        
-            base.UpdateState(instant);
         }
 
         private IEnumerator TransitionBar(bool instant)
@@ -64,47 +59,24 @@ namespace TMechs.UI.Components
             }
         }
 
-        public override void OnSubmit()
+        public override bool DirectionPressed(Direction dir)
         {
-            base.OnSelect();
-
-            locked = true;
-            UpdateState_Pre();
-        }
-
-        public override bool OnCancel()
-        {
-            if (locked)
+            switch (dir)
             {
-                locked = false;
-                UpdateState_Pre();
-                return true;
+                case Direction.Left:
+                    Value -= valueIncrement;
+                    return true;
+                case Direction.Right:
+                    Value += valueIncrement;
+                    return true;
+                case Direction.Up:
+                case Direction.Down:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
             }
 
-            return base.OnCancel();
-        }
-
-        protected override void OnDeselect()
-        {
-            base.OnDeselect();
-
-            locked = false;
-        }
-
-        public override bool NavigateLeft()
-        {
-            if(locked)
-                Value -= valueIncrement;
-            
-            return locked;
-        }
-
-        public override bool NavigateRight()
-        {
-            if(locked)
-                Value += valueIncrement;
-            
-            return locked;
+            return false;
         }
     }
 }
