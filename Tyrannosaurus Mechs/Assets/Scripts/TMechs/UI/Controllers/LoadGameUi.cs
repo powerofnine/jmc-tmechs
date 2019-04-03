@@ -24,6 +24,8 @@ namespace TMechs.UI.Controllers
                 GameObject ui = Instantiate(saveSlotTemplate, saveSlotRoot);
                 ui.GetComponent<SaveSlotProperties>()?.Set(entry);
             }
+            
+            saveSlotRoot.GetComponentInParent<UiNavigation>().RefreshComponents();
         }
 
         public void OnMenuChanged(bool activated)

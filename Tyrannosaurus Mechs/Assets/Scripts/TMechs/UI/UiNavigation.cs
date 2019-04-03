@@ -39,7 +39,7 @@ namespace TMechs.UI
 
                 List<UiComponent> active = ActiveComponents;
                 
-                if(currentComponent[currentTab] < 0 || currentComponent[currentTab] > active.Count)
+                if(currentComponent[currentTab] < 0 || currentComponent[currentTab] >= active.Count)
                     SetComponent(0);
                 
                 return active[currentComponent[currentTab]];
@@ -54,7 +54,7 @@ namespace TMechs.UI
             controller = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
             if (tabs == null || tabs.Length == 0)
-                tabs = new GameObject[] { gameObject };
+                tabs = new[] { gameObject };
             
             toggles = new Toggle[tabs.Length];
             currentComponent = new int[tabs.Length > 0 ? tabs.Length : 1];
@@ -126,6 +126,20 @@ namespace TMechs.UI
             }
         }
 
+        public void RefreshComponents(bool instantEffect = false)
+        {
+            if (tabs == null || tabs.Length == 0)
+                return;
+            
+            components = tabs[currentTab].GetComponentsInChildren<UiComponent>();
+            List<UiComponent> active = ActiveComponents;
+            
+            foreach (UiComponent component in active)
+                component.OnDeselect(instantEffect);
+            if(active.Count > 0)
+                active[currentComponent[currentTab]].OnSelect(instantEffect);
+        }
+
         private void SetTab(int id)
         {
             if (id < 0)
@@ -143,29 +157,29 @@ namespace TMechs.UI
             }
             
             currentTab = id;
-
-            components = tabs[id].GetComponentsInChildren<UiComponent>();
-            foreach (UiComponent component in components)
-                component.OnDeselect(true);
-            SetComponent(currentComponent[id], true);
+            
+            RefreshComponents(true);
         }
 
         private void SetComponent(int id, bool noTransition = false)
         {
             List<UiComponent> active = ActiveComponents;
+
+            if (active.Count <= 0)
+                return;
             
             if (id < 0)
                 id = active.Count - 1;
             if (id >= active.Count)
                 id = 0;
             
-            if(CurrentComponent)
-                CurrentComponent.OnDeselect(noTransition);
+            if(active[currentComponent[currentTab]])
+                active[currentComponent[currentTab]].OnDeselect(noTransition);
             currentComponent[currentTab] = id;
-            if(CurrentComponent)
-                CurrentComponent.OnSelect(noTransition);
+            if(active[currentComponent[currentTab]])
+                active[currentComponent[currentTab]].OnSelect(noTransition);
         }
-        
+
         [Serializable]
         public class NavigationShouldCloseEvent : UnityEvent{}
     }
