@@ -11,6 +11,9 @@ namespace TMechs.UI.Controllers
         public GameObject saveSlotTemplate;
         public RectTransform saveSlotRoot;
 
+        public RectTransform scrollRect;
+        public RectTransform scrollTarget;
+
         public void RefreshUi()
         {
             if (!saveSlotRoot || !saveSlotTemplate)
@@ -21,6 +24,7 @@ namespace TMechs.UI.Controllers
             
             SaveSystem.LexiconEntry[] entries = SaveSystem.GetLexicon();
 
+            for(int i = 0; i < 50; i++)
             foreach (SaveSystem.LexiconEntry entry in entries.OrderByDescending(x => x.creationTime))
             {
                 GameObject ui = Instantiate(saveSlotTemplate, saveSlotRoot);
@@ -30,6 +34,7 @@ namespace TMechs.UI.Controllers
                 {
                     slot.Set(entry);
                     slot.menuActions = menuActions;
+                    slot.parent = this;
                 }
             }
             
@@ -40,6 +45,19 @@ namespace TMechs.UI.Controllers
         {
             if(activated)
                 RefreshUi();
+        }
+
+        public void OnSlotSelected(RectTransform rect)
+        {
+            if (!scrollRect || !scrollTarget)
+                return;
+
+            float scrolledPos = rect.anchoredPosition.y + scrollTarget.anchoredPosition.y;
+            
+            if (scrolledPos > 0)
+                scrollTarget.anchoredPosition = new Vector2(0F, -rect.anchoredPosition.y - rect.sizeDelta.y);
+            else if(scrolledPos < -scrollRect.sizeDelta.y)
+                scrollTarget.anchoredPosition = new Vector2(0F, -scrollRect.sizeDelta.y - rect.anchoredPosition.y);
         }
     }
 }

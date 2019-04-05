@@ -1,4 +1,5 @@
 using TMechs.Data;
+using TMechs.UI.Controllers;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,10 @@ namespace TMechs.UI.Components
 {
     public class UiSaveSlot : UiButton
     {
+        [HideInInspector]
         public MenuActions menuActions;
+        [HideInInspector]
+        public LoadGameUi parent;
         
         [SerializeField]
         private TextMeshProUGUI meta;
@@ -55,6 +59,14 @@ namespace TMechs.UI.Components
             
             if(menuActions)
                 menuActions.LoadGame(entry);
+        }
+
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            
+            if(parent)
+                parent.OnSlotSelected((RectTransform)transform);
         }
     }
 }
