@@ -26,7 +26,7 @@ namespace TMechs.UI.Controllers
         private string guidFormat;
 
         private readonly Dictionary<int, ControllerDef.ButtonLayout> map = new Dictionary<int, ControllerDef.ButtonLayout>();
-        
+
         private void Awake()
         {
             ControllerSettings settings = SettingsData.Get<ControllerSettings>();
@@ -34,33 +34,30 @@ namespace TMechs.UI.Controllers
             if (autoIcons)
             {
                 autoIcons.SetInstant(settings.autoDetectControllerType);
-                autoIcons.onValueChange.AddListener(ob =>
-                {
-                    settings.autoDetectControllerType = autoIcons.IsChecked;
-                });
+                autoIcons.onValueChange.AddListener(ob => settings.autoDetectControllerType = autoIcons.IsChecked);
             }
 
             if (iconSet)
             {
                 ControllerDef.ButtonLayout[] layouts = Enum.GetValues(typeof(ControllerDef.ButtonLayout)).Cast<ControllerDef.ButtonLayout>().ToArray();
                 List<string> values = new List<string>();
-                
+
                 foreach (ControllerDef.ButtonLayout layout in layouts)
                 {
                     MemberInfo info = layout.GetType().GetMember(layout.ToString()).SingleOrDefault();
                     if (info == null)
                         continue;
-                    
+
                     FriendlyNameAttribute fn = (FriendlyNameAttribute) info.GetCustomAttributes(typeof(FriendlyNameAttribute)).SingleOrDefault();
-                    if(fn == null)
+                    if (fn == null)
                         continue;
-                    
+
                     map.Add(values.Count, layout);
                     values.Add(fn.name);
                 }
 
                 iconSet.values = values.ToArray();
-                
+
                 iconSet.Value = map.SingleOrDefault(x => x.Value.Equals(settings.buttonLayout)).Key;
                 iconSet.onValueChange.AddListener(ob => settings.buttonLayout = map[iconSet.Value]);
             }
@@ -76,7 +73,7 @@ namespace TMechs.UI.Controllers
         private void LateUpdate()
         {
             ControllerSettings settings = SettingsData.Get<ControllerSettings>();
-            
+
             ControllerDef def = ButtonDisplayController.Instance.AbsoluteController;
             if (controllerName)
                 controllerName.text = string.Format(nameFormat, def.padName);
@@ -84,10 +81,9 @@ namespace TMechs.UI.Controllers
                 controllerLayout.text = string.Format(layoutFormat, def.layout);
             if (controllerGuid)
                 controllerGuid.text = string.Format(guidFormat, def.guid);
-            
-            if(iconSet)
+
+            if (iconSet)
                 iconSet.gameObject.SetActive(!settings.autoDetectControllerType);
-            
         }
     }
 }

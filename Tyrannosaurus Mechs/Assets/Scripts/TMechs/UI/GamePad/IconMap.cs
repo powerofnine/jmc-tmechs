@@ -58,7 +58,6 @@ namespace TMechs.UI.GamePad
                 rect.width / COUNT,
                 rect.height / COUNT
             );
-            Debug.Log(name + " " + spRect);
             
             Sprite spr = Sprite.Create(texture, spRect, Vector2.one * .5F, sprite.pixelsPerUnit, 0);
             spr.name = name;

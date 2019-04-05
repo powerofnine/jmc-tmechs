@@ -1,11 +1,13 @@
 using System.Linq;
 using TMechs.Data;
+using TMechs.UI.Components;
 using UnityEngine;
 
 namespace TMechs.UI.Controllers
 {
     public class LoadGameUi : MonoBehaviour, MenuController.IMenuCallback
     {
+        public MenuActions menuActions;
         public GameObject saveSlotTemplate;
         public RectTransform saveSlotRoot;
 
@@ -22,7 +24,13 @@ namespace TMechs.UI.Controllers
             foreach (SaveSystem.LexiconEntry entry in entries.OrderByDescending(x => x.creationTime))
             {
                 GameObject ui = Instantiate(saveSlotTemplate, saveSlotRoot);
-                ui.GetComponent<SaveSlotProperties>()?.Set(entry);
+                UiSaveSlot slot = ui.GetComponent<UiSaveSlot>();
+
+                if (slot)
+                {
+                    slot.Set(entry);
+                    slot.menuActions = menuActions;
+                }
             }
             
             saveSlotRoot.GetComponentInParent<UiNavigation>().RefreshComponents();

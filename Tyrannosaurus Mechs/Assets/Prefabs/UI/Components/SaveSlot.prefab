@@ -319,7 +319,6 @@ GameObject:
   - component: {fileID: 9115888181341896453}
   - component: {fileID: 7379412193041323444}
   - component: {fileID: 4845207474800780734}
-  - component: {fileID: 8033480234420417970}
   - component: {fileID: 6294309716384334078}
   m_Layer: 5
   m_Name: SaveSlot
@@ -389,26 +388,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &8033480234420417970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4752908658174615791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 603108ab8eba484aa8763f22f25cf89b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlight: {fileID: 523617140688555997}
-  onValueChange:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: TMechs.UI.Components.UiComponent+ValueChangedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onClick:
-    List: []
 --- !u!114 &6294309716384334078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +400,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df301e9e55244b85a64f6258a58cecc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: {fileID: 523617140688555997}
+  onValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: TMechs.UI.Components.UiComponent+ValueChangedEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  onClick:
+    List: []
+  menuActions: {fileID: 0}
   meta: {fileID: 6851226792275029777}
   creationDate: {fileID: 3093544775118972429}
   id: {fileID: 350896363116529138}

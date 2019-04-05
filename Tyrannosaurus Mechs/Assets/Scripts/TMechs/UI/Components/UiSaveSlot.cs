@@ -1,12 +1,13 @@
-using System.Globalization;
 using TMechs.Data;
 using TMPro;
 using UnityEngine;
 
-namespace TMechs.UI.Controllers
+namespace TMechs.UI.Components
 {
-    public class SaveSlotProperties : MonoBehaviour
+    public class UiSaveSlot : UiButton
     {
+        public MenuActions menuActions;
+        
         [SerializeField]
         private TextMeshProUGUI meta;
         [SerializeField]
@@ -16,9 +17,13 @@ namespace TMechs.UI.Controllers
 
         private string creationDateFormat;
         private string idFormat;
+
+        private SaveSystem.LexiconEntry entry;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             if (creationDate)
                 creationDateFormat = creationDate.text;
 
@@ -28,6 +33,8 @@ namespace TMechs.UI.Controllers
 
         public void Set(SaveSystem.LexiconEntry entry)
         {
+            this.entry = entry;
+            
             if (meta)
                 meta.text = entry.meta;
             if (creationDate)
@@ -40,6 +47,14 @@ namespace TMechs.UI.Controllers
 
             if (id)
                 id.text = string.Format(idFormat, entry.id);
+        }
+
+        public override void OnSubmit()
+        {
+            base.OnSubmit();
+            
+            if(menuActions)
+                menuActions.LoadGame(entry);
         }
     }
 }
