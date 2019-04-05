@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Rewired.Data.Mapping;
 using TMechs.Attributes;
 using UnityEngine;
@@ -11,7 +12,6 @@ using UnityEditor;
 
 namespace TMechs.UI.GamePad
 {
-//    [CreateAssetMenu(fileName = "New Controller", menuName = "TMechs/Controller Definition", order = 100)]
     public class ControllerDef : ScriptableObject
     {
         public string padName;
@@ -28,10 +28,10 @@ namespace TMechs.UI.GamePad
             [TextureName("buttons.ps4")]
             Ps4,
             [FriendlyName("Xbox 360")]
-            [TextureName("buttons.mx360")]
+            [TextureName("buttons.x360")]
             Xbox360,
             [FriendlyName("Xbox One")]
-            [TextureName("buttons.mxone")]
+            [TextureName("buttons.xone")]
             XboxOne,
             [FriendlyName("Nintendo")]
             [TextureName("buttons.nintendo")]

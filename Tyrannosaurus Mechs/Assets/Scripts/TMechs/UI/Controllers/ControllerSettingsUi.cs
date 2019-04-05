@@ -34,7 +34,10 @@ namespace TMechs.UI.Controllers
             if (autoIcons)
             {
                 autoIcons.SetInstant(settings.autoDetectControllerType);
-                autoIcons.onValueChange.AddListener(ob => settings.autoDetectControllerType = autoIcons.IsChecked);
+                autoIcons.onValueChange.AddListener(ob =>
+                {
+                    settings.autoDetectControllerType = autoIcons.IsChecked;
+                });
             }
 
             if (iconSet)
@@ -48,7 +51,7 @@ namespace TMechs.UI.Controllers
                     if (info == null)
                         continue;
                     
-                    FriendlyName fn = (FriendlyName) info.GetCustomAttributes(typeof(FriendlyName)).SingleOrDefault();
+                    FriendlyNameAttribute fn = (FriendlyNameAttribute) info.GetCustomAttributes(typeof(FriendlyNameAttribute)).SingleOrDefault();
                     if(fn == null)
                         continue;
                     
@@ -72,14 +75,18 @@ namespace TMechs.UI.Controllers
 
         private void LateUpdate()
         {
-            ControllerDef def = ButtonDisplayController.Instance.Controller;
-
+            ControllerSettings settings = SettingsData.Get<ControllerSettings>();
+            
+            ControllerDef def = ButtonDisplayController.Instance.AbsoluteController;
             if (controllerName)
                 controllerName.text = string.Format(nameFormat, def.padName);
             if (controllerLayout)
                 controllerLayout.text = string.Format(layoutFormat, def.layout);
             if (controllerGuid)
                 controllerGuid.text = string.Format(guidFormat, def.guid);
+            
+            if(iconSet)
+                iconSet.gameObject.SetActive(!settings.autoDetectControllerType);
             
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rewired;
+using TMechs.Data.Settings;
 using UnityEngine;
 
 namespace TMechs.UI.GamePad
@@ -13,40 +14,72 @@ namespace TMechs.UI.GamePad
         private Dictionary<Guid, ControllerDef> controllers;
 
         public ControllerDef Controller { get; private set; }
+        public ControllerDef AbsoluteController { get; private set; }
 
-        private ControllerDef custom;
+        public ControllerDef.ButtonLayout ButtonLayout
+        {
+            get
+            {
+                ControllerSettings settings = SettingsData.Get<ControllerSettings>();
+            
+                ControllerDef.ButtonLayout layout = settings.buttonLayout;
+                if (settings.autoDetectControllerType)
+                    layout = Controller.layout;
+
+                return layout;
+            }
+        }
+
+        private ControllerDef unsupported;
         
         private void Awake()
         {
-            custom = ScriptableObject.CreateInstance<ControllerDef>();
+            unsupported = ScriptableObject.CreateInstance<ControllerDef>();
         }
 
         private void Start()
         {
             Instance = this;
             controllers = Resources.LoadAll<ControllerDef>("").ToDictionary(x => Guid.Parse(x.guid));
+
+            if(ReInput.controllers.joystickCount > 0) {
+                Joystick joy = ReInput.controllers.Joysticks[0];
+                if (controllers.ContainsKey(joy.hardwareTypeGuid))
+                    Controller = controllers[joy.hardwareTypeGuid];
+            }
         }
 
         private void Update()
         {
             Controller controller = ReInput.controllers.GetLastActiveController();
 
+            ControllerDef abs = null;
+            
             if (controller is Joystick)
             {
                 Joystick joystick = (Joystick) controller;
-                Controller = controllers[joystick.hardwareTypeGuid];
+                if (controllers.ContainsKey(joystick.hardwareTypeGuid))
+                {
+                    Controller = controllers[joystick.hardwareTypeGuid];
+                    abs = Controller;
+                }
             }
 
-            if (!Controller)
+            if (!Controller || !abs)
             {
-                custom.guid = Guid.Empty.ToString();
-                custom.layout = ControllerDef.ButtonLayout.Unsupported;
-                custom.padName = ReInput.controllers.GetLastActiveControllerType().ToString();
+                unsupported.guid = controller is Joystick ? ((Joystick)controller).hardwareTypeGuid.ToString() : Guid.Empty.ToString();
+                unsupported.layout = ControllerDef.ButtonLayout.Unsupported;
+                unsupported.padName = controller.type.ToString();
 
-                Controller = custom;
+                if(!Controller)
+                    Controller = unsupported;
+                if (!abs)
+                    abs = unsupported;
             }
+
+            AbsoluteController = abs;
         }
 
-        private void OnDestroy() => DestroyImmediate(custom);
+        private void OnDestroy() => DestroyImmediate(unsupported);
     }
 }

@@ -131,7 +131,7 @@ namespace TMechs.UI
             if (tabs == null || tabs.Length == 0)
                 return;
             
-            components = tabs[currentTab].GetComponentsInChildren<UiComponent>();
+            components = tabs[currentTab].GetComponentsInChildren<UiComponent>(true);
             List<UiComponent> active = ActiveComponents;
             
             foreach (UiComponent component in active)
