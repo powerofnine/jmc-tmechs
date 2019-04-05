@@ -22,15 +22,21 @@ namespace TMechs.UI.GamePad
         public enum ButtonLayout
         {
             [FriendlyName("PlayStation 3")]
+            [TextureName("buttons.ps3")]
             Ps3,
             [FriendlyName("PlayStation 4")]
+            [TextureName("buttons.ps4")]
             Ps4,
             [FriendlyName("Xbox 360")]
+            [TextureName("buttons.mx360")]
             Xbox360,
             [FriendlyName("Xbox One")]
+            [TextureName("buttons.mxone")]
             XboxOne,
             [FriendlyName("Nintendo")]
+            [TextureName("buttons.nintendo")]
             Nintendo,
+            [TextureName("buttons.missingno")]
             Unsupported
         }
 
