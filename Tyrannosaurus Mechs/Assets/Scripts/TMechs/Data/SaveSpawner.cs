@@ -28,6 +28,8 @@ namespace TMechs.Data
         {
             if(!string.IsNullOrWhiteSpace(data.checkpointId))
                 Checkpoint.CheckpointRegistry.Instance.MovePlayerTo(data.checkpointId);
+            
+            Destroy(gameObject);
         }
     }
 }

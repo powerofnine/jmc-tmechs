@@ -1,5 +1,6 @@
 ﻿using System;
 using TMechs.Environment.Targets;
+using TMechs.UI;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -41,6 +42,15 @@ namespace TMechs.Player
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
+        }
+
+        private void Update()
+        {
+            if (PlayerMovement.Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
+            {
+                Instantiate(Resources.Load<GameObject>("UI/Menu"));
+                MenuActions.SetPause(true);
+            }
         }
 
         public void Damage(int damage)

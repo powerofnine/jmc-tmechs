@@ -52,7 +52,7 @@ namespace TMechs.UI.Components
                 if (instant)
                     progress = 1F;
                 
-                progress += Time.deltaTime * 6F;
+                progress += Time.unscaledDeltaTime * 6F;
                 bar.fillAmount = Mathf.Lerp(fillValue, value / 100F, progress);
 
                 yield return null;

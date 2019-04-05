@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using UIEventDelegate;
 using UnityEngine;
 
 namespace TMechs.UI
 {
     public class MenuController : MonoBehaviour
     {
+        public static MenuController Instance { get; private set; }
+        
         public GameObject menuMain;
         public GameObject menuPause;
         public GameObject menuSettings;
@@ -13,13 +16,16 @@ namespace TMechs.UI
 
         public Menu startingMenu;
         public bool canClose = true;
-        public event Action OnMenuClose;
+        
+        public ReorderableEventList onMenuClose;
 
         private readonly Stack<Menu> stateStack = new Stack<Menu>();
         private Menu cachedMenu = Menu.None;
 
         private void Awake()
         {
+            Instance = this;
+            
             foreach (Menu state in Enum.GetValues(typeof(Menu)))
             {
                 GameObject menu = GetStateMenu(state);
@@ -70,8 +76,8 @@ namespace TMechs.UI
             if (stateStack.Count == 0)
             {
                 Destroy(gameObject);
-                if (OnMenuClose != null)
-                    OnMenuClose();
+                if (onMenuClose != null)
+                    EventDelegate.Execute(onMenuClose.List);
             }
         }
 

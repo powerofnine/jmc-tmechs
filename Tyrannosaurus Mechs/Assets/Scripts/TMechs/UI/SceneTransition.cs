@@ -55,9 +55,10 @@ namespace TMechs.UI
 
         private IEnumerator _LoadScene(int index, Action sceneLoaded)
         {
+            MenuActions.SetPause(true);
+            
             yield return StartCoroutine(Fade(1F));
             yield return SceneManager.LoadSceneAsync(LOADING);
-
             yield return StartCoroutine(Fade(0F));
             
             AsyncOperation mainSceneLoad = SceneManager.LoadSceneAsync(index);
@@ -69,11 +70,11 @@ namespace TMechs.UI
             mainSceneLoad.allowSceneActivation = true;
             
             yield return mainSceneLoad;
-            
             if (sceneLoaded != null)
                 sceneLoaded();
             
-            yield return new WaitForSeconds(.25F);
+            yield return new WaitForSecondsRealtime(.25F);
+            MenuActions.SetPause(false);
             yield return StartCoroutine(Fade(0F));
         }
 

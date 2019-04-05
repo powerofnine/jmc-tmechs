@@ -1,4 +1,6 @@
-﻿using TMechs.Data;
+﻿using Rewired;
+using TMechs.Data;
+using TMechs.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,6 +54,15 @@ namespace TMechs.UI
         public void MainMenu()
         {
             SceneTransition.LoadScene(0);
+        }
+
+        public static void SetPause(bool pause)
+        {
+            Time.timeScale = pause ? 0F : 1F;
+            ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER).controllers.maps.SetMapsEnabled(!pause, Controls.Category.DEFAULT);
+
+            if (PlayerPostProcess.Instance && PlayerPostProcess.Instance.ui)
+                PlayerPostProcess.Instance.ui.enabled = pause;
         }
 
         public void ExitGame()

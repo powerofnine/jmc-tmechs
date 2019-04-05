@@ -278,7 +278,11 @@
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerHitBox.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
+              <e p="PlayerPostProcess.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
+            </e>
+            <e p="PostProcessing" t="Include">
+              <e p="Blur.cs" t="Include" />
             </e>
             <e p="RewiredConsts.cs" t="Include" />
             <e p="UI" t="Include">
@@ -317,6 +321,8 @@
           </e>
         </e>
         <e p="Shaders" t="Include">
+          <e p="Blur.shader" t="Include" />
+          <e p="FrostedGlass.shader" t="Include" />
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>

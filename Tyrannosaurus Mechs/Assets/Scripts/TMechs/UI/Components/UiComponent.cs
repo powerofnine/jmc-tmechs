@@ -87,7 +87,7 @@ namespace TMechs.UI.Components
             
             while (g && transition < 1F)
             {
-                transition += Time.deltaTime * 4F;
+                transition += Time.unscaledDeltaTime * 4F;
                 if (instant)
                     transition = 1F;
 
