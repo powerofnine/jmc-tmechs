@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: d797b3953a1656d4795b50ba3fcb144f
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Icons_0
+    21300000: icon_health_straight_mask
     21300002: icon_bracket
     21300004: icon_enemy_heallth_mask
     21300006: icon_enemy_health_bg
@@ -12,6 +12,14 @@ TextureImporter:
     21300014: icon_boss_health_fg
     21300016: icon_boss_health_bg
     21300018: icon_boss_health_mask
+    21300020: icon_health_narrow_mask
+    21300022: icon_health_wide_mask
+    21300024: icon_health_straight_fg
+    21300026: icon_health_narrow_fg
+    21300028: icon_health_wide_fg
+    21300030: icon_health_straight_bg
+    21300032: icon_health_narrow_bg
+    21300034: icon_health_wide_bg
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -41,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 2
     aniso: 2
     mipBias: -100
     wrapU: 1
@@ -70,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -81,7 +89,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -92,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: iPhone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,7 +111,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -236,7 +244,7 @@ TextureImporter:
         height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 383, y: 0, z: 414, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -302,6 +310,186 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: af7ff87255b16fb438b5f27c62dc4774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_straight_mask
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1509
+        width: 453
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b952ae626a743a448a56165efce57618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_narrow_mask
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1149
+        width: 237
+        height: 329
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328b472454131a74ca80c4afff96133d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_wide_mask
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 1163
+        width: 402
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737841540c28b4d4180518963401438c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_straight_fg
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 942
+        width: 453
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca8eceefc36a264bb0f88ab7f31825a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_narrow_fg
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 582
+        width: 237
+        height: 329
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b4ff48e6f9436e4d86cd4f5476c8036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_wide_fg
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 596
+        width: 402
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13e7de999caa8954e9fba89fa0037ea3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_straight_bg
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 386
+        width: 447
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8f68391c7858c849adf1f2dcc78e92e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_narrow_bg
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 26
+        width: 229
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a98131e322e93b547ae1e2efe3035aab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health_wide_bg
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 41
+        width: 393
+        height: 291
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8307b4822e6f28b45a3e7379ee801d24
       vertices: []
       indices: 
       edges: []

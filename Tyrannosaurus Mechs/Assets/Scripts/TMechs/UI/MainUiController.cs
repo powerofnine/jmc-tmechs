@@ -12,7 +12,7 @@ namespace TMechs.UI
         {
             Player.Player player = Player.Player.Instance;
             health.fillAmount = player.Health;
-            charge.localEulerAngles = charge.localEulerAngles.Set(Mathf.Lerp(0F, 180F, player.Combat.rocketFistCharge / player.Combat.rocketFistChargeMax), Utility.Axis.Z);
+            charge.localEulerAngles = -charge.localEulerAngles.Set(Mathf.Lerp(0F, 180F, player.Combat.rocketFistCharge / player.Combat.rocketFistChargeMax), Utility.Axis.Z);
         }
     }
 }

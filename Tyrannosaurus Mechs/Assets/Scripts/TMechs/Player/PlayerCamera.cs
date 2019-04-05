@@ -101,7 +101,7 @@ namespace TMechs.Player
 
             Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
-            state.rotationY += -input.x * cameraSpeed * Time.deltaTime * (settings.invertHorizontal ? -1 : 1);
+            state.rotationY += input.x * cameraSpeed * Time.deltaTime * (settings.invertHorizontal ? -1 : 1);
             state.rotationX += -input.y * cameraSpeed * Time.deltaTime * (settings.invertVertical ? -1 : 1);
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
