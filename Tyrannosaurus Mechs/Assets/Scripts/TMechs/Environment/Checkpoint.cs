@@ -43,7 +43,8 @@ namespace TMechs.Environment
 
         private void OnTriggerEnter(Collider other)
         {
-            CheckpointRegistry.Instance.Set(id);
+            if(other.CompareTag("Player"))
+                CheckpointRegistry.Instance.Set(id);
         }
 
         private void UpdateState()
