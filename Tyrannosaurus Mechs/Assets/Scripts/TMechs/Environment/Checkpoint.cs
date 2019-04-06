@@ -14,6 +14,7 @@ namespace TMechs.Environment
         [Id("Unique Checkpoint ID")]
         public string id;
         public Vector3 anchorOffset;
+        public string checkpointName;
 
         [Header("Visual")]
         public Color unsetColor = Color.red;
@@ -55,15 +56,15 @@ namespace TMechs.Environment
 
         private void MovePlayer()
         {
-            GameObject go = GameObject.FindGameObjectWithTag("Player");
-            
-            if(!go)
+            if(!Player.Player.Instance)
             {
                 Debug.LogError("Could not spawn player as the player could not be found");
                 return;
             }
 
-            go.transform.position = transform.position + anchorOffset;
+            Player.Player.Instance.Controller.enabled = false;
+            Player.Player.Instance.transform.position = transform.position + anchorOffset;
+            Player.Player.Instance.Controller.enabled = true;
         }
         
         private IEnumerator Transition(Color c)
@@ -133,9 +134,19 @@ namespace TMechs.Environment
                         sceneId = SceneManager.GetActiveScene().path,
                         checkpointId = id
                 };
+
+
+                string meta = "";
+
+                if (LevelInfo.Instance && !string.IsNullOrWhiteSpace(LevelInfo.Instance.levelName))
+                    meta += LevelInfo.Instance.levelName;
+                else
+                    meta += SceneManager.GetActiveScene().name;
+
+                if (!string.IsNullOrWhiteSpace(checkpoints[id].checkpointName))
+                    meta += " - " + checkpoints[id].checkpointName;
                 
-                // TODO: more descriptive text for meta
-                SaveSystem.CreateSave(data, data.sceneId);
+                SaveSystem.CreateSave(data, meta);
             }
 
             public void SetUnsaved(string id)
