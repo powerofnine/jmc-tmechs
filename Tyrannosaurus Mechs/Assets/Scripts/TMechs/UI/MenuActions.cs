@@ -1,6 +1,9 @@
-﻿using Rewired;
+﻿using System;
+using System.Collections;
+using Rewired;
 using TMechs.Data;
 using TMechs.Player;
+using TMechs.UI.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,22 +43,39 @@ namespace TMechs.UI
             SaveSpawner.Spawn(data);
         }
 
-        public void RestartLevel()
-        {
-            SceneTransition.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
         public void OpenMenu(MenuController.Menu menu)
         {
             if (controller)
                 controller.Open(menu);
         }
-
-        public void MainMenu()
+        
+        public void RestartLevel(bool bypassConfirm = false)
         {
-            SceneTransition.LoadScene(0);
+            StartCoroutine(Confirm(() => SceneTransition.LoadScene(SceneManager.GetActiveScene().buildIndex), bypassConfirm, "restart the current level from the beginning"));
         }
 
+        public void MainMenu(bool bypassConfirm = false)
+        {
+            StartCoroutine(Confirm(() => SceneTransition.LoadScene(0), bypassConfirm, "return to main menu"));
+        }
+
+        public IEnumerator Confirm(Action action, bool bypass, string message)
+        {
+            if (!bypass && controller)
+            {
+                UiNavigation menu = controller.GetCurrentMenu().GetComponent<UiNavigation>();
+
+                if (menu)
+                    yield return menu.ModalWindow($"Are you sure you want to {message}?", new[] {"No", "Yes"}, null);
+
+                if (!"Yes".Equals(UiModal.Result))
+                    yield break;
+            }
+
+            if(action != null)
+                action();
+        }
+        
         public static void SetPause(bool pause)
         {
             Time.timeScale = pause ? 0F : 1F;

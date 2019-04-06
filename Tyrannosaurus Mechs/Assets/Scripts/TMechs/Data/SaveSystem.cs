@@ -38,8 +38,8 @@ namespace TMechs.Data
 
             int lexiconSize = lexicon.Count;
             lexicon = lexicon.Where(x => File.Exists(Path.Combine(dataPath, x.id + ".json"))).OrderByDescending(x => x.creationTime).ToList();
-            
-            if(lexiconSize - lexicon.Count != 0)
+
+            if (lexiconSize - lexicon.Count != 0)
                 Debug.LogWarningFormat("Removing {0} missing saves from the lexicon", lexiconSize - lexicon.Count);
         }
 
@@ -49,11 +49,11 @@ namespace TMechs.Data
         public static void CreateSave(SaveData data, string meta)
         {
             GameObject display = Object.Instantiate(Resources.Load<GameObject>("UI/SavingWheel"));
-            
+
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += (sender, args) => instance._CreateSave(data, meta);
             worker.RunWorkerCompleted += (sender, args) => display.GetComponent<UiFade>().Kill();
-            
+
             worker.RunWorkerAsync();
         }
 
@@ -62,15 +62,15 @@ namespace TMechs.Data
             LexiconEntry entry = new LexiconEntry {meta = meta};
 
             // Prevent clashing ids in the lexicon
-            while(lexicon.FirstOrDefault(x => x.id == entry.id) != null)
+            while (lexicon.FirstOrDefault(x => x.id == entry.id) != null)
                 entry.id = Guid.NewGuid();
-            
-            string saveFile = Path.Combine(dataPath, entry.id + ".json");
-            
+
+            string saveFile = GetSaveFile(entry);
+
             lexicon.Add(entry);
-            
+
             File.WriteAllText(saveFile, JsonConvert.SerializeObject(data));
-            File.WriteAllText(lexiconPath, JsonConvert.SerializeObject(lexicon));
+            FlushLexicon();
         }
 
         public static SaveData LoadSave(LexiconEntry entry)
@@ -80,10 +80,10 @@ namespace TMechs.Data
 
         private SaveData _LoadSave(LexiconEntry entry)
         {
-            string saveFile = Path.Combine(dataPath, entry.id + ".json");
+            string saveFile = GetSaveFile(entry);
 
             SaveData data = null;
-            
+
             if (File.Exists(saveFile))
             {
                 try
@@ -104,8 +104,34 @@ namespace TMechs.Data
             return data;
         }
 
+        public static void DeleteSave(LexiconEntry entry)
+        {
+            instance._DeleteSave(entry);
+        }
+
+        private void _DeleteSave(LexiconEntry entry)
+        {
+            if (lexicon.Contains(entry))
+            {
+                lexicon.Remove(entry);
+
+                string saveFile = Path.Combine(dataPath, entry.id + ".json");
+
+                if (File.Exists(saveFile))
+                    File.Delete(saveFile);
+                
+                FlushLexicon();
+            }
+        }
+
+        private string GetSaveFile(LexiconEntry entry)
+            => Path.Combine(dataPath, entry.id + ".json");
+
+        private void FlushLexicon()
+            => File.WriteAllText(lexiconPath, JsonConvert.SerializeObject(lexicon));
+
         public static LexiconEntry[] GetLexicon() => instance.lexicon.ToArray();
-        
+
         [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
         public class LexiconEntry
         {
@@ -114,7 +140,7 @@ namespace TMechs.Data
             public DateTime creationTime = DateTime.Now;
             public string meta;
         }
-        
+
         [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
         public class SaveData
         {

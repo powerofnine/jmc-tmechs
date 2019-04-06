@@ -66,7 +66,7 @@ namespace TMechs.UI.Components
             base.OnSelect();
             
             if(parent)
-                parent.OnSlotSelected((RectTransform)transform);
+                parent.OnSlotSelected((RectTransform)transform, entry);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Rewired;
@@ -15,6 +16,7 @@ namespace TMechs.UI
     public class UiNavigation : UIBehaviour
     {
         public NavigationShouldCloseEvent closeAction;
+        public UiModal modalTemplate;
         
         [Header("Tabs (optional)")]
         public GameObject[] tabs;
@@ -46,6 +48,9 @@ namespace TMechs.UI
             }
         }
         private List<UiComponent> ActiveComponents => components.Where(x => x && x.IsActive()).ToList();
+    
+        private UiModal modal;
+        public bool IsModal => modal;
         
         protected override void Start()
         {
@@ -75,7 +80,7 @@ namespace TMechs.UI
                         text.text = name;
                         text.ForceMeshUpdate();
 
-                        tab.sizeDelta = new Vector2(text.preferredWidth + 20F, tab.sizeDelta.y);
+                        tab.sizeDelta = new Vector2(text.preferredWidth + 40F, tab.sizeDelta.y);
                     }
 
                     toggles[i] = tab.GetComponent<Toggle>();
@@ -87,6 +92,21 @@ namespace TMechs.UI
 
         private void Update()
         {
+            if (modal)
+            {
+                if(controller.GetButtonDown(Action.UIVERTICAL))
+                    modal.NavigateDown();
+                else if (controller.GetNegativeButtonDown(Action.UIVERTICAL))
+                    modal.NavigateUp();
+                
+                if(controller.GetButtonDown(Action.UISUBMIT))
+                    modal.Submit();
+                else if(controller.GetButtonDown(Action.UICANCEL))
+                    modal.Cancel();
+                
+                return;
+            }
+            
             int tab = currentTab;
             
             if (controller.GetButtonDown(Action.UIHORIZONTAL) && (!CurrentComponent || !CurrentComponent.NavigateRight()))
@@ -140,6 +160,25 @@ namespace TMechs.UI
                 active[currentComponent[currentTab]].OnSelect(instantEffect);
         }
 
+        public void OpenModal(string text, IEnumerable<string> buttons, Action<string> callback = null)
+            => StartCoroutine(ModalWindow(text, buttons, callback));
+        
+        public IEnumerator ModalWindow(string text, IEnumerable<string> buttons, Action<string> callback)
+        {
+            if (!modalTemplate)
+            {
+                Debug.LogError("No modal window template assigned");
+                yield break;
+            }
+
+            modal = Instantiate(modalTemplate, transform);
+            yield return modal.Show(text, buttons);
+            modal = null;
+
+            if (callback != null)
+                callback(UiModal.Result);
+        }
+        
         private void SetTab(int id)
         {
             if (id < 0)

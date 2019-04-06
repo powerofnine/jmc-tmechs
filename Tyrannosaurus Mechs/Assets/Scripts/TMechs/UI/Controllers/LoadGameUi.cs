@@ -1,4 +1,6 @@
 using System.Linq;
+using Rewired;
+using TMechs.Controls;
 using TMechs.Data;
 using TMechs.UI.Components;
 using UnityEngine;
@@ -13,6 +15,33 @@ namespace TMechs.UI.Controllers
 
         public RectTransform scrollRect;
         public RectTransform scrollTarget;
+
+        private Rewired.Player input;
+        private UiNavigation navigation;
+
+        private SaveSystem.LexiconEntry selectedEntry;
+        
+        private void Awake()
+        {
+            input = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
+            navigation = GetComponentInParent<UiNavigation>();
+        }
+
+        private void Update()
+        {
+            if(selectedEntry != null && !navigation.IsModal && input.GetButtonDown(Action.UIALTERNATE))
+                navigation.OpenModal("Are you sure you want to delete this save? This cannot be undone!", new [] {"No", "Yes"}, Delete);
+                
+        }
+
+        private void Delete(string confirm)
+        {
+            if (!"Yes".Equals(confirm) || selectedEntry == null)
+                return;
+         
+            SaveSystem.DeleteSave(selectedEntry);
+            RefreshUi();
+        }
 
         public void RefreshUi()
         {
@@ -46,7 +75,7 @@ namespace TMechs.UI.Controllers
                 RefreshUi();
         }
 
-        public void OnSlotSelected(RectTransform rect)
+        public void OnSlotSelected(RectTransform rect, SaveSystem.LexiconEntry entry)
         {
             if (!scrollRect || !scrollTarget)
                 return;
@@ -57,6 +86,8 @@ namespace TMechs.UI.Controllers
                 scrollTarget.anchoredPosition = new Vector2(0F, -rect.anchoredPosition.y - rect.sizeDelta.y);
             else if(scrolledPos < -scrollRect.sizeDelta.y)
                 scrollTarget.anchoredPosition = new Vector2(0F, -scrollRect.sizeDelta.y - rect.anchoredPosition.y);
+
+            selectedEntry = entry;
         }
     }
 }

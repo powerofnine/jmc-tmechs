@@ -106,6 +106,9 @@ namespace TMechs.UI
             }
         }
 
+        public GameObject GetCurrentMenu()
+            => stateStack.Count == 0 ? null : GetStateMenu(stateStack.Peek());
+
         [Serializable]
         public enum Menu
         {
