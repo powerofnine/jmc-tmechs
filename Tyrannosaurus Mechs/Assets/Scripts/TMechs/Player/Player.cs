@@ -58,6 +58,11 @@ namespace TMechs.Player
 
         private void UpdateHealth()
         {
+            if (health <= 0F)
+            {
+                //TODO proper death
+                Destroy(gameObject);
+            }
         }
     }
 }
