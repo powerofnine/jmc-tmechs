@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TMechs.UI
@@ -19,7 +20,7 @@ namespace TMechs.UI
         [Range(0F, 1F)]
         private float fillAmount;
 
-        public Image[] bars;
+        public HealthBar[] bars;
 
         private void UpdateRender()
         {
@@ -28,18 +29,22 @@ namespace TMechs.UI
 
             float fillValue = bars.Length * fillAmount;
 
-            foreach (Image bar in bars)
+            foreach (HealthBar bar in bars)
             {
                 if (fillValue >= 1F)
                 {
-                    if (bar)
-                        bar.fillAmount = 1F;
+                    if (bar.image)
+                        bar.image.fillAmount = 1F;
+                    if (bar.path)
+                        bar.path.Value = 1F;
                     fillValue -= 1F;
                 }
                 else
                 {
-                    if (bar)
-                        bar.fillAmount = fillValue;
+                    if (bar.image)
+                        bar.image.fillAmount = fillValue;
+                    if (bar.path)
+                        bar.path.Value = fillValue;
                     fillValue = 0F;
                 }
             }
@@ -48,5 +53,12 @@ namespace TMechs.UI
 #if UNITY_EDITOR
         private void OnValidate() => UpdateRender();
 #endif
+
+        [Serializable]
+        public struct HealthBar
+        {
+            public Image image;
+            public UiPath path;
+        }
     }
 }
