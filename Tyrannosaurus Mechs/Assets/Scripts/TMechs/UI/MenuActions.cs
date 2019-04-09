@@ -2,6 +2,7 @@
 using System.Collections;
 using Rewired;
 using TMechs.Data;
+using TMechs.FX;
 using TMechs.Player;
 using TMechs.UI.Components;
 using UnityEngine;
@@ -72,8 +73,7 @@ namespace TMechs.UI
                     yield break;
             }
 
-            if(action != null)
-                action();
+            action?.Invoke();
         }
         
         public static void SetPause(bool pause)
@@ -81,8 +81,7 @@ namespace TMechs.UI
             Time.timeScale = pause ? 0F : 1F;
             ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER).controllers.maps.SetMapsEnabled(!pause, Controls.Category.DEFAULT);
 
-            if (PlayerPostProcess.Instance && PlayerPostProcess.Instance.ui)
-                PlayerPostProcess.Instance.ui.enabled = pause;
+            BlurFade.Fade(pause);
         }
 
         public void ExitGame()

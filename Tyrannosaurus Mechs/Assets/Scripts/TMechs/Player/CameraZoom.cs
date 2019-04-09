@@ -14,7 +14,7 @@ namespace TMechs.Player
 
         public float zoomDistance = 5F;
         
-        private void LateUpdate()
+        private void Update()
         {
             float distance = maxDistance;
 
