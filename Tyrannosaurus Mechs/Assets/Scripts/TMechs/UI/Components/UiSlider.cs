@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace TMechs.UI.Components
@@ -10,22 +11,29 @@ namespace TMechs.UI.Components
     {
         public Image bar;
         public TextMeshProUGUI percentage;
-        public int valueIncrement = 5;
-
-        public int Value
+        public float valueIncrement = .05F;
+        
+        public float Value
         {
             get => value;
             set
             {
-                this.value = Mathf.Clamp(value, 0, 100);
+                this.value = Mathf.Clamp(value, minValue, maxValue);
                 UpdateState_Pre();
                 NotifyValueChange();
             }
         }
 
-        private int value;
+        private float value;
 
-        public void SetInstant(int value)
+        [Space]
+        public float minValue = 0F;
+        public float maxValue = 1F;
+
+        public delegate string ToValue(float value, float min, float max);
+        public ToValue toValue = (val, min, max) => Mathf.RoundToInt((val - min) / (max - min) * 100) + "%";
+        
+        public void SetInstant(float value)
         {
             Value = value;
             UpdateState_Pre(true);
@@ -38,8 +46,8 @@ namespace TMechs.UI.Components
             if (bar)
                 StartCoroutine(TransitionBar(instant));
 
-            if (percentage)
-                percentage.text = value + "%";
+            if (percentage && toValue != null)
+                percentage.text = toValue(Value, minValue, maxValue);
         }
 
         private IEnumerator TransitionBar(bool instant)
@@ -53,7 +61,7 @@ namespace TMechs.UI.Components
                     progress = 1F;
                 
                 progress += Time.unscaledDeltaTime * 6F;
-                bar.fillAmount = Mathf.Lerp(fillValue, value / 100F, progress);
+                bar.fillAmount = Mathf.Lerp(fillValue, (value - minValue) / (maxValue - minValue), progress);
 
                 yield return null;
             }

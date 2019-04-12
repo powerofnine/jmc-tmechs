@@ -17,17 +17,17 @@ namespace TMechs.UI.Controllers
             if (masterSlider)
             {
                 masterSlider.SetInstant(settings.volume[SoundSettings.Channel.Master]);
-                masterSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Master] = masterSlider.Value);
+                masterSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Master] = Mathf.RoundToInt(masterSlider.Value));
             }
             if (musicSlider)
             {
                 musicSlider.SetInstant(settings.volume[SoundSettings.Channel.Music]);
-                musicSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Music] = musicSlider.Value);
+                musicSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Music] = Mathf.RoundToInt(musicSlider.Value));
             }
             if (sfxSlider)
             {
                 sfxSlider.SetInstant(settings.volume[SoundSettings.Channel.Sfx]);
-                sfxSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Sfx] = sfxSlider.Value);
+                sfxSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Sfx] = Mathf.RoundToInt(sfxSlider.Value));
             }
         }
     }
