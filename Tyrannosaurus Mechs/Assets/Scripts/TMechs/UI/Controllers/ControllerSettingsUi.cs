@@ -25,7 +25,7 @@ namespace TMechs.UI.Controllers
         private string layoutFormat;
         private string guidFormat;
 
-        private readonly Dictionary<int, ControllerDef.ButtonLayout> map = new Dictionary<int, ControllerDef.ButtonLayout>();
+        private Dictionary<int, ControllerDef.ButtonLayout> map;
 
         private void Awake()
         {
@@ -39,24 +39,7 @@ namespace TMechs.UI.Controllers
 
             if (iconSet)
             {
-                ControllerDef.ButtonLayout[] layouts = Enum.GetValues(typeof(ControllerDef.ButtonLayout)).Cast<ControllerDef.ButtonLayout>().ToArray();
-                List<string> values = new List<string>();
-
-                foreach (ControllerDef.ButtonLayout layout in layouts)
-                {
-                    MemberInfo info = layout.GetType().GetMember(layout.ToString()).SingleOrDefault();
-                    if (info == null)
-                        continue;
-
-                    FriendlyNameAttribute fn = (FriendlyNameAttribute) info.GetCustomAttributes(typeof(FriendlyNameAttribute)).SingleOrDefault();
-                    if (fn == null)
-                        continue;
-
-                    map.Add(values.Count, layout);
-                    values.Add(fn.name);
-                }
-
-                iconSet.values = values.ToArray();
+                map = iconSet.SetEnum<ControllerDef.ButtonLayout>();
 
                 iconSet.Value = map.SingleOrDefault(x => x.Value.Equals(settings.buttonLayout)).Key;
                 iconSet.onValueChange.AddListener(ob => settings.buttonLayout = map[iconSet.Value]);

@@ -1,4 +1,5 @@
-using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
 using TMechs.Data.Settings;
 using TMechs.UI.Components;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace TMechs.UI.Controllers
         public UiSlider brightnessSlider;
         public UiSlider gammaSlider;
         public UiCheckbox vsyncSlider;
+        public UiSelection fpsDisplay;
+
+        private Dictionary<int, DisplaySettings.FpsDisplay> fpsValueMap;
 
         private void Awake()
         {
@@ -30,6 +34,14 @@ namespace TMechs.UI.Controllers
             {
                 vsyncSlider.SetInstant(settings.vsync);
                 vsyncSlider.onValueChange.AddListener(ob => settings.vsync = vsyncSlider.IsChecked);
+            }
+
+            if (fpsDisplay)
+            {
+                fpsValueMap = fpsDisplay.SetEnum<DisplaySettings.FpsDisplay>();
+                
+                fpsDisplay.Value = fpsValueMap.SingleOrDefault(x => x.Value.Equals(settings.fpsDisplay)).Key;
+                fpsDisplay.onValueChange.AddListener(ob => settings.fpsDisplay = fpsValueMap[fpsDisplay.Value]);
             }
         }
     }
