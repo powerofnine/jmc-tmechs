@@ -1,3 +1,4 @@
+using System.Globalization;
 using TMechs.Data.Settings;
 using TMechs.UI.Components;
 using UnityEngine;

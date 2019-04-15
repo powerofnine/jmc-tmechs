@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,10 +30,19 @@ namespace TMechs.UI.Components
         [Space]
         public float minValue = 0F;
         public float maxValue = 1F;
-
-        public delegate string ToValue(float value, float min, float max);
-        public ToValue toValue = (val, min, max) => Mathf.RoundToInt((val - min) / (max - min) * 100) + "%";
+        public DisplayMode displayMode;
         
+        public delegate string ToValue(float value, float min, float max);
+        public ToValue toValue;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            if(modes.ContainsKey(displayMode))
+                toValue = modes[displayMode];
+        }
+
         public void SetInstant(float value)
         {
             Value = value;
@@ -86,5 +96,16 @@ namespace TMechs.UI.Components
 
             return false;
         }
+
+        public enum DisplayMode
+        {
+            Percentage,
+            Value
+        }
+        private static readonly Dictionary<DisplayMode, ToValue> modes = new Dictionary<DisplayMode, ToValue>()
+        {
+                {DisplayMode.Percentage, (value, min, max) => Mathf.RoundToInt((value - min) / (max - min) * 100) + "%"},
+                {DisplayMode.Value, (value, min, max) => value.ToString("n2")}
+        };
     }
 }

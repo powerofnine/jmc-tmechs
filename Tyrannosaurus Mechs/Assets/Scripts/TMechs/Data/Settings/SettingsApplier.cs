@@ -30,8 +30,9 @@ namespace TMechs.Data.Settings
 
             if (display != null)
             {
-//                grading.postExposure.value = display.brightness;
+                grading.postExposure.value = Mathf.Clamp(display.brightness, -2F, 2F);
                 grading.gamma.value.w = Mathf.Clamp(display.gamma, -1F, 1F);
+                QualitySettings.vSyncCount = display.vsync ? 1 : 0;
             }
         }
 
