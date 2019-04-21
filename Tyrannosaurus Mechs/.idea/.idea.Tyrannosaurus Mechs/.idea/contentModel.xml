@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\AUzulins\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\AUzulins\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Tyrannosaurus Mechs.996682487.00" t="ExcludeRecursive" />
-    <e p="C:\Users\AUzulins\Desktop\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
+    <e p="C:\Users\fuj1n\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\fuj1n\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Tyrannosaurus Mechs.-131819345.00" t="ExcludeRecursive" />
+    <e p="D:\Libraries\Documents\Unity Projects\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -15,6 +15,24 @@
             <e p="Editor" t="Include">
               <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
             </e>
+          </e>
+          <e p="Event Delegate System" t="Include">
+            <e p="UI" t="Include">
+              <e p="EventDelegate" t="Include">
+                <e p="EDFlagAttribute.cs" t="Include" />
+                <e p="Editor" t="Include">
+                  <e p="DrawerTools.cs" t="Include" />
+                  <e p="EventDelegateDrawer.cs" t="Include" />
+                  <e p="FlagDrawer.cs" t="Include" />
+                  <e p="ReorderableDelegateDrawer.cs" t="Include" />
+                </e>
+                <e p="EventDelegate.cs" t="Include" />
+                <e p="ReorderableList.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Json.NET" t="Include">
+            <e p="Newtonsoft.Json.xml" t="Include" />
           </e>
           <e p="RainbowAssets" t="Include">
             <e p="!Core" t="Include">
@@ -194,16 +212,32 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Editor" t="Include">
+            <e p="IdAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
+            <e p="ReadOnlyAttributeDrawer.cs" t="Include" />
           </e>
-          <e p="TestPendulum.cs" t="Include" />
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
-            <e p="Enemy" t="Include">
-              <e p="AI" t="Include">
-                <e p="AIComponent.cs" t="Include" />
-                <e p="AiManager.cs" t="Include" />
+            <e p="Attributes" t="Include">
+              <e p="FriendlyNameAttribute.cs" t="Include" />
+              <e p="TextureNameAttribute.cs" t="Include" />
+            </e>
+            <e p="Data" t="Include">
+              <e p="SaveSpawner.cs" t="Include" />
+              <e p="SaveSystem.cs" t="Include" />
+              <e p="Settings" t="Include">
+                <e p="CameraSettings.cs" t="Include" />
+                <e p="ControllerSettings.cs" t="Include" />
+                <e p="DisplaySettings.cs" t="Include" />
+                <e p="SettingsApplier.cs" t="Include" />
+                <e p="SettingsData.cs" t="Include" />
+                <e p="SettingsProviderAttribute.cs" t="Include" />
+                <e p="SoundSettings.cs" t="Include" />
               </e>
+            </e>
+            <e p="Enemy" t="Include">
+              <e p="AiHarrierTemporary.cs" t="Include" />
+              <e p="AnimatorEventListener.cs" t="Include" />
               <e p="EnemyBasicAI.cs" t="Include" />
             </e>
             <e p="Entity" t="Include">
@@ -211,8 +245,10 @@
               <e p="RocketFist.cs" t="Include" />
             </e>
             <e p="Environment" t="Include">
+              <e p="Checkpoint.cs" t="Include" />
               <e p="InstantiateOnDie.cs" t="Include" />
               <e p="KillOnEmpty.cs" t="Include" />
+              <e p="LevelInfo.cs" t="Include" />
               <e p="Targets" t="Include">
                 <e p="BaseTarget.cs" t="Include" />
                 <e p="EnemyTarget.cs" t="Include" />
@@ -220,10 +256,18 @@
               </e>
             </e>
             <e p="FX" t="Include">
+              <e p="BlurFade.cs" t="Include" />
               <e p="Rotator.cs" t="Include" />
+              <e p="SineBob.cs" t="Include" />
+              <e p="Sprites" t="Include">
+                <e p="SpriteAnimator.cs" t="Include" />
+                <e p="SpriteSheet.cs" t="Include" />
+              </e>
             </e>
             <e p="InspectorAttributes" t="Include">
+              <e p="IdAttribute.cs" t="Include" />
               <e p="NameAttribute.cs" t="Include" />
+              <e p="ReadOnlyAttribute.cs" t="Include" />
             </e>
             <e p="Player" t="Include">
               <e p="Behaviour" t="Include">
@@ -241,16 +285,56 @@
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerHitBox.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
+              <e p="PlayerPostProcess.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
             </e>
+            <e p="PostProcessing" t="Include">
+              <e p="Blur.cs" t="Include" />
+            </e>
+            <e p="Preloader.cs" t="Include" />
             <e p="RewiredConsts.cs" t="Include" />
             <e p="UI" t="Include">
+              <e p="Components" t="Include">
+                <e p="FancyImage.cs" t="Include" />
+                <e p="UiButton.cs" t="Include" />
+                <e p="UiCheckbox.cs" t="Include" />
+                <e p="UIComponent.cs" t="Include" />
+                <e p="UiModal.cs" t="Include" />
+                <e p="UiSaveSlot.cs" t="Include" />
+                <e p="UiSelectable.cs" t="Include" />
+                <e p="UiSelection.cs" t="Include" />
+                <e p="UiSlider.cs" t="Include" />
+              </e>
+              <e p="ConditionalDisplay.cs" t="Include" />
+              <e p="Controllers" t="Include">
+                <e p="CameraSettingsUi.cs" t="Include" />
+                <e p="ControllerSettingsUi.cs" t="Include" />
+                <e p="DisplaySettingsUi.cs" t="Include" />
+                <e p="LoadGameUi.cs" t="Include" />
+                <e p="SoundSettingsUi.cs" t="Include" />
+              </e>
+              <e p="FX" t="Include">
+                <e p="UiFade.cs" t="Include" />
+              </e>
+              <e p="GamePad" t="Include">
+                <e p="ButtonDisplayController.cs" t="Include" />
+                <e p="ControllerDef.cs" t="Include" />
+                <e p="IconMap.cs" t="Include" />
+                <e p="IconSwitcher.cs" t="Include" />
+              </e>
+              <e p="HealthBarCollection.cs" t="Include" />
               <e p="MainUIController.cs" t="Include" />
+              <e p="MenuActions.cs" t="Include" />
+              <e p="MenuController.cs" t="Include" />
+              <e p="SceneTransition.cs" t="Include" />
+              <e p="UiNavigation.cs" t="Include" />
+              <e p="UiPath.cs" t="Include" />
             </e>
             <e p="Utility.cs" t="Include" />
           </e>
         </e>
         <e p="Shaders" t="Include">
+          <e p="Blur.shader" t="Include" />
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>

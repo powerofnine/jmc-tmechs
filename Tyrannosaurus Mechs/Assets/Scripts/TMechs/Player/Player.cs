@@ -1,5 +1,6 @@
 ﻿using System;
 using TMechs.Environment.Targets;
+using TMechs.UI;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -43,11 +44,25 @@ namespace TMechs.Player
             Combat = GetComponent<PlayerCombat>();
         }
 
+        private void Update()
+        {
+            if (PlayerMovement.Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
+            {
+                Instantiate(Resources.Load<GameObject>("UI/Menu"));
+                MenuActions.SetPause(true);
+            }
+        }
+
         public void Damage(int damage)
             => Health -= (float) damage / maxHealth;
 
         private void UpdateHealth()
         {
+            if (health <= 0F)
+            {
+                //TODO proper death
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using TMechs.Data.Settings;
 using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
@@ -65,32 +67,42 @@ namespace TMechs.Player
         }
 
         public void FreeCamera()
-        {            
+        {
+            CameraSettings settings = SettingsData.Get<CameraSettings>();
+            
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
-            
-            #if TMECHS_CAMERA_PAN
-            transform.Translate(playerDelta.x, playerDelta.y, playerDelta.z, Space.Self);
-            #else
-            // Move towards the player in the local z axis
-            transform.Translate(0F, playerDelta.y, playerDelta.z, Space.Self);
 
-            Vector3 playerCamPos = player.position.Remove(Utility.Axis.Y);
-            Vector3 camCamPos = aaRig.position.Remove(Utility.Axis.Y);
-            
-            // Calculate the angle between the aa rig and the player
-            float offsetAngle = Vector3.SignedAngle(playerCamPos - camCamPos, aaRig.forward, Vector3.up);
-            
-            // Rotate around the aa rig to face the player
-            transform.RotateAround(camCamPos, Vector3.up, -offsetAngle);
-            if(Mathf.Abs(offsetAngle) > 1F)
-                state.rotationY = transform.localEulerAngles.y;
-            #endif
-            
+            switch (settings.mode)
+            {
+                case CameraSettings.CameraMode.Pan:
+                    transform.Translate(playerDelta.x, playerDelta.y, playerDelta.z, Space.Self);
+                    break;
+                case CameraSettings.CameraMode.Rotate:
+                {
+                    // Move towards the player in the local z axis
+                    transform.Translate(0F, playerDelta.y, playerDelta.z, Space.Self);
+
+                    Vector3 playerCamPos = player.position.Remove(Utility.Axis.Y);
+                    Vector3 camCamPos = aaRig.position.Remove(Utility.Axis.Y);
+
+                    // Calculate the angle between the aa rig and the player
+                    float offsetAngle = Vector3.SignedAngle(playerCamPos - camCamPos, aaRig.forward, Vector3.up);
+
+                    // Rotate around the aa rig to face the player
+                    transform.RotateAround(camCamPos, Vector3.up, -offsetAngle);
+                    if (Mathf.Abs(offsetAngle) > 1F)
+                        state.rotationY = transform.localEulerAngles.y;
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
 
-            state.rotationY += -input.x * cameraSpeed * Time.deltaTime;
-            state.rotationX += -input.y * cameraSpeed * Time.deltaTime;
+            state.rotationY += input.x * cameraSpeed * Time.deltaTime * (settings.invertHorizontal ? -1 : 1);
+            state.rotationX += -input.y * cameraSpeed * Time.deltaTime * (settings.invertVertical ? -1 : 1);
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
             if (Input.GetButtonDown(CAMERA_CENTER))

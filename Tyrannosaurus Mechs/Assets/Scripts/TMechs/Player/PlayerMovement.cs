@@ -1,4 +1,5 @@
 ﻿using System;
+using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
@@ -122,6 +123,11 @@ namespace TMechs.Player
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
+            
+            #if UNITY_EDITOR
+            if(UnityEngine.Input.GetKeyDown(KeyCode.B))
+                SaveSystem.CreateSave(new SaveSystem.SaveData() {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
+            #endif
         }
 
         private void GroundedCheck()
