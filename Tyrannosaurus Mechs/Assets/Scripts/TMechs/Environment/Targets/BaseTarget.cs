@@ -38,7 +38,6 @@ namespace TMechs.Environment.Targets
             target.gameObject.SetActive(false);
 
             target.transform.localScale = target.transform.lossyScale.InverseScale();
-            target.sharedMaterial = Resources.Load<Material>("Sprite-AlwaysOnTop");
             
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }

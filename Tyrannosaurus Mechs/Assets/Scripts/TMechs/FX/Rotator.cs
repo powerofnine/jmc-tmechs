@@ -8,7 +8,7 @@ namespace TMechs.FX
 
         private void Update()
         {
-            transform.Rotate(axis * Time.deltaTime);
+            transform.Rotate(axis * Time.unscaledDeltaTime);
         }
     }
 }
