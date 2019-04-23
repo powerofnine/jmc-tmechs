@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMechs.Environment.Targets;
 using TMechs.UI;
 using UnityEngine;
@@ -63,6 +64,18 @@ namespace TMechs.Player
                 //TODO proper death
                 Destroy(gameObject);
             }
+        }
+
+        public IEnumerable<string> GetDebugInfo()
+        {
+            List<string> ret = new List<string>();
+            
+            ret.Add($"World Position: {transform.position}");
+            ret.Add($"World Rotation: {transform.eulerAngles}");
+            ret.Add($"Health: {Health * maxHealth} / {maxHealth}");
+            ret.Add($"Velocity: {Controller.velocity}");
+
+            return ret;
         }
     }
 }
