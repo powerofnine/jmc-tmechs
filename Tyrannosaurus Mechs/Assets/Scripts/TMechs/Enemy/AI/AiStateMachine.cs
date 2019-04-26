@@ -83,7 +83,8 @@ namespace TMechs.Enemy.AI
             if (states.ContainsKey(name))
                 throw new ArgumentException($"State name {name} already exists when trying to register {state}");
 
-            state.Machine = this;
+            if(state != null)
+                state.Machine = this;
             states.Add(name, state);
         }
 

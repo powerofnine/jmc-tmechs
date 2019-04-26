@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace TMechs.Enemy.AI
 {
@@ -53,10 +52,15 @@ namespace TMechs.Enemy.AI
                     (transform, target, machine) => properties.attackReleased);
 
             stateMachine.RegisterTransition("Shooting", "Chasing",
-                    (transform, target, machine) => machine.HorizontalDistanceToTarget > properties.shootRange || properties.shootTimer <= 0F);
+                    (transform, target, machine) => machine.HorizontalDistanceToTarget > properties.shootRange || (properties.shootTimer -= Time.deltaTime) <= 0F);
 
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"Harrier:{name}");
+        }
+
+        private void Update()
+        {
+            stateMachine.Tick();
         }
 
         public void OnAnimationEvent(string id)
@@ -66,9 +70,56 @@ namespace TMechs.Enemy.AI
 
         private class Chasing : AiStateMachine.State
         {
+            private HarrierProperties props;
+            
+            private float dashTimer;
+            private Vector3 dashDirection;
+            
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                props = properties as HarrierProperties ?? new HarrierProperties();
+
+                dashTimer = 0F;
+                dashDirection = Vector3.zero;
+            }
+
             public override void OnTick()
             {
-                throw new System.NotImplementedException();
+                Vector3 heading = target.position - transform.position;
+                Vector3 fullDirection = heading / heading.magnitude;
+                
+                float yHeading = heading.y;
+                heading = heading.Remove(Utility.Axis.Y);
+
+                float distance = heading.magnitude;
+
+                Vector3 direction = heading / distance;
+
+                transform.forward = fullDirection;
+
+                dashTimer -= Time.deltaTime;
+                if (dashTimer <= 0F)
+                {
+                    if (dashDirection.magnitude > float.Epsilon)
+                    {
+                        dashTimer = .5F;
+                        dashDirection = Vector3.zero;
+                    }
+                    else
+                    {
+                        dashTimer = Random.Range(2F, 4F);
+                        dashDirection = direction;
+
+                        if (Mathf.Abs(yHeading) > 15F)
+                            dashDirection.y = Mathf.Sign(yHeading);
+                        else
+                            dashDirection.y = Random.Range(-.75F, .75F);
+                    }
+                }
+
+                props.controller.Move(dashDirection * props.dashSpeed * Time.deltaTime);
             }
         }
 
@@ -99,6 +150,11 @@ namespace TMechs.Enemy.AI
 
             public override void OnTick()
             {
+                Vector3 heading = target.position - transform.position;
+                Vector3 direction = heading / heading.magnitude;
+
+                transform.forward = direction;
+                
                 nextShot -= Time.deltaTime;
                 if (nextShot <= 0F)
                 {
