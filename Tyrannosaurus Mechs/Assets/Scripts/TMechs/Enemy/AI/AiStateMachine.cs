@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -45,6 +46,11 @@ namespace TMechs.Enemy.AI
             if (!isInitialized)
                 EnterState(stateDefault);
 
+#if UNITY_EDITOR
+            if (!snapshot.initialized)
+                BuildSnapshot();
+#endif
+            
             if (transitions.ContainsKey(ANY_STATE))
             {
                 foreach (Transition t in transitions[ANY_STATE])
@@ -66,6 +72,8 @@ namespace TMechs.Enemy.AI
                 }
             }
 
+            UpdateSnapshot();
+            
             if (CurrentState != null)
             {
                 CurrentState.properties = properties;
@@ -83,9 +91,11 @@ namespace TMechs.Enemy.AI
             if (states.ContainsKey(name))
                 throw new ArgumentException($"State name {name} already exists when trying to register {state}");
 
-            if(state != null)
+            if (state != null)
                 state.Machine = this;
             states.Add(name, state);
+
+            BuildSnapshot();
         }
 
         public void RegisterTransition(string source, string destination, TransitionCondition condition, Action<AiStateMachine> onTransition = null)
@@ -94,6 +104,8 @@ namespace TMechs.Enemy.AI
                 transitions.Add(source, new List<Transition>());
 
             transitions[source].Add(new Transition(destination, condition, onTransition));
+
+            BuildSnapshot();
         }
 
         public void SetDefaultState(string state)
@@ -135,7 +147,34 @@ namespace TMechs.Enemy.AI
         public void RegisterVisualizer(string name)
         {
 #if UNITY_EDITOR
-            //TODO
+            AiGraphClient.RegisterMachine(name, this);
+#endif
+        }
+
+        private void BuildSnapshot()
+        {
+#if UNITY_EDITOR
+            snapshot = new MachineSnapshot();
+            {
+                snapshot.states = states.Select(x => x.Key).Prepend(ANY_STATE).ToArray();
+                snapshot.currentState = state;
+
+                List<Tuple<string, string>> transitionStates = new List<Tuple<string, string>>();
+                foreach (KeyValuePair<string, List<Transition>> branch in transitions)
+                foreach (Transition transition in branch.Value)
+                    transitionStates.Add(new Tuple<string, string>(branch.Key, transition.destinationState));
+
+                snapshot.transitions = transitionStates.ToArray();
+
+                snapshot.initialized = true;
+            }
+#endif
+        }
+
+        private void UpdateSnapshot()
+        {
+#if UNITY_EDITOR
+            snapshot.currentState = state;
 #endif
         }
 
@@ -193,5 +232,21 @@ namespace TMechs.Enemy.AI
                 this.onTransition = onTransition;
             }
         }
+
+#if UNITY_EDITOR
+        public MachineSnapshot snapshot;
+
+        public struct MachineSnapshot
+        {
+            public bool initialized;
+
+            public string[] states;
+            public Tuple<string, string>[] transitions;
+
+            public string currentState;
+
+            public Vector2[] positions;
+        }
+#endif
     }
 }
