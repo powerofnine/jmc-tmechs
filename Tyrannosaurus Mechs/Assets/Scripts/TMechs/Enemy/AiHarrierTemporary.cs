@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TMechs.Enemy.AI;
 using TMechs.InspectorAttributes;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace TMechs.Enemy
         [ReadOnly]
         public string currentState = "None";
 
+        public AiStateMachine stateMachine;
+        
         [Header("Chasing")]
         public float rangeStartFollow = 15F;
         public float rangeStopFollow = 25F;
@@ -41,6 +44,8 @@ namespace TMechs.Enemy
 
         private void Awake()
         {
+            stateMachine = new AiStateMachine(transform);
+            
             controller = GetComponent<CharacterController>();
             animator = GetComponentInChildren<Animator>();
 
