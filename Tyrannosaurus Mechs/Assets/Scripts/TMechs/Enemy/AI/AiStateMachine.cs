@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace TMechs.Enemy.AI
@@ -24,9 +26,12 @@ namespace TMechs.Enemy.AI
         public State CurrentState { get; private set; }
         private List<Transition> currentTransitions;
 
-        private AiProperties properties;
+        private readonly HashSet<string> triggers = new HashSet<string>();
+        private readonly Dictionary<string, object> properties = new Dictionary<string, object>();
 
-        public delegate bool TransitionCondition(Transform transform, Transform target, AiStateMachine machine);
+        public delegate bool TransitionCondition(AiStateMachine machine);
+
+        public object shared;
 
         #region Utilities
 
@@ -50,12 +55,12 @@ namespace TMechs.Enemy.AI
             if (!snapshot.initialized)
                 BuildSnapshot();
 #endif
-            
+
             if (transitions.ContainsKey(ANY_STATE))
             {
                 foreach (Transition t in transitions[ANY_STATE])
                 {
-                    if (t.condition(transform, target, this))
+                    if (t.condition(this))
                     {
                         t.onTransition?.Invoke(this);
                         EnterState(t.destinationState);
@@ -65,7 +70,7 @@ namespace TMechs.Enemy.AI
 
             foreach (Transition t in currentTransitions)
             {
-                if (t.condition(transform, target, this))
+                if (t.condition(this))
                 {
                     t.onTransition?.Invoke(this);
                     EnterState(t.destinationState);
@@ -73,12 +78,8 @@ namespace TMechs.Enemy.AI
             }
 
             UpdateSnapshot();
-            
-            if (CurrentState != null)
-            {
-                CurrentState.properties = properties;
-                CurrentState.OnTick();
-            }
+
+            CurrentState?.OnTick();
         }
 
         public void OnAnimationEvent(string id)
@@ -113,9 +114,6 @@ namespace TMechs.Enemy.AI
             stateDefault = state;
         }
 
-        public void SetProperties(AiProperties properties)
-            => this.properties = properties;
-
         public void EnterState(string state)
         {
             if (!states.ContainsKey(state))
@@ -126,23 +124,97 @@ namespace TMechs.Enemy.AI
 
             isInitialized = true;
 
-            if (CurrentState != null)
-            {
-                CurrentState.properties = properties;
-                CurrentState.OnExit();
-            }
+            CurrentState?.OnExit();
 
             this.state = state;
 
             CurrentState = states[state];
             currentTransitions = transitions.ContainsKey(state) ? transitions[state] : null;
 
-            if (CurrentState != null)
-            {
-                CurrentState.properties = properties;
-                CurrentState.OnEnter();
-            }
+            CurrentState?.OnEnter();
         }
+
+        #region Properties
+
+        public void SetTrigger(string name, bool active = true)
+        {
+            if (active)
+                triggers.Add(name);
+            else
+                triggers.Remove(name);
+        }
+
+        public bool GetTrigger(string name, bool pop = true)
+            => pop ? triggers.Remove(name) : triggers.Contains(name);
+
+        public void Set<T>(string name, T value)
+        {
+            if(value == null)
+                throw new ArgumentException($"Attempted to assign a null value to property: {name}");
+            if(properties.ContainsKey(name) && !(properties[name] is T))
+                throw new ArgumentException($"Type mismatch between the existing property {name} and the attempted assignment. {properties[name].GetType()} != {typeof(T)}");
+
+            properties[name] = value;
+        }
+
+        public T Get<T>(string name)
+        {
+            if (!properties.ContainsKey(name))
+                return default;
+            if (!(properties[name] is T))
+            {
+                Debug.LogWarning($"[Type Mismatch] Attempted to get value {name} of type {typeof(T)} when real type is {properties[name].GetType()}");
+                return default;
+            }
+
+            return (T) properties[name];
+        }
+
+        public T GetAddSet<T>(string name, int value)
+        {
+            return GetAddSet<T>(name, (float)value);
+        }
+
+        public T GetAddSet<T>(string name, float value)
+        {
+            if (!HasValue(name))
+                Set(name, default(T));
+
+            object ob = Get<object>(name);
+
+            switch (ob)
+            {
+                case int i:
+                    ob = i + (int) value;
+                    break;
+                case float f:
+                    ob = f + value;
+                    break;
+                case double d:
+                    ob = d + value;
+                    break;
+            }
+
+            Set(name, ob);
+            
+            if (ob is T)
+                return (T) ob;
+
+            return default;
+        }
+
+        public bool HasValue(string name)
+            => properties.ContainsKey(name);
+        
+        public void ImportProperties(object ob)
+        {
+            FieldInfo[] fields = ob.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (FieldInfo field in fields)
+                Set(field.Name, field.GetValue(ob));
+        }
+        
+        #endregion
 
         public void RegisterVisualizer(string name)
         {
@@ -183,8 +255,6 @@ namespace TMechs.Enemy.AI
         {
             public AiStateMachine Machine { get; set; }
 
-            public AiProperties properties;
-
             // ReSharper disable once InconsistentNaming
             public Transform transform => Machine.transform;
 
@@ -214,11 +284,6 @@ namespace TMechs.Enemy.AI
             }
         }
 
-        [Serializable]
-        public class AiProperties
-        {
-        }
-
         private struct Transition
         {
             public string destinationState;
@@ -232,6 +297,8 @@ namespace TMechs.Enemy.AI
                 this.onTransition = onTransition;
             }
         }
+
+        #region Snapshot
 
 #if UNITY_EDITOR
         public MachineSnapshot snapshot;
@@ -248,5 +315,7 @@ namespace TMechs.Enemy.AI
             public Vector2[] positions;
         }
 #endif
+
+        #endregion
     }
 }
