@@ -70,10 +70,22 @@ MonoBehaviour:
     transform: {fileID: 0}
     target: {fileID: 0}
   properties:
-    rangeStartFollow: 75
-    rangeStopFollow: 100
-    attackRange: 15
-    shootRange: 50
+    rangeStartFollow:
+      radius: 75
+      visualize: 1
+      visualizeColor: {r: 0, g: 1, b: 0, a: 0}
+    rangeStopFollow:
+      radius: 100
+      visualize: 1
+      visualizeColor: {r: 1, g: 0, b: 0, a: 0}
+    attackRange:
+      radius: 15
+      visualize: 1
+      visualizeColor: {r: 1, g: 1, b: 0, a: 0}
+    shootRange:
+      radius: 50
+      visualize: 1
+      visualizeColor: {r: 0, g: 1, b: 1, a: 0}
     dashSpeed: 10
     shootFrequency: {x: 5, y: 10}
     shootTime: {x: 2, y: 5}
@@ -643,11 +655,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: bcf7fa07c143d7240bd1748a9c975edd, type: 2}
-    - target: {fileID: 2000000, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
+    - target: {fileID: 2000004, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
       propertyPath: m_HDR
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2000000, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
+    - target: {fileID: 2000004, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
       propertyPath: m_AllowMSAA
       value: 0
       objectReference: {fileID: 0}
@@ -659,11 +671,11 @@ PrefabInstance:
       propertyPath: m_AllowMSAA
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2000004, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
+    - target: {fileID: 2000000, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
       propertyPath: m_HDR
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2000004, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
+    - target: {fileID: 2000000, guid: 304c30cdd948bed4d8b2aeec95c7b0d2, type: 3}
       propertyPath: m_AllowMSAA
       value: 0
       objectReference: {fileID: 0}

@@ -8,8 +8,8 @@ namespace TMechs.Player.Behaviour
 {
     public class Grapple : StateMachineBehaviour
     {
-        private static readonly int GRAPPLE_DOWN = Animator.StringToHash("Grapple Down");
-        private static readonly int GRAPPLE_END = Animator.StringToHash("Grapple End");
+        private static readonly int GRAPPLE_DOWN = Anim.Hash("Grapple Down");
+        private static readonly int GRAPPLE_END = Anim.Hash("Grapple End");
 
         public float pullSpeedMin = 50F;
         public float pullSpeedAcceleration = 9.81F;
