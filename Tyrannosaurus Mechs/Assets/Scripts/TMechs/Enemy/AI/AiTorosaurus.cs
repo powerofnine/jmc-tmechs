@@ -231,7 +231,7 @@ namespace TMechs.Enemy.AI
         }
         #endregion
 
-        [System.Serializable]
+        [Serializable]
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         public class TorosaurusProperties
         {

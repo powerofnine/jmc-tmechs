@@ -1,6 +1,8 @@
+using System;
 using JetBrains.Annotations;
 using TMechs.Types;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
 {
@@ -225,7 +227,7 @@ namespace TMechs.Enemy.AI
         }
         #endregion States
 
-        [System.Serializable]
+        [Serializable]
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         public class HarrierProperties
         {
