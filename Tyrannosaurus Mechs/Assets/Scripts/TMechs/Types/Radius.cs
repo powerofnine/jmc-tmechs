@@ -11,9 +11,14 @@ namespace TMechs.Types
         [ColorUsage(false)]
         public Color visualizeColor;
 
-        public Radius(float radius) : this()
-            => this.radius = radius;
-        
+        public bool renderAsLine;
+
+        public Radius(float radius, bool renderAsLine = false) : this()
+        {
+            this.radius = radius;
+            this.renderAsLine = renderAsLine;
+        }
+
         public static implicit operator float(Radius r)
             => r.radius;
     }

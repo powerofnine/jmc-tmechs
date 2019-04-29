@@ -9,7 +9,7 @@ using UnityEngine;
 namespace TMechs.Enemy.AI
 {
     [Serializable]
-    public sealed class AiStateMachine : AnimatorEventListener.IAnimatorEvent
+    public sealed class AiStateMachine
     {
         public const string ANY_STATE = "%FROMANYSTATE%";
 
@@ -38,7 +38,10 @@ namespace TMechs.Enemy.AI
         public float DistanceToTarget => Vector3.Distance(transform.position, target.position);
         public float VerticalDistanceToTarget => Vector3.Distance(transform.position.Isolate(Utility.Axis.Y), target.position.Isolate(Utility.Axis.Y));
         public float HorizontalDistanceToTarget => Vector3.Distance(transform.position.Remove(Utility.Axis.Y), target.position.Remove(Utility.Axis.Y));
-
+        public Vector3 DirectionToTarget => (target.position - transform.position).normalized;
+        public Vector3 HorizontalDirectionToTarget => (target.position - transform.position).Remove(Utility.Axis.Y).normalized;
+        
+        
         #endregion
 
         public AiStateMachine(Transform transform)
@@ -82,9 +85,9 @@ namespace TMechs.Enemy.AI
             CurrentState?.OnTick();
         }
 
-        public void OnAnimationEvent(string id)
+        public void OnEvent(EventType type, string id)
         {
-            CurrentState?.OnAnimationEvent(id);
+            CurrentState?.OnEvent(type, id);
         }
 
         public void RegisterState(State state, string name)
@@ -160,7 +163,11 @@ namespace TMechs.Enemy.AI
         public T Get<T>(string name)
         {
             if (!properties.ContainsKey(name))
+            {
+                Debug.LogWarning($"[Missing Property] Property {name} does not exist");
                 return default;
+            }
+
             if (!(properties[name] is T))
             {
                 Debug.LogWarning($"[Type Mismatch] Attempted to get value {name} of type {typeof(T)} when real type is {properties[name].GetType()}");
@@ -268,6 +275,8 @@ namespace TMechs.Enemy.AI
             public float DistanceToTarget => Machine.DistanceToTarget;
             public float VerticalDistanceToTarget => Machine.VerticalDistanceToTarget;
             public float HorizontalDistanceToTarget => Machine.HorizontalDistanceToTarget;
+            public Vector3 DirectionToTarget => Machine.DirectionToTarget;
+            public Vector3 HorizontalDirectionToTarget => Machine.HorizontalDirectionToTarget;
 
             public virtual void OnEnter()
             {
@@ -279,11 +288,17 @@ namespace TMechs.Enemy.AI
 
             public abstract void OnTick();
 
-            public virtual void OnAnimationEvent(string id)
+            public virtual void OnEvent(EventType type, string id)
             {
             }
         }
 
+        public enum EventType
+        {
+            Animation,
+            Trigger
+        }
+        
         private struct Transition
         {
             public string destinationState;

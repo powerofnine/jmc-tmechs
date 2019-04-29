@@ -15,12 +15,16 @@ namespace TMechs.Enemy.AI
 
         private void Start()
         {
+            CreateStateMachine(new HarrierShared {controller = GetComponent<CharacterController>(), animator = GetComponentInChildren<Animator>()});
+        }
+
+        private void CreateStateMachine(HarrierShared shared)
+        {
             stateMachine = new AiStateMachine(transform)
             {
                     target = Player.Player.Instance.transform,
-                    shared = new HarrierShared {controller = GetComponent<CharacterController>(), animator = GetComponentInChildren<Animator>()}
+                    shared = shared
             };
-
 
             stateMachine.ImportProperties(properties);
 
@@ -67,13 +71,24 @@ namespace TMechs.Enemy.AI
 
         public void OnAnimationEvent(string id)
         {
-            stateMachine.OnAnimationEvent(id);
+            stateMachine.OnEvent(AiStateMachine.EventType.Animation, id);
         }
 
-        private class Chasing : AiStateMachine.State
+        #region States
+        private abstract class HarrierState : AiStateMachine.State
         {
-            private HarrierShared props;
-
+            protected HarrierShared props;
+            
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                
+                props = Machine.shared as HarrierShared;
+            }
+        }
+        
+        private class Chasing : HarrierState
+        {
             private float dashTimer;
             private Vector3 dashDirection;
 
@@ -83,8 +98,6 @@ namespace TMechs.Enemy.AI
 
                 dashTimer = 0F;
                 dashDirection = Vector3.zero;
-
-                props = Machine.shared as HarrierShared;
             }
 
             public override void OnTick()
@@ -125,17 +138,13 @@ namespace TMechs.Enemy.AI
             }
         }
 
-        private class Shooting : AiStateMachine.State
+        private class Shooting : HarrierState
         {
-            private HarrierShared props;
-
             private float nextShot;
 
             public override void OnEnter()
             {
                 base.OnEnter();
-
-                props = Machine.shared as HarrierShared;
 
                 Vector2 shootTime = Machine.Get<Vector2>("shootTime");
                 Machine.Set("shootTimer", Random.Range(shootTime.x, shootTime.y));
@@ -167,10 +176,8 @@ namespace TMechs.Enemy.AI
             }
         }
 
-        private class Attacking : AiStateMachine.State
+        private class Attacking : HarrierState
         {
-            private HarrierShared props;
-
             private int substate = 0;
 
             private bool attackTriggered = true;
@@ -179,11 +186,8 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEnter();
 
-                props = Machine.shared as HarrierShared;
-
-                Machine.Set("attackTimer", Machine.Get<float>("attackCooldown"));
-
                 substate = 0;
+                Machine.Set("attackTimer", Machine.Get<float>("attackCooldown"));
             }
 
             public override void OnTick()
@@ -211,14 +215,15 @@ namespace TMechs.Enemy.AI
                 Machine.SetTrigger("attackReleased");
             }
 
-            public override void OnAnimationEvent(string id)
+            public override void OnEvent(AiStateMachine.EventType type, string id)
             {
-                base.OnAnimationEvent(id);
+                base.OnEvent(type, id);
 
-                if ("attack".Equals(id))
+                if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
                     attackTriggered = true;
             }
         }
+        #endregion States
 
         [System.Serializable]
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
