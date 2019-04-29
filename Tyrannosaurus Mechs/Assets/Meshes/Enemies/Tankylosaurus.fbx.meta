@@ -430,7 +430,8 @@ ModelImporter:
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Tankylosaurus:Global_CTRL/Tankylosaurus:Skeleton_GRP/Tankylosaurus:Root_BND/Tankylosaurus:Tail_Start_BND/Tankylosaurus:Tail_Joint_1_BND/Tankylosaurus:Tail_Joint_2_BND/Tankylosaurus:Tail_Joint_3_BND/Tankylosaurus:Tail_Joint_4_BND/Tankylosaurus:Tail_Joint_5_BND/Tankylosaurus:Tail_Joint_6_BND/Tankylosaurus:Tail_Joint_7_BND/Tankylosaurus:Tail_Joint_8_BND/Tankylosaurus:Tail_End_BND/Tankylosaurus:Tail_Claw_Palm_BND
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
@@ -456,7 +457,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.79539645
+        functionName: OnAnimationEvent
+        data: attack
+        objectReferenceParameter: {fileID: 11500000, guid: f532a6d624d32b54a804fe8d36edc38b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -484,7 +493,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.26342714
+        functionName: OnAnimationEvent
+        data: rockReady
+        objectReferenceParameter: {fileID: 11500000, guid: f532a6d624d32b54a804fe8d36edc38b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.657289
+        functionName: OnAnimationEvent
+        data: rockThrow
+        objectReferenceParameter: {fileID: 11500000, guid: f532a6d624d32b54a804fe8d36edc38b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -512,7 +537,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.79539657
+        functionName: OnAnimationEvent
+        data: attack
+        objectReferenceParameter: {fileID: 11500000, guid: f532a6d624d32b54a804fe8d36edc38b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -540,7 +573,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.87468046
+        functionName: OnAnimationEvent
+        data: attack
+        objectReferenceParameter: {fileID: 11500000, guid: f532a6d624d32b54a804fe8d36edc38b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -569,7 +610,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
+    previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60

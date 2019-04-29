@@ -176,6 +176,26 @@ namespace TMechs
             return new Vector3(1F / source.x, 1F / source.y, 1F / source.z);
         }
         
+        /// <summary>
+        /// Calculate ballistic velocity from <paramref name="source"/> to <paramref name="target"/> via throw <paramref name="angle"/>
+        /// </summary>
+        /// <returns>The calculated velocity for Rigidbody</returns>
+        public static Vector3 BallisticVelocity(Vector3 source, Vector3 target, float angle)
+        {
+            angle *= Mathf.Deg2Rad;
+            
+            Vector3 direction = target - source;
+            float height = direction.y;
+            direction.y = .0F;
+            
+            float distance = direction.magnitude;
+            direction.y = distance * Mathf.Tan(angle);
+            distance += height / Mathf.Tan(angle);
+            
+            float velocity = Mathf.Sqrt(distance * Utility.GRAVITY / Mathf.Sin(2 * angle));
+            return velocity * direction.normalized;
+        }
+        
         private static float GetComponent(this Vector3 source, Axis component)
         {
             switch (component)

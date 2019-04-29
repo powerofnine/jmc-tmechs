@@ -286,7 +286,9 @@ namespace TMechs.Enemy.AI
             {
             }
 
-            public abstract void OnTick();
+            public virtual void OnTick()
+            {
+            }
 
             public virtual void OnEvent(EventType type, string id)
             {

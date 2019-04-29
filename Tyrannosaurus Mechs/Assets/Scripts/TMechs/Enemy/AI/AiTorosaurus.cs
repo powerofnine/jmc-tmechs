@@ -218,9 +218,6 @@ namespace TMechs.Enemy.AI
                 shared.animator.SetTrigger(Anim.ATTACK);
             }
 
-            public override void OnTick()
-            {}
-
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
