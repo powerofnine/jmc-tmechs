@@ -23,7 +23,7 @@ namespace TMechs.Enemy.AI
 
         private float yVelocity;
         
-        private void Awake()
+        private void Start()
         {
             CreateStateMachine(new TankyloShared() {animator = GetComponentInChildren<Animator>(), controller = GetComponent<CharacterController>()});
         }

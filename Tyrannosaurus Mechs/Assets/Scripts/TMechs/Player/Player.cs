@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMechs.Environment.Targets;
 using TMechs.UI;
+using TMechs.UI.GamePad;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -52,6 +53,8 @@ namespace TMechs.Player
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
                 MenuActions.SetPause(true);
             }
+
+            UpdateIcons();
         }
 
         public void Damage(int damage)
@@ -66,14 +69,57 @@ namespace TMechs.Player
             }
         }
 
+        private void UpdateIcons()
+        {
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow1, "Jump");
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "");
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "");
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "Interact");
+                
+            if (pickedUp)
+            {
+                // State: picked up
+                
+                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Throw");
+                
+                return;
+            }
+
+            if (PlayerMovement.Input.GetButton(Controls.Action.ANGERY))
+            {
+                //State: angry
+                
+                if(Animator.GetBool(Anim.HAS_ENEMY))
+                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Rocket Fist");
+            }
+            else
+            {
+                //State: normal
+                
+                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
+            }
+            
+            // Grab/Grapple label
+            if(Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
+                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
+            else if (Animator.GetBool(Anim.HAS_GRAPPLE))
+            {
+                GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
+                
+                if(target)
+                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
+            }
+        }
+
         public IEnumerable<string> GetDebugInfo()
         {
-            List<string> ret = new List<string>();
-            
-            ret.Add($"World Position: {transform.position}");
-            ret.Add($"World Rotation: {transform.eulerAngles}");
-            ret.Add($"Health: {Health * maxHealth} / {maxHealth}");
-            ret.Add($"Velocity: {Controller.velocity}");
+            List<string> ret = new List<string>
+            {
+                    $"World Position: {transform.position}", 
+                    $"World Rotation: {transform.eulerAngles}", 
+                    $"Health: {Health * maxHealth} / {maxHealth}", 
+                    $"Velocity: {Controller.velocity}"
+            };
 
             return ret;
         }
