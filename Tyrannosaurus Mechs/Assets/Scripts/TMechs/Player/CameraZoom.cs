@@ -1,5 +1,4 @@
 using UnityEngine;
-using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
