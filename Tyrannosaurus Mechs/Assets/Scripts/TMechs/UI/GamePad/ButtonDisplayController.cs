@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TMechs.UI.GamePad
 {
+    [AddComponentMenu("")]
     public class ButtonDisplayController : MonoBehaviour
     {
         public static ButtonDisplayController Instance { get; private set; }
@@ -34,12 +35,20 @@ namespace TMechs.UI.GamePad
         
         private void Awake()
         {
+            if (Instance)
+            {
+                Destroy(this);
+                return;
+            }
+            
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            
             unsupported = ScriptableObject.CreateInstance<ControllerDef>();
         }
 
         private void Start()
         {
-            Instance = this;
             controllers = Resources.LoadAll<ControllerDef>("").ToDictionary(x => Guid.Parse(x.guid));
 
             if(ReInput.controllers.joystickCount > 0) {
@@ -81,5 +90,12 @@ namespace TMechs.UI.GamePad
         }
 
         private void OnDestroy() => DestroyImmediate(unsupported);
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void Init()
+        {
+            GameObject go = new GameObject("Button Display Controller");
+            go.AddComponent<ButtonDisplayController>();
+        }
     }
 }
