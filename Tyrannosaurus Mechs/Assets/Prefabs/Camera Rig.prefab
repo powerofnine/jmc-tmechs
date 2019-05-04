@@ -162,7 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraRig: {fileID: 1438288215997354276}
   minDistance: 0
-  maxDistance: 25
+  maxDistance: 50
   distanceOffset: -0.75
   zoomDistance: 5
 --- !u!114 &2507603506829192732
@@ -356,6 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3288080464021413281}
   - component: {fileID: 7368212867867604780}
+  - component: {fileID: 620967931}
   m_Layer: 0
   m_Name: PostProcess
   m_TagString: Untagged
@@ -384,7 +385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3484796465202004328}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
@@ -394,3 +395,16 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &620967931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484796465202004328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658f491254734ff488e16eb1e0ae5c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 0.15
