@@ -35,6 +35,8 @@ namespace TMechs.Player
         }
 
         private float health = 1F;
+        
+        private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
 
         private void Awake()
         {
@@ -44,6 +46,18 @@ namespace TMechs.Player
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
+            
+            // Configure shaders
+            foreach (Renderer render in GetComponentsInChildren<Renderer>())
+            {
+                foreach (Material mat in render.materials)
+                {
+                    if ("Shader Graphs/Player".Equals(mat.shader.name))
+                    {
+                        mat.SetInt(Z_WRITE, 1);
+                    }
+                }
+            }
         }
 
         private void Update()
