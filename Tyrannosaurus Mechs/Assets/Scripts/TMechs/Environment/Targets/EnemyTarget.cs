@@ -9,7 +9,7 @@ namespace TMechs.Environment.Targets
 
         private RigidbodyConstraints constraints;
         private readonly Dictionary<Behaviour, bool> states = new Dictionary<Behaviour, bool>();
-        
+
         public override int GetPriority() => 100;
         public override Color GetHardLockColor() => Color.red;
         public override Color GetColor() => Color.yellow;
@@ -42,7 +42,7 @@ namespace TMechs.Environment.Targets
                 if (kvp.Key)
                     kvp.Key.enabled = kvp.Value;
         }
-        
+
         public enum PickupType
         {
             Prohibit,

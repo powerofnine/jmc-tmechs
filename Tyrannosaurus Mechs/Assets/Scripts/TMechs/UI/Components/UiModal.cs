@@ -9,7 +9,7 @@ namespace TMechs.UI.Components
     public class UiModal : MonoBehaviour
     {
         public RectTransform windowAnchor;
-        
+
         public TextMeshProUGUI textDisplay;
         public RectTransform buttonsAnchor;
         public GameObject buttonTemplate;
@@ -19,7 +19,7 @@ namespace TMechs.UI.Components
 
         private readonly List<UiButton> buttons = new List<UiButton>();
         private int selectedButton;
-        
+
         public IEnumerator Show(string text, IEnumerable<string> buttons)
         {
             float height = 25F;
@@ -51,33 +51,33 @@ namespace TMechs.UI.Components
                     if (btn)
                     {
                         EventDelegate ev = new EventDelegate(this, nameof(OnButton));
-                        
-                        
+
+
                         Debug.Log(ev.ExistMethod());
-                        
+
                         ev.parameters[0].argStringValue = button;
-                     
-                        if(btn.onClick.List == null)
+
+                        if (btn.onClick.List == null)
                             btn.onClick.List = new List<EventDelegate>();
-                        
+
                         EventDelegate.Add(btn.onClick.List, ev);
-                        
+
                         this.buttons.Add(btn);
                         btn.OnDeselect(true);
                     }
                 }
-                
-                if(this.buttons.Count > 0)
+
+                if (this.buttons.Count > 0)
                     this.buttons[0].OnSelect(true);
             }
-            
-            if(windowAnchor)
+
+            if (windowAnchor)
                 windowAnchor.sizeDelta = new Vector2(windowAnchor.sizeDelta.x, height);
             buttonsAnchor.anchoredPosition = new Vector2(buttonsAnchor.anchoredPosition.x, -textBottom);
-            
+
             while (!isDone)
                 yield return null;
-            
+
             Destroy(gameObject);
         }
 
@@ -88,8 +88,8 @@ namespace TMechs.UI.Components
         {
             if (isDone || buttons.Count == 0)
                 return;
-            
-            if(buttons[selectedButton])
+
+            if (buttons[selectedButton])
                 buttons[selectedButton].OnSubmit();
         }
 
@@ -99,7 +99,7 @@ namespace TMechs.UI.Components
         {
             if (isDone || buttons.Count == 0)
                 return;
-            
+
             if (newSelection < 0)
                 newSelection = buttons.Count - 1;
             if (newSelection >= buttons.Count)
@@ -107,21 +107,21 @@ namespace TMechs.UI.Components
 
             if (newSelection == selectedButton)
                 return;
-                
-            if(selectedButton < buttons.Count)
+
+            if (selectedButton < buttons.Count)
                 buttons[selectedButton].OnDeselect(false);
 
             selectedButton = newSelection;
-            
-            if(selectedButton < buttons.Count)
+
+            if (selectedButton < buttons.Count)
                 buttons[selectedButton].OnSelect(false);
         }
-        
+
         public void OnButton(string button)
         {
             if (isDone)
                 return;
-            
+
             Result = button;
             isDone = true;
         }

@@ -1,9 +1,11 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace TMechs.Types
 {
     [Serializable]
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public struct Radius
     {
         public float radius;

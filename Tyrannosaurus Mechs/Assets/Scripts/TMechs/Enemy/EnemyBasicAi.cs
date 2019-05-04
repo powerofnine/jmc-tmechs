@@ -11,7 +11,7 @@ namespace TMechs.Enemy
 
         private Transform player;
         private NavMeshAgent agent;
-        
+
         private void Awake()
         {
             player = FindObjectOfType<PlayerMovement>().transform;

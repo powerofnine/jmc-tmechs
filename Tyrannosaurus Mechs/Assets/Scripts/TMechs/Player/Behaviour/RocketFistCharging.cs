@@ -10,7 +10,7 @@ namespace TMechs.Player.Behaviour
 
             PlayerCombat combat = Player.Instance.Combat;
             combat.rocketFistCharge += Time.deltaTime;
-            if(combat.rocketFistCharge >= combat.rocketFistChargeMax)
+            if (combat.rocketFistCharge >= combat.rocketFistChargeMax)
                 animator.SetTrigger(Anim.ROCKET_OVERCHARGE);
         }
     }

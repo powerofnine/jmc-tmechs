@@ -36,14 +36,14 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Attacking(), "Attacking");
 
             stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle",
-                    (machine) => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
+                    machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
             stateMachine.RegisterTransition("Idle", "Chasing",
-                    (machine) => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
 
             stateMachine.RegisterTransition("Chasing", "Attacking",
-                    (machine) => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F);
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F);
             stateMachine.RegisterTransition("Chasing", "Shooting",
-                    (machine) =>
+                    machine =>
                     {
                         if (machine.GetAddSet<float>("nextShoot", -Time.deltaTime) <= 0F)
                         {
@@ -57,10 +57,10 @@ namespace TMechs.Enemy.AI
                     });
 
             stateMachine.RegisterTransition("Attacking", "Chasing",
-                    (machine) => machine.GetTrigger("attackReleased"));
+                    machine => machine.GetTrigger("attackReleased"));
 
             stateMachine.RegisterTransition("Shooting", "Chasing",
-                    (machine) => machine.HorizontalDistanceToTarget > machine.Get<Radius>("shootRange") || machine.GetAddSet<float>("shootTimer", -Time.deltaTime) <= 0F);
+                    machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>("shootRange") || machine.GetAddSet<float>("shootTimer", -Time.deltaTime) <= 0F);
 
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"Harrier:{name}");
@@ -77,18 +77,19 @@ namespace TMechs.Enemy.AI
         }
 
         #region States
+
         private abstract class HarrierState : AiStateMachine.State
         {
             protected HarrierShared props;
-            
+
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 props = Machine.shared as HarrierShared;
             }
         }
-        
+
         private class Chasing : HarrierState
         {
             private float dashTimer;
@@ -136,7 +137,7 @@ namespace TMechs.Enemy.AI
                     }
                 }
 
-                props?.controller.Move(dashDirection * Machine.Get<float>("dashSpeed") * Time.deltaTime);
+                props?.controller.Move(Machine.Get<float>("dashSpeed") * Time.deltaTime * dashDirection);
             }
         }
 
@@ -180,7 +181,7 @@ namespace TMechs.Enemy.AI
 
         private class Attacking : HarrierState
         {
-            private int substate = 0;
+            private int substate;
 
             private bool attackTriggered = true;
 
@@ -225,6 +226,7 @@ namespace TMechs.Enemy.AI
                     attackTriggered = true;
             }
         }
+
         #endregion States
 
         [Serializable]

@@ -119,7 +119,7 @@ namespace TMechs.Data
 
                 if (File.Exists(saveFile))
                     File.Delete(saveFile);
-                
+
                 FlushLexicon();
             }
         }

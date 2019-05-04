@@ -25,7 +25,7 @@ namespace TMechs
         public static readonly int ROCKET_OVERCHARGE = Hash("Rocket Fist Overcharge");
         public static readonly int ROCKET_READY = Hash("Rocket Fist Ready");
 
-        public static readonly Dictionary<int, string> RAINBOW = new Dictionary<int, string>()
+        public static readonly Dictionary<int, string> RAINBOW = new Dictionary<int, string>
         {
                 {Hash("Rocket Fist"), "Rocket Fist"},
                 {Hash("Rocket Fist Charge"), "Rocket Fist Charge"},

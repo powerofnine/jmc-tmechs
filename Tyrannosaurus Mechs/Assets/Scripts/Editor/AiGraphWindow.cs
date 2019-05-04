@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class AiGraphWindow : EditorWindow
 {
     public readonly Vector2 nodeSize = new Vector2(200F, 30F);
-    
+
     private int selectedMachine;
     private Vector2 offset = Vector2.zero;
 
@@ -24,7 +24,7 @@ public class AiGraphWindow : EditorWindow
     {
         Rect size = position;
         size.position = Vector2.zero;
-        
+
         machines = AiGraphClient.GetMachines();
 
         if (!machines.Any())
@@ -51,7 +51,7 @@ public class AiGraphWindow : EditorWindow
         Rect clip = size;
         clip.y += 20F;
         clip.height -= 20F;
-        
+
         GUI.BeginClip(clip);
         Handles.BeginGUI();
         Handles.color = Color.green;
@@ -60,7 +60,7 @@ public class AiGraphWindow : EditorWindow
             int stateA = Array.IndexOf(snapshot.states, t.Item1);
             int stateB = Array.IndexOf(snapshot.states, t.Item2);
             Handles.DrawLine(
-                    snapshot.positions[stateA] * size.size + offset + size.center + nodeSize * .5F, 
+                    snapshot.positions[stateA] * size.size + offset + size.center + nodeSize * .5F,
                     snapshot.positions[stateB] * size.size + offset + size.center + nodeSize * .5F);
         }
 
@@ -94,7 +94,7 @@ public class AiGraphWindow : EditorWindow
             offset = Vector2.zero;
             selectedMachine = sel;
         }
-        
+
         if (GUILayout.Button("Refresh", EditorStyles.toolbarButton, GUILayout.Width(150F)))
             machines[selectedMachine].machine.snapshot.positions = null;
         EditorGUILayout.EndHorizontal();
@@ -106,14 +106,13 @@ public class AiGraphWindow : EditorWindow
     private void Tint(string state, AiStateMachine.MachineSnapshot snapshot)
     {
         GUI.color = new Color(1F, 1F, 1F);
-        
+
         if (AiStateMachine.ANY_STATE.Equals(state))
             GUI.color *= new Color(1f, 0.74f, 0.5f);
         if (snapshot.currentState.Equals(state) && EditorApplication.isPlaying)
             GUI.color *= new Color(0.5f, 1f, 0.5f);
-            
     }
-    
+
     #region Force Directed Layout
 
     private const int ITERATIONS = 10;
@@ -125,7 +124,7 @@ public class AiGraphWindow : EditorWindow
     private void CalculatePositions(ref AiStateMachine.MachineSnapshot snapshot)
     {
         offset = Vector2.zero;
-        
+
         string[] verticies = snapshot.states;
 
         Dictionary<string, HashSet<string>> edges = new Dictionary<string, HashSet<string>>();

@@ -9,10 +9,10 @@ namespace TMechs.FX
 
         public Vector3 min;
         public Vector3 max;
-        
+
         public bool randomizeStartingAngle = true;
-        
-        private float angle = 0F;
+
+        private float angle;
 
         private Vector3 neutralPosition;
 

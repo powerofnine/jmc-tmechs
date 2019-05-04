@@ -16,16 +16,16 @@ namespace TMechs.Enemy.AI
                 Anim.Hash("Tail Whip (CCW)"),
                 Anim.Hash("Scorpion Punch")
         };
-        
+
         public AiStateMachine stateMachine;
 
         public TankylosaurusProperties properties = new TankylosaurusProperties();
 
         private float yVelocity;
-        
+
         private void Start()
         {
-            CreateStateMachine(new TankyloShared() {animator = GetComponentInChildren<Animator>(), controller = GetComponent<CharacterController>()});
+            CreateStateMachine(new TankyloShared {animator = GetComponentInChildren<Animator>(), controller = GetComponent<CharacterController>()});
         }
 
         private void Update()
@@ -33,7 +33,7 @@ namespace TMechs.Enemy.AI
             stateMachine.Tick();
 
             CharacterController controller = (stateMachine.shared as TankyloShared)?.controller;
-            
+
             yVelocity += 9.81F * Time.deltaTime;
 
             if (controller)
@@ -44,7 +44,7 @@ namespace TMechs.Enemy.AI
                     yVelocity = 0F;
             }
         }
-        
+
         public void OnAnimationEvent(string id)
         {
             stateMachine.OnEvent(AiStateMachine.EventType.Animation, id);
@@ -53,31 +53,31 @@ namespace TMechs.Enemy.AI
         private void CreateStateMachine(TankyloShared shared)
         {
             stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.transform, shared = shared};
-            
+
             stateMachine.ImportProperties(properties);
-            
+
             stateMachine.RegisterState(null, "Idle");
             stateMachine.RegisterState(new Chasing(), "Chasing");
             stateMachine.RegisterState(new Attack(), "Attack");
             stateMachine.RegisterState(new Throw(), "Throw");
-            
+
             stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle",
                     machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
             stateMachine.RegisterTransition("Idle", "Chasing",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
-            
-            stateMachine.RegisterTransition("Chasing", "Attack", 
+
+            stateMachine.RegisterTransition("Chasing", "Attack",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F,
                     machine => machine.Set("attackTimer", machine.Get<float>("attackCooldown")));
             stateMachine.RegisterTransition("Attack", "Chasing",
                     machine => machine.GetTrigger("attackDone"));
-            
-            stateMachine.RegisterTransition("Chasing", "Throw", 
+
+            stateMachine.RegisterTransition("Chasing", "Throw",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("rockThrowRange") && machine.GetAddSet<float>("throwTimer", -Time.deltaTime) <= 0F,
                     machine => machine.Set("throwTimer", machine.Get<float>("throwCooldown")));
-            stateMachine.RegisterTransition("Throw", "Chasing", 
+            stateMachine.RegisterTransition("Throw", "Chasing",
                     machine => machine.GetTrigger("rockThrowDone"));
-            
+
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"Tankylosaurus:{name}");
         }
@@ -89,7 +89,7 @@ namespace TMechs.Enemy.AI
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 shared = Machine.shared as TankyloShared;
             }
         }
@@ -99,32 +99,32 @@ namespace TMechs.Enemy.AI
             public override void OnTick()
             {
                 Vector3 direction = HorizontalDirectionToTarget;
-                
+
                 transform.forward = direction;
 
                 if (DistanceToTarget >= Machine.Get<Radius>("attackRange"))
-                    shared.controller.Move(direction * Machine.Get<float>("moveSpeed") * Time.deltaTime);
+                    shared.controller.Move(Machine.Get<float>("moveSpeed") * Time.deltaTime * direction);
             }
         }
-        
+
         private class Attack : TankyloState
         {
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 shared.animator.SetTrigger(ATTACKS[Random.Range(0, ATTACKS.Length)]);
             }
 
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
-                
-                if(type == AiStateMachine.EventType.Animation && "attack".Equals(id))
+
+                if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
                     Machine.SetTrigger("attackDone");
             }
         }
-        
+
         private class Throw : TankyloState
         {
             private GameObject rock;
@@ -132,15 +132,15 @@ namespace TMechs.Enemy.AI
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 shared.animator.SetTrigger(ROCK_THROW);
             }
 
             public override void OnExit()
             {
                 base.OnExit();
-                
-                if(rock)
+
+                if (rock)
                     Destroy(rock);
             }
 
@@ -157,7 +157,7 @@ namespace TMechs.Enemy.AI
                     Debug.LogWarning("No rock has been created");
                     return;
                 }
-                
+
                 rock.transform.SetParent(null, true);
                 rock.AddComponent<Rigidbody>().velocity = Utility.BallisticVelocity(rock.transform.position, target.position, 45F);
 
@@ -171,7 +171,7 @@ namespace TMechs.Enemy.AI
 
                 if (type != AiStateMachine.EventType.Animation)
                     return;
-                
+
                 switch (id)
                 {
                     case "rockReady":
@@ -196,7 +196,7 @@ namespace TMechs.Enemy.AI
 
             [Header("Chasing")]
             public float moveSpeed;
-            
+
             [Header("Attacc")]
             public float attackCooldown;
 

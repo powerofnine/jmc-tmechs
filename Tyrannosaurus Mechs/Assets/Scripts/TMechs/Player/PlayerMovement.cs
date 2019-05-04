@@ -3,7 +3,6 @@ using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static TMechs.Controls.Action;
 
 namespace TMechs.Player
@@ -85,11 +84,11 @@ namespace TMechs.Player
             if (Input.GetButton(ANGERY))
                 movement *= 2F;
 
-            
+
             controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
             animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
             GroundedCheck();
-            
+
             if (isGrounded)
             {
                 jumps = 0;
@@ -102,7 +101,7 @@ namespace TMechs.Player
                     jumps++;
                 velocity.y = jumpForce;
             }
-            
+
             EnemyTarget target = TargetController.Instance.GetLock();
 
             if (target)
@@ -123,18 +122,18 @@ namespace TMechs.Player
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
-            
-            #if UNITY_EDITOR
-            if(UnityEngine.Input.GetKeyDown(KeyCode.B))
-                SaveSystem.CreateSave(new SaveSystem.SaveData() {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
-            #endif
+
+#if UNITY_EDITOR
+            if (UnityEngine.Input.GetKeyDown(KeyCode.B))
+                SaveSystem.CreateSave(new SaveSystem.SaveData {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
+#endif
         }
 
         private void GroundedCheck()
         {
             isGrounded = controller.isGrounded;
             playerControl = true;
-            
+
             if (!isGrounded)
                 return;
 
@@ -143,12 +142,12 @@ namespace TMechs.Player
             if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
                 if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
                     return;
-            
+
             if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
                 sliding = true;
 
             playerControl = !sliding;
-            
+
             if (!sliding)
                 return;
 
@@ -159,7 +158,7 @@ namespace TMechs.Player
             Vector3.OrthoNormalize(ref normal, ref direction);
 
             intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            controller.Move(direction * movementSpeed * Time.deltaTime);
+            controller.Move(movementSpeed * Time.deltaTime * direction);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)

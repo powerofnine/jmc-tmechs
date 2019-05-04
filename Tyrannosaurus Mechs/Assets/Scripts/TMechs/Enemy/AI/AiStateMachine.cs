@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace TMechs.Enemy.AI
@@ -40,8 +39,7 @@ namespace TMechs.Enemy.AI
         public float HorizontalDistanceToTarget => Vector3.Distance(transform.position.Remove(Utility.Axis.Y), target.position.Remove(Utility.Axis.Y));
         public Vector3 DirectionToTarget => (target.position - transform.position).normalized;
         public Vector3 HorizontalDirectionToTarget => (target.position - transform.position).Remove(Utility.Axis.Y).normalized;
-        
-        
+
         #endregion
 
         public AiStateMachine(Transform transform)
@@ -152,9 +150,9 @@ namespace TMechs.Enemy.AI
 
         public void Set<T>(string name, T value)
         {
-            if(value == null)
+            if (value == null)
                 throw new ArgumentException($"Attempted to assign a null value to property: {name}");
-            if(properties.ContainsKey(name) && !(properties[name] is T))
+            if (properties.ContainsKey(name) && !(properties[name] is T))
                 throw new ArgumentException($"Type mismatch between the existing property {name} and the attempted assignment. {properties[name].GetType()} != {typeof(T)}");
 
             properties[name] = value;
@@ -179,7 +177,7 @@ namespace TMechs.Enemy.AI
 
         public T GetAddSet<T>(string name, int value)
         {
-            return GetAddSet<T>(name, (float)value);
+            return GetAddSet<T>(name, (float) value);
         }
 
         public T GetAddSet<T>(string name, float value)
@@ -203,7 +201,7 @@ namespace TMechs.Enemy.AI
             }
 
             Set(name, ob);
-            
+
             if (ob is T)
                 return (T) ob;
 
@@ -212,7 +210,7 @@ namespace TMechs.Enemy.AI
 
         public bool HasValue(string name)
             => properties.ContainsKey(name);
-        
+
         public void ImportProperties(object ob)
         {
             FieldInfo[] fields = ob.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
@@ -220,7 +218,7 @@ namespace TMechs.Enemy.AI
             foreach (FieldInfo field in fields)
                 Set(field.Name, field.GetValue(ob));
         }
-        
+
         #endregion
 
         public void RegisterVisualizer(string name)
@@ -300,12 +298,12 @@ namespace TMechs.Enemy.AI
             Animation,
             Trigger
         }
-        
+
         private struct Transition
         {
-            public string destinationState;
-            public TransitionCondition condition;
-            public Action<AiStateMachine> onTransition;
+            public readonly string destinationState;
+            public readonly TransitionCondition condition;
+            public readonly Action<AiStateMachine> onTransition;
 
             public Transition(string destinationState, TransitionCondition condition, Action<AiStateMachine> onTransition)
             {

@@ -8,7 +8,7 @@ namespace TMechs.Data.Settings
     public class SoundSettings
     {
         public Dictionary<Channel, int> volume = Enum.GetValues(typeof(Channel)).Cast<Channel>().ToDictionary(x => x, x => 100);
-        
+
         public enum Channel
         {
             Music,

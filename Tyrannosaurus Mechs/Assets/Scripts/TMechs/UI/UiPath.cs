@@ -23,7 +23,7 @@ namespace TMechs.UI
         public int steps = 1;
         public Vector2[] positions;
         public float[] rotations;
-        
+
         private void UpdateValue()
         {
             float progress = (steps - 1) * value;
@@ -33,8 +33,8 @@ namespace TMechs.UI
 
             Vector2 pos = Vector2.Lerp(positions[thisStep], positions[nextStep], progress % 1F);
             float rot = Mathf.LerpAngle(rotations[thisStep], rotations[nextStep], progress % 1F);
-            
-            RectTransform rect = (RectTransform)transform;
+
+            RectTransform rect = (RectTransform) transform;
 
             if (rect)
                 rect.anchoredPosition = pos;
@@ -47,17 +47,17 @@ namespace TMechs.UI
         {
             if (steps < 2)
                 steps = 2;
-            
-            if(positions == null)
+
+            if (positions == null)
                 positions = new Vector2[steps];
-            if(rotations == null)
+            if (rotations == null)
                 rotations = new float[steps];
-            
-            if(positions.Length != steps)
+
+            if (positions.Length != steps)
                 Array.Resize(ref positions, steps);
-            if(rotations.Length != steps)
+            if (rotations.Length != steps)
                 Array.Resize(ref rotations, steps);
-            
+
             UpdateValue();
         }
 #endif

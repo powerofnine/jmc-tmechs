@@ -75,38 +75,38 @@ namespace TMechs.Player
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "");
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "");
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "Interact");
-                
+
             if (pickedUp)
             {
                 // State: picked up
-                
+
                 GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Throw");
-                
+
                 return;
             }
 
             if (PlayerMovement.Input.GetButton(Controls.Action.ANGERY))
             {
                 //State: angry
-                
-                if(Animator.GetBool(Anim.HAS_ENEMY))
+
+                if (Animator.GetBool(Anim.HAS_ENEMY))
                     GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Rocket Fist");
             }
             else
             {
                 //State: normal
-                
+
                 GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
             }
-            
+
             // Grab/Grapple label
-            if(Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
+            if (Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
                 GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
             else if (Animator.GetBool(Anim.HAS_GRAPPLE))
             {
                 GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
-                
-                if(target)
+
+                if (target)
                     GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
             }
         }
@@ -115,9 +115,9 @@ namespace TMechs.Player
         {
             List<string> ret = new List<string>
             {
-                    $"World Position: {transform.position}", 
-                    $"World Rotation: {transform.eulerAngles}", 
-                    $"Health: {Health * maxHealth} / {maxHealth}", 
+                    $"World Position: {transform.position}",
+                    $"World Rotation: {transform.eulerAngles}",
+                    $"Health: {Health * maxHealth} / {maxHealth}",
                     $"Velocity: {Controller.velocity}"
             };
 

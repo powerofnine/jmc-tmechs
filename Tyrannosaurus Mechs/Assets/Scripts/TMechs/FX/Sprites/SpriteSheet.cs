@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TMechs.FX.Sprites
 {
+    [PublicAPI]
     [RequireComponent(typeof(Image))]
     public class SpriteSheet : MonoBehaviour
     {
-        private static Dictionary<string, Sprite[]> registeredSprites = new Dictionary<string, Sprite[]>();
+        private static readonly Dictionary<string, Sprite[]> registeredSprites = new Dictionary<string, Sprite[]>();
 
         public Sprite Sheet
         {
@@ -47,7 +49,7 @@ namespace TMechs.FX.Sprites
                 if (!Sheet)
                     return -1;
 
-                return Mathf.CeilToInt((Sheet.rect.width / Size.x) * (Sheet.rect.height / Size.y));
+                return Mathf.CeilToInt(Sheet.rect.width / Size.x * (Sheet.rect.height / Size.y));
             }
         }
 
@@ -79,7 +81,7 @@ namespace TMechs.FX.Sprites
 
             for (int i = 0; i < SpriteCount; i++)
             {
-                sprites[i] = Sprite.Create(Sheet.texture, new Rect(Sheet.rect.x + (i % (Sheet.rect.width / Size.x)) * Size.x, Sheet.rect.y + Sheet.rect.height - Size.y - Mathf.FloorToInt(i / (Sheet.rect.height / Size.y)) * Size.y, Size.x, Size.y), new Vector2(0.5F, 0.5F));
+                sprites[i] = Sprite.Create(Sheet.texture, new Rect(Sheet.rect.x + i % (Sheet.rect.width / Size.x) * Size.x, Sheet.rect.y + Sheet.rect.height - Size.y - Mathf.FloorToInt(i / (Sheet.rect.height / Size.y)) * Size.y, Size.x, Size.y), new Vector2(0.5F, 0.5F));
                 sprites[i].name = Sheet.name + "." + i;
             }
 

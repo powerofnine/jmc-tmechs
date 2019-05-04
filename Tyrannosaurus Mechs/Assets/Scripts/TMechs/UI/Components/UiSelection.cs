@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using TMechs.Attributes;
-using TMechs.UI.GamePad;
 using TMPro;
 using UnityEngine;
 
@@ -12,9 +11,9 @@ namespace TMechs.UI.Components
 {
     public class UiSelection : UiSelectable
     {
-        public string[] values = {};
+        public string[] values = { };
         public TextMeshProUGUI selectionText;
-        
+
         public int Value
         {
             get => Mathf.Clamp(value, 0, values.Length - 1);
@@ -66,7 +65,7 @@ namespace TMechs.UI.Components
         public Dictionary<int, T> SetEnum<T>(bool requireFriendlyName = true)
         {
             Dictionary<int, T> map = new Dictionary<int, T>();
-            
+
             T[] items = Enum.GetValues(typeof(T)).Cast<T>().ToArray();
             List<string> values = new List<string>();
 

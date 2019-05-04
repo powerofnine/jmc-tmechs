@@ -11,18 +11,18 @@ namespace TMechs.Enemy.AI
         public static readonly int IS_MOVING = Anim.Hash("Is Moving");
         public static readonly int IS_CHARGING = Anim.Hash("Is Charging");
         public static readonly int CHARGE_HIT = Anim.Hash("Charge Hit");
-        
+
         public AiStateMachine stateMachine;
 
         public TorosaurusProperties properties = new TorosaurusProperties();
 
-        private float yVelocity = 0F;
-        
+        private float yVelocity;
+
         private void Start()
         {
-            CreateStateMachine(new TorosaurusShared()
+            CreateStateMachine(new TorosaurusShared
             {
-                    animator = GetComponentInChildren<Animator>(), 
+                    animator = GetComponentInChildren<Animator>(),
                     controller = GetComponent<CharacterController>()
             });
         }
@@ -32,17 +32,17 @@ namespace TMechs.Enemy.AI
             stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.transform, shared = shared};
 
             stateMachine.ImportProperties(properties);
-            
+
             stateMachine.RegisterState(null, "Idle");
             stateMachine.RegisterState(new Chasing(), "Chasing");
             stateMachine.RegisterState(new Charging(), "Charging");
             stateMachine.RegisterState(new Attacking(), "Attacking");
-            
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", 
-                    (machine) => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
-            stateMachine.RegisterTransition("Idle", "Chasing", 
-                    (machine) => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
-            
+
+            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle",
+                    machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
+            stateMachine.RegisterTransition("Idle", "Chasing",
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
+
             stateMachine.RegisterTransition("Chasing", "Charging",
                     machine =>
                     {
@@ -55,14 +55,14 @@ namespace TMechs.Enemy.AI
 
                         return false;
                     });
-            stateMachine.RegisterTransition("Charging", "Chasing", 
+            stateMachine.RegisterTransition("Charging", "Chasing",
                     machine => machine.GetTrigger("chargeFinished"));
-            
+
             stateMachine.RegisterTransition("Chasing", "Attacking",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F);
             stateMachine.RegisterTransition("Attacking", "Chasing",
                     machine => machine.GetTrigger("attackFinished"));
-            
+
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"Torosaurus:{name}");
         }
@@ -88,8 +88,9 @@ namespace TMechs.Enemy.AI
 
         public void OnTrigger(string id)
             => stateMachine.OnEvent(AiStateMachine.EventType.Trigger, id);
-        
+
         #region States
+
         private abstract class TorosaurusState : AiStateMachine.State
         {
             protected TorosaurusShared shared;
@@ -97,24 +98,24 @@ namespace TMechs.Enemy.AI
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 shared = Machine.shared as TorosaurusShared;
             }
         }
-        
+
         private class Chasing : TorosaurusState
         {
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 shared.animator.SetBool(IS_MOVING, true);
             }
 
             public override void OnExit()
             {
                 base.OnExit();
-                
+
                 shared.animator.SetBool(IS_MOVING, false);
             }
 
@@ -122,24 +123,24 @@ namespace TMechs.Enemy.AI
             {
                 Vector3 direction = HorizontalDirectionToTarget;
                 transform.forward = direction;
-                
-                if(DistanceToTarget >= Machine.Get<Radius>("attackRange"))
-                    shared.controller.Move(direction * Machine.Get<float>("moveSpeed") * Time.deltaTime);
+
+                if (DistanceToTarget >= Machine.Get<Radius>("attackRange"))
+                    shared.controller.Move(Machine.Get<float>("moveSpeed") * Time.deltaTime * direction);
             }
         }
-        
+
         private class Charging : TorosaurusState
         {
             private bool chargeStart;
             private float distanceRemaining;
             private float timeRemaining;
-            
+
             public override void OnEnter()
             {
                 base.OnEnter();
 
                 transform.forward = HorizontalDirectionToTarget;
-                
+
                 chargeStart = false;
                 shared.animator.SetBool(IS_CHARGING, true);
 
@@ -152,7 +153,7 @@ namespace TMechs.Enemy.AI
             public override void OnExit()
             {
                 base.OnExit();
-                
+
                 shared.animator.SetBool(IS_CHARGING, false);
             }
 
@@ -161,7 +162,7 @@ namespace TMechs.Enemy.AI
                 if (!chargeStart)
                     return;
 
-                shared.controller.Move(DirectionToTarget * Machine.Get<float>("chargeSpeed") * Time.deltaTime);
+                shared.controller.Move(Machine.Get<float>("chargeSpeed") * Time.deltaTime * DirectionToTarget);
 
                 distanceRemaining -= shared.controller.velocity.magnitude;
                 timeRemaining -= Time.deltaTime;
@@ -191,7 +192,7 @@ namespace TMechs.Enemy.AI
                     shared.animator.SetTrigger(CHARGE_HIT);
                 }
             }
-            
+
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
@@ -207,13 +208,13 @@ namespace TMechs.Enemy.AI
                 }
             }
         }
-        
+
         private class Attacking : TorosaurusState
         {
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 Machine.Set("attackTimer", Machine.Get<float>("attackCooldown"));
                 shared.animator.SetTrigger(Anim.ATTACK);
             }
@@ -221,11 +222,12 @@ namespace TMechs.Enemy.AI
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
-                
-                if("attackDone".Equals(id))
+
+                if ("attackDone".Equals(id))
                     Machine.SetTrigger("attackFinished");
             }
         }
+
         #endregion
 
         [Serializable]
@@ -237,7 +239,7 @@ namespace TMechs.Enemy.AI
             public Radius rangeStopFollow = new Radius(35F);
             public Radius chargeRange = new Radius(15F);
             public Radius attackRange = new Radius(1F);
-            
+
             [Header("Chase")]
             public float moveSpeed = 10F;
 
@@ -248,7 +250,7 @@ namespace TMechs.Enemy.AI
             public float chargeCooldown = 5F;
             public Radius chargeMaxDistance = new Radius(20F, true);
             public float chargeFallbackMaxTime = 5F;
-            
+
             [Header("Attack")]
             public float attackCooldown = 2F;
         }

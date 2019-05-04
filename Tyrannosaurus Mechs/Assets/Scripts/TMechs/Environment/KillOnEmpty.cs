@@ -6,7 +6,7 @@ namespace TMechs.Environment
     {
         private void LateUpdate()
         {
-            if(transform.childCount <= 0)
+            if (transform.childCount <= 0)
                 Destroy(gameObject);
         }
     }
