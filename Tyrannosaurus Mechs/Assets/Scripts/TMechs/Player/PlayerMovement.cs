@@ -16,6 +16,7 @@ namespace TMechs.Player
 
         [Header("Forces")]
         public float movementSpeed = 10F;
+        public float runSpeed = 20F;
         public float jumpForce = 2 * 9.8F;
 
         public int maxJumps = 1;
@@ -62,6 +63,8 @@ namespace TMechs.Player
                 return;
             }
 
+            bool angry = Input.GetButton(ANGERY);
+            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
             if (!playerControl)
                 movement = Vector3.zero;
@@ -81,12 +84,10 @@ namespace TMechs.Player
 
             velocity.y -= 9.8F * Time.deltaTime;
 
-            if (Input.GetButton(ANGERY))
-                movement *= 2F;
+            float speed = angry ? runSpeed : movementSpeed;
 
-
-            controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
-            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
+            controller.Move((movement * speed + velocity) * Time.deltaTime);
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
             GroundedCheck();
             animator.SetBool(Anim.GROUNDED, isGrounded);
 
