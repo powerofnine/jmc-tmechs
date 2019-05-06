@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: Contrail
+  m_Name: TMECHS_Run
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 0}
   m_Children:
@@ -808,7 +808,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.6415094137191773,"g":0.5773584842681885,"b":0.48113206028938296,"a":1.0},"time":0.0},{"color":{"r":0.6415094137191773,"g":0.5773584842681885,"b":0.48113206028938296,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.09117265790700913},{"alpha":0.9577465057373047,"time":1.0}],"gradientMode":1}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.09117265790700913},{"alpha":0.9577465057373047,"time":0.7764706015586853},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
@@ -1113,7 +1113,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Contrail
+  m_Name: TMECHS_Run
   m_Graph: {fileID: 114350483966674976}
   m_ShaderSources:
   - compute: 1
@@ -1551,8 +1551,8 @@ VisualEffectResource:
         - m_ExpressionIndex: 1
           m_Value:
             serializedVersion: 2
-            key0: {r: 0.6415094, g: 0.5773585, b: 0.48113206, a: 0}
-            key1: {r: 0.6415094, g: 0.5773585, b: 0.48113206, a: 1}
+            key0: {r: 1, g: 1, b: 1, a: 0}
+            key1: {r: 1, g: 1, b: 1, a: 1}
             key2: {r: 0, g: 0, b: 0, a: 0.9577465}
             key3: {r: 0, g: 0, b: 0, a: 0}
             key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1569,15 +1569,15 @@ VisualEffectResource:
             ctime7: 0
             atime0: 0
             atime1: 5975
-            atime2: 65535
-            atime3: 0
+            atime2: 50886
+            atime3: 65535
             atime4: 0
             atime5: 0
             atime6: 0
             atime7: 0
-            m_Mode: 1
+            m_Mode: 0
             m_NumColorKeys: 2
-            m_NumAlphaKeys: 3
+            m_NumAlphaKeys: 4
       m_NamedObject:
         m_Array:
         - m_ExpressionIndex: 13
