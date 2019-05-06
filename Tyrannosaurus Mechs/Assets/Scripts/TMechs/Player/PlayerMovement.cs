@@ -88,6 +88,7 @@ namespace TMechs.Player
             controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
             animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
             GroundedCheck();
+            animator.SetBool(Anim.GROUNDED, isGrounded);
 
             if (isGrounded)
             {
@@ -122,11 +123,6 @@ namespace TMechs.Player
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
-
-#if UNITY_EDITOR
-            if (UnityEngine.Input.GetKeyDown(KeyCode.B))
-                SaveSystem.CreateSave(new SaveSystem.SaveData {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
-#endif
         }
 
         private void GroundedCheck()

@@ -18,6 +18,8 @@ namespace TMechs
         public static readonly int PICKUP_TARGET_TYPE = Hash("Pickup Target Type");
         public static readonly int MOVE_DELTA = Hash("MoveDelta");
 
+        public static readonly int GROUNDED = Hash("Grounded");
+        
         public static readonly int DIE = Hash("Die");
         public static readonly int HIT = Hash("Hit");
 
