@@ -1,4 +1,5 @@
 using UnityEngine;
+using static TMechs.Player.PlayerMovement;
 
 namespace TMechs.Player
 {
@@ -12,10 +13,29 @@ namespace TMechs.Player
         public float distanceOffset = -.75F;
 
         public float zoomDistance = 5F;
+
+        public float distance;
+
+        public float zoomSpeed = 1; // Increases 
+        
         
         private void Update()
         {
-            float distance = maxDistance;
+            if (!PlayerMovement.Input.GetButton(Controls.Action.ANGERY))
+            {
+                if (distance < maxDistance)
+                {
+                    distance +=  zoomSpeed * Time.deltaTime;
+                }
+            }
+            else
+            {
+                if (distance > zoomDistance)
+                {
+                    distance -= zoomSpeed * Time.deltaTime;
+                }
+            }
+
 
 //            float zoom = PlayerMovement.Input.GetAxisRaw(ZOOM);
 //
