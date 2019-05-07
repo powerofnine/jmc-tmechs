@@ -198,6 +198,8 @@ namespace TMechs.Enemy.AI
                 if (!attackTriggered)
                     return;
 
+                transform.forward = DirectionToTarget;
+                
                 if (DistanceToTarget > Machine.Get<Radius>("attackRange"))
                 {
                     Machine.SetTrigger("attackReleased");
@@ -223,7 +225,12 @@ namespace TMechs.Enemy.AI
                 base.OnEvent(type, id);
 
                 if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
+                {
                     attackTriggered = true;
+                    
+                    if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
+                        Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                }
             }
         }
 
@@ -252,6 +259,7 @@ namespace TMechs.Enemy.AI
             public float attackCooldown = 2F;
             [Range(0F, 1F)]
             public float secondaryAttackChance = .5F;
+            public int attackDamage = 10;
         }
 
         private class HarrierShared

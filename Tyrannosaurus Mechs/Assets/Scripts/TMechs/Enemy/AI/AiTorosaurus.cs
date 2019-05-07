@@ -162,9 +162,11 @@ namespace TMechs.Enemy.AI
                 if (!chargeStart)
                     return;
 
-                shared.controller.Move(Machine.Get<float>("chargeSpeed") * Time.deltaTime * DirectionToTarget);
-
-                distanceRemaining -= shared.controller.velocity.magnitude;
+                Vector3 pos = transform.position;
+                shared.controller.Move(Machine.Get<float>("chargeSpeed") * Time.deltaTime * transform.forward);
+                
+                //TODO figure out why controller.velocity returns the completely wrong value, in the meantime, calculate it ourselves
+                distanceRemaining -= Vector3.Distance(pos, transform.position);
                 timeRemaining -= Time.deltaTime;
 
                 if (distanceRemaining <= 0F || timeRemaining <= 0F || shared.controller.velocity.magnitude < 1F)
@@ -180,6 +182,10 @@ namespace TMechs.Enemy.AI
                         break;
                     case "chargeDone":
                         Machine.SetTrigger("chargeFinished");
+                        break;
+                    case "chargeHit":
+                        if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
+                            Player.Player.Instance.Damage(Machine.Get<int>("chargeDamage"));
                         break;
                 }
             }
@@ -223,8 +229,16 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEvent(type, id);
 
-                if ("attackDone".Equals(id))
-                    Machine.SetTrigger("attackFinished");
+                switch (id)
+                {
+                    case "attackDone":
+                        Machine.SetTrigger("attackFinished");
+                        break;
+                    case "attack":
+                        if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
+                            Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                        break;
+                }
             }
         }
 
@@ -250,9 +264,11 @@ namespace TMechs.Enemy.AI
             public float chargeCooldown = 5F;
             public Radius chargeMaxDistance = new Radius(20F, true);
             public float chargeFallbackMaxTime = 5F;
-
+            public int chargeHitDamage = 30;
+            
             [Header("Attack")]
             public float attackCooldown = 2F;
+            public int attackDamage = 20;
         }
 
         private class TorosaurusShared

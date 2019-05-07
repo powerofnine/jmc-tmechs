@@ -39,7 +39,7 @@ namespace TMechs.Environment.Targets
 
             target.transform.localScale = target.transform.lossyScale.InverseScale();
 
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = Player.Player.Instance.transform;
         }
 
         private void LateUpdate()

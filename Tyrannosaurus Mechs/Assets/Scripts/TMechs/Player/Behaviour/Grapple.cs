@@ -23,6 +23,8 @@ namespace TMechs.Player.Behaviour
 
         private float pullSpeed;
 
+        private Transform Transform => Player.Instance.transform;
+        
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
@@ -44,7 +46,7 @@ namespace TMechs.Player.Behaviour
             switch (grappleType)
             {
                 case Types.Pull:
-                    if (PullPhysics(animator.transform, target.transform))
+                    if (PullPhysics(Transform, target.transform))
                         animator.SetTrigger(GRAPPLE_END);
                     break;
                 case Types.Swing:
@@ -54,7 +56,7 @@ namespace TMechs.Player.Behaviour
                         return;
                     }
 
-                    SwingPhysics(animator.transform, target.transform);
+                    SwingPhysics(Transform, target.transform);
 
                     break;
                 default:
@@ -66,7 +68,7 @@ namespace TMechs.Player.Behaviour
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
 
-            animator.GetComponent<PlayerMovement>().velocity = velocity;
+            Player.Instance.Movement.velocity = velocity;
         }
 
         public bool PullPhysics(Transform ball, Transform anchor, float exitDistance = float.NegativeInfinity)

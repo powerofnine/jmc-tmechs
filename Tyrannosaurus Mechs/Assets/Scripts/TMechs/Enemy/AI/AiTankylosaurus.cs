@@ -74,7 +74,7 @@ namespace TMechs.Enemy.AI
 
             stateMachine.RegisterTransition("Chasing", "Throw",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("rockThrowRange") && machine.GetAddSet<float>("throwTimer", -Time.deltaTime) <= 0F,
-                    machine => machine.Set("throwTimer", machine.Get<float>("throwCooldown")));
+                    machine => machine.Set("throwTimer", machine.Get<float>("rockThrowCooldown")));
             stateMachine.RegisterTransition("Throw", "Chasing",
                     machine => machine.GetTrigger("rockThrowDone"));
 

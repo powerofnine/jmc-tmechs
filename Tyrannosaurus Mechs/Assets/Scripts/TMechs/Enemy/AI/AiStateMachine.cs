@@ -39,6 +39,7 @@ namespace TMechs.Enemy.AI
         public float HorizontalDistanceToTarget => Vector3.Distance(transform.position.Remove(Utility.Axis.Y), target.position.Remove(Utility.Axis.Y));
         public Vector3 DirectionToTarget => (target.position - transform.position).normalized;
         public Vector3 HorizontalDirectionToTarget => (target.position - transform.position).Remove(Utility.Axis.Y).normalized;
+        public float AngleToTarget => Vector3.Angle(HorizontalDirectionToTarget, transform.forward.Remove(Utility.Axis.Y).normalized);
 
         #endregion
 
@@ -275,6 +276,7 @@ namespace TMechs.Enemy.AI
             public float HorizontalDistanceToTarget => Machine.HorizontalDistanceToTarget;
             public Vector3 DirectionToTarget => Machine.DirectionToTarget;
             public Vector3 HorizontalDirectionToTarget => Machine.HorizontalDirectionToTarget;
+            public float AngleToTarget => Machine.AngleToTarget;
 
             public virtual void OnEnter()
             {

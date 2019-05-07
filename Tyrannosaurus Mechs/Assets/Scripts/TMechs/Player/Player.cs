@@ -15,6 +15,7 @@ namespace TMechs.Player
         public Rigidbody Rigidbody { get; private set; }
         public CharacterController Controller { get; private set; }
         public PlayerCombat Combat { get; private set; }
+        public PlayerMovement Movement { get; private set; }
 
         public int maxHealth;
 
@@ -52,6 +53,7 @@ namespace TMechs.Player
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
+            Movement = GetComponent<PlayerMovement>();
             
             // Configure shaders
             foreach (Renderer render in GetComponentsInChildren<Renderer>())
