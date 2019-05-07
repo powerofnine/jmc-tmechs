@@ -24,19 +24,14 @@ namespace TMechs.Player.Behaviour
             rf.damage = Player.Instance.Combat.RocketFistDamage;
             rf.target = target.transform;
 
-            animator.transform.Find("T_MechsProto_RocketFist").gameObject.SetActive(false);
-        }
-
-        [UsedImplicitly]
-        private void RocketFistBegin()
-        {
+            Player.Instance.rocketFistGeo.SetActive(false);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
         {
             base.OnStateExit(animator, animatorStateInfo, layerIndex);
 
-            animator.transform.Find("T_MechsProto_RocketFist").gameObject.SetActive(true);
+            Player.Instance.rocketFistGeo.SetActive(true);
         }
     }
 }

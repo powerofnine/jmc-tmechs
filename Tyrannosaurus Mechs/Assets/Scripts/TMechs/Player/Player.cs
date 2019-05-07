@@ -10,6 +10,7 @@ namespace TMechs.Player
     public class Player : MonoBehaviour
     {
         public static Player Instance { get; private set; }
+        public static Rewired.Player Input { get; private set; }
         public Animator Animator { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public CharacterController Controller { get; private set; }
@@ -17,6 +18,9 @@ namespace TMechs.Player
 
         public int maxHealth;
 
+        [Header("Objects")]
+        public GameObject rocketFistGeo;
+                
         [Header("Anchors")]
         public Transform rocketFistAnchor;
         public Transform pickupAnchor;
@@ -42,7 +46,9 @@ namespace TMechs.Player
         {
             Instance = this;
 
-            Animator = GetComponent<Animator>();
+            Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
+            
+            Animator = GetComponentInChildren<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
@@ -62,7 +68,7 @@ namespace TMechs.Player
 
         private void Update()
         {
-            if (PlayerMovement.Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
+            if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
                 MenuActions.SetPause(true);
@@ -99,7 +105,7 @@ namespace TMechs.Player
                 return;
             }
 
-            if (PlayerMovement.Input.GetButton(Controls.Action.ANGERY))
+            if (Input.GetButton(Controls.Action.ANGERY))
             {
                 //State: angry
 

@@ -8,7 +8,7 @@ namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
     {
-        private Rewired.Player Input => PlayerMovement.Input;
+        private static Rewired.Player Input => Player.Input;
 
         public Transform player;
         public float cameraSpeed = 10F;

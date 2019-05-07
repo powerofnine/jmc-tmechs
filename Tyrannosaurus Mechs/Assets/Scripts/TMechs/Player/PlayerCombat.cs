@@ -7,7 +7,6 @@ using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
-    [RequireComponent(typeof(Animator))]
     public class PlayerCombat : MonoBehaviour
     {
         public float grappleRadius = 10F;
@@ -18,30 +17,29 @@ namespace TMechs.Player
         public float rocketFistChargeMax;
         public float rocketFistRechargeSpeedMultiplier = 2F;
         [NonSerialized]
+        public bool rocketFistCharging;
+        [NonSerialized]
         public float rocketFistCharge;
 
         public float RocketFistDamage => Mathf.Lerp(rocketFistDamageBase, rocketFistDamageMax, rocketFistCharge / rocketFistChargeMax);
 
         private CombatState combat;
 
-        private static Rewired.Player Input => PlayerMovement.Input;
+        private static Rewired.Player Input => Player.Input;
 
         private Animator animator;
-        private readonly Dictionary<string, PlayerHitBox> hitboxes = new Dictionary<string, PlayerHitBox>();
+        private readonly Dictionary<string, HashSet<PlayerHitBox>> hitboxes = new Dictionary<string, HashSet<PlayerHitBox>>();
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = Player.Instance.Animator;
 
             foreach (PlayerHitBox hitbox in GetComponentsInChildren<PlayerHitBox>())
             {
-                if (hitboxes.ContainsKey(hitbox.id))
-                {
-                    Debug.LogErrorFormat("HitBox id {0} already exists when trying to add {1}", hitbox.id, hitbox);
-                    continue;
-                }
+                if (!hitboxes.ContainsKey(hitbox.id))
+                    hitboxes.Add(hitbox.id, new HashSet<PlayerHitBox>());
 
-                hitboxes.Add(hitbox.id, hitbox);
+                hitboxes[hitbox.id].Add(hitbox);
                 hitbox.gameObject.SetActive(false);
             }
         }
@@ -83,14 +81,13 @@ namespace TMechs.Player
             else
                 animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
 
-            int stateHash = animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).shortNameHash;
-            if (!Anim.RAINBOW.ContainsKey(stateHash) || !Anim.RAINBOW[stateHash].StartsWith("Rocket Fist"))
+            if (!rocketFistCharging)
                 rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime * rocketFistRechargeSpeedMultiplier, 0F, rocketFistChargeMax);
         }
 
         public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)
         {
-            if (hitbox != combat.activeHitbox)
+            if (hitbox.id != combat.activeHitbox)
                 return;
 
             entity.Damage(combat.damage);
@@ -98,8 +95,9 @@ namespace TMechs.Player
 
         public void SetHitbox(string hitbox, float damage)
         {
-            if (combat.activeHitbox)
-                combat.activeHitbox.gameObject.SetActive(false);
+            if (!string.IsNullOrWhiteSpace(combat.activeHitbox) && hitboxes.ContainsKey(combat.activeHitbox))
+                foreach (PlayerHitBox box in hitboxes[combat.activeHitbox])
+                    box.gameObject.SetActive(false);
             combat.damage = 0F;
 
             if (string.IsNullOrWhiteSpace(hitbox))
@@ -111,8 +109,10 @@ namespace TMechs.Player
                 return;
             }
 
-            combat.activeHitbox = hitboxes[hitbox];
-            combat.activeHitbox.gameObject.SetActive(true);
+            combat.activeHitbox = hitbox;
+            foreach (PlayerHitBox box in hitboxes[combat.activeHitbox])
+                box.gameObject.SetActive(true);
+
             combat.damage = damage;
         }
 
@@ -124,7 +124,7 @@ namespace TMechs.Player
 
         private struct CombatState
         {
-            public PlayerHitBox activeHitbox;
+            public string activeHitbox;
             public float damage;
         }
     }

@@ -9,7 +9,7 @@ namespace TMechs.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public static Rewired.Player Input { get; private set; }
+        private static Rewired.Player Input => Player.Input;
 
         [Name("AA Camera")]
         public Transform aaCamera;
@@ -39,10 +39,8 @@ namespace TMechs.Player
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = Player.Instance.Animator;
             animator.SetFloat(Anim.PLAYER_SPEED, movementSpeed);
-
-            Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
             if (!aaCamera)
             {
@@ -52,7 +50,7 @@ namespace TMechs.Player
 
             intendedY = transform.eulerAngles.y;
 
-            controller = GetComponent<CharacterController>();
+            controller = Player.Instance.Controller;
         }
 
         private void Update()
