@@ -293,16 +293,13 @@ MonoBehaviour:
       y: 0
       width: 100
       height: 100
-    contents:
-    - model: {fileID: 0}
-      id: 0
-      isStickyNote: 0
+    contents: []
   stickyNoteInfos: []
   systemInfos: []
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 0
+    x: -0
     y: -796
     width: 1618
     height: 2758
@@ -738,7 +735,7 @@ MonoBehaviour:
   m_InputSlots:
   - {fileID: 114571176826476282}
   m_OutputSlots: []
-  m_Disabled: 0
+  m_Disabled: 1
 --- !u!114 &114888496708539098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1633,43 +1630,37 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
-      - op: 1
-        valueIndex: 5
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
+        data[3]: 2
       - op: 1
         valueIndex: 6
         data[0]: -1
         data[1]: -1
         data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 7
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
         data[3]: 7
       - op: 44
-        valueIndex: 8
+        valueIndex: 9
         data[0]: 0
         data[1]: -1
         data[2]: -1
         data[3]: 0
       - op: 45
-        valueIndex: 12
+        valueIndex: 13
         data[0]: 1
         data[1]: -1
         data[2]: -1
         data[3]: 0
       - op: 1
-        valueIndex: 13
+        valueIndex: 14
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
-      - op: 1
-        valueIndex: 16
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
       - op: 1
         valueIndex: 17
         data[0]: -1
@@ -1687,75 +1678,81 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
-        valueIndex: 22
+        valueIndex: 20
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 3
       - op: 1
         valueIndex: 23
         data[0]: -1
         data[1]: -1
         data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 24
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
         data[3]: 7
       - op: 45
-        valueIndex: 25
+        valueIndex: 26
         data[0]: 3
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 44
-        valueIndex: 26
+        valueIndex: 27
         data[0]: 2
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 6
-        valueIndex: 30
+        valueIndex: 31
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: -1
       - op: 1
-        valueIndex: 31
+        valueIndex: 32
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 32
+        valueIndex: 33
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 35
+        valueIndex: 36
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 2
       - op: 1
-        valueIndex: 37
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 2
-      - op: 1
-        valueIndex: 39
+        valueIndex: 38
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 42
+        valueIndex: 41
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 2
+      - op: 1
+        valueIndex: 43
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 9
-        valueIndex: 43
+        valueIndex: 44
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -1765,8 +1762,6 @@ VisualEffectResource:
     m_PropertySheet:
       m_Float:
         m_Array:
-        - m_ExpressionIndex: 4
-          m_Value: 1012
         - m_ExpressionIndex: 5
           m_Value: 0.1
         - m_ExpressionIndex: 10
@@ -1783,10 +1778,12 @@ VisualEffectResource:
           m_Value: 0.8
       m_Vector2f:
         m_Array:
+        - m_ExpressionIndex: 4
+          m_Value: {x: 252, y: 252}
         - m_ExpressionIndex: 21
-          m_Value: {x: 0, y: 0}
-        - m_ExpressionIndex: 22
           m_Value: {x: 10, y: 10}
+        - m_ExpressionIndex: 23
+          m_Value: {x: 0, y: 0}
       m_Vector3f:
         m_Array:
         - m_ExpressionIndex: 9
@@ -1795,7 +1792,7 @@ VisualEffectResource:
           m_Value: {x: -0.1, y: -0.2, z: -0.1}
         - m_ExpressionIndex: 20
           m_Value: {x: 0.1, y: 0.1, z: 0.1}
-        - m_ExpressionIndex: 23
+        - m_ExpressionIndex: 22
           m_Value: {x: 0, y: 0, z: 0}
       m_Vector4f:
         m_Array: []
@@ -2210,21 +2207,13 @@ VisualEffectResource:
       index: 1
     values: []
     tasks:
-    - type: 268435456
-      buffers: []
-      values:
-      - nameId: Rate
-        index: 4
-      params: []
-      processor: {fileID: 0}
-      shaderSourceIndex: -1
     - type: 268435457
       buffers: []
       values:
       - nameId: Count
-        index: 22
-      - nameId: Delay
         index: 21
+      - nameId: Delay
+        index: 23
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -2237,11 +2226,13 @@ VisualEffectResource:
       index: 2
     values: []
     tasks:
-    - type: 268435456
+    - type: 268435457
       buffers: []
       values:
-      - nameId: Rate
+      - nameId: Count
         index: 4
+      - nameId: Delay
+        index: 23
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -2268,9 +2259,9 @@ VisualEffectResource:
       index: 8
     values:
     - nameId: bounds_center
-      index: 23
+      index: 22
     - nameId: bounds_size
-      index: 23
+      index: 22
     tasks:
     - type: 536870912
       buffers:
@@ -2285,9 +2276,9 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 23
+        index: 22
       - nameId: bounds_size
-        index: 23
+        index: 22
       processor: {fileID: 0}
       shaderSourceIndex: 0
     - type: 805306368
@@ -2365,7 +2356,7 @@ VisualEffectResource:
       index: 15
     values:
     - nameId: bounds_center
-      index: 23
+      index: 22
     - nameId: bounds_size
       index: 20
     tasks:
@@ -2382,7 +2373,7 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 23
+        index: 22
       - nameId: bounds_size
         index: 20
       processor: {fileID: 0}
@@ -2522,7 +2513,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614537}
   - {fileID: 8926484042661614538}
   m_OutputSlots: []
-  m_Disabled: 1
+  m_Disabled: 0
   repeat: 0
   spawnMode: 0
   delayMode: 0
@@ -3541,7 +3532,7 @@ MonoBehaviour:
   m_InputSlots:
   - {fileID: 8926484042661614609}
   m_OutputSlots: []
-  m_Disabled: 0
+  m_Disabled: 1
 --- !u!114 &8926484042661614609
 MonoBehaviour:
   m_ObjectHideFlags: 0
