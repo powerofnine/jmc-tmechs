@@ -1,6 +1,5 @@
 ﻿using System;
-
-// ReSharper disable once CheckNamespace
+// ReSharper disable All
 namespace UnityEngine.Rendering.PostProcessing
 {
     [Serializable]
@@ -20,6 +19,8 @@ namespace UnityEngine.Rendering.PostProcessing
 
     public sealed class BlurEffect : PostProcessEffectRenderer<Blur>
     {
+        private static readonly int PARAMETER = Shader.PropertyToID("_Parameter");
+
         public enum Mode
         {
             StandardGaussian,
@@ -30,7 +31,7 @@ namespace UnityEngine.Rendering.PostProcessing
         {
             Downsample = 0,
             BlurVertical = 1,
-            BlurHorizontal = 2,
+            BlurHorizontal = 2
         }
 
         public override void Render(PostProcessRenderContext context)
@@ -49,7 +50,7 @@ namespace UnityEngine.Rendering.PostProcessing
 
             PropertySheet sheet = context.propertySheets.Get(Shader.Find("Hidden/Legacy/Blur"));
             sheet.properties.Clear();
-            sheet.properties.SetVector("_Parameter", new Vector4(blurSize * widthMod, -blurSize * widthMod, 0.0f, 0.0f));
+            sheet.properties.SetVector(PARAMETER, new Vector4(blurSize * widthMod, -blurSize * widthMod, 0.0f, 0.0f));
 
             int blurId = Shader.PropertyToID("_BlurPostProcessEffect");
             command.GetTemporaryRT(blurId, rtW, rtH, 0, FilterMode.Bilinear);
@@ -61,7 +62,7 @@ namespace UnityEngine.Rendering.PostProcessing
             for (int i = 0; i < blurIterations; i++)
             {
                 float iterationOffs = i * 1.0f;
-                sheet.properties.SetVector("_Parameter", new Vector4(blurSize * widthMod + iterationOffs, -blurSize * widthMod - iterationOffs, 0.0f, 0.0f));
+                sheet.properties.SetVector(PARAMETER, new Vector4(blurSize * widthMod + iterationOffs, -blurSize * widthMod - iterationOffs, 0.0f, 0.0f));
 
                 // Vertical blur..
                 int rtId2 = Shader.PropertyToID("_BlurPostProcessEffect" + rtIndex++);

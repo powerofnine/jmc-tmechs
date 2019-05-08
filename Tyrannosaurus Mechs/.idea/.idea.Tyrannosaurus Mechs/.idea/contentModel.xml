@@ -210,10 +210,29 @@
             </e>
           </e>
         </e>
+        <e p="Resources" t="Include">
+          <e p="ErosionBrush" t="Include">
+            <e p="ErosionBrush.cs" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="ArrayTools.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="ErosionBrushEditor.cs" t="Include" />
+                <e p="Layout.cs" t="Include" />
+              </e>
+              <e p="Erosion.cs" t="Include" />
+              <e p="Extensions.cs" t="Include" />
+              <e p="Matrix.cs" t="Include" />
+              <e p="Matrix2.cs" t="Include" />
+              <e p="Noise.cs" t="Include" />
+              <e p="WeldTerrains.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Editor" t="Include">
             <e p="AiGraphWindow.cs" t="Include" />
             <e p="AiStatePropertyDrawer.cs" t="Include" />
+            <e p="ArrayElementNameBindDrawer.cs" t="Include" />
             <e p="IdAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
             <e p="RadiusPropertyDrawer.cs" t="Include" />
@@ -222,6 +241,7 @@
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
             <e p="Attributes" t="Include">
+              <e p="ArrayElementNameBindAttribute.cs" t="Include" />
               <e p="FriendlyNameAttribute.cs" t="Include" />
               <e p="TextureNameAttribute.cs" t="Include" />
             </e>
@@ -299,7 +319,7 @@
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerHitBox.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
-              <e p="PlayerPostProcess.cs" t="Include" />
+              <e p="PlayerVfx.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
             </e>
             <e p="PostProcessing" t="Include">
@@ -312,7 +332,6 @@
             </e>
             <e p="UI" t="Include">
               <e p="Components" t="Include">
-                <e p="FancyImage.cs" t="Include" />
                 <e p="UiButton.cs" t="Include" />
                 <e p="UiCheckbox.cs" t="Include" />
                 <e p="UIComponent.cs" t="Include" />

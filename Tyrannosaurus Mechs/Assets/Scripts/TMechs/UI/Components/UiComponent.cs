@@ -12,7 +12,7 @@ namespace TMechs.UI.Components
         public Graphic highlight;
         [HideInInspector]
         public ValueChangedEvent onValueChange;
-        
+
         [NonSerialized]
         public Color highlightMultiply = Color.white;
 
@@ -21,7 +21,7 @@ namespace TMechs.UI.Components
         public virtual void OnSubmit()
         {
         }
-        
+
         public virtual bool OnCancel() => false;
         public virtual bool NavigateUp() => false;
         public virtual bool NavigateDown() => false;
@@ -54,7 +54,7 @@ namespace TMechs.UI.Components
         protected virtual void OnDeselect()
         {
         }
-        
+
         protected void NotifyValueChange()
         {
             if (onValueChange != null)
@@ -66,7 +66,7 @@ namespace TMechs.UI.Components
             StopAllCoroutines();
             UpdateState(instant);
         }
-        
+
         protected virtual void UpdateState(bool instant)
         {
             Transition(highlight, IsSelected, instant);
@@ -76,15 +76,15 @@ namespace TMechs.UI.Components
         {
             StartCoroutine(DoTransition(g, value, instant));
         }
-        
+
         private IEnumerator DoTransition(Graphic g, bool visible, bool instant)
         {
             float transition = 0F;
             Color startColor = g ? g.canvasRenderer.GetColor() : default;
-            
+
             Color targetColor = highlightMultiply;
             targetColor.a = visible ? 1F : 0F;
-            
+
             while (g && transition < 1F)
             {
                 transition += Time.unscaledDeltaTime * 4F;
@@ -92,7 +92,7 @@ namespace TMechs.UI.Components
                     transition = 1F;
 
                 g.canvasRenderer.SetColor(Color.Lerp(startColor, targetColor, transition));
-             
+
                 yield return null;
             }
         }

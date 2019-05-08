@@ -26,9 +26,9 @@ namespace TMechs.Data
 
         private void SpawnPlayer()
         {
-            if(!string.IsNullOrWhiteSpace(data.checkpointId))
+            if (!string.IsNullOrWhiteSpace(data.checkpointId))
                 Checkpoint.CheckpointRegistry.Instance.MovePlayerTo(data.checkpointId);
-            
+
             Destroy(gameObject);
         }
     }

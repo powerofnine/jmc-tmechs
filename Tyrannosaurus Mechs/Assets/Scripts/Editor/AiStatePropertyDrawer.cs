@@ -11,7 +11,7 @@ public class AiStatePropertyDrawer : PropertyDrawer
 
         if (string.IsNullOrWhiteSpace(state.stringValue))
             state.stringValue = "None";
-        
+
         GUI.enabled = false;
         EditorGUI.PropertyField(position, state, label);
         GUI.enabled = true;

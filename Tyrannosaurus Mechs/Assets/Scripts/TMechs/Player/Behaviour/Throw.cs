@@ -7,7 +7,7 @@ namespace TMechs.Player.Behaviour
     {
         public float throwForce = 5F;
         public float launchAngle = 45F;
-        
+
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
@@ -16,7 +16,7 @@ namespace TMechs.Player.Behaviour
             Player.Instance.pickedUp = null;
 
             EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
-            
+
             grabbed.HandleThrow();
             grabbed.transform.SetParent(null);
 
@@ -26,7 +26,7 @@ namespace TMechs.Player.Behaviour
                 ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
             else
                 ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, animator.transform.position + animator.transform.forward * throwForce, launchAngle);
-            
+
             grabbed.GetComponent<Rigidbody>().velocity = ballisticVelocity;
         }
     }

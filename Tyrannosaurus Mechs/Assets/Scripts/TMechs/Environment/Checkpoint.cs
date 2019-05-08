@@ -43,21 +43,21 @@ namespace TMechs.Environment
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag("Player"))
+            if (other.CompareTag("Player"))
                 CheckpointRegistry.Instance.Set(id);
         }
 
         private void UpdateState()
         {
             StopAllCoroutines();
-            
+
             if (statusRenderer)
                 StartCoroutine(Transition(CheckpointRegistry.Instance.IsActive(id) ? setColor : unsetColor));
         }
 
         private void MovePlayer()
         {
-            if(!Player.Player.Instance)
+            if (!Player.Player.Instance)
             {
                 Debug.LogError("Could not spawn player as the player could not be found");
                 return;
@@ -67,7 +67,7 @@ namespace TMechs.Environment
             Player.Player.Instance.transform.position = transform.position + anchorOffset;
             Player.Player.Instance.Controller.enabled = true;
         }
-        
+
         private IEnumerator Transition(Color c)
         {
             Color old = statusRenderer.material.GetColor(emissionColor);
@@ -130,7 +130,7 @@ namespace TMechs.Environment
 
                 SetUnsaved(id);
 
-                SaveSystem.SaveData data = new SaveSystem.SaveData()
+                SaveSystem.SaveData data = new SaveSystem.SaveData
                 {
                         sceneId = SceneManager.GetActiveScene().path,
                         checkpointId = id
@@ -146,7 +146,7 @@ namespace TMechs.Environment
 
                 if (!string.IsNullOrWhiteSpace(checkpoints[id].checkpointName))
                     meta += " - " + checkpoints[id].checkpointName;
-                
+
                 SaveSystem.CreateSave(data, meta);
             }
 
@@ -161,7 +161,7 @@ namespace TMechs.Environment
             {
                 if (!IsRegistered(id))
                     return;
-                
+
                 SetUnsaved(id);
 
                 checkpoints[id].MovePlayer();

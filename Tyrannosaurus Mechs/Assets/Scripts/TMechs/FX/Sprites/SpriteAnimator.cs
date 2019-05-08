@@ -1,74 +1,78 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace TMechs.FX.Sprites
 {
-	[RequireComponent (typeof(SpriteSheet))]
-	public class SpriteAnimator : MonoBehaviour
-	{
-		public bool running = true;
+    [PublicAPI]
+    [RequireComponent(typeof(SpriteSheet))]
+    public class SpriteAnimator : MonoBehaviour
+    {
+        public bool running = true;
 
-		public int minIndex = 0;
-		public int maxIndex = 15;
-		public int framesPerSecond = 15;
-		public bool reverse = false;
-		public bool ditherAnimation = false;
-		public bool useScaledTime = true;
+        public int minIndex;
+        public int maxIndex = 15;
+        public int framesPerSecond = 15;
+        public bool reverse;
+        public bool ditherAnimation;
+        public bool useScaledTime = true;
 
-		public LoopbackMode loopbackMode = LoopbackMode.Loop;
+        public LoopbackMode loopbackMode = LoopbackMode.Loop;
 
-		private SpriteSheet sheet;
+        private SpriteSheet sheet;
 
-		private double tick;
-		
-		private void Start ()
-		{
-			sheet = GetComponent<SpriteSheet> ();
+        private double tick;
 
-			if (ditherAnimation && sheet)
-				sheet.Index = Random.Range (minIndex, maxIndex);
+        private void Start()
+        {
+            sheet = GetComponent<SpriteSheet>();
 
-		}
+            if (ditherAnimation && sheet)
+                sheet.Index = Random.Range(minIndex, maxIndex);
+        }
 
-		private void Update ()
-		{
-			if (!running)
-				return;
+        private void Update()
+        {
+            if (!running)
+                return;
 
-			tick += useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime;
-			
-			if (tick > 1F / framesPerSecond) {
-				tick = 0;
+            tick += useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime;
 
-				int cur = sheet.Index + (reverse ? -1 : 1);
+            if (tick > 1F / framesPerSecond)
+            {
+                tick = 0;
 
-				if ((!reverse && (cur > maxIndex || cur > sheet.SpriteCount)) || (reverse && (cur < minIndex || cur < 0))) {
-					switch (loopbackMode) {
-						case LoopbackMode.Reverse:
-							reverse = !reverse;
-							break;
-						case LoopbackMode.Stop:
-							running = false;
-							break;
-						case LoopbackMode.Loop:
-							break;
-						default:
-							throw new ArgumentOutOfRangeException();
-					}
+                int cur = sheet.Index + (reverse ? -1 : 1);
 
-					cur = reverse ? maxIndex : minIndex;
-				}
+                if (!reverse && (cur > maxIndex || cur > sheet.SpriteCount) || reverse && (cur < minIndex || cur < 0))
+                {
+                    switch (loopbackMode)
+                    {
+                        case LoopbackMode.Reverse:
+                            reverse = !reverse;
+                            break;
+                        case LoopbackMode.Stop:
+                            running = false;
+                            break;
+                        case LoopbackMode.Loop:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
-				sheet.Index = cur;
-			}
-		}
+                    cur = reverse ? maxIndex : minIndex;
+                }
 
-		public enum LoopbackMode
-		{
-			Stop = 0,
-			Loop = 1,
-			Reverse = 2
-		}
-	}
+                sheet.Index = cur;
+            }
+        }
+
+        public enum LoopbackMode
+        {
+            Stop = 0,
+            Loop = 1,
+            Reverse = 2
+        }
+    }
 }

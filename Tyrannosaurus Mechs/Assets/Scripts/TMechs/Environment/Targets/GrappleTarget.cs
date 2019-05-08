@@ -16,7 +16,7 @@ namespace TMechs.Environment.Targets
         {
             if (!isSwing)
                 return;
-            
+
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
         }

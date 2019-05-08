@@ -18,12 +18,13 @@ namespace TMechs.UI.Controllers
         private void Awake()
         {
             DisplaySettings settings = SettingsData.Get<DisplaySettings>();
-            
+
             if (brightnessSlider)
             {
                 brightnessSlider.SetInstant(settings.brightness);
                 brightnessSlider.onValueChange.AddListener(ob => settings.brightness = brightnessSlider.Value);
             }
+
             if (gammaSlider)
             {
                 gammaSlider.SetInstant(settings.gamma);
@@ -39,7 +40,7 @@ namespace TMechs.UI.Controllers
             if (fpsDisplay)
             {
                 fpsValueMap = fpsDisplay.SetEnum<DisplaySettings.FpsDisplay>();
-                
+
                 fpsDisplay.Value = fpsValueMap.SingleOrDefault(x => x.Value.Equals(settings.fpsDisplay)).Key;
                 fpsDisplay.onValueChange.AddListener(ob => settings.fpsDisplay = fpsValueMap[fpsDisplay.Value]);
             }

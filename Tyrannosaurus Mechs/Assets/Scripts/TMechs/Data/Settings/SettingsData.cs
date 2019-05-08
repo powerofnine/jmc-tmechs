@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -30,18 +29,18 @@ namespace TMechs.Data.Settings
             {
                 if (!values.ContainsKey(provider))
                     continue;
-                
+
                 PlayerPrefs.SetString("settings:" + provider.FullName, JsonConvert.SerializeObject(values[provider]));
             }
-            
+
             PlayerPrefs.Save();
         }
 
         private static object CreateInstance(Type t)
         {
             ConstructorInfo constructor = t.GetConstructor(new Type[0]);
-            
-            if(constructor == null)
+
+            if (constructor == null)
                 throw new ArgumentException("Error: " + nameof(t) + " does not contain an empty constructor");
 
             return constructor.Invoke(new object[0]);
@@ -50,7 +49,7 @@ namespace TMechs.Data.Settings
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Init()
         {
-            IEnumerable<Type> discoveredProviders = 
+            IEnumerable<Type> discoveredProviders =
                     from assembly in AppDomain.CurrentDomain.GetAssemblies()
                     from t in assembly.GetTypes()
                     let attrib = t.GetCustomAttribute<SettingsProviderAttribute>(false)

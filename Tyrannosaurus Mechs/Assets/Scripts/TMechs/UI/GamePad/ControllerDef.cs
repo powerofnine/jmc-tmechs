@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Rewired.Data.Mapping;
 using TMechs.Attributes;
 using UnityEngine;
@@ -75,7 +74,7 @@ namespace TMechs.UI.GamePad
                 definition.padName = map.ControllerName;
                 definition.guid = map.Guid.ToString();
                 definition.layout = layout;
-                
+
                 AssetDatabase.CreateAsset(definition, file);
             }
         }

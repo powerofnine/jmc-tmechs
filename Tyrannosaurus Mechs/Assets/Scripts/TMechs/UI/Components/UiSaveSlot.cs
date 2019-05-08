@@ -11,7 +11,7 @@ namespace TMechs.UI.Components
         public MenuActions menuActions;
         [HideInInspector]
         public LoadGameUi parent;
-        
+
         [SerializeField]
         private TextMeshProUGUI meta;
         [SerializeField]
@@ -23,11 +23,11 @@ namespace TMechs.UI.Components
         private string idFormat;
 
         private SaveSystem.LexiconEntry entry;
-        
+
         protected override void Awake()
         {
             base.Awake();
-            
+
             if (creationDate)
                 creationDateFormat = creationDate.text;
 
@@ -38,7 +38,7 @@ namespace TMechs.UI.Components
         public void Set(SaveSystem.LexiconEntry entry)
         {
             this.entry = entry;
-            
+
             if (meta)
                 meta.text = entry.meta;
             if (creationDate)
@@ -56,17 +56,17 @@ namespace TMechs.UI.Components
         public override void OnSubmit()
         {
             base.OnSubmit();
-            
-            if(menuActions)
+
+            if (menuActions)
                 menuActions.LoadGame(entry);
         }
 
         protected override void OnSelect()
         {
             base.OnSelect();
-            
-            if(parent)
-                parent.OnSlotSelected((RectTransform)transform, entry);
+
+            if (parent)
+                parent.OnSlotSelected((RectTransform) transform, entry);
         }
     }
 }

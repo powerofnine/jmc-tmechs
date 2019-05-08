@@ -3,21 +3,21 @@ using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public static Rewired.Player Input { get; private set; }
+        private static Rewired.Player Input => Player.Input;
 
         [Name("AA Camera")]
         public Transform aaCamera;
 
         [Header("Forces")]
         public float movementSpeed = 10F;
-        public float jumpForce = 2 * 9.8F;
+        public float runSpeed = 20F;
+        public float jumpForce = 2 * Utility.GRAVITY;
 
         public int maxJumps = 1;
 
@@ -39,10 +39,8 @@ namespace TMechs.Player
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = Player.Instance.Animator;
             animator.SetFloat(Anim.PLAYER_SPEED, movementSpeed);
-
-            Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
             if (!aaCamera)
             {
@@ -52,7 +50,7 @@ namespace TMechs.Player
 
             intendedY = transform.eulerAngles.y;
 
-            controller = GetComponent<CharacterController>();
+            controller = Player.Instance.Controller;
         }
 
         private void Update()
@@ -63,6 +61,8 @@ namespace TMechs.Player
                 return;
             }
 
+            bool angry = Input.GetButton(ANGERY);
+            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
             if (!playerControl)
                 movement = Vector3.zero;
@@ -80,16 +80,15 @@ namespace TMechs.Player
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
 
-            velocity.y -= 9.8F * Time.deltaTime;
+            velocity.y -= Utility.GRAVITY * Time.deltaTime;
 
-            if (Input.GetButton(ANGERY))
-                movement *= 2F;
+            float speed = angry ? runSpeed : movementSpeed;
 
-            
-            controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
-            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
+            controller.Move((movement * speed + velocity) * Time.deltaTime);
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
             GroundedCheck();
-            
+            animator.SetBool(Anim.GROUNDED, isGrounded);
+
             if (isGrounded)
             {
                 jumps = 0;
@@ -102,7 +101,7 @@ namespace TMechs.Player
                     jumps++;
                 velocity.y = jumpForce;
             }
-            
+
             EnemyTarget target = TargetController.Instance.GetLock();
 
             if (target)
@@ -123,18 +122,13 @@ namespace TMechs.Player
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
-            
-            #if UNITY_EDITOR
-            if(UnityEngine.Input.GetKeyDown(KeyCode.B))
-                SaveSystem.CreateSave(new SaveSystem.SaveData() {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
-            #endif
         }
 
         private void GroundedCheck()
         {
             isGrounded = controller.isGrounded;
             playerControl = true;
-            
+
             if (!isGrounded)
                 return;
 
@@ -143,12 +137,12 @@ namespace TMechs.Player
             if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
                 if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
                     return;
-            
+
             if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
                 sliding = true;
 
             playerControl = !sliding;
-            
+
             if (!sliding)
                 return;
 
@@ -159,7 +153,7 @@ namespace TMechs.Player
             Vector3.OrthoNormalize(ref normal, ref direction);
 
             intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            controller.Move(direction * movementSpeed * Time.deltaTime);
+            controller.Move(movementSpeed * Time.deltaTime * direction);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)

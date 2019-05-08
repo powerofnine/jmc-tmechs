@@ -8,7 +8,7 @@ namespace TMechs.UI.FX
         public float fadeTime = 0.5F;
 
         private CanvasRenderer[] renderers;
-        
+
         private void Awake()
         {
             renderers = GetComponentsInChildren<CanvasRenderer>();
@@ -26,11 +26,11 @@ namespace TMechs.UI.FX
 
                 foreach (CanvasRenderer renderer in renderers)
                     renderer.SetAlpha(Mathf.Lerp(startAlpha, endAlpha, time / fadeTime));
-                
+
                 yield return null;
             }
-            
-            if(kill)
+
+            if (kill)
                 Destroy(gameObject);
         }
 

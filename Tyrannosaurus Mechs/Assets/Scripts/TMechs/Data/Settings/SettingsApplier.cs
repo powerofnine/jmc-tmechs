@@ -11,14 +11,14 @@ namespace TMechs.Data.Settings
 
         private ColorGrading grading;
 
-        private float deltaTime = 0F;
-        
+        private float deltaTime;
+
         private void Awake()
         {
             PostProcessVolume pp = gameObject.AddComponent<PostProcessVolume>();
 
             pp.isGlobal = true;
-            
+
             profile = ScriptableObject.CreateInstance<PostProcessProfile>();
             pp.profile = profile;
 
@@ -47,20 +47,21 @@ namespace TMechs.Data.Settings
         }
 
         #region Obsolete UI Code
+
         private void OnGUI()
         {
             DisplaySettings display = SettingsData.Get<DisplaySettings>();
 
             if (display == null || display.fpsDisplay == DisplaySettings.FpsDisplay.None)
                 return;
-            
+
             int w = Screen.width, h = Screen.height;
-            
+
             GUIStyle style = new GUIStyle();
             Rect rect = default;
-            
+
             style.fontSize = h * 2 / 100;
-            
+
             switch (display.fpsDisplay)
             {
                 case DisplaySettings.FpsDisplay.None:
@@ -86,13 +87,14 @@ namespace TMechs.Data.Settings
             }
 
             style.normal.textColor = Color.yellow;
-            
+
             float msec = deltaTime * 1000F;
             float fps = 1F / deltaTime;
 
             string text = $"{msec:0.0} ms ({fps:0.} fps)";
             GUI.Label(rect, text, style);
         }
+
         #endregion
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

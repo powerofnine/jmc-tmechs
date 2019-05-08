@@ -11,9 +11,9 @@ namespace TMechs.Player.Behaviour
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            if(string.IsNullOrWhiteSpace(hitboxId))
+            if (string.IsNullOrWhiteSpace(hitboxId))
                 Debug.LogWarningFormat("No HitBox ID specified for {0}, nothing will happen", stateInfo.shortNameHash);
-            
+
             Player.Instance.Combat.SetHitbox(hitboxId, damage);
         }
 
