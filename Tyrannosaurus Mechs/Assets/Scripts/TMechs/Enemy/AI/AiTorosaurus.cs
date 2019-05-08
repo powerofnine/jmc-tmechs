@@ -71,7 +71,7 @@ namespace TMechs.Enemy.AI
         {
             stateMachine.Tick();
 
-            yVelocity += 9.81F * Time.deltaTime;
+            yVelocity += Utility.GRAVITY * Time.deltaTime;
 
             CharacterController controller = (stateMachine.shared as TorosaurusShared)?.controller;
 

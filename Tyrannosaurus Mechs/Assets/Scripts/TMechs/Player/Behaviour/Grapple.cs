@@ -10,7 +10,6 @@ namespace TMechs.Player.Behaviour
         private static readonly int GRAPPLE_END = Anim.Hash("Grapple End");
 
         public float pullSpeedMin = 50F;
-        public float pullSpeedAcceleration = 9.81F;
         public float pullSpeedMax = 100F;
         public float pullExitDistance = 2F;
 
@@ -85,7 +84,7 @@ namespace TMechs.Player.Behaviour
             else
                 return true;
 
-            pullSpeed = Mathf.Clamp(pullSpeed + pullSpeedAcceleration, pullSpeedMin, pullSpeedMax);
+            pullSpeed = Mathf.Clamp(pullSpeed + Utility.GRAVITY, pullSpeedMin, pullSpeedMax);
 
             return false;
         }

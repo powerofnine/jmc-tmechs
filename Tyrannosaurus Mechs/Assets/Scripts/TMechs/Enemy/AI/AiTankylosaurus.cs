@@ -34,7 +34,7 @@ namespace TMechs.Enemy.AI
 
             CharacterController controller = (stateMachine.shared as TankyloShared)?.controller;
 
-            yVelocity += 9.81F * Time.deltaTime;
+            yVelocity += Utility.GRAVITY * Time.deltaTime;
 
             if (controller)
             {

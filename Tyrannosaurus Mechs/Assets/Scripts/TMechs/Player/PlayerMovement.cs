@@ -17,7 +17,7 @@ namespace TMechs.Player
         [Header("Forces")]
         public float movementSpeed = 10F;
         public float runSpeed = 20F;
-        public float jumpForce = 2 * 9.8F;
+        public float jumpForce = 2 * Utility.GRAVITY;
 
         public int maxJumps = 1;
 
@@ -80,7 +80,7 @@ namespace TMechs.Player
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
 
-            velocity.y -= 9.8F * Time.deltaTime;
+            velocity.y -= Utility.GRAVITY * Time.deltaTime;
 
             float speed = angry ? runSpeed : movementSpeed;
 
