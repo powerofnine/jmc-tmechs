@@ -670,7 +670,7 @@ MonoBehaviour:
     List:
     - mEventName: Unpause Game
       mShowGroup: 1
-      mUpdateEntryList: 0
+      mUpdateEntryList: 1
       mEntryList:
       - target: {fileID: 4744706801910707804}
         name: active
@@ -1759,6 +1759,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onClick.List.Array.data[0].mEntryList.Array.size
       value: 148
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400886270970633257, guid: dd7dbd54e7664944dbfb793225c85b2a,
+        type: 3}
+      propertyPath: onClick.List.Array.data[0].mParameters.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400886270970633257, guid: dd7dbd54e7664944dbfb793225c85b2a,
         type: 3}
@@ -7442,6 +7447,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069765480635814127, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515987199165752853, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 226495036565084918, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041858726448082154, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479423939792389796, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4306513311418027211, guid: dec880a02f8833a4ab76fa1032c0279e,
         type: 3}

@@ -72,17 +72,17 @@ MonoBehaviour:
     target: {fileID: 0}
   properties:
     rangeStartFollow:
-      radius: 50
+      radius: 100
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 0, a: 0}
       renderAsLine: 0
     rangeStopFollow:
-      radius: 75
+      radius: 125
       visualize: 1
       visualizeColor: {r: 1, g: 0, b: 0, a: 0}
       renderAsLine: 0
     chargeRange:
-      radius: 70
+      radius: 95
       visualize: 1
       visualizeColor: {r: 1, g: 1, b: 0, a: 0}
       renderAsLine: 0
@@ -92,17 +92,17 @@ MonoBehaviour:
       visualizeColor: {r: 0, g: 1, b: 1, a: 0}
       renderAsLine: 0
     moveSpeed: 20
-    chargeSpeed: 50
+    chargeSpeed: 75
     chargeChance: 0.5
     chargeCooldown: 2
     chargeMaxDistance:
-      radius: 30
+      radius: 95
       visualize: 1
       visualizeColor: {r: 1, g: 0, b: 1, a: 0}
       renderAsLine: 1
     chargeFallbackMaxTime: 5
     chargeHitDamage: 30
-    attackCooldown: 0.5
+    attackCooldown: 1
     attackDamage: 20
 --- !u!114 &2937862568076211965
 MonoBehaviour:
