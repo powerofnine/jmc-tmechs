@@ -3,7 +3,6 @@ using System.Collections;
 using Rewired;
 using TMechs.Data;
 using TMechs.FX;
-using TMechs.Player;
 using TMechs.UI.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,8 +38,8 @@ namespace TMechs.UI
             }
 
             if (data == null)
-                data = new SaveSystem.SaveData() {sceneId = sceneId};
-            
+                data = new SaveSystem.SaveData {sceneId = sceneId};
+
             SaveSpawner.Spawn(data);
         }
 
@@ -49,7 +48,7 @@ namespace TMechs.UI
             if (controller)
                 controller.Open(menu);
         }
-        
+
         public void RestartLevel(bool bypassConfirm = false)
         {
             StartCoroutine(Confirm(() => SceneTransition.LoadScene(SceneManager.GetActiveScene().buildIndex), bypassConfirm, "restart the current level from the beginning"));
@@ -75,7 +74,7 @@ namespace TMechs.UI
 
             action?.Invoke();
         }
-        
+
         public static void SetPause(bool pause)
         {
             Time.timeScale = pause ? 0F : 1F;

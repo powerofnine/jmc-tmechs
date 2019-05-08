@@ -9,8 +9,8 @@ namespace TMechs.UI.Components
         public override void OnSubmit()
         {
             base.OnSubmit();
-            
-            if(onClick != null)
+
+            if (onClick != null)
                 EventDelegate.Execute(onClick.List);
         }
     }

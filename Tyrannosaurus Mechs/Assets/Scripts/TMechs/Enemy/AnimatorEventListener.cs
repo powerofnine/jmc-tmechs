@@ -6,7 +6,7 @@ namespace TMechs.Enemy
     {
         public void OnAnimationEvent(string id)
         {
-            foreach(IAnimatorEvent ev in GetComponentsInParent<IAnimatorEvent>())
+            foreach (IAnimatorEvent ev in GetComponentsInParent<IAnimatorEvent>())
                 ev.OnAnimationEvent(id);
         }
 

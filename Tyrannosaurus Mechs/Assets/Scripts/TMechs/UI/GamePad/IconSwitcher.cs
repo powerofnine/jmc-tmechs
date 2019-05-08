@@ -1,4 +1,3 @@
-using TMechs.Data.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +6,17 @@ namespace TMechs.UI.GamePad
     public class IconSwitcher : MonoBehaviour
     {
         public bool isGeneric;
-        
+
         [ConditionalHide("isGeneric", true, true)]
         public IconMap.Icon icon;
         [ConditionalHide("isGeneric", true, false)]
         public IconMap.IconGeneric genericIcon;
-        
+
         private ControllerDef.ButtonLayout currentLayout = ControllerDef.ButtonLayout.Unsupported;
         private IconMap.Icon lastIcon = IconMap.Icon.L1;
         private IconMap.IconGeneric lastGeneric = IconMap.IconGeneric.RightAnalog;
         private bool lastIsGeneric;
-        
+
         private Image image;
         private SpriteRenderer sr;
 
@@ -25,7 +24,7 @@ namespace TMechs.UI.GamePad
         {
             image = GetComponent<Image>();
             sr = GetComponent<SpriteRenderer>();
-            
+
             UpdateIcon();
         }
 
@@ -36,7 +35,7 @@ namespace TMechs.UI.GamePad
             if (layout != currentLayout || isGeneric != lastIsGeneric || icon != lastIcon || genericIcon != lastGeneric)
             {
                 currentLayout = layout;
-                UpdateIcon();    
+                UpdateIcon();
             }
         }
 

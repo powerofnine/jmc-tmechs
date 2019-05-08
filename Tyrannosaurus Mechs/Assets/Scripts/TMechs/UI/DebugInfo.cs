@@ -13,6 +13,7 @@ namespace TMechs.UI
         private GUIStyle guiStyle;
 
         public delegate string GetDebugString();
+
         private readonly List<GetDebugString> debugStrings = new List<GetDebugString>();
 
         private static readonly string VERSION = Application.productName + " v" + Application.version;
@@ -20,9 +21,9 @@ namespace TMechs.UI
         private void Awake()
         {
             instance = this;
-            
+
             guiStyle = new GUIStyle {normal = {textColor = Color.white}, fontSize = 14};
-            
+
             RegisterDebug(() => VERSION);
             RegisterDebug(() =>
             {
@@ -42,7 +43,7 @@ namespace TMechs.UI
             if (Input.GetKeyDown(KeyCode.F3))
                 isActive = !isActive;
         }
-        
+
         private void OnGUI()
         {
             if (!isActive)
@@ -53,7 +54,7 @@ namespace TMechs.UI
             foreach (GetDebugString dbg in debugStrings)
             {
                 string debugString = "";
-                
+
                 try
                 {
                     debugString = dbg();
@@ -66,8 +67,8 @@ namespace TMechs.UI
                 debugString += '\n';
 
                 Rect rect = new Rect(10F, yCoord, Screen.width,
-                    guiStyle.CalcHeight(new GUIContent(debugString), Screen.width));
-                
+                        guiStyle.CalcHeight(new GUIContent(debugString), Screen.width));
+
                 GUI.Label(rect, debugString);
                 yCoord += rect.height;
             }
@@ -83,9 +84,10 @@ namespace TMechs.UI
 
             instance.debugStrings.Add(dbg);
         }
-        
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void Initialize() {
+        private static void Initialize()
+        {
             GameObject go = new GameObject("Debug Info Display");
             go.AddComponent<DebugInfo>();
             DontDestroyOnLoad(go);

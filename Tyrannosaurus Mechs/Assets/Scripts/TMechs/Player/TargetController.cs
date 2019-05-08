@@ -12,8 +12,8 @@ namespace TMechs.Player
         public Bounds box;
 
         [HideInInspector]
-        public bool isStopped = false;
-        
+        public bool isStopped;
+
         private EnemyTarget currentTarget;
         private readonly HashSet<BaseTarget> targetsInRange = new HashSet<BaseTarget>();
 
@@ -55,7 +55,7 @@ namespace TMechs.Player
         {
             if (isStopped)
                 return null;
-            
+
             if (currentTarget && targetsInRange.Contains(currentTarget))
                 return currentTarget;
             currentTarget = null;
@@ -65,8 +65,8 @@ namespace TMechs.Player
                 targets = targets.Where(type.IsInstanceOfType);
 
             targets = targets
-                .OrderByDescending(x => x.GetPriority())
-                .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
+                    .OrderByDescending(x => x.GetPriority())
+                    .ThenBy(x => Vector3.Distance(transform.position, x.transform.position));
 
             // Raycast to ensure we can see the target
             return targets.FirstOrDefault(x =>
@@ -75,21 +75,21 @@ namespace TMechs.Player
                 float distance = heading.magnitude;
 
                 bool wasHit = Physics.Raycast(Player.Instance.Rigidbody.worldCenterOfMass, heading / distance, out RaycastHit hit, distance);
-                
-                return !wasHit || (hit.rigidbody && hit.rigidbody.transform == x.transform) || hit.transform == x.transform;
-            });;
+
+                return !wasHit || hit.rigidbody && hit.rigidbody.transform == x.transform || hit.transform == x.transform;
+            });
         }
 
         public T GetTarget<T>() where T : BaseTarget
         {
-            return (T)GetTarget(typeof(T));
+            return (T) GetTarget(typeof(T));
         }
 
         public EnemyTarget GetLock()
         {
             if (isStopped)
                 return null;
-            
+
             if (!targetsInRange.Contains(currentTarget))
                 currentTarget = null;
 

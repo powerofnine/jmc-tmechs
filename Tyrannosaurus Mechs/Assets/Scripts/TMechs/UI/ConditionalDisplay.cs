@@ -7,7 +7,7 @@ namespace TMechs.UI
     public class ConditionalDisplay : MonoBehaviour
     {
         public Condition condition;
-        
+
         private void Awake()
         {
             gameObject.SetActive(TestCondition());
@@ -23,7 +23,7 @@ namespace TMechs.UI
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         [Serializable]
         public enum Condition
         {
