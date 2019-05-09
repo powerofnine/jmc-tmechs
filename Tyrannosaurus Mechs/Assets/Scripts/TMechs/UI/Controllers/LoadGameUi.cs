@@ -52,6 +52,9 @@ namespace TMechs.UI.Controllers
 
             SaveSystem.LexiconEntry[] entries = SaveSystem.GetLexicon();
 
+            if(entries.Length <= 0)
+                MenuController.Instance.Close();
+            
             foreach (SaveSystem.LexiconEntry entry in entries.OrderByDescending(x => x.creationTime))
             {
                 GameObject ui = Instantiate(saveSlotTemplate, saveSlotRoot);

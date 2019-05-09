@@ -32,16 +32,28 @@ namespace TMechs.Player.Behaviour
             transitionComplete = false;
 
             target = TargetController.Instance.GetTarget<GrappleTarget>();
+
+            if (!target)
+                return;
+            
             radius = target.radius;
             pullSpeed = pullSpeedMin;
 
             grappleType = target.isSwing ? Types.Swing : Types.Pull;
+            
+            target.OnGrapple();
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateUpdate(animator, stateInfo, layerIndex);
 
+            if (!target)
+            {
+                animator.SetTrigger(GRAPPLE_END);
+                return;
+            }
+            
             switch (grappleType)
             {
                 case Types.Pull:
@@ -61,6 +73,8 @@ namespace TMechs.Player.Behaviour
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            target.OnGrapple();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -68,6 +82,7 @@ namespace TMechs.Player.Behaviour
             base.OnStateExit(animator, stateInfo, layerIndex);
 
             Player.Instance.Movement.velocity = velocity;
+            target.OnGrapple();
         }
 
         public bool PullPhysics(Transform ball, Transform anchor, float exitDistance = float.NegativeInfinity)

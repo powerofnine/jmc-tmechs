@@ -52,9 +52,6 @@ namespace TMechs.UI.Components
                     {
                         EventDelegate ev = new EventDelegate(this, nameof(OnButton));
 
-
-                        Debug.Log(ev.ExistMethod());
-
                         ev.parameters[0].argStringValue = button;
 
                         if (btn.onClick.List == null)

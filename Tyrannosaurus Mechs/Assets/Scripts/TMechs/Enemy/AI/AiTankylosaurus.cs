@@ -10,11 +10,11 @@ namespace TMechs.Enemy.AI
     {
         private static readonly int ROCK_THROW = Anim.Hash("Rock Throw");
 
-        private static readonly int[] ATTACKS =
+        private static readonly int SCORPION_PUNCH = Anim.Hash("Scorpion Punch");
+        private static readonly int[] TAIL_WHIP =
         {
                 Anim.Hash("Tail Whip (CW)"),
                 Anim.Hash("Tail Whip (CCW)"),
-                Anim.Hash("Scorpion Punch")
         };
 
         public AiStateMachine stateMachine;
@@ -61,21 +61,24 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Attack(), "Attack");
             stateMachine.RegisterState(new Throw(), "Throw");
 
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle",
+            stateMachine.RegisterTransition("Attack", "Idle",
                     machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
+            stateMachine.RegisterTransition("Chasing", "Idle",
+                    machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
+            
             stateMachine.RegisterTransition("Idle", "Chasing",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
 
             stateMachine.RegisterTransition("Chasing", "Attack",
-                    machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F,
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("tailSpinRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F,
                     machine => machine.Set("attackTimer", machine.Get<float>("attackCooldown")));
             stateMachine.RegisterTransition("Attack", "Chasing",
                     machine => machine.GetTrigger("attackDone"));
 
-            stateMachine.RegisterTransition("Chasing", "Throw",
+            stateMachine.RegisterTransition("Idle", "Throw",
                     machine => machine.DistanceToTarget <= machine.Get<Radius>("rockThrowRange") && machine.GetAddSet<float>("throwTimer", -Time.deltaTime) <= 0F,
                     machine => machine.Set("throwTimer", machine.Get<float>("rockThrowCooldown")));
-            stateMachine.RegisterTransition("Throw", "Chasing",
+            stateMachine.RegisterTransition("Throw", "Idle",
                     machine => machine.GetTrigger("rockThrowDone"));
 
             stateMachine.SetDefaultState("Idle");
@@ -113,15 +116,23 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEnter();
 
-                shared.animator.SetTrigger(ATTACKS[Random.Range(0, ATTACKS.Length)]);
+                if(HorizontalDistanceToTarget <= Machine.Get<Radius>("attackRange") && Random.Range(0, 100) <= 75)
+                    shared.animator.SetTrigger(SCORPION_PUNCH);
+                else
+                    shared.animator.SetTrigger(TAIL_WHIP[Random.Range(0, TAIL_WHIP.Length)]);
             }
 
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
 
-                if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
-                    Machine.SetTrigger("attackDone");
+                if (type == AiStateMachine.EventType.Animation)
+                    switch (id)
+                    {
+                        case "attack":
+                            Machine.SetTrigger("attackDone");
+                            break;
+                    }
             }
         }
 
@@ -134,6 +145,8 @@ namespace TMechs.Enemy.AI
                 base.OnEnter();
 
                 shared.animator.SetTrigger(ROCK_THROW);
+
+                transform.forward = HorizontalDirectionToTarget;
             }
 
             public override void OnExit()
@@ -159,7 +172,9 @@ namespace TMechs.Enemy.AI
                 }
 
                 rock.transform.SetParent(null, true);
-                rock.AddComponent<Rigidbody>().velocity = Utility.BallisticVelocity(rock.transform.position, target.position, 45F);
+                
+                //TODO manual velocity so that the rock throw works regardless of distance
+                rock.AddComponent<Rigidbody>().velocity = Utility.BallisticVelocity(rock.transform.position, target.position, -15F);
 
                 rock = null;
                 Machine.SetTrigger("rockThrowDone");
@@ -192,13 +207,15 @@ namespace TMechs.Enemy.AI
             public Radius rangeStartFollow = new Radius(25F);
             public Radius rangeStopFollow = new Radius(35F);
             public Radius rockThrowRange = new Radius(15F);
-            public Radius attackRange = new Radius(1F);
+            public Radius attackRange = new Radius(13F);
+            public Radius tailSpinRange = new Radius(13F);
 
             [Header("Chasing")]
             public float moveSpeed;
 
             [Header("Attacc")]
             public float attackCooldown;
+            public int scorpionPunchDamage = 10;
 
             [Header("Rock Throw")]
             public float rockThrowCooldown;

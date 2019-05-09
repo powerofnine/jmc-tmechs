@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMechs.Environment.Targets;
+using UnityEditor;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -9,7 +10,9 @@ namespace TMechs.Player
     {
         public static TargetController Instance { get; private set; }
 
-        public Bounds box;
+        public float range = 50F;
+        public float angle = 45F;
+        public float yRange = 20F;
 
         [HideInInspector]
         public bool isStopped;
@@ -37,18 +40,33 @@ namespace TMechs.Player
 
             foreach (BaseTarget target in REGISTERED_TARGETS)
             {
-                if (!target)
+                if (!target || !target.CanTarget())
                     continue;
 
-                Vector3 point = transform.InverseTransformPoint(target.transform.position) - box.center;
-                Vector3 extents = box.extents;
-
-                //Approximate, but close enough
-                if (point.x < extents.x && point.x > -extents.x &&
-                    point.y < extents.y && point.y > -extents.y &&
-                    point.z < extents.z && point.z > -extents.z)
-                    targetsInRange.Add(target);
+                if (IsInRange(target.transform.position))
+                {
+                    Vector3 heading = target.transform.position - transform.position;
+                    heading = heading.Remove(Utility.Axis.Y);
+                    float distance = heading.magnitude;
+                    Vector3 direction = heading / distance;
+                    
+                    float angle = Vector3.Angle(direction, transform.forward.Remove(Utility.Axis.Y));
+                    if(angle <= this.angle)
+                        targetsInRange.Add(target);
+                }
             }
+        }
+
+        public bool IsInRange(Vector3 point)
+        {
+            Vector3 origin = Player.Instance.transform.position;
+            
+            Vector3 heading = point - origin;
+            float yDistance = Mathf.Abs(heading.y);
+            heading = heading.Remove(Utility.Axis.Y);
+            float distance = heading.magnitude;
+            
+            return distance <= range && yDistance <= yRange;
         }
 
         public BaseTarget GetTarget(System.Type type = null)
@@ -56,13 +74,13 @@ namespace TMechs.Player
             if (isStopped)
                 return null;
 
-            if (currentTarget && targetsInRange.Contains(currentTarget))
+            if (currentTarget && IsInRange(currentTarget.transform.position))
                 return currentTarget;
             currentTarget = null;
 
             IEnumerable<BaseTarget> targets = targetsInRange.Where(x => x);
             if (type != null)
-                targets = targets.Where(type.IsInstanceOfType);
+                targets = targets.Where(x => type.IsInstanceOfType(x) && x.CanTarget());
 
             targets = targets
                     .OrderByDescending(x => x.GetPriority())
@@ -71,10 +89,10 @@ namespace TMechs.Player
             // Raycast to ensure we can see the target
             return targets.FirstOrDefault(x =>
             {
-                Vector3 heading = x.transform.position - transform.position;
+                Vector3 heading = x.transform.position + Vector3.up * .5F - transform.position;
                 float distance = heading.magnitude;
 
-                bool wasHit = Physics.Raycast(Player.Instance.Rigidbody.worldCenterOfMass, heading / distance, out RaycastHit hit, distance);
+                bool wasHit = Physics.Raycast(transform.position, heading / distance, out RaycastHit hit, distance, ~LayerMask.GetMask("Ignore Raycast"), QueryTriggerInteraction.Ignore);
 
                 return !wasHit || hit.rigidbody && hit.rigidbody.transform == x.transform || hit.transform == x.transform;
             });
@@ -127,7 +145,41 @@ namespace TMechs.Player
         {
             Gizmos.color = Color.green;
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.DrawWireCube(box.center, box.size);
+
+            Vector3 angledPoint = Vector3.forward * range;
+            Vector3 leftPoint = Quaternion.AngleAxis(angle, Vector3.up) * angledPoint;
+            Vector3 rightPoint = Quaternion.AngleAxis(-angle, Vector3.up) * angledPoint;
+
+            Vector3 offset = Vector3.up * yRange;
+
+            // Lines from player outwards
+            Gizmos.DrawLine(offset, leftPoint + offset);
+            Gizmos.DrawLine(offset, rightPoint + offset);
+            Gizmos.DrawLine(-offset, leftPoint - offset);
+            Gizmos.DrawLine(-offset, rightPoint - offset);
+
+            // Lines connecting the top and bottom
+            Gizmos.DrawLine(offset, -offset);
+            Gizmos.DrawLine(leftPoint + offset, leftPoint - offset);
+            Gizmos.DrawLine(rightPoint + offset, rightPoint - offset);
+
+            // Outer edge
+            Vector3 halfLeft = Quaternion.AngleAxis(angle / 2F, Vector3.up) * angledPoint;
+            Vector3 halfRight = Quaternion.AngleAxis(-angle / 2F, Vector3.up) * angledPoint;
+
+            Gizmos.DrawLine(leftPoint + offset, halfLeft + offset);
+            Gizmos.DrawLine(rightPoint + offset, halfRight + offset);
+            Gizmos.DrawLine(leftPoint - offset, halfLeft - offset);
+            Gizmos.DrawLine(rightPoint - offset, halfRight - offset);
+
+            Gizmos.DrawLine(halfLeft + offset, angledPoint + offset);
+            Gizmos.DrawLine(halfRight + offset, angledPoint + offset);
+            Gizmos.DrawLine(halfLeft - offset, angledPoint - offset);
+            Gizmos.DrawLine(halfRight - offset, angledPoint - offset);
+
+            Gizmos.DrawLine(angledPoint + offset, angledPoint - offset);
+            Gizmos.DrawLine(halfLeft + offset, halfLeft - offset);
+            Gizmos.DrawLine(halfRight + offset, halfRight - offset);
         }
     }
 }
