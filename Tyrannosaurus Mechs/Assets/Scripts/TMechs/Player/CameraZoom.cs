@@ -21,7 +21,6 @@ namespace TMechs.Player
         private void Update()
         {
             float dash = Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA) <= .6F ? 0F : zoomDistance;
-            Debug.Log(Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA));
             dashZoom = Mathf.SmoothDamp(dashZoom, dash, ref dashZoomVelocity, zoomDamp);
             float maxDistance = this.maxDistance - dashZoom;
             

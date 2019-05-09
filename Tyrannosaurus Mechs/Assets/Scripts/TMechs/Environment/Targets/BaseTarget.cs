@@ -29,6 +29,8 @@ namespace TMechs.Environment.Targets
         public abstract Color GetColor();
         public abstract Color GetHardLockColor();
 
+        public virtual bool CanTarget() => true;
+
         private void Awake()
         {
             lookAnchor = new GameObject("Look Anchor").transform;
@@ -61,7 +63,7 @@ namespace TMechs.Environment.Targets
         public void Ping(bool hardLock = false)
         {
             this.hardLock = hardLock;
-            lastPing = 2;
+            lastPing = 1;
         }
     }
 }
