@@ -2665,7 +2665,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 10
   m_Radius: 4
-  m_SlopeLimit: 45
+  m_SlopeLimit: 50
   m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -2738,6 +2738,7 @@ MonoBehaviour:
   jumpForce: 25
   maxJumps: 1
   velocity: {x: 0, y: 0, z: 0}
+  motion: {x: 0, y: 0, z: 0}
 --- !u!1 &8819934355854533784
 GameObject:
   m_ObjectHideFlags: 0

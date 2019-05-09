@@ -36,7 +36,7 @@ namespace TMechs.Player
         public Vector3 motion;
         private bool isGrounded;
         private Vector3 contactPoint;
-        private bool playerControl = true;
+        private bool canRun = true;
 
         private void Awake()
         {
@@ -65,8 +65,6 @@ namespace TMechs.Player
             bool angry = Input.GetButton(ANGERY);
             
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            if (!playerControl)
-                movement = Vector3.zero;
 
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
@@ -82,6 +80,9 @@ namespace TMechs.Player
             }
 
             float speed = angry ? runSpeed : movementSpeed;
+            if (!canRun)
+                speed = movementSpeed * .85F;
+            
             motion = movement * speed;
             
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
@@ -90,7 +91,19 @@ namespace TMechs.Player
                     jumps++;
                 velocity.y = jumpForce;
             }
+        }
 
+        private void LateUpdate()
+        {
+            velocity.y -= Utility.GRAVITY * Time.deltaTime;
+
+            controller.Move((motion + velocity) * Time.deltaTime);
+            motion = Vector3.zero;
+            
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
+            
+            GroundedCheck();
+            
             EnemyTarget target = TargetController.Instance.GetLock();
 
             if (target)
@@ -111,16 +124,7 @@ namespace TMechs.Player
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
-        }
-
-        private void LateUpdate()
-        {
-            velocity.y -= Utility.GRAVITY * Time.deltaTime;
-
-            controller.Move((motion + velocity) * Time.deltaTime);
-            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
             
-            GroundedCheck();
             animator.SetBool(Anim.GROUNDED, isGrounded);
 
             if (isGrounded)
@@ -133,21 +137,26 @@ namespace TMechs.Player
         private void GroundedCheck()
         {
             isGrounded = controller.isGrounded;
-            playerControl = true;
+            canRun = true;
 
             if (!isGrounded)
                 return;
 
             bool sliding = false;
 
-            if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
-                if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
-                    return;
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
+            {
+                if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
+                    sliding = true;
+            }
+            else
+            {
+                Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit);
+                if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
+                    sliding = true;
+            }
 
-            if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
-                sliding = true;
-
-            playerControl = !sliding;
+            canRun = !sliding;
 
             if (!sliding)
                 return;
@@ -159,7 +168,7 @@ namespace TMechs.Player
             Vector3.OrthoNormalize(ref normal, ref direction);
 
             intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            controller.Move(movementSpeed * Time.deltaTime * direction);
+            controller.Move(runSpeed * 1.15F * Time.deltaTime * direction);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
