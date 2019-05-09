@@ -70,6 +70,8 @@ namespace TMechs.Player
 
         private void Update()
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
