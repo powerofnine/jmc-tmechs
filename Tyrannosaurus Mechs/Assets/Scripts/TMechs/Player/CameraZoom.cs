@@ -11,39 +11,25 @@ namespace TMechs.Player
 
         public float distanceOffset = -.75F;
 
+        [Header("Dash Zoom")]
         public float zoomDistance = 5F;
-
-        public float distance;
-
-        public float zoomSpeed = 1; // Increases 
+        public float zoomDamp = .1F;
+        private float dashZoom;
+        private float dashZoomVelocity;
         
         
         private void Update()
         {
-            if (!Player.Input.GetButton(Controls.Action.ANGERY))
-            {
-                if (distance < maxDistance)
-                {
-                    distance +=  zoomSpeed * Time.deltaTime;
-                }
-            }
-            else
-            {
-                if (distance > zoomDistance)
-                {
-                    distance -= zoomSpeed * Time.deltaTime;
-                }
-            }
-
-
-//            float zoom = PlayerMovement.Input.GetAxisRaw(ZOOM);
-//
-//            if (zoom > float.Epsilon)
-//                distance = Mathf.Lerp(maxDistance, zoomDistance, zoom);
+            float dash = Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA) <= .6F ? 0F : zoomDistance;
+            Debug.Log(Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA));
+            dashZoom = Mathf.SmoothDamp(dashZoom, dash, ref dashZoomVelocity, zoomDamp);
+            float maxDistance = this.maxDistance - dashZoom;
+            
+            float distance = maxDistance;
 
             if (Physics.Raycast(cameraRig.position, -transform.forward, out RaycastHit hit, maxDistance))
                 distance = Mathf.Min(distance, hit.distance + distanceOffset);
-
+            
             distance = Mathf.Clamp(distance, minDistance, maxDistance);
 
             Vector3 pos = transform.localPosition;
