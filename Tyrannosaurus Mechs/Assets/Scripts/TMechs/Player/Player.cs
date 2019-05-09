@@ -100,7 +100,7 @@ namespace TMechs.Player
             if (health <= 0F)
             {
                 //TODO proper death
-                Destroy(gameObject);
+                SceneTransition.LoadScene(0);
             }
         }
 
