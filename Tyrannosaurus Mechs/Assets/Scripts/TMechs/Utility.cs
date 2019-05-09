@@ -192,7 +192,7 @@ namespace TMechs
             direction.y = distance * Mathf.Tan(angle);
             distance += height / Mathf.Tan(angle);
 
-            float velocity = Mathf.Sqrt(distance * GRAVITY / Mathf.Sin(2 * angle));
+            float velocity = Mathf.Sqrt(Mathf.Abs(distance * 9.81F / Mathf.Sin(2 * angle)));
             return velocity * direction.normalized;
         }
 

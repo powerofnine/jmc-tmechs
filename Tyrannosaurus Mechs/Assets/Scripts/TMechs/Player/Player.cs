@@ -19,7 +19,10 @@ namespace TMechs.Player
         public PlayerMovement Movement { get; private set; }
 
         public int maxHealth;
+        public float damageCooldown = 0.25F;
 
+        private float damageTimer = 0F;
+        
         [Header("Objects")]
         public GameObject rocketFistGeo;
                 
@@ -79,12 +82,18 @@ namespace TMechs.Player
                 MenuActions.SetPause(true);
             }
 
+            if (damageTimer >= 0F)
+                damageTimer -= Time.deltaTime;
+
             UpdateIcons();
         }
 
         public void Damage(int damage)
-            => Health -= (float) damage / maxHealth;
-
+        {
+            if (damage > 0 && damageTimer > 0F)
+                return;
+            Health -= (float) damage / maxHealth;
+        }
         public void SavePlayerData(ref SaveSystem.SaveData data)
         {
             data.health = Health;
