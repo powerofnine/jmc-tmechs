@@ -52,8 +52,12 @@ namespace TMechs.UI
                     if (menu)
                     {
                         menu.SetActive(state == current);
-                        foreach (IMenuCallback callback in menu.GetComponents<IMenuCallback>())
+                        foreach (IMenuCallback callback in menu.GetComponentsInChildren<IMenuCallback>(true))
                             callback.OnMenuChanged(state == current);
+
+                        UiNavigation nav = menu.GetComponent<UiNavigation>();
+                        if(nav && nav.isActiveAndEnabled)
+                            nav.OnMenuChanged(state == current);
                     }
                 }
 

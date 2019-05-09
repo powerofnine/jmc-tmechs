@@ -225,5 +225,11 @@ namespace TMechs.UI
         public class NavigationShouldCloseEvent : UnityEvent
         {
         }
+
+        public void OnMenuChanged(bool activated)
+        {
+            if(currentComponent != null)
+                SetComponent(currentComponent[currentTab], true);
+        }
     }
 }
