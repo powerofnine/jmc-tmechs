@@ -21,11 +21,14 @@ namespace TMechs.Player.Behaviour
             if (!target)
                 return;
             
-            target.HandlePickup();
-
-            target.transform.SetParent(Player.Instance.pickupAnchor, false);
-            target.transform.localPosition = Vector3.zero;
-            Player.Instance.pickedUp = target;
+            GameObject go = new GameObject($"ThrowableContainer:{target.name}");
+            ThrowableContainer container = go.AddComponent<ThrowableContainer>();
+            
+            container.Initialize(target.gameObject);
+            
+            go.transform.SetParent(Player.Instance.pickupAnchor, false);
+            go.transform.localPosition = Vector3.zero;
+            Player.Instance.pickedUp = container;
         }
     }
 }

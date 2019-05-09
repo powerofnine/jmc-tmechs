@@ -32,7 +32,7 @@ namespace TMechs.Player
         public Transform pickupAnchor;
 
         [NonSerialized]
-        public EnemyTarget pickedUp;
+        public ThrowableContainer pickedUp;
 
         public float Health
         {
