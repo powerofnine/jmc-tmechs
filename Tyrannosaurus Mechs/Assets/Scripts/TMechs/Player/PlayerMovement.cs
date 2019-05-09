@@ -33,6 +33,7 @@ namespace TMechs.Player
 
         // Movement
         public Vector3 velocity;
+        public Vector3 motion;
         private bool isGrounded;
         private Vector3 contactPoint;
         private bool playerControl = true;
@@ -80,21 +81,9 @@ namespace TMechs.Player
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
 
-            velocity.y -= Utility.GRAVITY * Time.deltaTime;
-
             float speed = angry ? runSpeed : movementSpeed;
-
-            controller.Move((movement * speed + velocity) * Time.deltaTime);
-            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
-            GroundedCheck();
-            animator.SetBool(Anim.GROUNDED, isGrounded);
-
-            if (isGrounded)
-            {
-                jumps = 0;
-                velocity = Vector3.zero;
-            }
-
+            motion = movement * speed;
+            
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
                 if (!isGrounded)
@@ -121,6 +110,23 @@ namespace TMechs.Player
             {
                 transform.up = Vector3.up;
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
+            }
+        }
+
+        private void LateUpdate()
+        {
+            velocity.y -= Utility.GRAVITY * Time.deltaTime;
+
+            controller.Move((motion + velocity) * Time.deltaTime);
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
+            
+            GroundedCheck();
+            animator.SetBool(Anim.GROUNDED, isGrounded);
+
+            if (isGrounded)
+            {
+                jumps = 0;
+                velocity = Vector3.zero;
             }
         }
 
