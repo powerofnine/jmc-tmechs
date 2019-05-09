@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMechs.Data;
 using TMechs.Environment.Targets;
@@ -22,10 +23,10 @@ namespace TMechs.Player
         public float damageCooldown = 0.25F;
 
         private float damageTimer = 0F;
-        
+
         [Header("Objects")]
         public GameObject rocketFistGeo;
-                
+
         [Header("Anchors")]
         public Transform rocketFistAnchor;
         public Transform pickupAnchor;
@@ -44,7 +45,7 @@ namespace TMechs.Player
         }
 
         private float health = 1F;
-        
+
         private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
 
         private void Awake()
@@ -52,13 +53,13 @@ namespace TMechs.Player
             Instance = this;
 
             Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
-            
+
             Animator = GetComponentInChildren<Animator>();
             Rigidbody = GetComponent<Rigidbody>();
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
             Movement = GetComponent<PlayerMovement>();
-            
+
             // Configure shaders
             foreach (Renderer render in GetComponentsInChildren<Renderer>())
             {
@@ -75,7 +76,7 @@ namespace TMechs.Player
         private void Update()
         {
             Cursor.lockState = CursorLockMode.Locked;
-            
+
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
@@ -94,6 +95,7 @@ namespace TMechs.Player
                 return;
             Health -= (float) damage / maxHealth;
         }
+
         public void SavePlayerData(ref SaveSystem.SaveData data)
         {
             data.health = Health;
@@ -108,8 +110,14 @@ namespace TMechs.Player
         {
             if (health <= 0F)
             {
-                //TODO proper death
-                SceneTransition.LoadScene(0);
+                IEnumerator Death()
+                {
+                    yield return new WaitForSeconds(2F);
+                    SceneTransition.LoadScene(0);
+                }
+
+                Animator.SetTrigger(Anim.DIE);
+                StartCoroutine(Death());
             }
         }
 

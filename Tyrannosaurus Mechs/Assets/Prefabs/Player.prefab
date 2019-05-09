@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6551452369546543806}
   - component: {fileID: 3439993304969493273}
   - component: {fileID: 6736977138638407520}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1141404370291271974}
   - component: {fileID: 984662790540077343}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 5548724733412604055}
   - component: {fileID: 559666944845076001}
   - component: {fileID: 5007181870236590745}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VFX_RPunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 6861987351069853581}
   - component: {fileID: 1390931243647445189}
   - component: {fileID: 3909363897219625706}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VFX_LPunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 217796000798589115}
   - component: {fileID: 2357518007212932218}
   - component: {fileID: 2777004606219544203}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HitBoxBoth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1252,7 +1252,7 @@ GameObject:
   - component: {fileID: 952382305458671344}
   - component: {fileID: 8766653806040488183}
   - component: {fileID: 7533734546650741896}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1310,7 +1310,7 @@ GameObject:
   - component: {fileID: 1271094314563110882}
   - component: {fileID: 6480850650454954607}
   - component: {fileID: 5889190704596628732}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1603,7 +1603,7 @@ GameObject:
   - component: {fileID: 402736127887328466}
   - component: {fileID: 5040574679660250249}
   - component: {fileID: 4552461371561546268}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Run
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2046,7 +2046,7 @@ GameObject:
   - component: {fileID: 7608047739582343441}
   - component: {fileID: 4691195900172224804}
   - component: {fileID: 3559301513054914178}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HitBoxBoth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2523,7 +2523,7 @@ GameObject:
   - component: {fileID: 1716273403916084730}
   - component: {fileID: 1253668737089101906}
   - component: {fileID: 6923202098583007213}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VFX_RFistCharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2629,7 +2629,7 @@ GameObject:
   - component: {fileID: 5551831704643172593}
   - component: {fileID: 8123279636071323484}
   - component: {fileID: 4509543298720882439}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2699,9 +2699,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  damageCooldown: 0.25
   rocketFistGeo: {fileID: 3859233158697959049}
   rocketFistAnchor: {fileID: 3859233158698246825}
-  pickupAnchor: {fileID: 3859233158698246841}
+  pickupAnchor: {fileID: 3859233158698246847}
 --- !u!114 &8123279636071323484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3059,6 +3060,50 @@ PrefabInstance:
     - target: {fileID: 100016, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
       propertyPath: m_Name
       value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 100016, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100018, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
       propertyPath: m_LocalPosition.x
