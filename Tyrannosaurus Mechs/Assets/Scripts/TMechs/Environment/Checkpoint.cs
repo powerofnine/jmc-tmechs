@@ -136,7 +136,8 @@ namespace TMechs.Environment
                         checkpointId = id
                 };
 
-
+                Player.Player.Instance.SavePlayerData(ref data);
+                
                 string meta = "";
 
                 if (LevelInfo.Instance && !string.IsNullOrWhiteSpace(LevelInfo.Instance.levelName))

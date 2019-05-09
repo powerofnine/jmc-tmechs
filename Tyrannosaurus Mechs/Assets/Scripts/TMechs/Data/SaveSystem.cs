@@ -146,6 +146,7 @@ namespace TMechs.Data
         {
             public string sceneId;
             public string checkpointId;
+            public float health = 1F;
         }
     }
 }

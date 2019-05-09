@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.UI;
 using TMechs.UI.GamePad;
@@ -83,6 +84,16 @@ namespace TMechs.Player
 
         public void Damage(int damage)
             => Health -= (float) damage / maxHealth;
+
+        public void SavePlayerData(ref SaveSystem.SaveData data)
+        {
+            data.health = Health;
+        }
+
+        public void LoadPlayerData(SaveSystem.SaveData data)
+        {
+            Health = data.health;
+        }
 
         private void UpdateHealth()
         {
