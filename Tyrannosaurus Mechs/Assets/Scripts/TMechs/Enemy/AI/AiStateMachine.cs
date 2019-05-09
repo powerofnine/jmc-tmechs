@@ -12,6 +12,8 @@ namespace TMechs.Enemy.AI
     {
         public const string ANY_STATE = "%FROMANYSTATE%";
 
+        public bool tickWhenPaused = false;
+        
         [SerializeField]
         private string state = "None";
         private string stateDefault;
@@ -50,6 +52,9 @@ namespace TMechs.Enemy.AI
 
         public void Tick()
         {
+            if(!tickWhenPaused && Time.timeScale <= float.Epsilon)
+                return;
+            
             if (!isInitialized)
                 EnterState(stateDefault);
 

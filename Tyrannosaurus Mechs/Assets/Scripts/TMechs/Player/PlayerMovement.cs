@@ -92,7 +92,7 @@ namespace TMechs.Player
             if (isGrounded)
             {
                 jumps = 0;
-                velocity = Vector3.zero + Vector3.down * .5F;
+                velocity.y = 0F;
             }
 
             if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
