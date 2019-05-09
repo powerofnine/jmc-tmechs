@@ -143,8 +143,8 @@ namespace TMechs.Enemy.AI
 
         private class Shooting : HarrierState
         {
-            private float nextShot;
-
+            private bool left;
+            
             public override void OnEnter()
             {
                 base.OnEnter();
@@ -152,8 +152,6 @@ namespace TMechs.Enemy.AI
                 Vector2 shootTime = Machine.Get<Vector2>("shootTime");
                 Machine.Set("shootTimer", Random.Range(shootTime.x, shootTime.y));
                 props?.animator.SetBool(FIRING, true);
-
-                nextShot = 1F / Machine.Get<float>("fireRate");
             }
 
             public override void OnExit()
@@ -165,16 +163,26 @@ namespace TMechs.Enemy.AI
 
             public override void OnTick()
             {
-                Vector3 heading = target.position - transform.position;
-                Vector3 direction = heading / heading.magnitude;
+                transform.forward = DirectionToTarget;
+            }
 
-                transform.forward = direction;
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
 
-                nextShot -= Time.deltaTime;
-                if (nextShot <= 0F)
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                if ("fire".Equals(id))
                 {
-                    nextShot = 1F / Machine.Get<float>("fireRate");
-                    //TODO fire
+                    Transform anchor = left ? Machine.Get<Transform>("leftGunAnchor") : Machine.Get<Transform>("rightGunAnchor");
+                    left = !left;
+                    
+                    GameObject go = Instantiate(Machine.Get<GameObject>("bulletTemplate"), anchor.position, anchor.rotation);
+                    EnemyBullet bullet = go.GetComponent<EnemyBullet>();
+                    bullet.damage = Machine.Get<int>("shotDamage");
+                    bullet.direction = DirectionToTarget;
+                    bullet.owner = transform;
                 }
             }
         }
@@ -252,8 +260,10 @@ namespace TMechs.Enemy.AI
             [Header("Shooting")]
             public Vector2 shootFrequency = new Vector2(5F, 10F);
             public Vector2 shootTime = new Vector2(2F, 5F);
-            public float fireRate = .5F;
             public int shotDamage = 1;
+            public Transform leftGunAnchor;
+            public Transform rightGunAnchor;
+            public GameObject bulletTemplate;
 
             [Header("Attacking")]
             public float attackCooldown = 2F;
