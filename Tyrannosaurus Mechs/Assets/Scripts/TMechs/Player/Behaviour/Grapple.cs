@@ -40,7 +40,8 @@ namespace TMechs.Player.Behaviour
             pullSpeed = pullSpeedMin;
 
             grappleType = target.isSwing ? Types.Swing : Types.Pull;
-            
+
+            Player.Instance.Movement.disableControllerMovement = true;
             target.OnGrapple();
         }
 
@@ -82,6 +83,7 @@ namespace TMechs.Player.Behaviour
             base.OnStateExit(animator, stateInfo, layerIndex);
 
             Player.Instance.Movement.velocity = velocity;
+            Player.Instance.Movement.disableControllerMovement = false;
             target.OnGrapple();
         }
 

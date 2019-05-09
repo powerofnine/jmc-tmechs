@@ -21,6 +21,9 @@ namespace TMechs.Player
 
         public int maxJumps = 1;
 
+        [NonSerialized]
+        public bool disableControllerMovement;
+        
         // State
         private float intendedY;
         private float yDampVelocity;
@@ -95,9 +98,13 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
-            velocity.y -= Utility.GRAVITY * Time.deltaTime;
+            if (!disableControllerMovement)
+            {
+                velocity.y -= Utility.GRAVITY * Time.deltaTime;
 
-            controller.Move((motion + velocity) * Time.deltaTime);
+                controller.Move((motion + velocity) * Time.deltaTime);
+            }
+
             motion = Vector3.zero;
             
             animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
