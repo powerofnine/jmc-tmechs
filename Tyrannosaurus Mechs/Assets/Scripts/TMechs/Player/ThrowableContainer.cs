@@ -8,15 +8,23 @@ namespace TMechs.Player
     [AddComponentMenu("")]
     public class ThrowableContainer : MonoBehaviour
     {
-        public float damage = 5F;
+        /// <summary>
+        /// Amount of damage that an entity that this entity collides with is dealth
+        /// </summary>
+        public float recepientDamage;
+        
+        /// <summary>
+        /// Amount of damage that this entity is dealt when it collides with something
+        /// </summary>
+        public float sourceDamage;
 
         private GameObject containedObject;
 
         private Renderer[] renderCache;
-        private Dictionary<Renderer, Mesh> meshCache = new Dictionary<Renderer, Mesh>();
+        private readonly Dictionary<Renderer, Mesh> meshCache = new Dictionary<Renderer, Mesh>();
 
         private Rigidbody rb;
-        private bool isDead = false;
+        private bool isDead;
         
         public void Initialize(GameObject containedObject)
         {
@@ -64,6 +72,12 @@ namespace TMechs.Player
 
         public void Throw(Vector3 velocity)
         {
+            if (!containedObject)
+            {
+                Debug.LogError("Contained object has been destroyed");
+                return;
+            }
+
             IEnumerable<Collider> colliders = containedObject.GetComponentsInChildren<Collider>(true).Where(x => !x.isTrigger);
 
             foreach (Collider col in colliders)
@@ -75,6 +89,7 @@ namespace TMechs.Player
                 go.transform.rotation = col.transform.rotation;
                 go.transform.localScale = col.transform.localScale;
 
+                // Terrible, but outside of reflection, best way to copy a collider
                 switch (col)
                 {
                     case SphereCollider sph:
@@ -113,20 +128,31 @@ namespace TMechs.Player
             isDead = true;
             EntityHealth entity = other.collider.GetComponent<EntityHealth>();
             if (entity)
-                entity.Damage(damage);
+                entity.Damage(recepientDamage);
 
-            containedObject.transform.SetParent(null, true);
-            
-            renderCache = null;
-            meshCache = null;
-            
-            Invoke(nameof(Destroy), 1F);
+            if (containedObject)
+            {
+                EntityHealth containedEntity = containedObject.GetComponent<EntityHealth>();
+                if (containedEntity)
+                    containedEntity.Damage(sourceDamage);
+
+                Rigidbody containedRb = containedObject.GetComponent<Rigidbody>();
+                if (containedRb)
+                    containedRb.velocity = rb.velocity;
+                
+                gameObject.SetActive(false);
+                containedObject.transform.SetParent(null, true);
+                containedObject.SetActive(true);
+            }
+
+            // This is stupid, but Unity crashes here if there is no delay before destroying this object
+            // Something to do with unparenting an object before destroying the parent crashes unity?
+            Invoke(nameof(Destroy), .25F);
         }
 
         private void Destroy()
         {
             DestroyImmediate(gameObject);
-            containedObject.SetActive(true);
         }
     }
 }

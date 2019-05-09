@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1656afc-ab2f-4e5a-a6ab-2693ccd2f8bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs___jb_tmp___.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Entity/Player.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Entity/Player.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Ricks Shit/Terrain/GrassMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Ricks Shit/Terrain/GrassMat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Ricks Shit/Terrain/grass.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Ricks Shit/Terrain/grass.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Grass_Quad.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Grass_Quad.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Pickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Pickup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Graph/Checkerboard.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Graph/Checkerboard.shadergraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Graph/Player.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Graph/Player.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Harrier.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Harrier.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Dev/DevWorld.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Dev/DevWorld.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,22 +36,27 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="119" column="31" lean-forward="true" selection-start-line="119" selection-start-column="31" selection-end-line="119" selection-end-column="31" />
+            <state relative-caret-position="247">
+              <caret line="140" column="55" selection-start-line="140" selection-start-column="55" selection-end-line="140" selection-end-column="55" />
               <folding>
-                <marker date="1557433377482" expanded="true" signature="6:92" ph="..." />
-                <marker date="1557433377482" expanded="true" signature="117:4528" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="198:4526" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="549:1543" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="761:1305" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="807:1291" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="1574:1951" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="1698:1941" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="1996:3858" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="2183:3756" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="2561:3742" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="3914:4381" ph="{...}" />
-                <marker date="1557433377482" expanded="true" signature="4413:4520" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="6:92" ph="..." />
+                <marker date="1557435068494" expanded="true" signature="117:5704" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="198:5702" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="213:334" ph="/// Amount of damage that an entity that this entity collides with is dealth ... " />
+                <marker date="1557435068494" expanded="true" signature="390:513" ph="/// Amount of damage that this entity is dealt when it collides with something ... " />
+                <marker date="1557435068494" expanded="true" signature="860:1854" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="1072:1616" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="1118:1602" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="1885:2262" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="2009:2252" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="2307:4411" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="2351:2474" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="2652:4309" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="3114:4295" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="4467:5602" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="4776:5341" ph="{...}" />
+                <marker date="1557435068494" expanded="true" signature="5355:5549" ph="/* This is stupid, but Unity crashes here if there is no delay before destroying this object ... */" />
+                <marker date="1557435068494" expanded="true" signature="5634:5696" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -467,10 +465,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="37020">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="20920">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="37020" />
+      <option name="pid" value="20920" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -558,12 +556,12 @@
       <workItem from="1557123161694" duration="2336000" />
       <workItem from="1557220655168" duration="13376000" />
       <workItem from="1557283491244" duration="13171000" />
-      <workItem from="1557384155978" duration="40479000" />
+      <workItem from="1557384155978" duration="42168000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="463628000" />
+    <option name="totallyTimeSpent" value="465317000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -578,7 +576,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49822694" visible="true" weight="0.20788912" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49822694" visible="true" weight="0.20788912" />
       <window_info id="Structure" order="1" sideWeight="0.5010661" side_tool="true" weight="0.19722815" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -587,7 +585,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3283582" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39872068" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39872068" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1279,22 +1277,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="119" column="31" lean-forward="true" selection-start-line="119" selection-start-column="31" selection-end-line="119" selection-end-column="31" />
+        <state relative-caret-position="247">
+          <caret line="140" column="55" selection-start-line="140" selection-start-column="55" selection-end-line="140" selection-end-column="55" />
           <folding>
-            <marker date="1557433377482" expanded="true" signature="6:92" ph="..." />
-            <marker date="1557433377482" expanded="true" signature="117:4528" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="198:4526" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="549:1543" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="761:1305" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="807:1291" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="1574:1951" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="1698:1941" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="1996:3858" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="2183:3756" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="2561:3742" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="3914:4381" ph="{...}" />
-            <marker date="1557433377482" expanded="true" signature="4413:4520" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="6:92" ph="..." />
+            <marker date="1557435068494" expanded="true" signature="117:5704" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="198:5702" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="213:334" ph="/// Amount of damage that an entity that this entity collides with is dealth ... " />
+            <marker date="1557435068494" expanded="true" signature="390:513" ph="/// Amount of damage that this entity is dealt when it collides with something ... " />
+            <marker date="1557435068494" expanded="true" signature="860:1854" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="1072:1616" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="1118:1602" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="1885:2262" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="2009:2252" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="2307:4411" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="2351:2474" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="2652:4309" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="3114:4295" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="4467:5602" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="4776:5341" ph="{...}" />
+            <marker date="1557435068494" expanded="true" signature="5355:5549" ph="/* This is stupid, but Unity crashes here if there is no delay before destroying this object ... */" />
+            <marker date="1557435068494" expanded="true" signature="5634:5696" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2596314, g: 0.28510135, b: 0.27063757, a: 1}
+  m_IndirectSpecularColor: {r: 0.10940082, g: 0.16632274, b: 0.26684195, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -214,6 +214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tankylosaurus
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894199, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
         type: 3}
@@ -1194,3 +1199,60 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1001 &2001680782
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 728434962, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_Name
+      value: Harrier
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 212
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 92.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 284.45148
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728434968, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c40f5f1ee5b45d946b41b30d31bb9fa6, type: 3}
