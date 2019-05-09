@@ -67,22 +67,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine:
+    tickWhenPaused: 0
     state: None
     transform: {fileID: 0}
     target: {fileID: 0}
   properties:
     rangeStartFollow:
-      radius: 100
+      radius: 150
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 0, a: 0}
       renderAsLine: 0
     rangeStopFollow:
-      radius: 125
+      radius: 175
       visualize: 1
       visualizeColor: {r: 1, g: 0, b: 0, a: 0}
       renderAsLine: 0
     chargeRange:
-      radius: 95
+      radius: 100
       visualize: 1
       visualizeColor: {r: 1, g: 1, b: 0, a: 0}
       renderAsLine: 0
@@ -91,19 +92,19 @@ MonoBehaviour:
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 1, a: 0}
       renderAsLine: 0
-    moveSpeed: 20
-    chargeSpeed: 75
+    moveSpeed: 30
+    chargeSpeed: 50
     chargeChance: 0.5
     chargeCooldown: 2
     chargeMaxDistance:
-      radius: 95
+      radius: 110
       visualize: 1
       visualizeColor: {r: 1, g: 0, b: 1, a: 0}
       renderAsLine: 1
     chargeFallbackMaxTime: 5
-    chargeHitDamage: 30
+    chargeHitDamage: 20
     attackCooldown: 1
-    attackDamage: 20
+    attackDamage: 10
 --- !u!114 &2937862568076211965
 MonoBehaviour:
   m_ObjectHideFlags: 0

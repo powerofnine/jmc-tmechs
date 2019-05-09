@@ -146,7 +146,7 @@ namespace TMechs.Enemy.AI
 
                 Machine.Set("chargeTimer", Machine.Get<float>("chargeCooldown"));
 
-                distanceRemaining = Machine.Get<Radius>("chargeMaxDistance");
+                distanceRemaining = Mathf.Min(Machine.Get<Radius>("chargeMaxDistance"), HorizontalDistanceToTarget + 5F);
                 timeRemaining = Machine.Get<float>("chargeFallbackMaxTime");
             }
 

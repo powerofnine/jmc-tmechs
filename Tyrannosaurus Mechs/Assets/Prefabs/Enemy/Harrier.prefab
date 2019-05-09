@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine:
+    tickWhenPaused: 0
     state: None
     transform: {fileID: 0}
     target: {fileID: 0}
@@ -90,14 +91,14 @@ MonoBehaviour:
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 1, a: 0}
       renderAsLine: 0
-    dashSpeed: 10
+    dashSpeed: 20
     shootFrequency: {x: 5, y: 10}
     shootTime: {x: 2, y: 5}
     fireRate: 1.5
     shotDamage: 1
     attackCooldown: 2
     secondaryAttackChance: 0.5
-    attackDamage: 10
+    attackDamage: 5
 --- !u!114 &728434965
 MonoBehaviour:
   m_ObjectHideFlags: 0
