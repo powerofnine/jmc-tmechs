@@ -7,7 +7,7 @@ using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
     {
         private static Rewired.Player Input => Player.Input;
 
@@ -40,6 +40,7 @@ namespace TMechs.Player
         private bool isGrounded;
         private Vector3 contactPoint;
         private bool canRun = true;
+        private bool canJump = true;
 
         private void Awake()
         {
@@ -85,11 +86,10 @@ namespace TMechs.Player
             
             motion = movement * speed;
             
-            if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
+            if (canJump && Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                if (!isGrounded)
-                    jumps++;
-                velocity.y = jumpForce;
+                animator.SetTrigger(Anim.JUMP);
+                canJump = false;
             }
         }
 
@@ -177,5 +177,16 @@ namespace TMechs.Player
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
+
+        public void OnAnimationEvent(string id)
+        {
+            if ("jump".Equals(id))
+            {
+                if (!isGrounded)
+                    jumps++;
+                velocity.y = jumpForce;
+                canJump = true;
+            }
+        }
     }
 }

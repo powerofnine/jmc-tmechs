@@ -19,7 +19,8 @@ namespace TMechs
         public static readonly int MOVE_DELTA = Hash("MoveDelta");
 
         public static readonly int GROUNDED = Hash("Grounded");
-        
+
+        public static readonly int JUMP = Hash("Jump");
         public static readonly int DIE = Hash("Die");
         public static readonly int HIT = Hash("Hit");
 

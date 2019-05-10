@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TMechs.Enemy
+namespace TMechs
 {
     public class AnimatorEventListener : MonoBehaviour
     {
