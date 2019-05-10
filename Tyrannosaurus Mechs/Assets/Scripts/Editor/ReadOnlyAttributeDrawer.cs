@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMechs.InspectorAttributes;
+﻿using TMechs.InspectorAttributes;
 using UnityEditor;
 using UnityEngine;
 

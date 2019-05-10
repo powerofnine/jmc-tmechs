@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\fuj1n\.Rider2019.1\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\fuj1n\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Tyrannosaurus Mechs.-131819345.00" t="ExcludeRecursive" />
-    <e p="D:\Libraries\Documents\Unity Projects\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
+    <e p="C:\Users\AUzulins\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\AUzulins\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Tyrannosaurus Mechs.996682487.00" t="ExcludeRecursive" />
+    <e p="C:\Users\AUzulins\Desktop\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -14,6 +14,22 @@
             <e p="ConditionalHideAttribute.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ErosionBrush" t="Include">
+            <e p="ErosionBrush.cs" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="ArrayTools.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="ErosionBrushEditor.cs" t="Include" />
+                <e p="Layout.cs" t="Include" />
+              </e>
+              <e p="Erosion.cs" t="Include" />
+              <e p="Extensions.cs" t="Include" />
+              <e p="Matrix.cs" t="Include" />
+              <e p="Matrix2.cs" t="Include" />
+              <e p="Noise.cs" t="Include" />
+              <e p="WeldTerrains.cs" t="Include" />
             </e>
           </e>
           <e p="Event Delegate System" t="Include">
@@ -214,6 +230,7 @@
           <e p="Editor" t="Include">
             <e p="AiGraphWindow.cs" t="Include" />
             <e p="AiStatePropertyDrawer.cs" t="Include" />
+            <e p="ArrayElementNameBindDrawer.cs" t="Include" />
             <e p="IdAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
             <e p="RadiusPropertyDrawer.cs" t="Include" />
@@ -221,7 +238,9 @@
           </e>
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
+            <e p="AnimatorEventListener.cs" t="Include" />
             <e p="Attributes" t="Include">
+              <e p="ArrayElementNameBindAttribute.cs" t="Include" />
               <e p="FriendlyNameAttribute.cs" t="Include" />
               <e p="TextureNameAttribute.cs" t="Include" />
             </e>
@@ -246,13 +265,14 @@
                 <e p="AiTankylosaurus.cs" t="Include" />
                 <e p="AiTorosaurus.cs" t="Include" />
               </e>
-              <e p="AnimatorEventListener.cs" t="Include" />
               <e p="Behaviour" t="Include">
                 <e p="EnemyAttack.cs" t="Include" />
               </e>
               <e p="EnemyBasicAI.cs" t="Include" />
+              <e p="EnemyBullet.cs" t="Include" />
               <e p="EnemyHitBox.cs" t="Include" />
               <e p="EnemyTrigger.cs" t="Include" />
+              <e p="TankyloRock.cs" t="Include" />
             </e>
             <e p="Entity" t="Include">
               <e p="EntityHealth.cs" t="Include" />
@@ -271,6 +291,7 @@
             </e>
             <e p="FX" t="Include">
               <e p="BlurFade.cs" t="Include" />
+              <e p="DestroyTimer.cs" t="Include" />
               <e p="Rotator.cs" t="Include" />
               <e p="SineBob.cs" t="Include" />
               <e p="Sprites" t="Include">
@@ -293,14 +314,16 @@
                 <e p="RocketFistCharging.cs" t="Include" />
                 <e p="Throw.cs" t="Include" />
               </e>
+              <e p="CameraShake.cs" t="Include" />
               <e p="CameraZoom.cs" t="Include" />
               <e p="Player.cs" t="Include" />
               <e p="PlayerCamera.cs" t="Include" />
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerHitBox.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
-              <e p="PlayerPostProcess.cs" t="Include" />
+              <e p="PlayerVfx.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
+              <e p="ThrowableContainer.cs" t="Include" />
             </e>
             <e p="PostProcessing" t="Include">
               <e p="Blur.cs" t="Include" />
@@ -312,7 +335,6 @@
             </e>
             <e p="UI" t="Include">
               <e p="Components" t="Include">
-                <e p="FancyImage.cs" t="Include" />
                 <e p="UiButton.cs" t="Include" />
                 <e p="UiCheckbox.cs" t="Include" />
                 <e p="UIComponent.cs" t="Include" />
@@ -357,9 +379,12 @@
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
+      <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
       <e p="Tyrannosaurus Mechs.sln" t="IncludeFlat" />
     </e>
   </component>

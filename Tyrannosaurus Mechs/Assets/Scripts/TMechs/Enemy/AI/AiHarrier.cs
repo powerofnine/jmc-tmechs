@@ -36,14 +36,14 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Attacking(), "Attacking");
 
             stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle",
-                    (machine) => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
+                    machine => machine.DistanceToTarget > machine.Get<Radius>("rangeStopFollow"));
             stateMachine.RegisterTransition("Idle", "Chasing",
-                    (machine) => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("rangeStartFollow"));
 
             stateMachine.RegisterTransition("Chasing", "Attacking",
-                    (machine) => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F);
+                    machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange") && machine.GetAddSet<float>("attackTimer", -Time.deltaTime) <= 0F);
             stateMachine.RegisterTransition("Chasing", "Shooting",
-                    (machine) =>
+                    machine =>
                     {
                         if (machine.GetAddSet<float>("nextShoot", -Time.deltaTime) <= 0F)
                         {
@@ -57,10 +57,10 @@ namespace TMechs.Enemy.AI
                     });
 
             stateMachine.RegisterTransition("Attacking", "Chasing",
-                    (machine) => machine.GetTrigger("attackReleased"));
+                    machine => machine.GetTrigger("attackReleased"));
 
             stateMachine.RegisterTransition("Shooting", "Chasing",
-                    (machine) => machine.HorizontalDistanceToTarget > machine.Get<Radius>("shootRange") || machine.GetAddSet<float>("shootTimer", -Time.deltaTime) <= 0F);
+                    machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>("shootRange") || machine.GetAddSet<float>("shootTimer", -Time.deltaTime) <= 0F);
 
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"Harrier:{name}");
@@ -77,18 +77,19 @@ namespace TMechs.Enemy.AI
         }
 
         #region States
+
         private abstract class HarrierState : AiStateMachine.State
         {
             protected HarrierShared props;
-            
+
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 props = Machine.shared as HarrierShared;
             }
         }
-        
+
         private class Chasing : HarrierState
         {
             private float dashTimer;
@@ -136,14 +137,14 @@ namespace TMechs.Enemy.AI
                     }
                 }
 
-                props?.controller.Move(dashDirection * Machine.Get<float>("dashSpeed") * Time.deltaTime);
+                props?.controller.Move(Machine.Get<float>("dashSpeed") * Time.deltaTime * dashDirection);
             }
         }
 
         private class Shooting : HarrierState
         {
-            private float nextShot;
-
+            private bool left;
+            
             public override void OnEnter()
             {
                 base.OnEnter();
@@ -151,8 +152,6 @@ namespace TMechs.Enemy.AI
                 Vector2 shootTime = Machine.Get<Vector2>("shootTime");
                 Machine.Set("shootTimer", Random.Range(shootTime.x, shootTime.y));
                 props?.animator.SetBool(FIRING, true);
-
-                nextShot = 1F / Machine.Get<float>("fireRate");
             }
 
             public override void OnExit()
@@ -164,23 +163,33 @@ namespace TMechs.Enemy.AI
 
             public override void OnTick()
             {
-                Vector3 heading = target.position - transform.position;
-                Vector3 direction = heading / heading.magnitude;
+                transform.forward = DirectionToTarget;
+            }
 
-                transform.forward = direction;
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
 
-                nextShot -= Time.deltaTime;
-                if (nextShot <= 0F)
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                if ("fire".Equals(id))
                 {
-                    nextShot = 1F / Machine.Get<float>("fireRate");
-                    //TODO fire
+                    Transform anchor = left ? Machine.Get<Transform>("leftGunAnchor") : Machine.Get<Transform>("rightGunAnchor");
+                    left = !left;
+                    
+                    GameObject go = Instantiate(Machine.Get<GameObject>("bulletTemplate"), anchor.position, anchor.rotation);
+                    EnemyBullet bullet = go.GetComponent<EnemyBullet>();
+                    bullet.damage = Machine.Get<int>("shotDamage");
+                    bullet.direction = DirectionToTarget;
+                    bullet.owner = transform;
                 }
             }
         }
 
         private class Attacking : HarrierState
         {
-            private int substate = 0;
+            private int substate;
 
             private bool attackTriggered = true;
 
@@ -197,6 +206,8 @@ namespace TMechs.Enemy.AI
                 if (!attackTriggered)
                     return;
 
+                transform.forward = DirectionToTarget;
+                
                 if (DistanceToTarget > Machine.Get<Radius>("attackRange"))
                 {
                     Machine.SetTrigger("attackReleased");
@@ -222,9 +233,15 @@ namespace TMechs.Enemy.AI
                 base.OnEvent(type, id);
 
                 if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
+                {
                     attackTriggered = true;
+                    
+                    if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
+                        Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                }
             }
         }
+
         #endregion States
 
         [Serializable]
@@ -243,13 +260,16 @@ namespace TMechs.Enemy.AI
             [Header("Shooting")]
             public Vector2 shootFrequency = new Vector2(5F, 10F);
             public Vector2 shootTime = new Vector2(2F, 5F);
-            public float fireRate = .5F;
             public int shotDamage = 1;
+            public Transform leftGunAnchor;
+            public Transform rightGunAnchor;
+            public GameObject bulletTemplate;
 
             [Header("Attacking")]
             public float attackCooldown = 2F;
             [Range(0F, 1F)]
             public float secondaryAttackChance = .5F;
+            public int attackDamage = 10;
         }
 
         private class HarrierShared

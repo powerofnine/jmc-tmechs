@@ -12,7 +12,7 @@ namespace TMechs.Enemy
                 foreach (ITriggerListener listener in GetComponentsInParent<ITriggerListener>())
                     listener.OnTrigger(id);
         }
-
+        
         public interface ITriggerListener
         {
             void OnTrigger(string id);

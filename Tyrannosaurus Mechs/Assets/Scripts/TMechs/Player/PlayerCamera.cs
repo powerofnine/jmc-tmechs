@@ -7,16 +7,16 @@ using static TMechs.Controls.Action;
 namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
-    {    
-        private Rewired.Player Input => PlayerMovement.Input;
-        
+    {
+        private static Rewired.Player Input => Player.Input;
+
         public Transform player;
         public float cameraSpeed = 10F;
 
         [Header("Limits")]
         public float minX;
         public float maxX;
-        
+
         [Header("Camera Rig")]
         public Transform aaRig;
         public Transform verticalRig;
@@ -29,7 +29,7 @@ namespace TMechs.Player
         private void Awake()
         {
             state.parent = this;
-            
+
             if (!aaRig)
             {
                 Debug.LogWarning("Missing axis aligned rig reference, expect camera errors");
@@ -41,25 +41,23 @@ namespace TMechs.Player
                 Debug.LogWarning("Missing vertical rig reference, vertical camera rotation will not work");
                 verticalRig = new GameObject("Vertical Stand-in").transform;
             }
-            
+
             state.rotationX = verticalRig.localEulerAngles.x;
         }
 
         private void LateUpdate()
         {
-            EnemyTarget locked = TargetController.Instance.GetLock();
-            
-            if(locked)
-                LockedCamera(locked);
+            if (TargetController.Instance.GetLock())
+                LockedCamera();
             else
                 FreeCamera();
-            
+
             state.ClampState();
             transform.localEulerAngles = transform.localEulerAngles.Set(state.DampedY, Utility.Axis.Y);
             verticalRig.localEulerAngles = verticalRig.localEulerAngles.Set(state.DampedX, Utility.Axis.X);
         }
 
-        public void LockedCamera(EnemyTarget target)
+        public void LockedCamera()
         {
             transform.position = player.position;
             state.rotationX = 0F;
@@ -69,7 +67,7 @@ namespace TMechs.Player
         public void FreeCamera()
         {
             CameraSettings settings = SettingsData.Get<CameraSettings>();
-            
+
             // Get the difference between our position and the player's
             Vector3 playerDelta = transform.InverseTransformPoint(player.position);
 
@@ -95,6 +93,7 @@ namespace TMechs.Player
                         state.rotationY = transform.localEulerAngles.y;
                     break;
                 }
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -111,18 +110,18 @@ namespace TMechs.Player
                 state.rotationY = player.localEulerAngles.y;
             }
         }
-        
+
         private struct CameraState
         {
             public PlayerCamera parent;
-            
+
             public float rotationX;
             public float rotationY;
 
             private float xVelocity;
             private float yVelocity;
-            
-            public float DampedX => 
+
+            public float DampedX =>
                     Mathf.SmoothDampAngle(parent.verticalRig.localEulerAngles.x, rotationX, ref xVelocity, parent.dampening.x);
 
             public float DampedY => Mathf.SmoothDampAngle(parent.transform.localEulerAngles.y, rotationY, ref yVelocity, parent.dampening.y);

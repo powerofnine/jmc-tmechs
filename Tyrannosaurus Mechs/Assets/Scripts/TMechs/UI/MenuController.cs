@@ -8,7 +8,7 @@ namespace TMechs.UI
     public class MenuController : MonoBehaviour
     {
         public static MenuController Instance { get; private set; }
-        
+
         public GameObject menuMain;
         public GameObject menuPause;
         public GameObject menuSettings;
@@ -16,7 +16,7 @@ namespace TMechs.UI
 
         public Menu startingMenu;
         public bool canClose = true;
-        
+
         public ReorderableEventList onMenuClose;
 
         private readonly Stack<Menu> stateStack = new Stack<Menu>();
@@ -25,7 +25,7 @@ namespace TMechs.UI
         private void Awake()
         {
             Instance = this;
-            
+
             foreach (Menu state in Enum.GetValues(typeof(Menu)))
             {
                 GameObject menu = GetStateMenu(state);
@@ -52,8 +52,12 @@ namespace TMechs.UI
                     if (menu)
                     {
                         menu.SetActive(state == current);
-                        foreach (IMenuCallback callback in menu.GetComponents<IMenuCallback>())
+                        foreach (IMenuCallback callback in menu.GetComponentsInChildren<IMenuCallback>(true))
                             callback.OnMenuChanged(state == current);
+
+                        UiNavigation nav = menu.GetComponent<UiNavigation>();
+                        if(nav && nav.isActiveAndEnabled)
+                            nav.OnMenuChanged(state == current);
                     }
                 }
 

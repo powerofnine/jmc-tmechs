@@ -18,6 +18,9 @@ namespace TMechs
         public static readonly int PICKUP_TARGET_TYPE = Hash("Pickup Target Type");
         public static readonly int MOVE_DELTA = Hash("MoveDelta");
 
+        public static readonly int GROUNDED = Hash("Grounded");
+
+        public static readonly int JUMP = Hash("Jump");
         public static readonly int DIE = Hash("Die");
         public static readonly int HIT = Hash("Hit");
 
@@ -25,7 +28,7 @@ namespace TMechs
         public static readonly int ROCKET_OVERCHARGE = Hash("Rocket Fist Overcharge");
         public static readonly int ROCKET_READY = Hash("Rocket Fist Ready");
 
-        public static readonly Dictionary<int, string> RAINBOW = new Dictionary<int, string>()
+        public static readonly Dictionary<int, string> RAINBOW = new Dictionary<int, string>
         {
                 {Hash("Rocket Fist"), "Rocket Fist"},
                 {Hash("Rocket Fist Charge"), "Rocket Fist Charge"},

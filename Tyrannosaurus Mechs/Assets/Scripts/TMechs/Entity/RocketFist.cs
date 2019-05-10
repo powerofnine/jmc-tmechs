@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using TMechs.Enemy;
-using TMechs.Environment.Targets;
-using TMechs.Player;
 using UnityEngine;
 
 namespace TMechs.Entity
@@ -13,7 +10,7 @@ namespace TMechs.Entity
         public float speed = 10F;
         [NonSerialized]
         public float damage = 10F;
-        
+
         private Transform anchor;
         [HideInInspector]
         public Transform target;
@@ -21,7 +18,7 @@ namespace TMechs.Entity
         private bool isReturning;
 
         private bool done;
-        
+
         private void Awake()
         {
             anchor = Player.Player.Instance.rocketFistAnchor;
@@ -46,8 +43,8 @@ namespace TMechs.Entity
             Quaternion rotation = transform.rotation;
             rotation.SetLookRotation(relativePos);
             transform.eulerAngles = rotation.eulerAngles;
-            
-            transform.Translate(Vector3.forward * speed * Time.deltaTime * (isReturning ? -1 : 1));
+
+            transform.Translate(speed * Time.deltaTime * (isReturning ? -1 : 1) * Vector3.forward);
 
             maxTime -= Time.deltaTime;
             if (maxTime <= 0F)
@@ -72,7 +69,7 @@ namespace TMechs.Entity
 
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
-            
+
             while (progress <= 1F)
             {
                 progress += Time.deltaTime * 2F;
@@ -82,7 +79,7 @@ namespace TMechs.Entity
 
                 yield return null;
             }
-            
+
             Player.Player.Instance.Animator.SetTrigger(Anim.ROCKET_RETURN);
             Destroy(gameObject);
         }
@@ -95,10 +92,10 @@ namespace TMechs.Entity
                 return;
 
             EntityHealth entity = other.GetComponent<EntityHealth>();
-            if(entity)
+            if (entity)
                 entity.Damage(damage);
-            
-            if(other.transform == GetTarget())
+
+            if (other.transform == GetTarget())
                 isReturning = true;
         }
     }

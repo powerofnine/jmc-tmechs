@@ -8,15 +8,31 @@ namespace TMechs.Environment.Targets
         [ConditionalHide("isSwing", true)]
         public float radius = 10F;
 
+        public float cooldown = 1F;
+        private float currentCooldown;
+
+        public void OnGrapple()
+        {
+            currentCooldown = cooldown;
+        }
+        
         public override int GetPriority() => 0;
         public override Color GetColor() => Color.green;
         public override Color GetHardLockColor() => throw new System.NotImplementedException();
+
+        public override bool CanTarget() => currentCooldown <= 0F;
+        
+        private void Update()
+        {
+            if(currentCooldown > 0F)
+                currentCooldown -= Time.deltaTime;
+        }
 
         private void OnDrawGizmosSelected()
         {
             if (!isSwing)
                 return;
-            
+
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
         }

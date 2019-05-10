@@ -12,7 +12,7 @@ namespace TMechs.FX
         private Blur blurLayer;
 
         private float blurSize;
-        
+
         private void Awake()
         {
             instance = this;
@@ -22,9 +22,9 @@ namespace TMechs.FX
             if (blurLayer)
             {
                 blurSize = blurLayer.BlurSize.value;
-                
+
                 blurLayer.BlurSize.value = 0F;
-                
+
                 volume.enabled = true;
                 blurLayer.enabled.value = false;
             }
@@ -51,10 +51,10 @@ namespace TMechs.FX
 
             int multiplierStart = enabled ? 0 : 1;
             int multiplierEnd = enabled ? 1 : 0;
-            
+
             blurLayer.BlurSize.value = enabled ? 0F : blurSize;
             blurLayer.enabled.value = true;
-            
+
             while (time < fadeTime && blurLayer)
             {
                 time += Time.unscaledDeltaTime;
@@ -64,6 +64,5 @@ namespace TMechs.FX
 
             blurLayer.enabled.value = enabled;
         }
-        
     }
 }

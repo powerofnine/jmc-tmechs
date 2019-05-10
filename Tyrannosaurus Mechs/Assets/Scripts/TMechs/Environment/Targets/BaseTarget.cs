@@ -12,7 +12,7 @@ namespace TMechs.Environment.Targets
 
         private Transform lookAnchor;
         private SpriteRenderer target;
-        
+
         private void OnEnable()
         {
             TargetController.Add(this);
@@ -21,7 +21,7 @@ namespace TMechs.Environment.Targets
         private void OnDisable()
         {
             TargetController.Remove(this);
-            
+
             target.gameObject.SetActive(false);
         }
 
@@ -29,17 +29,19 @@ namespace TMechs.Environment.Targets
         public abstract Color GetColor();
         public abstract Color GetHardLockColor();
 
+        public virtual bool CanTarget() => true;
+
         private void Awake()
         {
             lookAnchor = new GameObject("Look Anchor").transform;
             lookAnchor.SetParent(transform, false);
-            
+
             target = Instantiate(Resources.Load<GameObject>("Prefabs/TargetRender"), lookAnchor).GetComponent<SpriteRenderer>();
             target.gameObject.SetActive(false);
 
             target.transform.localScale = target.transform.lossyScale.InverseScale();
-            
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+
+            player = Player.Player.Instance.transform;
         }
 
         private void LateUpdate()
@@ -48,20 +50,20 @@ namespace TMechs.Environment.Targets
             if (shouldShow != target.gameObject.activeSelf)
                 target.gameObject.SetActive(shouldShow);
             target.color = hardLock ? GetHardLockColor() : GetColor();
-            
-            if(player)
+
+            if (player)
                 lookAnchor.transform.LookAt(player);
-            
+
             target.transform.Rotate(0F, 0F, 25F * Time.deltaTime);
 
-            if(shouldShow)
+            if (shouldShow)
                 lastPing--;
         }
 
         public void Ping(bool hardLock = false)
         {
             this.hardLock = hardLock;
-            lastPing = 2;
+            lastPing = 1;
         }
     }
 }

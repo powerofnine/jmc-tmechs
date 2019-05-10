@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace TMechs.UI.Components
@@ -13,7 +12,7 @@ namespace TMechs.UI.Components
         public Image bar;
         public TextMeshProUGUI percentage;
         public float valueIncrement = .05F;
-        
+
         public float Value
         {
             get => value;
@@ -28,18 +27,19 @@ namespace TMechs.UI.Components
         private float value;
 
         [Space]
-        public float minValue = 0F;
+        public float minValue;
         public float maxValue = 1F;
         public DisplayMode displayMode;
-        
+
         public delegate string ToValue(float value, float min, float max);
+
         public ToValue toValue;
 
         protected override void Awake()
         {
             base.Awake();
-            
-            if(modes.ContainsKey(displayMode))
+
+            if (modes.ContainsKey(displayMode))
                 toValue = modes[displayMode];
         }
 
@@ -48,11 +48,11 @@ namespace TMechs.UI.Components
             Value = value;
             UpdateState_Pre(true);
         }
-        
+
         protected override void UpdateState(bool instant)
         {
             base.UpdateState(instant);
-            
+
             if (bar)
                 StartCoroutine(TransitionBar(instant));
 
@@ -69,7 +69,7 @@ namespace TMechs.UI.Components
             {
                 if (instant)
                     progress = 1F;
-                
+
                 progress += Time.unscaledDeltaTime * 6F;
                 bar.fillAmount = Mathf.Lerp(fillValue, (value - minValue) / (maxValue - minValue), progress);
 
@@ -102,7 +102,8 @@ namespace TMechs.UI.Components
             Percentage,
             Value
         }
-        private static readonly Dictionary<DisplayMode, ToValue> modes = new Dictionary<DisplayMode, ToValue>()
+
+        private static readonly Dictionary<DisplayMode, ToValue> modes = new Dictionary<DisplayMode, ToValue>
         {
                 {DisplayMode.Percentage, (value, min, max) => Mathf.RoundToInt((value - min) / (max - min) * 100) + "%"},
                 {DisplayMode.Value, (value, min, max) => value.ToString("n2")}

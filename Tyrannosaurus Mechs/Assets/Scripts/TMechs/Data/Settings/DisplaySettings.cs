@@ -5,11 +5,11 @@ namespace TMechs.Data.Settings
     [SettingsProvider]
     public class DisplaySettings
     {
-        public float brightness = 0F;
-        public float gamma = 0F;
+        public float brightness;
+        public float gamma;
         public bool vsync = true;
         public FpsDisplay fpsDisplay;
-        
+
         public enum FpsDisplay
         {
             [FriendlyName("Don't Show")]

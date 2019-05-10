@@ -119,7 +119,7 @@ namespace TMechs.Data
 
                 if (File.Exists(saveFile))
                     File.Delete(saveFile);
-                
+
                 FlushLexicon();
             }
         }
@@ -146,6 +146,7 @@ namespace TMechs.Data
         {
             public string sceneId;
             public string checkpointId;
+            public float health = 1F;
         }
     }
 }

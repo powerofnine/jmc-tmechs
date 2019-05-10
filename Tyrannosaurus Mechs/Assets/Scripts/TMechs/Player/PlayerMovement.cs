@@ -3,24 +3,27 @@ using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static TMechs.Controls.Action;
 
 namespace TMechs.Player
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
     {
-        public static Rewired.Player Input { get; private set; }
+        private static Rewired.Player Input => Player.Input;
 
         [Name("AA Camera")]
         public Transform aaCamera;
 
         [Header("Forces")]
         public float movementSpeed = 10F;
-        public float jumpForce = 2 * 9.8F;
+        public float runSpeed = 20F;
+        public float jumpForce = 2 * Utility.GRAVITY;
 
         public int maxJumps = 1;
 
+        [NonSerialized]
+        public bool disableControllerMovement;
+        
         // State
         private float intendedY;
         private float yDampVelocity;
@@ -33,16 +36,16 @@ namespace TMechs.Player
 
         // Movement
         public Vector3 velocity;
+        public Vector3 motion;
         private bool isGrounded;
         private Vector3 contactPoint;
-        private bool playerControl = true;
+        private bool canRun = true;
+        private bool canJump = true;
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            animator = Player.Instance.Animator;
             animator.SetFloat(Anim.PLAYER_SPEED, movementSpeed);
-
-            Input = Rewired.ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
 
             if (!aaCamera)
             {
@@ -52,20 +55,17 @@ namespace TMechs.Player
 
             intendedY = transform.eulerAngles.y;
 
-            controller = GetComponent<CharacterController>();
+            controller = Player.Instance.Controller;
         }
 
         private void Update()
         {
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
-            {
-                animator.SetFloat(Anim.MOVE_DELTA, 0F);
                 return;
-            }
 
+            bool angry = Input.GetButton(ANGERY);
+            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
-            if (!playerControl)
-                movement = Vector3.zero;
 
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
@@ -80,28 +80,33 @@ namespace TMechs.Player
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
 
-            velocity.y -= 9.8F * Time.deltaTime;
-
-            if (Input.GetButton(ANGERY))
-                movement *= 2F;
-
+            float speed = angry ? runSpeed : movementSpeed;
+            if (!canRun)
+                speed = movementSpeed * .85F;
             
-            controller.Move((movement * movementSpeed + velocity) * Time.deltaTime);
-            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F);
+            motion = movement * speed;
+            
+            if (canJump && Input.GetButtonDown(JUMP) && jumps < maxJumps)
+            {
+                animator.SetTrigger(Anim.JUMP);
+                canJump = false;
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (!disableControllerMovement)
+            {
+                velocity.y -= Utility.GRAVITY * Time.deltaTime;
+
+                controller.Move((motion + velocity) * Time.deltaTime);
+            }
+
+            motion = Vector3.zero;
+            
+            animator.SetFloat(Anim.MOVE_DELTA, controller.velocity.Remove(Utility.Axis.Y).magnitude / movementSpeed / 2F); 
+            
             GroundedCheck();
-            
-            if (isGrounded)
-            {
-                jumps = 0;
-                velocity = Vector3.zero + Vector3.down * .5F;
-            }
-
-            if (Input.GetButtonDown(JUMP) && jumps < maxJumps)
-            {
-                if (!isGrounded)
-                    jumps++;
-                velocity.y = jumpForce;
-            }
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
@@ -124,31 +129,39 @@ namespace TMechs.Player
                 transform.eulerAngles = transform.eulerAngles.Set(intendedY, Utility.Axis.Y);
             }
             
-            #if UNITY_EDITOR
-            if(UnityEngine.Input.GetKeyDown(KeyCode.B))
-                SaveSystem.CreateSave(new SaveSystem.SaveData() {checkpointId = "checkpointhehe", sceneId = "BceneID"}, "TEGSADG");
-            #endif
+            animator.SetBool(Anim.GROUNDED, isGrounded);
+
+            if (isGrounded)
+            {
+                jumps = 0;
+                velocity = Vector3.zero;
+            }
         }
 
         private void GroundedCheck()
         {
             isGrounded = controller.isGrounded;
-            playerControl = true;
-            
+            canRun = true;
+
             if (!isGrounded)
                 return;
 
             bool sliding = false;
 
-            if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
-                if (!Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit))
-                    return;
-            
-            if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit)
-                sliding = true;
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
+            {
+                if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
+                    sliding = true;
+            }
+            else
+            {
+                Physics.Raycast(contactPoint + Vector3.up, Vector3.down, out hit);
+                if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
+                    sliding = true;
+            }
 
-            playerControl = !sliding;
-            
+            canRun = !sliding;
+
             if (!sliding)
                 return;
 
@@ -159,10 +172,21 @@ namespace TMechs.Player
             Vector3.OrthoNormalize(ref normal, ref direction);
 
             intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            controller.Move(direction * movementSpeed * Time.deltaTime);
+            controller.Move(runSpeed * 1.15F * Time.deltaTime * direction);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
+
+        public void OnAnimationEvent(string id)
+        {
+            if ("jump".Equals(id))
+            {
+                if (!isGrounded)
+                    jumps++;
+                velocity.y = jumpForce;
+                canJump = true;
+            }
+        }
     }
 }
