@@ -272,6 +272,7 @@ ModelImporter:
     100532: Upper_Torso_CTRL
     100534: Upper_Torso_CTRL_GRP
     100536: Global_GRP
+    100538: left
     400000: Chest_BND
     400002: Chest_CLSTR
     400004: DoNotTouchGRP
@@ -541,6 +542,8 @@ ModelImporter:
     400532: Upper_Torso_CTRL
     400534: Upper_Torso_CTRL_GRP
     400536: Global_GRP
+    400538: left
+    2000000: left
     2100000: lambert3SG1
     2100002: initialShadingGroup2
     4300000: Mech_Spine_GEO
@@ -556,6 +559,7 @@ ModelImporter:
     7400004: Grab
     7400006: Throw
     7400008: Death
+    7400010: DoubleJump
     9500000: //RootNode
     13700000: L_Mech_Arm_GEO
     13700002: L_Mech_Fist_GEO
@@ -743,6 +747,48 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: DoubleJump
+      takeName: Take 001
+      firstFrame: 262
+      lastFrame: 330
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.22159088
+        functionName: OnAnimationEvent
+        data: jump
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.24431835
+        functionName: Shake
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
