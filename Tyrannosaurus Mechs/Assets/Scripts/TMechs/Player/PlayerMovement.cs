@@ -88,7 +88,7 @@ namespace TMechs.Player
             
             if (canJump && Input.GetButtonDown(JUMP) && jumps < maxJumps)
             {
-                animator.SetTrigger(Anim.JUMP);
+                animator.SetTrigger(isGrounded ? Anim.JUMP : Anim.AIR_JUMP);
                 canJump = false;
             }
         }

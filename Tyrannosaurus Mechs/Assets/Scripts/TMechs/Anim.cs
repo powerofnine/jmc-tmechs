@@ -21,6 +21,7 @@ namespace TMechs
         public static readonly int GROUNDED = Hash("Grounded");
 
         public static readonly int JUMP = Hash("Jump");
+        public static readonly int AIR_JUMP = Hash("AirJump");
         public static readonly int DIE = Hash("Die");
         public static readonly int HIT = Hash("Hit");
 
