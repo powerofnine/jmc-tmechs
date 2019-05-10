@@ -29,9 +29,9 @@ namespace TMechs.Player
         }
 
         [UsedImplicitly] // Animator event
-        private void Step()
+        private void Shake(float multiplier = 1F)
         {
-            shake = strength;
+            shake = strength * multiplier;
         }
     }
 }

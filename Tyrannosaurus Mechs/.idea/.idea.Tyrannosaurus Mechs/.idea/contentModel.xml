@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\fuj1n\.Rider2019.1\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\fuj1n\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Tyrannosaurus Mechs.-131819345.00" t="ExcludeRecursive" />
-    <e p="D:\Libraries\Documents\Unity Projects\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
+    <e p="C:\Users\AUzulins\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\AUzulins\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Tyrannosaurus Mechs.996682487.00" t="ExcludeRecursive" />
+    <e p="C:\Users\AUzulins\Desktop\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -14,6 +14,22 @@
             <e p="ConditionalHideAttribute.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ErosionBrush" t="Include">
+            <e p="ErosionBrush.cs" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="ArrayTools.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="ErosionBrushEditor.cs" t="Include" />
+                <e p="Layout.cs" t="Include" />
+              </e>
+              <e p="Erosion.cs" t="Include" />
+              <e p="Extensions.cs" t="Include" />
+              <e p="Matrix.cs" t="Include" />
+              <e p="Matrix2.cs" t="Include" />
+              <e p="Noise.cs" t="Include" />
+              <e p="WeldTerrains.cs" t="Include" />
             </e>
           </e>
           <e p="Event Delegate System" t="Include">
@@ -210,24 +226,6 @@
             </e>
           </e>
         </e>
-        <e p="Resources" t="Include">
-          <e p="ErosionBrush" t="Include">
-            <e p="ErosionBrush.cs" t="Include" />
-            <e p="Scripts" t="Include">
-              <e p="ArrayTools.cs" t="Include" />
-              <e p="Editor" t="Include">
-                <e p="ErosionBrushEditor.cs" t="Include" />
-                <e p="Layout.cs" t="Include" />
-              </e>
-              <e p="Erosion.cs" t="Include" />
-              <e p="Extensions.cs" t="Include" />
-              <e p="Matrix.cs" t="Include" />
-              <e p="Matrix2.cs" t="Include" />
-              <e p="Noise.cs" t="Include" />
-              <e p="WeldTerrains.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="Scripts" t="Include">
           <e p="Editor" t="Include">
             <e p="AiGraphWindow.cs" t="Include" />
@@ -381,9 +379,12 @@
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
+      <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
       <e p="Tyrannosaurus Mechs.sln" t="IncludeFlat" />
     </e>
   </component>

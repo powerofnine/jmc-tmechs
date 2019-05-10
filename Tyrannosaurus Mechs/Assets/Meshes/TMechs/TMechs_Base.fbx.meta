@@ -132,19 +132,17 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5774908
-        functionName: Step
+        functionName: Shake
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 52e52b0296ba4196afc24bed66a02ef7,
-          type: 3}
-        floatParameter: 0
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1
         intParameter: 0
         messageOptions: 0
       - time: 0
-        functionName: Step
+        functionName: Shake
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 52e52b0296ba4196afc24bed66a02ef7,
-          type: 3}
-        floatParameter: 0
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1
         intParameter: 0
         messageOptions: 0
       transformMask: []
@@ -258,7 +256,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4033067
+        functionName: Shake
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 2
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

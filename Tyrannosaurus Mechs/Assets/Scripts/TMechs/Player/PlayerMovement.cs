@@ -60,10 +60,7 @@ namespace TMechs.Player
         private void Update()
         {
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
-            {
-                animator.SetFloat(Anim.MOVE_DELTA, 0F);
                 return;
-            }
 
             bool angry = Input.GetButton(ANGERY);
             
