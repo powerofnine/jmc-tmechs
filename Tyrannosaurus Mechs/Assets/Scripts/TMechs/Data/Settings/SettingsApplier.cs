@@ -1,30 +1,34 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 namespace TMechs.Data.Settings
 {
     [AddComponentMenu("")]
     public sealed class SettingsApplier : MonoBehaviour
     {
-        private PostProcessProfile profile;
+        private VolumeProfile profile;
 
-        private ColorGrading grading;
+        private ColorAdjustments colorAdjustments;
+        private LiftGammaGain gammaAdjustments;
 
         private float deltaTime;
 
         private void Awake()
         {
-            PostProcessVolume pp = gameObject.AddComponent<PostProcessVolume>();
+            Volume pp = gameObject.AddComponent<Volume>();
 
             pp.isGlobal = true;
 
-            profile = ScriptableObject.CreateInstance<PostProcessProfile>();
+            profile = ScriptableObject.CreateInstance<VolumeProfile>();
             pp.profile = profile;
 
-            grading = profile.AddSettings<ColorGrading>();
-            grading.gamma.overrideState = true;
-            grading.postExposure.overrideState = true;
+            colorAdjustments = profile.Add<ColorAdjustments>();
+            gammaAdjustments = profile.Add<LiftGammaGain>();
+
+            colorAdjustments.postExposure.overrideState = true;
+            gammaAdjustments.gamma.overrideState = true;
         }
 
         private void Update()
@@ -33,8 +37,12 @@ namespace TMechs.Data.Settings
 
             if (display != null)
             {
-                grading.postExposure.value = Mathf.Clamp(display.brightness, -2F, 2F);
-                grading.gamma.value.w = Mathf.Clamp(display.gamma, -1F, 1F);
+                colorAdjustments.postExposure.value = Mathf.Clamp(display.brightness, -2F, 2F);
+                
+                Vector4 gamma = gammaAdjustments.gamma.value;
+                gamma.w = Mathf.Clamp(display.gamma, -1F, 1F);
+                gammaAdjustments.gamma.value = gamma;
+                
                 QualitySettings.vSyncCount = display.vsync ? 1 : 0;
             }
 
