@@ -108,10 +108,26 @@ namespace TMechs.Data.Settings
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Init()
         {
+            ApplyResolution();
+            ApplyQualitySettings();
+            
             GameObject go = new GameObject("Settings Applier");
             DontDestroyOnLoad(go);
 
             go.AddComponent<SettingsApplier>();
+        }
+
+        public static void ApplyResolution()
+        {
+            DisplaySettings display = SettingsData.Get<DisplaySettings>();
+            Resolution res = display.resolution;
+            Screen.SetResolution(res.width, res.height, DisplaySettings.ModeToUnity(display.fullscreenMode), res.refreshRate);
+        }
+
+        public static void ApplyQualitySettings()
+        {
+            DisplaySettings display = SettingsData.Get<DisplaySettings>();
+            QualitySettings.SetQualityLevel(display.qualityLevel, true);
         }
     }
 }

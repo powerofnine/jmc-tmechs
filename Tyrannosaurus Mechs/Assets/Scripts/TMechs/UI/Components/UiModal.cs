@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UIEventDelegate;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TMechs.UI.Components
 {
@@ -11,6 +13,7 @@ namespace TMechs.UI.Components
         public RectTransform windowAnchor;
 
         public TextMeshProUGUI textDisplay;
+        public RectTransform scrollRect;
         public RectTransform buttonsAnchor;
         public GameObject buttonTemplate;
 
@@ -20,7 +23,7 @@ namespace TMechs.UI.Components
         private readonly List<UiButton> buttons = new List<UiButton>();
         private int selectedButton;
 
-        public IEnumerator Show(string text, IEnumerable<string> buttons)
+        public IEnumerator Show(string text, IEnumerable<string> buttons, int startIndex)
         {
             float height = 25F;
             float textBottom = 10F;
@@ -64,13 +67,22 @@ namespace TMechs.UI.Components
                     }
                 }
 
-                if (this.buttons.Count > 0)
-                    this.buttons[0].OnSelect(true);
+                if (startIndex >= this.buttons.Count)
+                    startIndex = 0;
+
+                if (this.buttons.Count > startIndex)
+                {
+                    selectedButton = startIndex;
+                    this.buttons[startIndex].OnSelect(true);
+                }
             }
 
+            height = Mathf.Min(height, Screen.height * .85F);
+            
             if (windowAnchor)
                 windowAnchor.sizeDelta = new Vector2(windowAnchor.sizeDelta.x, height);
-            buttonsAnchor.anchoredPosition = new Vector2(buttonsAnchor.anchoredPosition.x, -textBottom);
+            scrollRect.anchoredPosition = new Vector2(buttonsAnchor.anchoredPosition.x, -textBottom);
+            scrollRect.sizeDelta = new Vector2(scrollRect.sizeDelta.x, height - 25F);
 
             while (!isDone)
                 yield return null;
@@ -112,6 +124,15 @@ namespace TMechs.UI.Components
 
             if (selectedButton < buttons.Count)
                 buttons[selectedButton].OnSelect(false);
+
+            // Scroll
+            RectTransform rect = (RectTransform) buttons[selectedButton].transform;
+            float scrolledPos = rect.anchoredPosition.y + buttonsAnchor.anchoredPosition.y;
+
+            if (scrolledPos > -rect.sizeDelta.y)
+                buttonsAnchor.anchoredPosition = new Vector2(0F, -rect.anchoredPosition.y - rect.sizeDelta.y);
+            else if (scrolledPos < -scrollRect.sizeDelta.y)
+                buttonsAnchor.anchoredPosition = new Vector2(0F, -scrollRect.sizeDelta.y - rect.anchoredPosition.y);
         }
 
         public void OnButton(string button)

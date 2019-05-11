@@ -62,39 +62,12 @@ namespace TMechs.UI.Components
         }
 
         [NotNull]
-        public Dictionary<int, T> SetEnum<T>(bool requireFriendlyName = true)
+        public Dictionary<int, T> SetEnum<T>(bool requireFriendlyName = true) where T : Enum
         {
             Dictionary<int, T> map = new Dictionary<int, T>();
-
-            T[] items = Enum.GetValues(typeof(T)).Cast<T>().ToArray();
-            List<string> values = new List<string>();
-
-            foreach (T item in items)
-            {
-                MemberInfo info = item.GetType().GetMember(item.ToString()).SingleOrDefault();
-                if (info == null)
-                    continue;
-
-                FriendlyNameAttribute fn = (FriendlyNameAttribute) info.GetCustomAttributes(typeof(FriendlyNameAttribute)).SingleOrDefault();
-
-                string name;
-
-                if (fn == null)
-                {
-                    if (requireFriendlyName)
-                        continue;
-
-                    name = info.Name;
-                }
-                else
-                    name = fn.name;
-
-                map.Add(values.Count, item);
-                values.Add(name);
-            }
-
+            IEnumerable<string> values = FriendlyNameAttribute.GetNames(requireFriendlyName, map);
+            
             this.values = values.ToArray();
-
             return map;
         }
     }

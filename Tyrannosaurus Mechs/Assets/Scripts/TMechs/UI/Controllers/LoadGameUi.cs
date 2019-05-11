@@ -84,7 +84,7 @@ namespace TMechs.UI.Controllers
 
             float scrolledPos = rect.anchoredPosition.y + scrollTarget.anchoredPosition.y;
 
-            if (scrolledPos > 0)
+            if (scrolledPos > -rect.sizeDelta.y)
                 scrollTarget.anchoredPosition = new Vector2(0F, -rect.anchoredPosition.y - rect.sizeDelta.y);
             else if (scrolledPos < -scrollRect.sizeDelta.y)
                 scrollTarget.anchoredPosition = new Vector2(0F, -scrollRect.sizeDelta.y - rect.anchoredPosition.y);

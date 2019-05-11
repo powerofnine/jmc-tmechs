@@ -97,9 +97,9 @@ namespace TMechs.UI
             if (modal)
             {
                 if (controller.GetButtonDown(Action.UIVERTICAL))
-                    modal.NavigateDown();
-                else if (controller.GetNegativeButtonDown(Action.UIVERTICAL))
                     modal.NavigateUp();
+                else if (controller.GetNegativeButtonDown(Action.UIVERTICAL))
+                    modal.NavigateDown();
 
                 if (controller.GetButtonDown(Action.UISUBMIT))
                     modal.Submit();
@@ -162,10 +162,10 @@ namespace TMechs.UI
                 active[currentComponent[currentTab]].OnSelect(instantEffect);
         }
 
-        public void OpenModal(string text, IEnumerable<string> buttons, Action<string> callback = null)
-            => StartCoroutine(ModalWindow(text, buttons, callback));
+        public void OpenModal(string text, IEnumerable<string> buttons, Action<string> callback = null, int startIndex = 0)
+            => StartCoroutine(ModalWindow(text, buttons, callback, startIndex));
 
-        public IEnumerator ModalWindow(string text, IEnumerable<string> buttons, Action<string> callback)
+        public IEnumerator ModalWindow(string text, IEnumerable<string> buttons, Action<string> callback, int startIndex = 0)
         {
             if (!modalTemplate)
             {
@@ -174,7 +174,7 @@ namespace TMechs.UI
             }
 
             modal = Instantiate(modalTemplate, transform);
-            yield return modal.Show(text, buttons);
+            yield return modal.Show(text, buttons, startIndex);
             modal = null;
 
             if (callback != null)
