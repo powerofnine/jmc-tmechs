@@ -16,15 +16,6 @@
               <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
             </e>
           </e>
-          <e p="DebugConsole" t="Include">
-            <e p="Scripts" t="Include">
-              <e p="BuiltinCommands.cs" t="Include" />
-              <e p="BuiltinTypeParsers.cs" t="Include" />
-              <e p="DebugConsole.cs" t="Include" />
-              <e p="DebugConsoleCommand.cs" t="Include" />
-              <e p="IDebugTypeParser.cs" t="Include" />
-            </e>
-          </e>
           <e p="Event Delegate System" t="Include">
             <e p="UI" t="Include">
               <e p="EventDelegate" t="Include">
@@ -42,6 +33,16 @@
           </e>
           <e p="Json.NET" t="Include">
             <e p="Newtonsoft.Json.xml" t="Include" />
+          </e>
+          <e p="MinimalDebugConsole" t="Include">
+            <e p="MinimalDebugConsole.asmdef" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="BuiltinCommands.cs" t="Include" />
+              <e p="BuiltinTypeParsers.cs" t="Include" />
+              <e p="DebugConsole.cs" t="Include" />
+              <e p="DebugConsoleCommand.cs" t="Include" />
+              <e p="IDebugTypeParser.cs" t="Include" />
+            </e>
           </e>
           <e p="RainbowAssets" t="Include">
             <e p="!Core" t="Include">
@@ -368,6 +369,7 @@
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
+      <e p="MinimalDebugConsole.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />

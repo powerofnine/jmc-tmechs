@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DebugConsole;
+using fuj1n.MinimalDebugConsole;
 using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.UI;
@@ -171,12 +171,12 @@ namespace TMechs.Player
 
         private void OnEnable()
         {
-            DebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
         }
 
         private void OnDisable()
         {
-            DebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
         }
 
         private void OnConsoleToggle(bool state)
@@ -202,7 +202,7 @@ namespace TMechs.Player
         private static void ToggleGodMode()
         {
             isGod = !isGod;
-            DebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
         }
 
         [DebugConsoleCommand("tp")]
@@ -238,7 +238,7 @@ namespace TMechs.Player
                     break;
             }
             
-            DebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
         }
 
         private enum PlayerVar

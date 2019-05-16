@@ -1,37 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Reflection;
-using TMPro;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
-namespace DebugConsole
+﻿namespace fuj1n.MinimalDebugConsole
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using JetBrains.Annotations;
+    using TMPro;
+    using UnityEngine;
+    using UnityEngine.EventSystems;
+    using UnityEngine.UI;
+
+    [PublicAPI]
     public class DebugConsole : MonoBehaviour
     {
-        public const string INTRO_STRING = "Simple Debug Console v1.0";
-        
+        // The string that is printed at the top of the console log
+        public const string INTRO_STRING = "Minimal Debug Console v1.0\n";
+        // How frequently the console updates whilst it is open
+        public const float UPDATE_FREQUENCY = 0.1F;
+
+        // What key needs to be pressed to toggle the console
+        // Can be changed during runtime
+        public static KeyCode hotkey = KeyCode.BackQuote;
+        // The max number of lines for the console buffer or -1 for no limit
+        // Can be changed during runtime
+        public static int maxLines = 512;
+
         public static DebugConsole Instance { get; private set; }
 
+        /// <summary>
+        /// Called when the console is toggled
+        /// </summary>
         public event Action<bool> OnConsoleToggle;
-        
+
         private readonly Dictionary<Type, IDebugTypeParser> parsers = new Dictionary<Type, IDebugTypeParser>();
         private readonly Dictionary<string, Command> commands = new Dictionary<string, Command>();
+
+        private readonly Queue<string> lines = new Queue<string>();
 
         private GameObject consoleDisplay;
         private TextMeshProUGUI consoleText;
         private TMP_InputField consoleField;
         private ScrollRect consoleScroll;
 
+        // Marked true when the text changes
+        private bool textDirty;
+        // Marked true when the console scroll needs to be moved back to the bottom of the log
+        private bool scrollDirty;
+
+        private float time;
+
         private void Update()
         {
             if (consoleDisplay.activeSelf && consoleField && EventSystem.current)
                 consoleField.OnSelect(null);
 
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+            if (Input.GetKeyDown(hotkey))
                 ToggleConsole();
 
             if ((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) && consoleDisplay.activeSelf)
@@ -41,26 +64,42 @@ namespace DebugConsole
                 Execute(consoleField.text);
                 consoleField.text = "";
             }
+
+            time += Time.unscaledDeltaTime;
+            if (time > UPDATE_FREQUENCY)
+            {
+                time = 0F;
+                UpdateText();
+            }
         }
 
+        /// <summary>
+        /// Toggles the state of the console
+        /// </summary>
         public void ToggleConsole()
         {
             SetConsole(!consoleDisplay.activeSelf);
         }
 
+        /// <summary>
+        /// Opens or closes the console based on <paramref name="open"/>
+        /// </summary>
         public void SetConsole(bool open)
         {
             consoleDisplay.SetActive(open);
             OnConsoleToggle?.Invoke(open);
         }
 
+        /// <summary>
+        /// Executes a console <paramref name="command"/>
+        /// </summary>
         public void Execute(string command)
         {
             if (string.IsNullOrWhiteSpace(command))
                 return;
 
             AddMessage($"] {command}", Color.cyan);
-            
+
             command = command.Trim();
 
             List<string> args = command.Split(' ').ToList();
@@ -79,10 +118,11 @@ namespace DebugConsole
                         args.RemoveAt(j);
                     }
 
-                    args[i] = args[i].Substring(0, args[i].Length - 1);
+                    if(args[i].EndsWith("\""))
+                        args[i] = args[i].Substring(0, args[i].Length - 1);
                 }
             }
-            
+
             if (!commands.ContainsKey(command))
             {
                 AddMessage($"[CONSOLE] {command} is not a recognized command", Color.red);
@@ -95,7 +135,7 @@ namespace DebugConsole
         private void InitializeConsole(IEnumerable<CommandDiscovery> discoveries)
         {
             Instance = this;
-            
+
             // Setup debug console
             consoleDisplay = Instantiate(Resources.Load<GameObject>("DebugConsole/Console"), transform);
             consoleDisplay.SetActive(false);
@@ -104,8 +144,9 @@ namespace DebugConsole
             consoleField = consoleDisplay.GetComponentInChildren<TMP_InputField>(true);
             consoleScroll = consoleDisplay.GetComponentInChildren<ScrollRect>(true);
             consoleDisplay.GetComponentsInChildren<Button>(true).SingleOrDefault(x => "Close".Equals(x.name))?.onClick.AddListener(() => SetConsole(false));
-            
+
             Clear();
+
             Application.logMessageReceivedThreaded += HandleDebugLog;
 
             // Setup argv parsers
@@ -166,18 +207,48 @@ namespace DebugConsole
             AddMessage(message, c);
         }
 
+        /// <summary>
+        /// Adds a <paramref name="message"/> to the console in color <paramref name="c"/>
+        /// and marks the console dirty
+        /// </summary>
         public void AddMessage(string message, Color c)
         {
-            if (consoleText)
-                consoleText.text += $"<#{ColorUtility.ToHtmlStringRGB(c)}>{message.Trim('\t', '\n', ' ')}</color>\n";
-            if (consoleScroll)
-                consoleScroll.verticalNormalizedPosition = 0F;
+            lines.Enqueue($"<#{ColorUtility.ToHtmlStringRGB(c)}>{message.Trim('\t', '\n', ' ')}</color>");
+
+            while (lines.Count > maxLines && maxLines > 0)
+                lines.Dequeue();
+
+            textDirty = true;
+            scrollDirty = true;
         }
 
+        /// <summary>
+        /// Clears the console
+        /// </summary>
         public void Clear()
         {
+            lines.Clear();
+            lines.Enqueue(INTRO_STRING);
+            textDirty = true;
+            scrollDirty = true;
+        }
+
+        private void UpdateText()
+        {
+            if (!textDirty || !consoleDisplay.activeSelf)
+                return;
+
+            float startPos = 0F;
+            if (consoleScroll && scrollDirty)
+                startPos = consoleScroll.verticalNormalizedPosition;
+
             if (consoleText)
-                consoleText.text = INTRO_STRING;
+                consoleText.text = string.Join("\n", lines);
+            if (consoleScroll && scrollDirty && startPos <= Mathf.Epsilon)
+                consoleScroll.verticalNormalizedPosition = 0F;
+
+            textDirty = false;
+            scrollDirty = false;
         }
 
         private Type[] ExpandArguments(IEnumerable<Type> args)
@@ -256,17 +327,17 @@ namespace DebugConsole
                 {
                     List<string> names = Enum.GetNames(arg).ToList();
                     string val = (string) argQueue.Dequeue();
-                    
+
                     if (!names.Contains(val))
                     {
-                        Debug.LogError($"[CONSOLE] Illegal value given {val}, legal values are: {string.Join(", ", names)}");
+                        AddMessage($"[CONSOLE] Illegal value given {val}, legal values are: {string.Join(", ", names)}", Color.red);
                         return null;
                     }
-                    
+
                     finalArgs.Add(Enum.Parse(arg, val));
                     continue;
                 }
-                
+
                 if (typeof(IConvertible).IsAssignableFrom(arg) || typeof(string).IsAssignableFrom(arg))
                 {
                     finalArgs.Add(argQueue.Dequeue());
@@ -297,7 +368,7 @@ namespace DebugConsole
 
         private class Command
         {
-            private string command;
+            private readonly string command;
             private readonly Dictionary<int, SubCommand> subs = new Dictionary<int, SubCommand>();
 
             public Command(string command)
@@ -351,19 +422,22 @@ namespace DebugConsole
 
                     if (processed == null)
                         return;
-                    
+
                     try
                     {
                         method.Invoke(null, processed);
                     }
                     catch (Exception e)
                     {
+                        if (e.InnerException != null)
+                            e = e.InnerException;
+                        
                         Debug.LogError("[CONSOLE]: " + e.Message);
                         Debug.LogError(e.StackTrace);
                     }
                 }
 
-                [Pure]
+                [System.Diagnostics.Contracts.Pure]
                 public int GetArgc()
                 {
                     return expandedArguments.Length;

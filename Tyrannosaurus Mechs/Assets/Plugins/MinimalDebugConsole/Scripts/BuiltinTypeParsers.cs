@@ -1,9 +1,11 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace DebugConsole
+namespace fuj1n.MinimalDebugConsole
 {
+    using System;
+    using System.Collections.Generic;
+    using JetBrains.Annotations;
+    using UnityEngine;
+
+    [PublicAPI]
     public class ColorParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -18,10 +20,11 @@ namespace DebugConsole
 
         public object GetValue(Queue<object> arguments)
         {
-            return new Color((byte)arguments.Dequeue() / 255F, (byte)arguments.Dequeue() / 255F, (byte)arguments.Dequeue() / 255F);
+            return new Color((byte) arguments.Dequeue() / 255F, (byte) arguments.Dequeue() / 255F, (byte) arguments.Dequeue() / 255F);
         }
     }
 
+    [PublicAPI]
     public class Vector2Parser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -38,7 +41,8 @@ namespace DebugConsole
             return new Vector2((float) arguments.Dequeue(), (float) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class Vector3Parser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -56,7 +60,8 @@ namespace DebugConsole
             return new Vector3((float) arguments.Dequeue(), (float) arguments.Dequeue(), (float) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class Vector4Parser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -75,7 +80,8 @@ namespace DebugConsole
             return new Vector4((float) arguments.Dequeue(), (float) arguments.Dequeue(), (float) arguments.Dequeue(), (float) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class RectParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -95,6 +101,7 @@ namespace DebugConsole
         }
     }
 
+    [PublicAPI]
     public class BoundsParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -118,7 +125,8 @@ namespace DebugConsole
             );
         }
     }
-    
+
+    [PublicAPI]
     public class QuaternionParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -134,10 +142,11 @@ namespace DebugConsole
 
         public object GetValue(Queue<object> arguments)
         {
-            return new Quaternion((float)arguments.Dequeue(), (float)arguments.Dequeue(), (float)arguments.Dequeue(), (float)arguments.Dequeue());
+            return new Quaternion((float) arguments.Dequeue(), (float) arguments.Dequeue(), (float) arguments.Dequeue(), (float) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class Vector2IntParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -154,7 +163,8 @@ namespace DebugConsole
             return new Vector2Int((int) arguments.Dequeue(), (int) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class Vector3IntParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -172,7 +182,8 @@ namespace DebugConsole
             return new Vector3((int) arguments.Dequeue(), (int) arguments.Dequeue(), (int) arguments.Dequeue());
         }
     }
-    
+
+    [PublicAPI]
     public class RectIntParser : IDebugTypeParser
     {
         public Type GetTarget()
@@ -192,6 +203,7 @@ namespace DebugConsole
         }
     }
 
+    [PublicAPI]
     public class BoundsIntParser : IDebugTypeParser
     {
         public Type GetTarget()
