@@ -12,6 +12,8 @@ namespace DebugConsole
 {
     public class DebugConsole : MonoBehaviour
     {
+        public const string INTRO_STRING = "Simple Debug Console v1.0";
+        
         public static DebugConsole Instance { get; private set; }
 
         public event Action<bool> OnConsoleToggle;
@@ -83,7 +85,7 @@ namespace DebugConsole
             
             if (!commands.ContainsKey(command))
             {
-                Debug.LogError($"[CONSOLE] {command} is not a recognized command");
+                AddMessage($"[CONSOLE] {command} is not a recognized command", Color.red);
                 return;
             }
 
@@ -102,6 +104,8 @@ namespace DebugConsole
             consoleField = consoleDisplay.GetComponentInChildren<TMP_InputField>(true);
             consoleScroll = consoleDisplay.GetComponentInChildren<ScrollRect>(true);
             consoleDisplay.GetComponentsInChildren<Button>(true).SingleOrDefault(x => "Close".Equals(x.name))?.onClick.AddListener(() => SetConsole(false));
+            
+            Clear();
             Application.logMessageReceivedThreaded += HandleDebugLog;
 
             // Setup argv parsers
@@ -167,13 +171,13 @@ namespace DebugConsole
             if (consoleText)
                 consoleText.text += $"<#{ColorUtility.ToHtmlStringRGB(c)}>{message.Trim('\t', '\n', ' ')}</color>\n";
             if (consoleScroll)
-                consoleScroll.verticalNormalizedPosition = 1F;
+                consoleScroll.verticalNormalizedPosition = 0F;
         }
 
         public void Clear()
         {
             if (consoleText)
-                consoleText.text = "";
+                consoleText.text = INTRO_STRING;
         }
 
         private Type[] ExpandArguments(IEnumerable<Type> args)
@@ -319,7 +323,7 @@ namespace DebugConsole
             {
                 if (!subs.ContainsKey(args.Length))
                 {
-                    Debug.LogError($"[CONSOLE] {command} does not accept {args.Length} arguments");
+                    Instance.AddMessage($"[CONSOLE] {command} does not accept {args.Length} arguments", Color.red);
                     return;
                 }
 

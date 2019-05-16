@@ -212,5 +212,41 @@ namespace TMechs.Player
             Instance.transform.position = pos;
             Instance.Controller.enabled = true;
         }
+
+        [DebugConsoleCommand("playerVar")]
+        private static void SetVariable(PlayerVar variable, float value)
+        {
+            float oldVal = 0F;
+            
+            switch (variable)
+            {
+                case PlayerVar.MovementSpeed:
+                    oldVal = Instance.Movement.movementSpeed;
+                    Instance.Movement.movementSpeed = value;
+                    break;
+                case PlayerVar.RunSpeed:
+                    oldVal = Instance.Movement.runSpeed;
+                    Instance.Movement.runSpeed = value;
+                    break;
+                case PlayerVar.JumpForce:
+                    oldVal = Instance.Movement.jumpForce;
+                    Instance.Movement.jumpForce = value;
+                    break;
+                case PlayerVar.JumpCount:
+                    oldVal = Instance.Movement.maxJumps;
+                    Instance.Movement.maxJumps = (int) value;
+                    break;
+            }
+            
+            DebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+        }
+
+        private enum PlayerVar
+        {
+            MovementSpeed,
+            RunSpeed,
+            JumpForce,
+            JumpCount
+        }
     }
 }
