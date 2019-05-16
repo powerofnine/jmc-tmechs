@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DebugConsole;
 using Rewired;
 using TMechs.Data;
 using TMechs.FX;
@@ -75,6 +76,7 @@ namespace TMechs.UI
             action?.Invoke();
         }
 
+        [DebugConsoleCommand("pause")]
         public static void SetPause(bool pause)
         {
             Time.timeScale = pause ? 0F : 1F;

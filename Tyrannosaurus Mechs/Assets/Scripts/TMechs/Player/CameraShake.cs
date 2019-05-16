@@ -6,7 +6,7 @@ namespace TMechs.Player
 {
     public class CameraShake : MonoBehaviour
     {
-        public Transform camera;
+        public new Transform camera;
         public float strength = 2F;
         public float falloff = .25F;
         

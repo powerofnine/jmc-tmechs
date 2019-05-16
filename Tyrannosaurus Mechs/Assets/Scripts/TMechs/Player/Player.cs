@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DebugConsole;
 using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.UI;
@@ -34,11 +35,15 @@ namespace TMechs.Player
         [NonSerialized]
         public ThrowableContainer pickedUp;
 
+        public static bool isGod = false;
+
         public float Health
         {
             get => health;
             set
             {
+                if (isGod && value <= health)
+                    return;
                 health = value;
                 UpdateHealth();
             }
@@ -47,6 +52,8 @@ namespace TMechs.Player
         private float health = 1F;
 
         private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
+
+        private bool displayCursor = false;
 
         private void Awake()
         {
@@ -75,8 +82,7 @@ namespace TMechs.Player
 
         private void Update()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-
+            Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
@@ -163,6 +169,22 @@ namespace TMechs.Player
             }
         }
 
+        private void OnEnable()
+        {
+            DebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+        }
+
+        private void OnDisable()
+        {
+            DebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+        }
+
+        private void OnConsoleToggle(bool state)
+        {
+            MenuActions.SetPause(state);
+            displayCursor = state;
+        }
+
         public IEnumerable<string> GetDebugInfo()
         {
             List<string> ret = new List<string>
@@ -174,6 +196,21 @@ namespace TMechs.Player
             };
 
             return ret;
+        }
+
+        [DebugConsoleCommand("god")]
+        private static void ToggleGodMode()
+        {
+            isGod = !isGod;
+            DebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+        }
+
+        [DebugConsoleCommand("tp")]
+        private static void Teleport(Vector3 pos)
+        {
+            Instance.Controller.enabled = false;
+            Instance.transform.position = pos;
+            Instance.Controller.enabled = true;
         }
     }
 }
