@@ -318,10 +318,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 710
+    x: 702
     y: -190
     width: 936
-    height: 1573
+    height: 1563
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -564,7 +564,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0
+      m_SerializableObject: 1000
     m_Space: 2147483647
   m_Property:
     name: Rate
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_InputSlots:
   - {fileID: 114571176826476282}
   m_OutputSlots: []
-  m_Disabled: 1
+  m_Disabled: 0
 --- !u!114 &114888496708539098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1174,7 +1174,7 @@ VisualEffectResource:
       */seed, float3(-1,0.2,-1), float3(1,1,1));\n        }\n        {\n            SetAttribute_F01429A3(
       /*inout */lifetime,  /*inout */seed, (float)0.4, (float)0.4);\n        }\n        {\n
       \           PositionSphere_18D( /*inout */position,  /*inout */seed,  /*inout
-      */direction, float3(0,0,0), (float)1, (float)6.283185, (float)0);\n        }\n
+      */direction, float3(0,0,0), (float)4.5, (float)6.283185, (float)0);\n        }\n
       \       \n\n\n#if VFX_USE_ALIVE_CURRENT\n        if (alive)\n        {\n\t\t\tuint
       deadIndex = deadListIn.DecrementCounter();\n            uint index = deadListIn[deadIndex];\n
       \           attributeBuffer.Store3((index * 0x4 + 0x0) << 2,asuint(velocity));\n
@@ -1402,25 +1402,31 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 2
+        data[3]: 1
       - op: 51
-        valueIndex: 4
+        valueIndex: 3
         data[0]: 0
         data[1]: -1
         data[2]: -1
         data[3]: 0
       - op: 50
-        valueIndex: 5
+        valueIndex: 4
         data[0]: 1
         data[1]: -1
         data[2]: -1
         data[3]: 0
       - op: 6
-        valueIndex: 9
+        valueIndex: 8
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: -1
+      - op: 1
+        valueIndex: 9
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
       - op: 1
         valueIndex: 10
         data[0]: -1
@@ -1432,49 +1438,49 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
-      - op: 1
-        valueIndex: 12
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
+        data[3]: 7
       - op: 1
         valueIndex: 13
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
-        valueIndex: 16
+        valueIndex: 14
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 17
+        valueIndex: 15
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 20
+        valueIndex: 18
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 23
+        valueIndex: 21
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 26
+        valueIndex: 24
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
+      - op: 1
+        valueIndex: 27
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 2
       - op: 1
         valueIndex: 29
         data[0]: -1
@@ -1486,9 +1492,9 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 7
+        data[3]: 3
       - op: 9
-        valueIndex: 33
+        valueIndex: 34
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -1499,24 +1505,24 @@ VisualEffectResource:
     m_PropertySheet:
       m_Float:
         m_Array:
+        - m_ExpressionIndex: 2
+          m_Value: 1000
         - m_ExpressionIndex: 6
           m_Value: 0
         - m_ExpressionIndex: 7
           m_Value: 6.2831855
-        - m_ExpressionIndex: 8
-          m_Value: 1
+        - m_ExpressionIndex: 9
+          m_Value: 4.5
         - m_ExpressionIndex: 10
           m_Value: 0.4
       m_Vector2f:
         m_Array:
-        - m_ExpressionIndex: 2
-          m_Value: {x: 15, y: 15}
         - m_ExpressionIndex: 15
           m_Value: {x: 0, y: 0}
+        - m_ExpressionIndex: 16
+          m_Value: {x: 15, y: 15}
       m_Vector3f:
         m_Array:
-        - m_ExpressionIndex: 9
-          m_Value: {x: 0, y: 0, z: 0}
         - m_ExpressionIndex: 11
           m_Value: {x: 1, y: 1, z: 1}
         - m_ExpressionIndex: 12
@@ -1525,6 +1531,8 @@ VisualEffectResource:
           m_Value: {x: 2, y: 3, z: 2}
         - m_ExpressionIndex: 14
           m_Value: {x: 0, y: 1, z: 0}
+        - m_ExpressionIndex: 17
+          m_Value: {x: 0, y: 0, z: 0}
       m_Vector4f:
         m_Array: []
       m_Uint:
@@ -1540,8 +1548,8 @@ VisualEffectResource:
             serializedVersion: 2
             m_Curve:
             - serializedVersion: 3
-              time: 0
-              value: 0
+              time: -0.015552521
+              value: 0.5034485
               inSlope: 2
               outSlope: 2
               tangentMode: 0
@@ -1549,8 +1557,8 @@ VisualEffectResource:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.20000458
-              value: 0.2075615
+              time: 0.26677078
+              value: 0.7892483
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -1594,7 +1602,7 @@ VisualEffectResource:
             m_NumAlphaKeys: 3
       m_NamedObject:
         m_Array:
-        - m_ExpressionIndex: 16
+        - m_ExpressionIndex: 8
           m_Value: {fileID: 2800000, guid: 10d14db40a3b0174d92ae14489b74702, type: 3}
       m_Bool:
         m_Array: []
@@ -1757,11 +1765,19 @@ VisualEffectResource:
       index: 1
     values: []
     tasks:
+    - type: 268435456
+      buffers: []
+      values:
+      - nameId: Rate
+        index: 2
+      params: []
+      processor: {fileID: 0}
+      shaderSourceIndex: -1
     - type: 268435457
       buffers: []
       values:
       - nameId: Count
-        index: 2
+        index: 16
       - nameId: Delay
         index: 15
       params: []
@@ -1838,7 +1854,7 @@ VisualEffectResource:
         index: 4
       values:
       - nameId: localToWorld
-        index: 17
+        index: 18
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 3
@@ -1856,7 +1872,7 @@ VisualEffectResource:
       - nameId: gradient_c
         index: 3
       - nameId: mainTexture
-        index: 16
+        index: 8
       params:
       - nameId: sortPriority
         index: 0
@@ -1916,7 +1932,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.20000457763671876,"value":0.20756149291992188,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":-0.015552520751953125,"value":0.503448486328125,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.26677078008651736,"value":0.7892482876777649,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -1975,7 +1991,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.ArcSphere, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"sphere":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":1.0},"arc":6.2831854820251469}'
+      m_SerializableObject: '{"sphere":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":4.5},"arc":6.2831854820251469}'
     m_Space: 0
   m_Property:
     name: ArcSphere
