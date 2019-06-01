@@ -1,5 +1,4 @@
-﻿using TMechs.Enemy;
-using TMechs.Entity;
+﻿using TMechs.Entity;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -7,7 +6,7 @@ namespace TMechs.Player
     public class PlayerHitBox : MonoBehaviour
     {
         public string id;
-        
+
         private PlayerCombat combat;
 
         private void Awake()
@@ -20,8 +19,8 @@ namespace TMechs.Player
         private void OnTriggerEnter(Collider other)
         {
             EntityHealth entity = other.GetComponent<EntityHealth>();
-            
-            if(entity)
+
+            if (entity)
                 combat.OnHitboxTrigger(this, entity);
         }
     }

@@ -34,6 +34,16 @@
           <e p="Json.NET" t="Include">
             <e p="Newtonsoft.Json.xml" t="Include" />
           </e>
+          <e p="MinimalDebugConsole" t="Include">
+            <e p="MinimalDebugConsole.asmdef" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="BuiltinCommands.cs" t="Include" />
+              <e p="BuiltinTypeParsers.cs" t="Include" />
+              <e p="DebugConsole.cs" t="Include" />
+              <e p="DebugConsoleCommand.cs" t="Include" />
+              <e p="IDebugTypeParser.cs" t="Include" />
+            </e>
+          </e>
           <e p="RainbowAssets" t="Include">
             <e p="!Core" t="Include">
               <e p="Editor" t="Include">
@@ -214,6 +224,7 @@
           <e p="Editor" t="Include">
             <e p="AiGraphWindow.cs" t="Include" />
             <e p="AiStatePropertyDrawer.cs" t="Include" />
+            <e p="ArrayElementNameBindDrawer.cs" t="Include" />
             <e p="IdAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
             <e p="RadiusPropertyDrawer.cs" t="Include" />
@@ -221,7 +232,9 @@
           </e>
           <e p="TMechs" t="Include">
             <e p="Anim.cs" t="Include" />
+            <e p="AnimatorEventListener.cs" t="Include" />
             <e p="Attributes" t="Include">
+              <e p="ArrayElementNameBindAttribute.cs" t="Include" />
               <e p="FriendlyNameAttribute.cs" t="Include" />
               <e p="TextureNameAttribute.cs" t="Include" />
             </e>
@@ -246,13 +259,14 @@
                 <e p="AiTankylosaurus.cs" t="Include" />
                 <e p="AiTorosaurus.cs" t="Include" />
               </e>
-              <e p="AnimatorEventListener.cs" t="Include" />
               <e p="Behaviour" t="Include">
                 <e p="EnemyAttack.cs" t="Include" />
               </e>
               <e p="EnemyBasicAI.cs" t="Include" />
+              <e p="EnemyBullet.cs" t="Include" />
               <e p="EnemyHitBox.cs" t="Include" />
               <e p="EnemyTrigger.cs" t="Include" />
+              <e p="TankyloRock.cs" t="Include" />
             </e>
             <e p="Entity" t="Include">
               <e p="EntityHealth.cs" t="Include" />
@@ -271,6 +285,7 @@
             </e>
             <e p="FX" t="Include">
               <e p="BlurFade.cs" t="Include" />
+              <e p="DestroyTimer.cs" t="Include" />
               <e p="Rotator.cs" t="Include" />
               <e p="SineBob.cs" t="Include" />
               <e p="Sprites" t="Include">
@@ -293,17 +308,16 @@
                 <e p="RocketFistCharging.cs" t="Include" />
                 <e p="Throw.cs" t="Include" />
               </e>
+              <e p="CameraShake.cs" t="Include" />
               <e p="CameraZoom.cs" t="Include" />
               <e p="Player.cs" t="Include" />
               <e p="PlayerCamera.cs" t="Include" />
               <e p="PlayerCombat.cs" t="Include" />
               <e p="PlayerHitBox.cs" t="Include" />
               <e p="PlayerMovement.cs" t="Include" />
-              <e p="PlayerPostProcess.cs" t="Include" />
+              <e p="PlayerVfx.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
-            </e>
-            <e p="PostProcessing" t="Include">
-              <e p="Blur.cs" t="Include" />
+              <e p="ThrowableContainer.cs" t="Include" />
             </e>
             <e p="Preloader.cs" t="Include" />
             <e p="RewiredConsts.cs" t="Include" />
@@ -312,7 +326,6 @@
             </e>
             <e p="UI" t="Include">
               <e p="Components" t="Include">
-                <e p="FancyImage.cs" t="Include" />
                 <e p="UiButton.cs" t="Include" />
                 <e p="UiCheckbox.cs" t="Include" />
                 <e p="UIComponent.cs" t="Include" />
@@ -353,10 +366,10 @@
           </e>
         </e>
         <e p="Shaders" t="Include">
-          <e p="Blur.shader" t="Include" />
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
+      <e p="MinimalDebugConsole.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />

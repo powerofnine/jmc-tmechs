@@ -1,30 +1,34 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 namespace TMechs.Data.Settings
 {
     [AddComponentMenu("")]
     public sealed class SettingsApplier : MonoBehaviour
     {
-        private PostProcessProfile profile;
+        private VolumeProfile profile;
 
-        private ColorGrading grading;
+        private ColorAdjustments colorAdjustments;
+        private LiftGammaGain gammaAdjustments;
 
-        private float deltaTime = 0F;
-        
+        private float deltaTime;
+
         private void Awake()
         {
-            PostProcessVolume pp = gameObject.AddComponent<PostProcessVolume>();
+            Volume pp = gameObject.AddComponent<Volume>();
 
             pp.isGlobal = true;
-            
-            profile = ScriptableObject.CreateInstance<PostProcessProfile>();
+
+            profile = ScriptableObject.CreateInstance<VolumeProfile>();
             pp.profile = profile;
 
-            grading = profile.AddSettings<ColorGrading>();
-            grading.gamma.overrideState = true;
-            grading.postExposure.overrideState = true;
+            colorAdjustments = profile.Add<ColorAdjustments>();
+            gammaAdjustments = profile.Add<LiftGammaGain>();
+
+            colorAdjustments.postExposure.overrideState = true;
+            gammaAdjustments.gamma.overrideState = true;
         }
 
         private void Update()
@@ -33,8 +37,12 @@ namespace TMechs.Data.Settings
 
             if (display != null)
             {
-                grading.postExposure.value = Mathf.Clamp(display.brightness, -2F, 2F);
-                grading.gamma.value.w = Mathf.Clamp(display.gamma, -1F, 1F);
+                colorAdjustments.postExposure.value = Mathf.Clamp(display.brightness, -2F, 2F);
+                
+                Vector4 gamma = gammaAdjustments.gamma.value;
+                gamma.w = Mathf.Clamp(display.gamma, -1F, 1F);
+                gammaAdjustments.gamma.value = gamma;
+                
                 QualitySettings.vSyncCount = display.vsync ? 1 : 0;
             }
 
@@ -47,20 +55,21 @@ namespace TMechs.Data.Settings
         }
 
         #region Obsolete UI Code
+
         private void OnGUI()
         {
             DisplaySettings display = SettingsData.Get<DisplaySettings>();
 
             if (display == null || display.fpsDisplay == DisplaySettings.FpsDisplay.None)
                 return;
-            
+
             int w = Screen.width, h = Screen.height;
-            
+
             GUIStyle style = new GUIStyle();
             Rect rect = default;
-            
+
             style.fontSize = h * 2 / 100;
-            
+
             switch (display.fpsDisplay)
             {
                 case DisplaySettings.FpsDisplay.None:
@@ -86,22 +95,39 @@ namespace TMechs.Data.Settings
             }
 
             style.normal.textColor = Color.yellow;
-            
+
             float msec = deltaTime * 1000F;
             float fps = 1F / deltaTime;
 
             string text = $"{msec:0.0} ms ({fps:0.} fps)";
             GUI.Label(rect, text, style);
         }
+
         #endregion
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Init()
         {
+            ApplyResolution();
+            ApplyQualitySettings();
+            
             GameObject go = new GameObject("Settings Applier");
             DontDestroyOnLoad(go);
 
             go.AddComponent<SettingsApplier>();
+        }
+
+        public static void ApplyResolution()
+        {
+            DisplaySettings display = SettingsData.Get<DisplaySettings>();
+            Resolution res = display.resolution;
+            Screen.SetResolution(res.width, res.height, DisplaySettings.ModeToUnity(display.fullscreenMode), res.refreshRate);
+        }
+
+        public static void ApplyQualitySettings()
+        {
+            DisplaySettings display = SettingsData.Get<DisplaySettings>();
+            QualitySettings.SetQualityLevel(display.qualityLevel, true);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace TMechs.UI.GamePad
     public class GamepadLabels : MonoBehaviour
     {
         private static GamepadLabels instance;
-        
+
         [Header("Labels")]
         [SerializeField]
         [Name("Action Bottom Row 1")]
@@ -29,7 +29,7 @@ namespace TMechs.UI.GamePad
 
         public static void SetLabel(ButtonLabel label, string text)
         {
-            if(instance)
+            if (instance)
                 instance._SetLabel(label, text);
         }
 

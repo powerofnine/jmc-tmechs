@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9203337180624838033}
+  - component: {fileID: 5983330595945558576}
   m_Layer: 0
   m_Name: TankyloRock
   m_TagString: Untagged
@@ -24,13 +25,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166710408581516358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 367.27, y: 22.33, z: 546.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3399498311412351894}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5983330595945558576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166710408581516358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7761e2089225f324895d52f177062689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 15
+  effect: {fileID: 6901935668048427798, guid: 2eec128c8e06bac4e85157c900b84ba5, type: 3}
+--- !u!64 &1936929426950282035
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3399498311411992232}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: a00a189e59931a5418fd1112fd9e4c3d, type: 3}
 --- !u!1001 &3399498311412041992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 477854, guid: ecdb2fbb8e698e0499faa5d7ecb2509d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.51
+      value: -2.83
       objectReference: {fileID: 0}
     - target: {fileID: 477854, guid: ecdb2fbb8e698e0499faa5d7ecb2509d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -100,6 +129,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecdb2fbb8e698e0499faa5d7ecb2509d, type: 3}
+--- !u!1 &3399498311411992232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 118688, guid: ecdb2fbb8e698e0499faa5d7ecb2509d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3399498311412041992}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3399498311412351894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 477854, guid: ecdb2fbb8e698e0499faa5d7ecb2509d,

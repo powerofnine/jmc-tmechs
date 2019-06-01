@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using TMechs.Attributes;
-using TMechs.UI.GamePad;
 using TMPro;
 using UnityEngine;
 
@@ -12,9 +11,9 @@ namespace TMechs.UI.Components
 {
     public class UiSelection : UiSelectable
     {
-        public string[] values = {};
+        public string[] values = { };
         public TextMeshProUGUI selectionText;
-        
+
         public int Value
         {
             get => Mathf.Clamp(value, 0, values.Length - 1);
@@ -63,39 +62,12 @@ namespace TMechs.UI.Components
         }
 
         [NotNull]
-        public Dictionary<int, T> SetEnum<T>(bool requireFriendlyName = true)
+        public Dictionary<int, T> SetEnum<T>(bool requireFriendlyName = true) where T : Enum
         {
             Dictionary<int, T> map = new Dictionary<int, T>();
+            IEnumerable<string> values = FriendlyNameAttribute.GetNames(requireFriendlyName, map);
             
-            T[] items = Enum.GetValues(typeof(T)).Cast<T>().ToArray();
-            List<string> values = new List<string>();
-
-            foreach (T item in items)
-            {
-                MemberInfo info = item.GetType().GetMember(item.ToString()).SingleOrDefault();
-                if (info == null)
-                    continue;
-
-                FriendlyNameAttribute fn = (FriendlyNameAttribute) info.GetCustomAttributes(typeof(FriendlyNameAttribute)).SingleOrDefault();
-
-                string name;
-
-                if (fn == null)
-                {
-                    if (requireFriendlyName)
-                        continue;
-
-                    name = info.Name;
-                }
-                else
-                    name = fn.name;
-
-                map.Add(values.Count, item);
-                values.Add(name);
-            }
-
             this.values = values.ToArray();
-
             return map;
         }
     }

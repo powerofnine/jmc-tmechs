@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 namespace TMechs.FX
 {
@@ -9,24 +10,26 @@ namespace TMechs.FX
         private static BlurFade instance;
 
         public float fadeTime = .5F;
-        private Blur blurLayer;
+        private DepthOfField blurLayer;
 
-        private float blurSize;
-        
+        private float minBlur;
+        private float maxBlur;
+
         private void Awake()
         {
             instance = this;
-            PostProcessVolume volume = GetComponent<PostProcessVolume>();
-            volume.profile.TryGetSettings(out blurLayer);
+            Volume volume = GetComponent<Volume>();
+            volume.profile.TryGet(out blurLayer);
 
             if (blurLayer)
             {
-                blurSize = blurLayer.BlurSize.value;
-                
-                blurLayer.BlurSize.value = 0F;
-                
+                minBlur = blurLayer.farMaxBlur.min;
+                maxBlur = blurLayer.farMaxBlur.value;
+
+                blurLayer.farMaxBlur.value = minBlur;
+
                 volume.enabled = true;
-                blurLayer.enabled.value = false;
+                blurLayer.active = false;
             }
         }
 
@@ -49,21 +52,20 @@ namespace TMechs.FX
 
             float time = .0F;
 
-            int multiplierStart = enabled ? 0 : 1;
-            int multiplierEnd = enabled ? 1 : 0;
-            
-            blurLayer.BlurSize.value = enabled ? 0F : blurSize;
-            blurLayer.enabled.value = true;
-            
+            float start = enabled ? minBlur : maxBlur;
+            float end = enabled ? maxBlur : minBlur;
+
+            blurLayer.farMaxBlur.value = start;
+            blurLayer.active = true;
+
             while (time < fadeTime && blurLayer)
             {
                 time += Time.unscaledDeltaTime;
-                blurLayer.BlurSize.value = Mathf.Lerp(blurSize * multiplierStart, blurSize * multiplierEnd, time / fadeTime);
+                blurLayer.farMaxBlur.value = Mathf.Lerp(start, end, time / fadeTime);
                 yield return null;
             }
 
-            blurLayer.enabled.value = enabled;
+            blurLayer.active = enabled;
         }
-        
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class RadiusPropertyDrawer : PropertyDrawer
 {
     private static bool fresh;
-    private static List<Tuple<Transform, float, Color, bool>> gizmos = new List<Tuple<Transform,float,Color, bool>>();
+    private static List<Tuple<Transform, float, Color, bool>> gizmos = new List<Tuple<Transform, float, Color, bool>>();
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
@@ -54,15 +54,15 @@ public class RadiusPropertyDrawer : PropertyDrawer
     private static void OnDrawGizmos(Transform component, GizmoType gizmoType)
     {
         fresh = false;
-        
-        foreach((Transform transform, float radius, Color color, bool line) in gizmos)
+
+        foreach ((Transform transform, float radius, Color color, bool line) in gizmos)
         {
-            if(transform != Selection.activeTransform)
+            if (transform != Selection.activeTransform)
                 continue;
-            
+
             Gizmos.color = color;
-            
-            if(line)
+
+            if (line)
                 Gizmos.DrawLine(transform.position, transform.position + transform.forward * radius);
             else
                 Gizmos.DrawWireSphere(transform.position, radius);

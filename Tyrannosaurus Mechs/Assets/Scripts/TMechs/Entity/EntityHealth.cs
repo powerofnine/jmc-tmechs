@@ -9,7 +9,7 @@ namespace TMechs.Entity
             get => health;
             set
             {
-                health = Mathf.Clamp01(value); 
+                health = Mathf.Clamp01(value);
                 UpdateHealth();
             }
         }
@@ -17,7 +17,7 @@ namespace TMechs.Entity
         public float maxHealth;
 
         private float health = 1F;
-        private bool isDead = false;
+        private bool isDead;
 
         private void UpdateHealth()
         {

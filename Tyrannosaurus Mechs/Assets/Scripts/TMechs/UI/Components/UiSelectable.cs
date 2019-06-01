@@ -1,7 +1,4 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TMechs.UI.Components
 {
@@ -15,7 +12,7 @@ namespace TMechs.UI.Components
         protected override void UpdateState(bool instant)
         {
             highlightMultiply = locked ? lockedMultiply : Color.white;
-        
+
             base.UpdateState(instant);
         }
 
