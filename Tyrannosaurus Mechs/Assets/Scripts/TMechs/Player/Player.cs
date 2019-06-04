@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using fuj1n.MinimalDebugConsole;
 using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.UI;
@@ -34,11 +35,15 @@ namespace TMechs.Player
         [NonSerialized]
         public ThrowableContainer pickedUp;
 
+        public static bool isGod = false;
+
         public float Health
         {
             get => health;
             set
             {
+                if (isGod && value <= health)
+                    return;
                 health = value;
                 UpdateHealth();
             }
@@ -47,6 +52,8 @@ namespace TMechs.Player
         private float health = 1F;
 
         private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
+
+        private bool displayCursor = false;
 
         private void Awake()
         {
@@ -75,8 +82,7 @@ namespace TMechs.Player
 
         private void Update()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-
+            Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
@@ -163,6 +169,22 @@ namespace TMechs.Player
             }
         }
 
+        private void OnEnable()
+        {
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+        }
+
+        private void OnDisable()
+        {
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+        }
+
+        private void OnConsoleToggle(bool state)
+        {
+            MenuActions.SetPause(state);
+            displayCursor = state;
+        }
+
         public IEnumerable<string> GetDebugInfo()
         {
             List<string> ret = new List<string>
@@ -174,6 +196,57 @@ namespace TMechs.Player
             };
 
             return ret;
+        }
+
+        [DebugConsoleCommand("god")]
+        private static void ToggleGodMode()
+        {
+            isGod = !isGod;
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+        }
+
+        [DebugConsoleCommand("tp")]
+        private static void Teleport(Vector3 pos)
+        {
+            Instance.Controller.enabled = false;
+            Instance.transform.position = pos;
+            Instance.Controller.enabled = true;
+        }
+
+        [DebugConsoleCommand("playerVar")]
+        private static void SetVariable(PlayerVar variable, float value)
+        {
+            float oldVal = 0F;
+            
+            switch (variable)
+            {
+                case PlayerVar.MovementSpeed:
+                    oldVal = Instance.Movement.movementSpeed;
+                    Instance.Movement.movementSpeed = value;
+                    break;
+                case PlayerVar.RunSpeed:
+                    oldVal = Instance.Movement.runSpeed;
+                    Instance.Movement.runSpeed = value;
+                    break;
+                case PlayerVar.JumpForce:
+                    oldVal = Instance.Movement.jumpForce;
+                    Instance.Movement.jumpForce = value;
+                    break;
+                case PlayerVar.JumpCount:
+                    oldVal = Instance.Movement.maxJumps;
+                    Instance.Movement.maxJumps = (int) value;
+                    break;
+            }
+            
+            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+        }
+
+        private enum PlayerVar
+        {
+            MovementSpeed,
+            RunSpeed,
+            JumpForce,
+            JumpCount
         }
     }
 }
