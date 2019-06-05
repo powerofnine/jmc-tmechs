@@ -18,7 +18,7 @@ namespace TMechs.Environment
         public string propertyName = "IsOn";
 
         private bool used;
-        private bool overrideLabel;
+        private int overrideLabel;
 
         private void Awake()
         {
@@ -31,12 +31,18 @@ namespace TMechs.Environment
             if (!other.CompareTag("Player") || !IsWithinAngle() || (isSingleUse && used))
                 return;
 
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, displayText);
-
+            overrideLabel = 3; 
+            
             if (Player.Player.Input.GetButtonDown(Controls.Action.INTERACT) && onToggle != null)
             {
                 OnToggle();
             }
+        }
+
+        private void LateUpdate()
+        {
+            if(overrideLabel-- > 0)
+                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, displayText);
         }
 
         public virtual void OnToggle()
@@ -56,7 +62,7 @@ namespace TMechs.Environment
         public virtual bool IsWithinAngle()
         {
             Vector3 direction = (transform.position - Player.Player.Instance.transform.position).normalized;
-            return Vector3.Angle(direction, Player.Player.Instance.transform.forward) < 60F;
+            return Vector3.Angle(direction, Player.Player.Instance.transform.forward) < 90F;
         }
     }
 }

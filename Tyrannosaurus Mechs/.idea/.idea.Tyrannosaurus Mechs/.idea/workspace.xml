@@ -4,7 +4,10 @@
     <list default="true" id="c1656afc-ab2f-4e5a-a6ab-2693ccd2f8bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tyrannosaurus Mechs/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/TestMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/TestMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Dev/Arthur.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Dev/Arthur.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InteractableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InteractableObject.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,17 +107,82 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InteractableObject.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+            <state relative-caret-position="673">
+              <caret line="64" column="90" selection-start-line="64" selection-start-column="90" selection-end-line="64" selection-end-column="90" />
               <folding>
-                <marker date="1559710986779" expanded="true" signature="6:66" ph="..." />
-                <marker date="1559710986779" expanded="true" signature="96:1698" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="150:1696" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="573:673" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="725:1104" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="1038:1094" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="1144:1423" ph="{...}" />
-                <marker date="1559710986779" expanded="true" signature="1468:1690" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="6:66" ph="..." />
+                <marker date="1559712975363" expanded="true" signature="96:1836" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="150:1834" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="572:672" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="724:1057" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="991:1047" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="1092:1242" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="1282:1561" ph="{...}" />
+                <marker date="1559712975363" expanded="true" signature="1606:1828" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Temp/EmissSwitcher.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+              <folding>
+                <marker date="1559712836181" expanded="true" signature="6:44" ph="..." />
+                <marker date="1559712836181" expanded="true" signature="67:537" ph="{...}" />
+                <marker date="1559712836181" expanded="true" signature="116:535" ph="{...}" />
+                <marker date="1559712836181" expanded="true" signature="245:373" ph="{...}" />
+                <marker date="1559712836181" expanded="true" signature="405:529" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.13.0-preview/Runtime/Material/Unlit/Unlit.shader">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="28" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="28" />
+              <folding>
+                <marker date="1555344845693" expanded="true" signature="20:20228" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="41:5582" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="550:690" ph="/* Used only to serialize the LDR and HDR emissive color in the material UI, ... */" />
+                <marker date="1555344845693" expanded="true" signature="3551:3599" ph="/* StencilMask.Lighting ... */" />
+                <marker date="1555344845693" expanded="true" signature="3768:3817" ph="/* DoesntReceiveSSR ... */" />
+                <marker date="1555344845693" expanded="true" signature="4004:4075" ph="/* StencilBitMask.ObjectMotionVectors ... */" />
+                <marker date="1555344845693" expanded="true" signature="4302:4769" ph="/* StencilBitMask.DistortionVectors ... */" />
+                <marker date="1555344845693" expanded="true" signature="4830:5091" ph="/* For raytracing indirect illumination effects, we need to be able to define if the emissive part of the materia ... */" />
+                <marker date="1555344845693" expanded="true" signature="5599:7629" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="7656:16714" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="7991:9070" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="8162:9053" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="9093:10579" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="9217:9380" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="9446:9694" ph="/* Caution: When using MSAA we have normal and depth buffer bind. ... */" />
+                <marker date="1555344845693" expanded="true" signature="9745:10562" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="10603:12443" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="10688:10905" ph="/* Caution, this need to be call like this to setup the correct parameters by C++ (legacy Unity) ... */" />
+                <marker date="1555344845693" expanded="true" signature="10938:11094" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="11160:11423" ph="/* Caution: When using MSAA we have motion vector, normal and depth buffer bind. ... */" />
+                <marker date="1555344845693" expanded="true" signature="11474:12426" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="12515:13885" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="12737:12887" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="12942:13868" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="13895:14022" ph="/* Extracts information for lightmapping, GI (emission, albedo, ...) ... */" />
+                <marker date="1555344845693" expanded="true" signature="14044:15295" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="14157:15278" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="15318:16708" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="15520:15692" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="15976:16691" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="16734:20163" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="16757:17881" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="16862:17864" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="17904:19035" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="18007:19018" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="19058:20157" ph="{...}" />
+                <marker date="1555344845693" expanded="true" signature="19167:20140" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -365,6 +433,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Data/Settings/SettingsApplier.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Data/Settings/DisplaySettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.13.0-preview/Runtime/Material/Unlit/Unlit.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@5.13.0/Runtime/Volume/VolumeProfile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Enemy/EnemyBasicAi.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@5.13.0/Runtime/Volume/Volume.cs" root0="SKIP_HIGHLIGHTING" />
@@ -398,6 +467,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/RocketFist.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.playablegraph-visualizer@0.2.1-preview.3/Editor/PlayableGraphVisualizerWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/FX/BlurFade.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Temp/EmissSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Attributes/ArrayElementNameBindAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../JMC_Kadoku/Bullet Hack/Assets/Scripts/BulletHack/FX/VisionCone.cs" root0="SKIP_HIGHLIGHTING" />
@@ -410,7 +480,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Pickup.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/Throw.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/ThrowableContainer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Behaviour/MoveForward.cs" />
@@ -460,6 +529,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/PlayerCamera.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Player/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Temp/EmissSwitcher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InteractableObject.cs" />
       </list>
     </option>
@@ -672,12 +742,12 @@
       <workItem from="1557987548094" duration="1662000" />
       <workItem from="1557989340375" duration="9050000" />
       <workItem from="1559691052665" duration="67000" />
-      <workItem from="1559692443866" duration="5682000" />
+      <workItem from="1559692443866" duration="7439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="527074000" />
+    <option name="totallyTimeSpent" value="528831000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -750,28 +820,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../JMC_Kadoku/Bullet Hack/Assets/Scripts/BulletHack/UI/BlockLoader.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="122" selection-start-line="122" selection-end-line="127" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Editor/ArrayElementNameBindDrawer.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding>
-            <marker date="1557967481546" expanded="false" signature="6:90" ph="..." />
-            <marker date="1557967481546" expanded="true" signature="210:2270" ph="{...}" />
-            <marker date="1557967481546" expanded="true" signature="305:853" ph="{...}" />
-            <marker date="1557967481546" expanded="true" signature="923:2097" ph="{...}" />
-            <marker date="1557967481546" expanded="true" signature="968:2070" ph="{...}" />
-            <marker date="1557967481546" expanded="true" signature="2189:2268" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Data/SaveSystem.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-175">
@@ -1359,19 +1407,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.13.0-preview/Runtime/Material/Unlit/Unlit.shader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="28" />
+          <folding>
+            <marker date="1555344845693" expanded="true" signature="20:20228" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="41:5582" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="550:690" ph="/* Used only to serialize the LDR and HDR emissive color in the material UI, ... */" />
+            <marker date="1555344845693" expanded="true" signature="3551:3599" ph="/* StencilMask.Lighting ... */" />
+            <marker date="1555344845693" expanded="true" signature="3768:3817" ph="/* DoesntReceiveSSR ... */" />
+            <marker date="1555344845693" expanded="true" signature="4004:4075" ph="/* StencilBitMask.ObjectMotionVectors ... */" />
+            <marker date="1555344845693" expanded="true" signature="4302:4769" ph="/* StencilBitMask.DistortionVectors ... */" />
+            <marker date="1555344845693" expanded="true" signature="4830:5091" ph="/* For raytracing indirect illumination effects, we need to be able to define if the emissive part of the materia ... */" />
+            <marker date="1555344845693" expanded="true" signature="5599:7629" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="7656:16714" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="7991:9070" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="8162:9053" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="9093:10579" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="9217:9380" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="9446:9694" ph="/* Caution: When using MSAA we have normal and depth buffer bind. ... */" />
+            <marker date="1555344845693" expanded="true" signature="9745:10562" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="10603:12443" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="10688:10905" ph="/* Caution, this need to be call like this to setup the correct parameters by C++ (legacy Unity) ... */" />
+            <marker date="1555344845693" expanded="true" signature="10938:11094" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="11160:11423" ph="/* Caution: When using MSAA we have motion vector, normal and depth buffer bind. ... */" />
+            <marker date="1555344845693" expanded="true" signature="11474:12426" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="12515:13885" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="12737:12887" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="12942:13868" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="13895:14022" ph="/* Extracts information for lightmapping, GI (emission, albedo, ...) ... */" />
+            <marker date="1555344845693" expanded="true" signature="14044:15295" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="14157:15278" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="15318:16708" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="15520:15692" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="15976:16691" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="16734:20163" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="16757:17881" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="16862:17864" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="17904:19035" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="18007:19018" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="19058:20157" ph="{...}" />
+            <marker date="1555344845693" expanded="true" signature="19167:20140" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Temp/EmissSwitcher.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding>
+            <marker date="1559712836181" expanded="true" signature="6:44" ph="..." />
+            <marker date="1559712836181" expanded="true" signature="67:537" ph="{...}" />
+            <marker date="1559712836181" expanded="true" signature="116:535" ph="{...}" />
+            <marker date="1559712836181" expanded="true" signature="245:373" ph="{...}" />
+            <marker date="1559712836181" expanded="true" signature="405:529" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/TMechs/Environment/InteractableObject.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        <state relative-caret-position="673">
+          <caret line="64" column="90" selection-start-line="64" selection-start-column="90" selection-end-line="64" selection-end-column="90" />
           <folding>
-            <marker date="1559710986779" expanded="true" signature="6:66" ph="..." />
-            <marker date="1559710986779" expanded="true" signature="96:1698" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="150:1696" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="573:673" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="725:1104" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="1038:1094" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="1144:1423" ph="{...}" />
-            <marker date="1559710986779" expanded="true" signature="1468:1690" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="6:66" ph="..." />
+            <marker date="1559712975363" expanded="true" signature="96:1836" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="150:1834" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="572:672" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="724:1057" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="991:1047" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="1092:1242" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="1282:1561" ph="{...}" />
+            <marker date="1559712975363" expanded="true" signature="1606:1828" ph="{...}" />
           </folding>
         </state>
       </provider>
