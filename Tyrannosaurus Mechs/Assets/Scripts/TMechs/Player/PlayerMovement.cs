@@ -62,6 +62,8 @@ namespace TMechs.Player
         {
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 return;
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
+                canJump = true;
 
             bool angry = Input.GetButton(ANGERY);
             
