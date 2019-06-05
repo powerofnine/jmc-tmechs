@@ -1,5 +1,7 @@
 ﻿using System;
+using JetBrains.Annotations;
 using TMechs.Attributes;
+using TMechs.Types;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 
@@ -7,6 +9,7 @@ namespace TMechs.Player
 {
     public class PlayerVfx : MonoBehaviour
     {
+        public StringVfxDictionary vfxRegistry = new StringVfxDictionary();
         [Header("References")]
         public VisualEffect sprint;
         public VisualEffect jump;
@@ -20,11 +23,6 @@ namespace TMechs.Player
 
         [Header("Punch")]
         public VisualEffectAsset hitSpark;
-
-        private void Awake()
-        {
-            sprint.Play();
-        }
 
         private void OnValidate()
         {
@@ -40,6 +38,12 @@ namespace TMechs.Player
                 runEffects[i].terrain = terrains[i];
         }
 
+        [UsedImplicitly]
+        private void PlayVfx(string effect)
+        {
+            
+        }
+        
         public enum TerrainType
         {
             Neutral,
@@ -51,6 +55,15 @@ namespace TMechs.Player
         {
             public TerrainType terrain;
             public VisualEffectAsset effect;
+        }
+        
+        [Serializable]
+        public struct Vfx
+        {
+            public Transform anchor;
+            public bool isDynamic;
+            public VisualEffectAsset effect;
+            public TerrainTypeVfxAssetDictionary dynamicEffect;
         }
     }
 }
