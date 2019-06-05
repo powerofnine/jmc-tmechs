@@ -47,6 +47,9 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
+            if (Time.timeScale <= float.Epsilon)
+                return;
+            
             if (TargetController.Instance.GetLock())
                 LockedCamera();
             else
