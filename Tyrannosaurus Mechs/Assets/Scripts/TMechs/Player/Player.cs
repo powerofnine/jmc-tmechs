@@ -132,7 +132,7 @@ namespace TMechs.Player
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow1, "Jump");
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "");
             GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "Interact");
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "");
 
             if (pickedUp)
             {
