@@ -42,6 +42,8 @@ namespace TMechs.Player
         private bool canRun = true;
         private bool canJump = true;
 
+        private bool isSprinting;
+        
         private void Awake()
         {
             animator = Player.Instance.Animator;
@@ -65,8 +67,6 @@ namespace TMechs.Player
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
                 canJump = true;
 
-            bool angry = Input.GetButton(ANGERY);
-            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
 
             // Multiply movement by camera quaternion so that it is relative to the camera
@@ -76,13 +76,20 @@ namespace TMechs.Player
 
             if (movementMag > float.Epsilon)
             {
+                if (Input.GetButtonDown(SPRINT))
+                    isSprinting = !isSprinting;
+                
                 if (movementMag > 1F)
                     movement.Normalize();
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
+            else
+            {
+                isSprinting = false;
+            }
 
-            float speed = angry ? runSpeed : movementSpeed;
+            float speed = isSprinting ? runSpeed : movementSpeed;
             if (!canRun)
                 speed = movementSpeed * .85F;
             
@@ -184,6 +191,9 @@ namespace TMechs.Player
         {
             if ("jump".Equals(id))
             {
+                if(isGrounded)
+                    Player.Instance.Combat.PerformAoe();
+                
                 if (!isGrounded)
                     jumps++;
                 velocity.y = jumpForce;

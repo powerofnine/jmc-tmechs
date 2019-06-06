@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMechs.Attributes;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static TMechs.Controls.Action;
 
 namespace TMechs.Player
@@ -10,12 +14,19 @@ namespace TMechs.Player
     public class PlayerCombat : MonoBehaviour
     {
         public float grappleRadius = 10F;
-
+        
+        [Header("Jump AOE")]
+        public float jumpAoeRadius = 20F;
+        [MinMax]
+        public Vector2 jumpAoeDamage = new Vector2(10F, 20F);
+        
+        
         [Header("Rocket Fist")]
         public float rocketFistDamageBase;
         public float rocketFistDamageMax;
         public float rocketFistChargeMax;
         public float rocketFistRechargeSpeedMultiplier = 2F;
+        
         [NonSerialized]
         public bool rocketFistCharging;
         [NonSerialized]
@@ -59,13 +70,10 @@ namespace TMechs.Player
             animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
             animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
 
-            if (animator.GetBool(Anim.ANGERY) != Input.GetButton(ANGERY))
-                animator.ResetTrigger(Anim.ATTACK);
-
-            animator.SetBool(Anim.ANGERY, Input.GetButton(ANGERY));
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
-            animator.SetBool(Anim.GRAPPLE, Input.GetButtonDown(GRAPPLE));
-            animator.SetBool(Anim.GRAPPLE_DOWN, Input.GetButton(GRAPPLE));
+            animator.SetBool(Anim.LEFT_ARM_HELD, Input.GetButton(LEFT_ARM));
+            animator.SetBool(Anim.RIGHT_ARM, Input.GetButtonDown(RIGHT_ARM));
+            animator.SetBool(Anim.RIGHT_ARM_HELD, Input.GetButton(RIGHT_ARM));
             animator.SetBool(Anim.ATTACK_HELD, Input.GetButton(ATTACK));
             animator.SetBool(Anim.ROCKET_READY, rocketFistCharge <= 0F);
 
@@ -120,8 +128,29 @@ namespace TMechs.Player
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, grappleRadius);
+
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(transform.position, Vector3.up, jumpAoeRadius);
         }
 
+        public void PerformAoe()
+        {
+            // ReSharper disable once Unity.PreferNonAllocApi
+            Collider[] colliders = Physics.OverlapBox(transform.position, jumpAoeRadius * 2F * Vector3.one.Remove(Utility.Axis.Y) + Vector3.up, transform.rotation);
+
+            IEnumerable<EntityHealth> targets = 
+                    from c in colliders
+                    let h = c.GetComponent<EntityHealth>()
+                    where h
+                    let d = Vector3.Distance(transform.position, c.transform.position)
+                    where d <= jumpAoeRadius
+                    select h;
+            
+            foreach(EntityHealth health in targets)
+                health.Damage(Mathf.Lerp(jumpAoeDamage.y, jumpAoeDamage.x, Vector3.Distance(transform.position, health.transform.position) / jumpAoeRadius));
+
+        }
+        
         private struct CombatState
         {
             public string activeHitbox;

@@ -103,6 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ea9ba24435fc947856fa594ad4fc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vfxRegistry:
+    keys: []
+    values: []
   sprint: {fileID: 5040574679660250249}
   jump: {fileID: 6480850650454954607}
   rocketFistCharge: {fileID: 1253668737089101906}
@@ -2734,6 +2737,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grappleRadius: 15
+  jumpAoeRadius: 20
+  jumpAoeDamage: {x: 10, y: 20}
   rocketFistDamageBase: 10
   rocketFistDamageMax: 100
   rocketFistChargeMax: 5
@@ -3320,11 +3325,6 @@ PrefabInstance:
       propertyPath: antialiasing
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2917028944154288337, guid: 4f940c44ea835f647a4acd60bff9f8fb,
-        type: 3}
-      propertyPath: distanceOrigin
-      value: 
-      objectReference: {fileID: 4243256085709574702}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f940c44ea835f647a4acd60bff9f8fb, type: 3}
 --- !u!20 &5996704746497395399 stripped

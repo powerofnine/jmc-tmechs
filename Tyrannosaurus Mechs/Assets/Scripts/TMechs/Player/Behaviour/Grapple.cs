@@ -6,9 +6,6 @@ namespace TMechs.Player.Behaviour
 {
     public class Grapple : StateMachineBehaviour
     {
-        private static readonly int GRAPPLE_DOWN = Anim.Hash("Grapple Down");
-        private static readonly int GRAPPLE_END = Anim.Hash("Grapple End");
-
         public float pullSpeedMin = 50F;
         public float pullSpeedMax = 100F;
         public float pullExitDistance = 2F;
@@ -51,7 +48,7 @@ namespace TMechs.Player.Behaviour
 
             if (!target)
             {
-                animator.SetTrigger(GRAPPLE_END);
+                animator.SetTrigger(Anim.GRAPPLE_END);
                 return;
             }
             
@@ -59,12 +56,12 @@ namespace TMechs.Player.Behaviour
             {
                 case Types.Pull:
                     if (PullPhysics(Transform, target.transform))
-                        animator.SetTrigger(GRAPPLE_END);
+                        animator.SetTrigger(Anim.GRAPPLE_END);
                     break;
                 case Types.Swing:
-                    if (!animator.GetBool(GRAPPLE_DOWN))
+                    if (!animator.GetBool(Anim.RIGHT_ARM_HELD))
                     {
-                        animator.SetTrigger(GRAPPLE_END);
+                        animator.SetTrigger(Anim.GRAPPLE_END);
                         return;
                     }
 

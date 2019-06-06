@@ -9,12 +9,12 @@ namespace TMechs
         public static readonly int PLAYER_SPEED = Hash("Player Speed");
         public static readonly int HAS_ENEMY = Hash("Has Enemy");
         public static readonly int HAS_GRAPPLE = Hash("Has Grapple");
-        public static readonly int ANGERY = Hash("ANGERY");
         public static readonly int DASH = Hash("Dash");
         public static readonly int ATTACK = Hash("Attack");
         public static readonly int ATTACK_HELD = Hash("Attack Held");
-        public static readonly int GRAPPLE = Hash("Grapple");
-        public static readonly int GRAPPLE_DOWN = Hash("Grapple Down");
+        public static readonly int LEFT_ARM_HELD = Hash("Left Arm Held");
+        public static readonly int RIGHT_ARM = Hash("Right Arm");
+        public static readonly int RIGHT_ARM_HELD = Hash("Right Arm Held");
         public static readonly int PICKUP_TARGET_TYPE = Hash("Pickup Target Type");
         public static readonly int MOVE_DELTA = Hash("MoveDelta");
 
@@ -28,6 +28,8 @@ namespace TMechs
         public static readonly int ROCKET_RETURN = Hash("Rocket Fist Return");
         public static readonly int ROCKET_OVERCHARGE = Hash("Rocket Fist Overcharge");
         public static readonly int ROCKET_READY = Hash("Rocket Fist Ready");
+        
+        public static readonly int GRAPPLE_END = Hash("Grapple End");
 
         public static readonly Dictionary<int, string> RAINBOW = new Dictionary<int, string>
         {

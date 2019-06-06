@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\AUzulins\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\AUzulins\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Tyrannosaurus Mechs.996682487.00" t="ExcludeRecursive" />
-    <e p="C:\Users\AUzulins\Desktop\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
+    <e p="C:\Users\fuj1n\.Rider2019.1\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\fuj1n\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Tyrannosaurus Mechs.-131819345.00" t="ExcludeRecursive" />
+    <e p="D:\Libraries\Documents\Unity Projects\jmc-tmechs\Tyrannosaurus Mechs" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -226,6 +226,7 @@
             <e p="AiStatePropertyDrawer.cs" t="Include" />
             <e p="ArrayElementNameBindDrawer.cs" t="Include" />
             <e p="IdAttributeDrawer.cs" t="Include" />
+            <e p="MinMaxAttributeDrawer.cs" t="Include" />
             <e p="NameAttributeDrawer.cs" t="Include" />
             <e p="PlayerVfxVfxDrawer.cs" t="Include" />
             <e p="RadiusPropertyDrawer.cs" t="Include" />
@@ -242,6 +243,7 @@
             <e p="Attributes" t="Include">
               <e p="ArrayElementNameBindAttribute.cs" t="Include" />
               <e p="FriendlyNameAttribute.cs" t="Include" />
+              <e p="MinMaxAttribute.cs" t="Include" />
               <e p="TextureNameAttribute.cs" t="Include" />
             </e>
             <e p="Data" t="Include">
@@ -328,9 +330,6 @@
             </e>
             <e p="Preloader.cs" t="Include" />
             <e p="RewiredConsts.cs" t="Include" />
-            <e p="Temp" t="Include">
-              <e p="EmissSwitcher.cs" t="Include" />
-            </e>
             <e p="Types" t="Include">
               <e p="Radius.cs" t="Include" />
               <e p="SerializedDictionary.cs" t="Include" />
@@ -383,13 +382,10 @@
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
-      <e p="Library" t="ExcludeRecursive" />
       <e p="MinimalDebugConsole.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp" t="ExcludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-      </e>
+      <e p="Temp\bin" t="ExcludeRecursive" />
       <e p="Tyrannosaurus Mechs.sln" t="IncludeFlat" />
     </e>
   </component>

@@ -143,30 +143,19 @@ namespace TMechs.Player
                 return;
             }
 
-            if (Input.GetButton(Controls.Action.ANGERY))
-            {
-                //State: angry
-
-                if (Animator.GetBool(Anim.HAS_ENEMY))
-                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Rocket Fist");
-            }
-            else
-            {
-                //State: normal
-
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
-            }
+            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
 
             // Grab/Grapple label
-            if (Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
-            else if (Animator.GetBool(Anim.HAS_GRAPPLE))
-            {
-                GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
-
-                if (target)
-                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
-            }
+            //TODO: display for triggers if they will ever get added to display
+//            if (Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
+//                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
+//            else if (Animator.GetBool(Anim.HAS_GRAPPLE))
+//            {
+//                GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
+//
+//                if (target)
+//                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
+//            }
         }
 
         private void OnEnable()
