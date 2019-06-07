@@ -53,7 +53,7 @@ namespace TMechs.Player
 
         private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
 
-        private bool displayCursor = false;
+        private bool displayCursor;
 
         private void Awake()
         {
@@ -82,7 +82,11 @@ namespace TMechs.Player
 
         private void Update()
         {
-            Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            #if UNITY_EDITOR
+            displayCursor = true;
+            #endif
+            
+            Cursor.lockState = displayCursor ? CursorLockMode.Locked : CursorLockMode.None;
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
