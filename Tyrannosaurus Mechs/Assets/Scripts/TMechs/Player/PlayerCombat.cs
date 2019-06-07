@@ -124,6 +124,7 @@ namespace TMechs.Player
             combat.damage = damage;
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
@@ -132,6 +133,7 @@ namespace TMechs.Player
             Handles.color = Color.green;
             Handles.DrawWireDisc(transform.position, Vector3.up, jumpAoeRadius);
         }
+#endif
 
         public void PerformAoe()
         {
