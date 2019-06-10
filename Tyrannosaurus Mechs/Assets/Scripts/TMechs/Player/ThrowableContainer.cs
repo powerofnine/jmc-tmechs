@@ -11,15 +11,17 @@ namespace TMechs.Player
         /// <summary>
         /// Amount of damage that an entity that this entity collides with is dealth
         /// </summary>
-        public float recepientDamage;
-        
+        public float recepientDamage = 10F;
+
         /// <summary>
         /// Amount of damage that this entity is dealt when it collides with something
         /// </summary>
-        public float sourceDamage;
+        public float sourceDamage = 10F;
 
         private GameObject containedObject;
-
+        private Vector3 startScale;
+        private Quaternion startRotation;
+        
         private Renderer[] renderCache;
         private readonly Dictionary<Renderer, Mesh> meshCache = new Dictionary<Renderer, Mesh>();
 
@@ -49,6 +51,9 @@ namespace TMechs.Player
                 }
             }
 
+            startScale = containedObject.transform.localScale;
+            startRotation = containedObject.transform.localRotation;
+            
             containedObject.SetActive(false);
             containedObject.transform.SetParent(transform);
             containedObject.transform.localPosition = Vector3.zero;
@@ -60,6 +65,9 @@ namespace TMechs.Player
         {
             if (isDead)
                 return;
+            
+            if(!containedObject)
+                Destroy(gameObject);
             
             foreach (Renderer render in renderCache)
             {
@@ -143,11 +151,24 @@ namespace TMechs.Player
                 gameObject.SetActive(false);
                 containedObject.transform.SetParent(null, true);
                 containedObject.SetActive(true);
+
+                containedObject.transform.localScale = startScale;
+                containedObject.transform.localRotation = startRotation;
             }
 
             // This is stupid, but Unity crashes here if there is no delay before destroying this object
             // Something to do with unparenting an object before destroying the parent crashes unity?
             Invoke(nameof(Destroy), .25F);
+        }
+
+        public void DamageContainedObject(float damage)
+        {
+            if (containedObject)
+            {
+                EntityHealth containedEntity = containedObject.GetComponent<EntityHealth>();
+                if(containedEntity)
+                    containedEntity.Damage(damage);
+            }
         }
 
         private void Destroy()

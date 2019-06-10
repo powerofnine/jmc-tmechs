@@ -97,6 +97,9 @@ namespace TMechs.Player
                 damageTimer -= Time.deltaTime;
 
             UpdateIcons();
+
+            if (Animator)
+                Animator.SetBool(Anim.IS_CARRYING, pickedUp);
         }
 
         public void Damage(int damage)

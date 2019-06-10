@@ -20,6 +20,9 @@ namespace TMechs
 
         public static readonly int GROUNDED = Hash("Grounded");
 
+        public static readonly int IS_CARRYING = Hash("Is Carrying");
+        public static readonly int IS_CARRYING_ATTACKABLE = Hash("Is Carrying Attackable");
+
         public static readonly int JUMP = Hash("Jump");
         public static readonly int AIR_JUMP = Hash("AirJump");
         public static readonly int DIE = Hash("Die");
