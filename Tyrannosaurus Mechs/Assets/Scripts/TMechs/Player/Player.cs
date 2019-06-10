@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using fuj1n.MinimalDebugConsole;
 using TMechs.Data;
-using TMechs.Environment.Targets;
 using TMechs.UI;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -82,11 +81,9 @@ namespace TMechs.Player
 
         private void Update()
         {
-            #if UNITY_EDITOR
-            displayCursor = true;
-            #endif
-            
-            Cursor.lockState = displayCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            #if !UNITY_EDITOR
+            Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            #endif            
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
