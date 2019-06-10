@@ -295,6 +295,9 @@
             <e p="FX" t="Include">
               <e p="BlurFade.cs" t="Include" />
               <e p="DestroyTimer.cs" t="Include" />
+              <e p="PostProcess" t="Include">
+                <e p="OutlineBlitter.cs" t="Include" />
+              </e>
               <e p="Rotator.cs" t="Include" />
               <e p="SineBob.cs" t="Include" />
               <e p="Sprites" t="Include">
@@ -379,9 +382,15 @@
               <e p="UiPath.cs" t="Include" />
             </e>
             <e p="Utility.cs" t="Include" />
+            <e p="Volumes" t="Include">
+              <e p="OutlinePostProcess.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Shaders" t="Include">
+          <e p="PP" t="Include">
+            <e p="Outline.shader" t="Include" />
+          </e>
           <e p="Sprites-AlwaysOnTop.shader" t="Include" />
         </e>
       </e>
