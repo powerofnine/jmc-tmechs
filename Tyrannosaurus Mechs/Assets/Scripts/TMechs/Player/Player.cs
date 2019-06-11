@@ -18,6 +18,8 @@ namespace TMechs.Player
         public CharacterController Controller { get; private set; }
         public PlayerCombat Combat { get; private set; }
         public PlayerMovement Movement { get; private set; }
+        
+        public PlayerCamera Camera { get; private set; }
 
         public int maxHealth;
         public float damageCooldown = 0.25F;
@@ -65,6 +67,7 @@ namespace TMechs.Player
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
             Movement = GetComponent<PlayerMovement>();
+            Camera = GameObject.FindObjectOfType<PlayerCamera>();
 
             // Configure shaders
             foreach (Renderer render in GetComponentsInChildren<Renderer>())

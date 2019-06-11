@@ -42,6 +42,8 @@ namespace TMechs.Player.Behaviour
             target.OnGrapple();
             
             Player.Instance.transform.LookAt(target.transform.position.Set(Player.Instance.transform.position.y, Utility.Axis.Y));
+            Player.Instance.Movement.ResetIntendedY();
+//            Player.Instance.Camera.RecenterCamera();
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

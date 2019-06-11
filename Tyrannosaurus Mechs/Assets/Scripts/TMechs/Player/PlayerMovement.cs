@@ -55,7 +55,7 @@ namespace TMechs.Player
                 aaCamera = transform;
             }
 
-            intendedY = transform.eulerAngles.y;
+            ResetIntendedY();
 
             controller = Player.Instance.Controller;
         }
@@ -122,7 +122,7 @@ namespace TMechs.Player
             if (target)
             {
                 transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));
-                intendedY = transform.eulerAngles.y;
+                ResetIntendedY();
                 return;
             }
 
@@ -187,6 +187,11 @@ namespace TMechs.Player
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
 
+        public void ResetIntendedY()
+        {
+            intendedY = transform.eulerAngles.y;
+        }
+        
         public void OnAnimationEvent(string id)
         {
             if ("jump".Equals(id))
