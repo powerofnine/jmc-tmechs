@@ -119,6 +119,9 @@ namespace TMechs.Player
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+                return;
+            
             if (target)
             {
                 transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));
