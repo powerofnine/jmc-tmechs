@@ -30,24 +30,4 @@ namespace TMechs.PostProcessing
             return enabled.value && enabled.overrideState;
         }
     }
-
-/*    public sealed class PostProcessOutlineRenderer : PostProcessEffectRenderer<PostProcessOutline>
-    {
-        public override void Render(PostProcessRenderContext context)
-        {
-            var sheet = context.propertySheets.Get(Shader.Find("Hidden/Roystan/Outline Post Process"));
-            sheet.properties.SetFloat("_Scale", settings.scale);
-            sheet.properties.SetColor("_Color", settings.color);
-            sheet.properties.SetFloat("_DepthThreshold", settings.depthThreshold);
-            sheet.properties.SetFloat("_DepthNormalThreshold", settings.depthNormalThreshold);
-            sheet.properties.SetFloat("_DepthNormalThresholdScale", settings.depthNormalThresholdScale);
-            sheet.properties.SetFloat("_NormalThreshold", settings.normalThreshold);
-            sheet.properties.SetColor("_Color", settings.color);
-
-            Matrix4x4 clipToView = GL.GetGPUProjectionMatrix(context.camera.projectionMatrix, true).inverse;
-            sheet.properties.SetMatrix("_ClipToView", clipToView);
-
-            context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, 0);
-        }
-    }*/
 }
