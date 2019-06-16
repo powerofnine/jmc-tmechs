@@ -10,6 +10,29 @@
 			// with lots of macros to aid with platform differences.
 			// https://github.com/Unity-Technologies/PostProcessing/wiki/Writing-Custom-Effects#shader
             HLSLPROGRAM
+            
+            #if defined(SHADER_API_PSSL)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_XBOXONE)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_D3D11)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_D3D12)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_D3D9) || defined(SHADER_API_D3D11_9X)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_VULKAN)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_SWITCH)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_METAL)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #elif defined(SHADER_API_PSP2)
+                #define UNITY_UV_STARTS_AT_TOP 1
+            #else
+                #define UNITY_UV_STARTS_AT_TOP 0
+            #endif
+            
             // BEGIN PPv2 defines
             #define TEXTURE2D_SAMPLER2D(textureName, samplerName) Texture2D textureName; SamplerState samplerName
             #define SAMPLE_TEXTURE2D(textureName, samplerName, coord2) textureName.Sample(samplerName, coord2)
@@ -92,7 +115,7 @@
 				// taking the xyz to interpret it as a direction.
 				o.viewSpaceDir = mul(_ClipToView, o.vertex).xyz;
 
-    			#if !UNITY_UV_STARTS_AT_TOP
+    			#if UNITY_UV_STARTS_AT_TOP
     				o.texcoord = o.texcoord * float2(1.0, -1.0) + float2(0.0, 1.0);
                 #endif
 
