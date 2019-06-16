@@ -1,119 +1,169 @@
-﻿Shader "TMechs/PP/Outline"
+﻿Shader "Hidden/TMechs/PP/Outline"
 {
-    //show values to edit in inspector
-    Properties{
-        [HideInInspector]_MainTex ("Texture", 2D) = "white" {}
-        _OutlineColor ("Outline Color", Color) = (0,0,0,1)
-        _NormalMult ("Normal Outline Multiplier", Range(0,4)) = 1
-        _NormalBias ("Normal Outline Bias", Range(1,4)) = 1
-        _DepthMult ("Depth Outline Multiplier", Range(0,4)) = 1
-        _DepthBias ("Depth Outline Bias", Range(1,4)) = 1
-    }
+    SubShader
+    {
+        Cull Off ZWrite Off ZTest Always
 
-    SubShader{
-        // markers that specify that we don't need culling 
-        // or comparing/writing to the depth buffer
-        Cull Off
-        ZWrite Off 
-        ZTest Always
+        Pass
+        {
+			// Custom post processing effects are written in HLSL blocks,
+			// with lots of macros to aid with platform differences.
+			// https://github.com/Unity-Technologies/PostProcessing/wiki/Writing-Custom-Effects#shader
+            HLSLPROGRAM
+            // BEGIN PPv2 defines
+            #define TEXTURE2D_SAMPLER2D(textureName, samplerName) Texture2D textureName; SamplerState samplerName
+            #define SAMPLE_TEXTURE2D(textureName, samplerName, coord2) textureName.Sample(samplerName, coord2)
+            #define SAMPLE_DEPTH_TEXTURE(textureName, samplerName, coord2) SAMPLE_TEXTURE2D(textureName, samplerName, coord2).r
+            // END PPv2 defines
+            
+            #pragma vertex Vert
+            #pragma fragment Frag
 
-        Pass{
-            CGPROGRAM
-            //include useful shader functions
-            #include "UnityCG.cginc"
+			TEXTURE2D_SAMPLER2D(_MainTex, sampler_MainTex);
+			// _CameraNormalsTexture contains the view space normals transformed
+			// to be in the 0...1 range.
+			TEXTURE2D_SAMPLER2D(_CameraNormalsTexture, sampler_CameraNormalsTexture);
+			TEXTURE2D_SAMPLER2D(_CameraDepthTexture, sampler_CameraDepthTexture);
+        
+			// Data pertaining to _MainTex's dimensions.
+			// https://docs.unity3d.com/Manual/SL-PropertiesInPrograms.html
+			float4 _MainTex_TexelSize;
 
-            //define vertex and fragment shader
-            #pragma vertex vert
-            #pragma fragment frag
+			float _Scale;
+			float4 _Color;
 
-            //the rendered screen so far
-            sampler2D _MainTex;
-            //the depth normals texture
-            sampler2D _CameraDepthNormalsTexture;
-            //texelsize of the depthnormals texture
-            float4 _CameraDepthNormalsTexture_TexelSize;
+			float _DepthThreshold;
+			float _DepthNormalThreshold;
+			float _DepthNormalThresholdScale;
+			float _RenderViewportScaleFactor;
 
-            //variables for customising the effect
-            float4 _OutlineColor;
-            float _NormalMult;
-            float _NormalBias;
-            float _DepthMult;
-            float _DepthBias;
+			float _NormalThreshold;
 
-            //the object data that's put into the vertex shader
-            struct appdata{
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+			// This matrix is populated in PostProcessOutline.cs.
+			float4x4 _ClipToView;
+
+			// Combines the top and bottom colors using normal blending.
+			// https://en.wikipedia.org/wiki/Blend_modes#Normal_blend_mode
+			// This performs the same operation as Blend SrcAlpha OneMinusSrcAlpha.
+			float4 alphaBlend(float4 top, float4 bottom)
+			{
+				float3 color = (top.rgb * top.a) + (bottom.rgb * (1 - top.a));
+				float alpha = top.a + bottom.a * (1 - top.a);
+
+				return float4(color, alpha);
+			}
+
+            struct AttributesDefault
+            {
+                float3 vertex : POSITION;
             };
-
-            //the data that's used to generate fragments and can be read by the fragment shader
-            struct v2f{
-                float4 position : SV_POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            //the vertex shader
-            v2f vert(appdata v){
-                v2f o;
-                //convert the vertex positions from object space to clip space so they can be rendered
-                o.position = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
-                return o;
+            
+            // Vertex manipulation
+            float2 TransformTriangleVertexToUV(float2 vertex)
+            {
+                float2 uv = (vertex + 1.0) * 0.5;
+                return uv;
+            }
+            
+            float2 TransformStereoScreenSpaceTex(float2 uv, float w)
+            {
+                return uv * _RenderViewportScaleFactor;
             }
 
-            void Compare(inout float depthOutline, inout float normalOutline, 
-                    float baseDepth, float3 baseNormal, float2 uv, float2 offset){
-                //read neighbor pixel
-                float4 neighborDepthnormal = tex2D(_CameraDepthNormalsTexture, 
-                        uv + _CameraDepthNormalsTexture_TexelSize.xy * offset);
-                float3 neighborNormal;
-                float neighborDepth;
-                DecodeDepthNormal(neighborDepthnormal, neighborDepth, neighborNormal);
-                neighborDepth = neighborDepth * _ProjectionParams.z;
+			// Both the Varyings struct and the Vert shader are copied
+			// from StdLib.hlsl included above, with some modifications.
+			struct Varyings
+			{
+				float4 vertex : SV_POSITION;
+				float2 texcoord : TEXCOORD0;
+				float2 texcoordStereo : TEXCOORD1;
+				float3 viewSpaceDir : TEXCOORD2;
+			#if STEREO_INSTANCING_ENABLED
+				uint stereoTargetEyeIndex : SV_RenderTargetArrayIndex;
+			#endif
+			};
 
-                float depthDifference = baseDepth - neighborDepth;
-                depthOutline = depthOutline + depthDifference;
+			Varyings Vert(AttributesDefault v)
+			{
+				Varyings o;
+				o.vertex = float4(v.vertex.xy, 0.0, 1.0);
+				o.texcoord = TransformTriangleVertexToUV(v.vertex.xy);
+				// Transform our point first from clip to view space,
+				// taking the xyz to interpret it as a direction.
+				o.viewSpaceDir = mul(_ClipToView, o.vertex).xyz;
 
-                float3 normalDifference = baseNormal - neighborNormal;
-                normalDifference = normalDifference.r + normalDifference.g + normalDifference.b;
-                normalOutline = normalOutline + normalDifference;
-            }
+    			#if !UNITY_UV_STARTS_AT_TOP
+    				o.texcoord = o.texcoord * float2(1.0, -1.0) + float2(0.0, 1.0);
+                #endif
 
-            //the fragment shader
-            fixed4 frag(v2f i) : SV_TARGET{
-                //read depthnormal
-                float4 depthnormal = tex2D(_CameraDepthNormalsTexture, i.uv);
+				o.texcoordStereo = TransformStereoScreenSpaceTex(o.texcoord, 1.0);
 
-                //decode depthnormal
-                float3 normal;
-                float depth;
-                DecodeDepthNormal(depthnormal, depth, normal);
+				return o;
+			}
 
-                //get depth as distance from camera in units 
-                depth = depth * _ProjectionParams.z;
+			float4 Frag(Varyings i) : SV_Target
+			{
+				float halfScaleFloor = floor(_Scale * 0.5);
+				float halfScaleCeil = ceil(_Scale * 0.5);
 
-                float depthDifference = 0;
-                float normalDifference = 0;
+				// Sample the pixels in an X shape, roughly centered around i.texcoord.
+				// As the _CameraDepthTexture and _CameraNormalsTexture default samplers
+				// use point filtering, we use the above variables to ensure we offset
+				// exactly one pixel at a time.
+				float2 bottomLeftUV = i.texcoord - float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleFloor;
+				float2 topRightUV = i.texcoord + float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleCeil;  
+				float2 bottomRightUV = i.texcoord + float2(_MainTex_TexelSize.x * halfScaleCeil, -_MainTex_TexelSize.y * halfScaleFloor);
+				float2 topLeftUV = i.texcoord + float2(-_MainTex_TexelSize.x * halfScaleFloor, _MainTex_TexelSize.y * halfScaleCeil);
 
-                Compare(depthDifference, normalDifference, depth, normal, i.uv, float2(1, 0));
-                Compare(depthDifference, normalDifference, depth, normal, i.uv, float2(0, 1));
-                Compare(depthDifference, normalDifference, depth, normal, i.uv, float2(0, -1));
-                Compare(depthDifference, normalDifference, depth, normal, i.uv, float2(-1, 0));
+				float3 normal0 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, bottomLeftUV).rgb;
+				float3 normal1 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, topRightUV).rgb;
+				float3 normal2 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, bottomRightUV).rgb;
+				float3 normal3 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, topLeftUV).rgb;
 
-                depthDifference = depthDifference * _DepthMult;
-                depthDifference = saturate(depthDifference);
-                depthDifference = pow(depthDifference, _DepthBias);
+				float depth0 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomLeftUV).r;
+				float depth1 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topRightUV).r;
+				float depth2 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomRightUV).r;
+				float depth3 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topLeftUV).r;
 
-                normalDifference = normalDifference * _NormalMult;
-                normalDifference = saturate(normalDifference);
-                normalDifference = pow(normalDifference, _NormalBias);
+				// Transform the view normal from the 0...1 range to the -1...1 range.
+				float3 viewNormal = normal0 * 2 - 1;
+				float NdotV = 1 - dot(viewNormal, -i.viewSpaceDir);
 
-                float outline = normalDifference + depthDifference;
-                float4 sourceColor = tex2D(_MainTex, i.uv);
-                float4 color = lerp(sourceColor, _OutlineColor, outline);
-                return color;
-            }
-            ENDCG
+				// Return a value in the 0...1 range depending on where NdotV lies 
+				// between _DepthNormalThreshold and 1.
+				float normalThreshold01 = saturate((NdotV - _DepthNormalThreshold) / (1 - _DepthNormalThreshold));
+				// Scale the threshold, and add 1 so that it is in the range of 1..._NormalThresholdScale + 1.
+				float normalThreshold = normalThreshold01 * _DepthNormalThresholdScale + 1;
+
+				// Modulate the threshold by the existing depth value;
+				// pixels further from the screen will require smaller differences
+				// to draw an edge.
+				float depthThreshold = _DepthThreshold * depth0 * normalThreshold;
+
+				float depthFiniteDifference0 = depth1 - depth0;
+				float depthFiniteDifference1 = depth3 - depth2;
+				// edgeDepth is calculated using the Roberts cross operator.
+				// The same operation is applied to the normal below.
+				// https://en.wikipedia.org/wiki/Roberts_cross
+				float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 100;
+				edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
+
+				float3 normalFiniteDifference0 = normal1 - normal0;
+				float3 normalFiniteDifference1 = normal3 - normal2;
+				// Dot the finite differences with themselves to transform the 
+				// three-dimensional values to scalars.
+				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
+				edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
+
+				float edge = max(edgeDepth, edgeNormal);
+
+				float4 edgeColor = float4(_Color.rgb, _Color.a * edge);
+
+				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord);
+
+				return alphaBlend(edgeColor, color);
+			}
+            ENDHLSL
         }
     }
 }
