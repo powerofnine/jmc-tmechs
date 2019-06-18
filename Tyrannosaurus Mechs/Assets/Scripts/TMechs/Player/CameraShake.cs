@@ -14,7 +14,7 @@ namespace TMechs.Player
 
         private void Update()
         {
-            if(!camera)
+            if(!camera || Time.timeScale < Mathf.Epsilon)
                 return;
 
             Vector3 cam = camera.localPosition;
