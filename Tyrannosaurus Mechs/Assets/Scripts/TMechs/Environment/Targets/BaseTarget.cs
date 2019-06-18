@@ -6,7 +6,7 @@ namespace TMechs.Environment.Targets
 {
     public abstract class BaseTarget : MonoBehaviour
     {
-        private Transform player;
+        private Transform lookTarget;
 
         private byte lastPing;
         private bool hardLock;
@@ -42,7 +42,7 @@ namespace TMechs.Environment.Targets
             targetImage = targetRoot.Find("Target").GetComponent<Image>();
             targetRoot.gameObject.SetActive(false);
 
-            player = Player.Player.Instance.transform;
+            lookTarget = Player.Player.Instance.Camera.camera.transform;
         }
 
         private void LateUpdate()
@@ -52,15 +52,15 @@ namespace TMechs.Environment.Targets
                 targetRoot.gameObject.SetActive(shouldShow);
             targetImage.color = hardLock ? GetHardLockColor() : GetColor();
 
-            if (player)
+            if (!shouldShow)
+                return;
+            lastPing--;
+            
+            if (lookTarget)
             {
-                lookAnchor.transform.LookAt(player);
+                lookAnchor.transform.LookAt(lookTarget);
                 lookAnchor.Rotate(0F, 180F, 0F);
             }
-
-
-            if (shouldShow)
-                lastPing--;
         }
 
         public void Ping(bool hardLock = false)
