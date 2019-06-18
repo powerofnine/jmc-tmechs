@@ -41,7 +41,7 @@ namespace TMechs.Enemy.AI
             
             stateMachine.RegisterTransition("Moving", "Shooting", machine => machine.GetTrigger("Shoot"));
             stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone"));
-            stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.GetTrigger("Attack"));
+            stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange"));
             stateMachine.RegisterTransition("Attack", "Moving", machine => machine.GetTrigger("AttackDone"));
             
             stateMachine.RegisterVisualizer($"HarrierNovus:{name}");
@@ -59,8 +59,27 @@ namespace TMechs.Enemy.AI
             [Header("Ranges")]
             public Radius rangeStartFollow;
             public Radius rangeStopFollow;
+
+            [Header("Moving")]
+            public int moveCount = 3;
+            public Radius dashDistance = new Radius(10F, true);
+            public float dashDelay = 1F;
+            public float dashSpeed = 10F;
+
+            [Header("Shooting")]
+            public int shotCount = 5;
+            public float shotDelay = .25F;
             
-            
+            [Header("Chasing")]
+            public Radius chaseDashDistance = new Radius(15F, true);
+            public float chaseDashDelay = .1F;
+            public float chaseDashSpeed = 20F;
+
+            [Header("Attacking")]
+            [Range(0F, 1F)]
+            public float secondaryAttackChance = .5F;
+            public float attackDamage = 5F;
+            public Radius attackRange;
         }
 
         private class HarrierShared
