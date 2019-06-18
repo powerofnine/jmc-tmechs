@@ -4,6 +4,7 @@ using System.Linq;
 using TMechs.Attributes;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
+using TMechs.UI.GamePad;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -59,6 +60,9 @@ namespace TMechs.Player
         {
             BaseTarget target = TargetController.Instance.GetTarget();
 
+            if (target)
+                GamepadLabels.AddLabel(IconMap.Icon.L1, TargetController.Instance.GetLock() ? "Unlock" : "Lock-on");
+            
             if (Input.GetButtonDown(LOCK_ON))
             {
                 if (TargetController.Instance.GetLock())
@@ -70,13 +74,19 @@ namespace TMechs.Player
             animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
             animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
 
+            if (target is GrappleTarget)
+                GamepadLabels.AddLabel(IconMap.Icon.R2, ((GrappleTarget)target).isSwing ? "Swing" : "Grapple");
+            
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
             animator.SetBool(Anim.LEFT_ARM_HELD, Input.GetButton(LEFT_ARM));
             animator.SetBool(Anim.RIGHT_ARM, Input.GetButtonDown(RIGHT_ARM));
             animator.SetBool(Anim.RIGHT_ARM_HELD, Input.GetButton(RIGHT_ARM));
             animator.SetBool(Anim.ATTACK_HELD, Input.GetButton(ATTACK));
             animator.SetBool(Anim.ROCKET_READY, rocketFistCharge <= 0F);
-
+            
+            if(target is EnemyTarget && rocketFistCharge <= 0F || rocketFistCharging)
+                GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
+                
             if (Input.GetButtonDown(ATTACK))
                 animator.SetTrigger(Anim.ATTACK);
 
@@ -85,6 +95,7 @@ namespace TMechs.Player
                 EnemyTarget enemy = (EnemyTarget) target;
 
                 animator.SetInteger(Anim.PICKUP_TARGET_TYPE, (int) enemy.pickup);
+                GamepadLabels.AddLabel(IconMap.Icon.R2, "Grab");
             }
             else
                 animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
