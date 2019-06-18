@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace fuj1n.NormalRecognizer
@@ -23,10 +24,10 @@ namespace fuj1n.NormalRecognizer
 
                     Vector3 v = SampleNormal(texture.GetPixel(xc, yc));
 
-                    if (v.z < -Mathf.Epsilon)
+                    if (v.z < -.15F)
                         return;
 
-                    if (v.magnitude > 1F + Mathf.Epsilon)
+                    if (v.magnitude > 1.25F)
                         return;
                 }
             }
