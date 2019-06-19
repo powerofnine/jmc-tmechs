@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 728434968}
   - component: {fileID: 728434963}
-  - component: {fileID: 1442146810155573575}
   - component: {fileID: 4432958772654551712}
   - component: {fileID: 728434965}
   - component: {fileID: 728434966}
@@ -54,55 +53,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.62, z: 0}
---- !u!114 &1442146810155573575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728434962}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f82be7d23c8f49e3b826a4afef8e7672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine:
-    tickWhenPaused: 0
-    state: None
-    transform: {fileID: 0}
-    target: {fileID: 0}
-  properties:
-    rangeStartFollow:
-      radius: 150
-      visualize: 1
-      visualizeColor: {r: 0, g: 1, b: 0, a: 0}
-      renderAsLine: 0
-    rangeStopFollow:
-      radius: 175
-      visualize: 1
-      visualizeColor: {r: 1, g: 0, b: 0, a: 0}
-      renderAsLine: 0
-    attackRange:
-      radius: 15
-      visualize: 1
-      visualizeColor: {r: 1, g: 1, b: 0, a: 0}
-      renderAsLine: 0
-    shootRange:
-      radius: 170
-      visualize: 1
-      visualizeColor: {r: 0, g: 1, b: 1, a: 0}
-      renderAsLine: 0
-    dashSpeed: 20
-    shootFrequency: {x: 5, y: 10}
-    shootTime: {x: 2, y: 5}
-    shotDamage: 1
-    leftGunAnchor: {fileID: 859594940751243042}
-    rightGunAnchor: {fileID: 6942452950812109432}
-    bulletTemplate: {fileID: 888758259634913089, guid: 8accf189d8f1aef49be69e549a759822,
-      type: 3}
-    attackCooldown: 2
-    secondaryAttackChance: 0.5
-    attackDamage: 5
 --- !u!114 &4432958772654551712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,16 +88,16 @@ MonoBehaviour:
       visualizeColor: {r: 1, g: 0, b: 1, a: 0}
       renderAsLine: 1
     dashDelay: 0.25
-    dashSpeed: 10
+    dashSpeed: 100
     maintainDistance:
       radius: 75
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 1, a: 0}
       renderAsLine: 1
-    shotCount: 5
-    shotDelay: 0.25
+    shotCount: 10
+    shotDelay: 0.05
     shotDamage: 1
-    chaseSpeed: 20
+    chaseSpeed: 120
     shootsBeforeChase: 3
     secondaryAttackChance: 0.5
     attackDamage: 5

@@ -65,7 +65,7 @@ namespace TMechs.Enemy.AI
 
             if (transitions.ContainsKey(ANY_STATE))
             {
-                foreach (Transition t in transitions[ANY_STATE])
+                foreach (Transition t in transitions[ANY_STATE].OrderBy(x => x.order))
                 {
                     if (t.condition(this))
                     {
@@ -75,7 +75,7 @@ namespace TMechs.Enemy.AI
                 }
             }
 
-            foreach (Transition t in currentTransitions)
+            foreach (Transition t in currentTransitions.OrderBy(x => x.order))
             {
                 if (t.condition(this))
                 {
@@ -106,12 +106,12 @@ namespace TMechs.Enemy.AI
             BuildSnapshot();
         }
 
-        public void RegisterTransition(string source, string destination, TransitionCondition condition, Action<AiStateMachine> onTransition = null)
+        public void RegisterTransition(string source, string destination, TransitionCondition condition, Action<AiStateMachine> onTransition = null, int order = 0)
         {
             if (!transitions.ContainsKey(source))
                 transitions.Add(source, new List<Transition>());
 
-            transitions[source].Add(new Transition(destination, condition, onTransition));
+            transitions[source].Add(new Transition(destination, condition, onTransition, order));
 
             BuildSnapshot();
         }
@@ -317,12 +317,14 @@ namespace TMechs.Enemy.AI
             public readonly string destinationState;
             public readonly TransitionCondition condition;
             public readonly Action<AiStateMachine> onTransition;
-
-            public Transition(string destinationState, TransitionCondition condition, Action<AiStateMachine> onTransition)
+            public readonly int order;
+            
+            public Transition(string destinationState, TransitionCondition condition, Action<AiStateMachine> onTransition, int order)
             {
                 this.destinationState = destinationState;
                 this.condition = condition;
                 this.onTransition = onTransition;
+                this.order = order;
             }
         }
 
