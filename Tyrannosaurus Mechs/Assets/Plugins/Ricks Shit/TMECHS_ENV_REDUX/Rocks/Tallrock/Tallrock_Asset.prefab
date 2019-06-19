@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 706895901557146083}
   - component: {fileID: 1168590214676391184}
   - component: {fileID: 2214711755540009464}
-  - component: {fileID: 7348739773696151588}
+  - component: {fileID: 797847510550461649}
   m_Layer: 0
   m_Name: TallRock_LOD0
   m_TagString: Untagged
@@ -155,8 +155,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &7348739773696151588
-MeshCollider:
+--- !u!65 &797847510550461649
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,10 +165,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4939107560000432994, guid: bdacf8e1bae5b1244b5c5e721cdf354b, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 11.29747, y: 23.38475, z: 8.531128}
+  m_Center: {x: -0.03653717, y: 11.276497, z: 0.48077393}
 --- !u!1 &5444880198241115817
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +256,7 @@ GameObject:
   - component: {fileID: 4865908183986175802}
   - component: {fileID: 5473196397654403582}
   m_Layer: 0
-  m_Name: TallRock_LOD
+  m_Name: Tallrock_Asset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
