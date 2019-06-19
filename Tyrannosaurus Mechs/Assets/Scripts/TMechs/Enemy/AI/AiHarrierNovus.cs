@@ -32,20 +32,21 @@ namespace TMechs.Enemy.AI
             stateMachine.ImportProperties(properties);
             
             stateMachine.RegisterState(null, "Idle");
-            stateMachine.RegisterState(null, "Moving");
-            stateMachine.RegisterState(null, "Shooting");
-            stateMachine.RegisterState(null, "Chasing");
-            stateMachine.RegisterState(null, "Attack");
+            stateMachine.RegisterState(new Moving(), "Moving");
+            stateMachine.RegisterState(new Shooting(), "Shooting");
+            stateMachine.RegisterState(new Chasing(), "Chasing");
+            stateMachine.RegisterState(new Attacking(), "Attack");
             
             stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.DistanceToTarget > machine.Get<Radius>(nameof(HarrierProperties.rangeStopFollow)));
             stateMachine.RegisterTransition("Idle", "Moving", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.rangeStartFollow)));
             
             stateMachine.RegisterTransition("Moving", "Shooting", machine => machine.GetTrigger("Shoot"));
-            stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone") && machine.GetAddSet<int>("ShootCount", 1) >= machine.Get<int>("shootsBeforeChase"), machine => machine.Set<int>("ShootCount", 0));
+            stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone") && machine.GetAddSet<int>("ShootCount", 1) >= machine.Get<int>(nameof(HarrierProperties.shootsBeforeChase)), machine => machine.Set<int>("ShootCount", 0));
             stateMachine.RegisterTransition("Shooting", "Moving", machine => machine.GetTrigger("ShootDone"));
-            stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.DistanceToTarget <= machine.Get<Radius>("attackRange"));
+            stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.attackRange)));
             stateMachine.RegisterTransition("Attack", "Moving", machine => machine.GetTrigger("AttackDone"));
             
+            stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"HarrierNovus:{name}");
         }
 
@@ -87,12 +88,12 @@ namespace TMechs.Enemy.AI
                 {
                     time -= Time.deltaTime;
 
-                    props.controller.Move(Machine.Get<float>("dashSpeed") * Time.deltaTime * direction);
+                    props.controller.Move(Machine.Get<float>(nameof(HarrierProperties.dashSpeed)) * Time.deltaTime * direction);
                     
                     return;
                 }
 
-                if (dashesDone > Machine.Get<int>("moveCount"))
+                if (dashesDone >= Machine.Get<int>(nameof(HarrierProperties.moveCount)))
                 {
                     Machine.SetTrigger("Shoot");
                     return;
@@ -102,23 +103,26 @@ namespace TMechs.Enemy.AI
                 {
                     direction = Vector3.zero;
                     dashesDone++;
-                    time = Machine.Get<float>("dashDelay");
+                    time = Machine.Get<float>(nameof(HarrierProperties.dashDelay));
                 }
                 else
                 {
                     direction = new Vector3(Random.Range(-1F, 1F), Random.Range(-1F, 1F), 0F);
-
+                    direction = transform.TransformDirection(direction);
+                    
                     Vector3 heading = target.position - transform.position;
 
-                    if (Math.Abs(HorizontalDistanceToTarget - Machine.Get<Radius>("maintainDistance")) > 4F)
-                        direction = DirectionToTarget;
+                    float distDifference = HorizontalDistanceToTarget - Machine.Get<Radius>(nameof(HarrierProperties.maintainDistance));
+                    
+                    if (Math.Abs(distDifference) < 5F)
+                        direction = DirectionToTarget * Mathf.Sign(distDifference);
                     
                     if (Mathf.Abs(heading.y) > 10F)
                         direction.y = Mathf.Sign(heading.y);
                     
                     direction.Normalize();
 
-                    time = Machine.Get<Radius>("dashDistance") / Machine.Get<float>("dashSpeed");
+                    time = Machine.Get<Radius>(nameof(HarrierProperties.dashDistance)) / Machine.Get<float>(nameof(HarrierProperties.dashSpeed));
                 }
             }
         }
@@ -152,22 +156,88 @@ namespace TMechs.Enemy.AI
 
                 shots++;
                 
-                Transform anchor = leftSide ? Machine.Get<Transform>("leftGunAnchor") : Machine.Get<Transform>("rightGunAnchor");
+                Transform anchor = leftSide ? Machine.Get<Transform>(nameof(HarrierProperties.leftGunAnchor)) : Machine.Get<Transform>(nameof(HarrierProperties.rightGunAnchor));
                 leftSide = !leftSide;
                     
-                GameObject go = Instantiate(Machine.Get<GameObject>("bulletTemplate"), anchor.position, anchor.rotation);
+                GameObject go = Instantiate(Machine.Get<GameObject>(nameof(HarrierProperties.bulletTemplate)), anchor.position, anchor.rotation);
                 EnemyBullet bullet = go.GetComponent<EnemyBullet>();
-                bullet.damage = Machine.Get<int>("shotDamage");
+                bullet.damage = Machine.Get<float>(nameof(HarrierProperties.shotDamage));
                 bullet.direction = transform.forward;
                 bullet.owner = transform;
 
-                if (shots > Machine.Get<int>("shotCount"))
+                if (shots > Machine.Get<int>(nameof(HarrierProperties.shotCount)))
                 {
                     Machine.SetTrigger("ShootDone");
                     return;
                 }
 
-                nextShot = Machine.Get<float>("shotDelay");
+                nextShot = Machine.Get<float>(nameof(HarrierProperties.shotDelay));
+            }
+        }
+
+        private class Chasing : HarrierState
+        {
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                transform.forward = DirectionToTarget;
+
+                props.controller.Move(Machine.Get<float>(nameof(HarrierProperties.chaseSpeed)) * Time.deltaTime * transform.forward);
+            }
+        }
+
+        private class Attacking : HarrierState
+        {
+            private int substate;
+
+            private bool attackTriggered = true;
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                substate = 0;
+            }
+
+            public override void OnTick()
+            {
+                if (!attackTriggered)
+                    return;
+
+                transform.forward = DirectionToTarget;
+                
+                if (DistanceToTarget > Machine.Get<Radius>(nameof(HarrierProperties.attackRange)))
+                {
+                    Machine.SetTrigger("AttackDone");
+                    return;
+                }
+
+                if (substate < 2)
+                {
+                    props.animator.SetTrigger(Anim.ATTACK);
+                    attackTriggered = false;
+
+                    substate++;
+                    if (Random.Range(0, 100) > Machine.Get<float>(nameof(HarrierProperties.secondaryAttackChance)) * 100F)
+                        substate = 4096;
+                    return;
+                }
+
+                Machine.SetTrigger("AttackDone");
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
+                {
+                    attackTriggered = true;
+                    
+                    if(DistanceToTarget <= Machine.Get<Radius>(nameof(HarrierProperties.attackRange)) && AngleToTarget <= 35F)
+                        Player.Player.Instance.Damage(Machine.Get<float>(nameof(HarrierProperties.attackDamage)));
+                }
             }
         }
         
@@ -201,12 +271,10 @@ namespace TMechs.Enemy.AI
             [Header("Shooting")]
             public int shotCount = 5;
             public float shotDelay = .25F;
-            public int shotDamage = 1;
+            public float shotDamage = 1;
             
             [Header("Chasing")]
-            public Radius chaseDashDistance = new Radius(15F, true);
-            public float chaseDashDelay = .1F;
-            public float chaseDashSpeed = 20F;
+            public float chaseSpeed = 20F;
             public int shootsBeforeChase = 3;
 
             [Header("Attacking")]
