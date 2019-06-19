@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 114159158872266358}
   - {fileID: 114432806307655266}
   - {fileID: 114756782827381086}
-  - {fileID: 114869805106759626}
+  - {fileID: 5135384718878196489}
 --- !u!114 &114159158872266358
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Value: 1
   fogType:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 2
 --- !u!114 &114756782827381086
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -132,7 +132,7 @@ MonoBehaviour:
     m_Value: 1
   sunSize:
     m_OverrideState: 1
-    m_Value: 0.007
+    m_Value: 0.022
     min: 0
     max: 1
   sunSizeConvergence:
@@ -160,7 +160,7 @@ MonoBehaviour:
   enableSunDisk:
     m_OverrideState: 1
     m_Value: 1
---- !u!114 &114869805106759626
+--- !u!114 &5135384718878196489
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,8 +169,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29b00527f85bb3346a4d2cb710971587, type: 3}
-  m_Name: VolumetricFog
+  m_Script: {fileID: 11500000, guid: 2150ee00179b2f4418ea8b21a7e98eea, type: 3}
+  m_Name: ExponentialFog
   m_EditorClassIdentifier: 
   active: 1
   m_AdvancedMode: 0
@@ -189,8 +189,8 @@ MonoBehaviour:
     min: 0
     max: 1
   maxFogDistance:
-    m_OverrideState: 1
-    m_Value: 30
+    m_OverrideState: 0
+    m_Value: 5000
     min: 0
   mipFogMaxMip:
     m_OverrideState: 0
@@ -205,32 +205,15 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1000
     min: 0
-  albedo:
+  fogDistance:
     m_OverrideState: 1
-    m_Value: {r: 0.41162336, g: 0.46273902, b: 0.6981132, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  meanFreePath:
+    m_Value: 1000
+    min: 0
+  fogBaseHeight:
     m_OverrideState: 1
-    m_Value: 300
-    min: 1
-  baseHeight:
-    m_OverrideState: 1
-    m_Value: 193.9
-  meanHeight:
+    m_Value: 1000
+  fogHeightAttenuation:
     m_OverrideState: 0
-    m_Value: 193.9
-  anisotropy:
-    m_OverrideState: 1
-    m_Value: 0.44
-    min: -1
-    max: 1
-  globalLightProbeDimmer:
-    m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.2
     min: 0
     max: 1
-  enableDistantFog:
-    m_OverrideState: 1
-    m_Value: 0
