@@ -123,6 +123,12 @@ namespace TMechs.Enemy.AI
 
         public void EnterState(string state)
         {
+            if (string.IsNullOrEmpty(state))
+            {
+                Debug.LogWarning("Attempted to enter null state, this is not allowed");
+                return;
+            }
+            
             if (!states.ContainsKey(state))
             {
                 Debug.LogWarning($"Attempted to enter unregistered state {state}");

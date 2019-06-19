@@ -108,11 +108,11 @@ namespace TMechs.Player
                 Animator.SetBool(Anim.IS_CARRYING, pickedUp);
         }
 
-        public void Damage(int damage)
+        public void Damage(float damage)
         {
             if (damage > 0 && damageTimer > 0F)
                 return;
-            Health -= (float) damage / maxHealth;
+            Health -= damage / maxHealth;
         }
 
         public void SavePlayerData(ref SaveSystem.SaveData data)
