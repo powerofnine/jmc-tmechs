@@ -21,9 +21,6 @@ namespace TMechs.Player
         public Transform aaRig;
         public Transform verticalRig;
 
-        [NonSerialized]
-        public new Camera camera;
-        
         [Space]
         public Vector2 dampening;
 
@@ -46,7 +43,6 @@ namespace TMechs.Player
             }
 
             state.rotationX = verticalRig.localEulerAngles.x;
-            camera = GetComponentInChildren<Camera>();
         }
 
         private void LateUpdate()

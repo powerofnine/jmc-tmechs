@@ -42,7 +42,7 @@ namespace TMechs.Environment.Targets
             targetImage = targetRoot.Find("Target").GetComponent<Image>();
             targetRoot.gameObject.SetActive(false);
 
-            lookTarget = Player.Player.Instance.Camera.camera.transform;
+            lookTarget = Player.Player.Instance.Camera.transform;
         }
 
         private void LateUpdate()
