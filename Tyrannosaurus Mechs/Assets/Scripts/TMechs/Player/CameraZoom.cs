@@ -32,8 +32,8 @@ namespace TMechs.Player
             distance = Mathf.Clamp(distance, minDistance, maxDistance);
 
             Vector3 pos = transform.localPosition;
-            pos.z = distance;
-            transform.localPosition = -pos;
+            pos.z = -distance;
+            transform.localPosition = pos;
         }
     }
 }

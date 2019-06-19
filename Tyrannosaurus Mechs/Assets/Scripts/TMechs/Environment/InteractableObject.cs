@@ -42,7 +42,7 @@ namespace TMechs.Environment
         private void LateUpdate()
         {
             if(overrideLabel-- > 0)
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, displayText);
+                GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow2, displayText);
         }
 
         public virtual void OnToggle()

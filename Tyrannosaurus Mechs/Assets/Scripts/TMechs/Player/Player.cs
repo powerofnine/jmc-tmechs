@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using fuj1n.MinimalDebugConsole;
 using TMechs.Data;
+using TMechs.Environment.Targets;
 using TMechs.UI;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -19,7 +20,8 @@ namespace TMechs.Player
         public PlayerCombat Combat { get; private set; }
         public PlayerMovement Movement { get; private set; }
         
-        public PlayerCamera Camera { get; private set; }
+        public PlayerCamera CameraController { get; private set; }
+        public Camera Camera { get; private set; }
 
         public int maxHealth;
         public float damageCooldown = 0.25F;
@@ -67,8 +69,9 @@ namespace TMechs.Player
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
             Movement = GetComponent<PlayerMovement>();
-            Camera = GameObject.FindObjectOfType<PlayerCamera>();
-
+            CameraController = GameObject.FindObjectOfType<PlayerCamera>();
+            Camera = CameraController.GetComponentInChildren<Camera>();
+            
             // Configure shaders
             foreach (Renderer render in GetComponentsInChildren<Renderer>())
             {
@@ -96,7 +99,10 @@ namespace TMechs.Player
             if (damageTimer >= 0F)
                 damageTimer -= Time.deltaTime;
 
-            UpdateIcons();
+            if (pickedUp)
+                GamepadLabels.AddLabel(IconMap.Icon.R2, "Throw");
+            else
+                GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
 
             if (Animator)
                 Animator.SetBool(Anim.IS_CARRYING, pickedUp);
@@ -132,37 +138,6 @@ namespace TMechs.Player
                 Animator.SetTrigger(Anim.DIE);
                 StartCoroutine(Death());
             }
-        }
-
-        private void UpdateIcons()
-        {
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow1, "Jump");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "");
-
-            if (pickedUp)
-            {
-                // State: picked up
-
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Throw");
-
-                return;
-            }
-
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
-
-            // Grab/Grapple label
-            //TODO: display for triggers if they will ever get added to display
-//            if (Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
-//                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
-//            else if (Animator.GetBool(Anim.HAS_GRAPPLE))
-//            {
-//                GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
-//
-//                if (target)
-//                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
-//            }
         }
 
         private void OnEnable()

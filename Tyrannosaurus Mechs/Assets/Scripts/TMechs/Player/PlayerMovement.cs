@@ -2,6 +2,7 @@
 using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
+using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -62,6 +63,8 @@ namespace TMechs.Player
 
         private void Update()
         {
+//            GamepadLabels.AddLabel(IconMap.IconGeneric.Down, "Test");
+            
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 return;
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
@@ -76,6 +79,8 @@ namespace TMechs.Player
 
             if (movementMag > float.Epsilon)
             {
+                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, isSprinting ? "Stop Sprinting" : "Sprint", -100);
+                
                 if (Input.GetButtonDown(SPRINT))
                     isSprinting = !isSprinting;
                 
@@ -94,11 +99,19 @@ namespace TMechs.Player
                 speed = movementSpeed * .85F;
             
             motion = movement * speed;
+
+//            if(isGrounded)
+//                GamepadLabels.AddLabel(IconMap.Icon.R1, "Dash");
             
-            if (canJump && Input.GetButtonDown(JUMP) && jumps < maxJumps)
+            if (canJump && jumps < maxJumps)
             {
-                animator.SetTrigger(isGrounded ? Anim.JUMP : Anim.AIR_JUMP);
-                canJump = false;
+                GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow1, "Jump");
+                
+                if (Input.GetButtonDown(JUMP))
+                {
+                    animator.SetTrigger(isGrounded ? Anim.JUMP : Anim.AIR_JUMP);
+                    canJump = false;
+                }
             }
         }
 
