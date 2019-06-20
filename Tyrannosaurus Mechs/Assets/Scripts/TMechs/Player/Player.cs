@@ -47,7 +47,7 @@ namespace TMechs.Player
             {
                 if (isGod && value <= health)
                     return;
-                health = value;
+                health = Mathf.Clamp01(value);
                 UpdateHealth();
             }
         }
