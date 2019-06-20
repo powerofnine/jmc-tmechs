@@ -85,6 +85,8 @@ namespace TMechs.Enemy.AI
             {
                 base.OnTick();
 
+                props.animator.SetBool(FIRING, false);
+                
                 transform.forward = DirectionToTarget;
 
                 if (time >= 0F)
@@ -151,7 +153,7 @@ namespace TMechs.Enemy.AI
             public override void OnExit()
             {
                 base.OnExit();
-                props.animator.SetBool(FIRING, true);
+                props.animator.SetBool(FIRING, false);
             }
 
             public override void OnTick()
@@ -214,9 +216,13 @@ namespace TMechs.Enemy.AI
 
             public override void OnTick()
             {
+                base.OnTick();
+                
+                props.animator.SetBool(FIRING, false);
+                
                 if (!attackTriggered)
                     return;
-
+                
                 transform.forward = DirectionToTarget;
                 
                 if (DistanceToTarget > Machine.Get<Radius>(nameof(HarrierProperties.attackRange)))
