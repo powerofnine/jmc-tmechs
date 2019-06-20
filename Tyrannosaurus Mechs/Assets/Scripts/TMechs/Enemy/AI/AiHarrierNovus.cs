@@ -112,7 +112,7 @@ namespace TMechs.Enemy.AI
                 }
                 else
                 {
-                    direction = new Vector3(Random.Range(-1F, 1F), Random.Range(-1F, 1F), 0F);
+                    direction = new Vector3(Random.Range(-1F, 1F), Random.Range(-.35F, 1F), 0F);
                     direction = transform.TransformDirection(direction);
                     
                     Vector3 heading = target.position - transform.position;

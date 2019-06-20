@@ -72,7 +72,7 @@ MonoBehaviour:
     target: {fileID: 0}
   properties:
     rangeStartFollow:
-      radius: 150
+      radius: 100
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 0, a: 0}
       renderAsLine: 0
@@ -83,14 +83,14 @@ MonoBehaviour:
       renderAsLine: 0
     moveCount: 3
     dashDistance:
-      radius: 20
+      radius: 15
       visualize: 1
       visualizeColor: {r: 1, g: 0, b: 1, a: 0}
       renderAsLine: 1
     dashDelay: 0.25
     dashSpeed: 100
     maintainDistance:
-      radius: 75
+      radius: 45
       visualize: 1
       visualizeColor: {r: 0, g: 1, b: 1, a: 0}
       renderAsLine: 1
@@ -102,7 +102,7 @@ MonoBehaviour:
     secondaryAttackChance: 0.5
     attackDamage: 5
     attackRange:
-      radius: 15
+      radius: 6
       visualize: 1
       visualizeColor: {r: 1, g: 1, b: 0, a: 0}
       renderAsLine: 0
@@ -160,7 +160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198153231273030375}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.300003, y: 2.334999, z: 3.1929932}
+  m_LocalPosition: {x: -0.5200012, y: 0.9339996, z: 1.2771972}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7372589279942956602}
@@ -190,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3336474131169766772}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.300003, y: 2.334999, z: 3.1929932}
+  m_LocalPosition: {x: 0.5200012, y: 0.9339996, z: 1.2771972}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7372589279942956602}
