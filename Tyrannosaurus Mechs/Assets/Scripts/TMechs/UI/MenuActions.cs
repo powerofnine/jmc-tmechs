@@ -12,7 +12,7 @@ namespace TMechs.UI
 {
     public class MenuActions : MonoBehaviour
     {
-        public const string FIRST_SCENE = "Assets/Scenes/Level1.unity";
+        public const string FIRST_SCENE = "Assets/Scenes/TestLevel.unity";
 
         public MenuController controller;
 
