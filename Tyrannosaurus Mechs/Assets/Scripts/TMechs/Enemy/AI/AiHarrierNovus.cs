@@ -8,6 +8,9 @@ namespace TMechs.Enemy.AI
 {
     public class AiHarrierNovus : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
     {
+        public static readonly int MOVE = Anim.Hash("Move");
+        public static readonly int FIRING = Anim.Hash("IsFiring");
+        
         public AiStateMachine stateMachine;
 
         public HarrierProperties properties = new HarrierProperties();
@@ -41,7 +44,7 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterTransition("Idle", "Moving", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.rangeStartFollow)));
             
             stateMachine.RegisterTransition("Moving", "Shooting", machine => machine.GetTrigger("Shoot"));
-            stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone") && machine.GetAddSet<int>("ShootCount", 1) >= machine.Get<int>(nameof(HarrierProperties.shootsBeforeChase)), machine => machine.Set<int>("ShootCount", 0));
+            stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone", false) && machine.GetAddSet<int>("ShootsNum", 1) >= machine.Get<int>(nameof(HarrierProperties.shootsBeforeChase)), machine => { machine.Set("ShootsNum", 0); machine.SetTrigger("ShootDone", false); }, -1);
             stateMachine.RegisterTransition("Shooting", "Moving", machine => machine.GetTrigger("ShootDone"));
             stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.attackRange)));
             stateMachine.RegisterTransition("Attack", "Moving", machine => machine.GetTrigger("AttackDone"));
@@ -123,6 +126,7 @@ namespace TMechs.Enemy.AI
                     direction.Normalize();
 
                     time = Machine.Get<Radius>(nameof(HarrierProperties.dashDistance)) / Machine.Get<float>(nameof(HarrierProperties.dashSpeed));
+                    props.animator.SetTrigger(MOVE);
                 }
             }
         }
@@ -140,6 +144,14 @@ namespace TMechs.Enemy.AI
 
                 nextShot = 0F;
                 shots = 0;
+                
+                props.animator.SetBool(FIRING, true);
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+                props.animator.SetBool(FIRING, true);
             }
 
             public override void OnTick()
