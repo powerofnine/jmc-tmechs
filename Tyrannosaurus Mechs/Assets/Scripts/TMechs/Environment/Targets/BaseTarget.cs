@@ -15,6 +15,8 @@ namespace TMechs.Environment.Targets
         private Transform lookAnchor;
         private Image targetImage;
 
+        private Transform specifics;
+        
         private void OnEnable()
         {
             TargetController.Add(this);
@@ -42,6 +44,12 @@ namespace TMechs.Environment.Targets
             targetImage = targetRoot.Find("Target").GetComponent<Image>();
             targetRoot.gameObject.SetActive(false);
 
+            specifics = targetRoot.transform.Find("Specifics")?.transform;
+
+            if (specifics != null)
+                foreach(Transform t in specifics)
+                    t.gameObject.SetActive(false);
+
             lookTarget = Player.Player.Instance.Camera.transform;
         }
 
@@ -61,6 +69,18 @@ namespace TMechs.Environment.Targets
                 lookAnchor.transform.LookAt(lookTarget);
                 lookAnchor.Rotate(0F, 180F, 0F);
             }
+        }
+
+        public GameObject UseSpecific(string name)
+        {
+            if (!specifics)
+                return null;
+            
+            GameObject go = specifics.Find(name)?.gameObject;
+            if(go != null)
+                go.SetActive(true);
+
+            return go;
         }
 
         public void Ping(bool hardLock = false)

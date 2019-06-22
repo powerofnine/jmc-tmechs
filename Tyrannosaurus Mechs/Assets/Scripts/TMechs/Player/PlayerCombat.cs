@@ -73,10 +73,6 @@ namespace TMechs.Player
 
             animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
             animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
-
-            if (target is GrappleTarget)
-                GamepadLabels.AddLabel(IconMap.Icon.R2, ((GrappleTarget)target).isSwing ? "Swing" : "Grapple");
-            
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
             animator.SetBool(Anim.LEFT_ARM_HELD, Input.GetButton(LEFT_ARM));
             animator.SetBool(Anim.RIGHT_ARM, Input.GetButtonDown(RIGHT_ARM));
