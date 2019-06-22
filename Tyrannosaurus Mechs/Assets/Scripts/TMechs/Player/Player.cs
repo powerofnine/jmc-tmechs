@@ -69,26 +69,15 @@ namespace TMechs.Player
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
             Movement = GetComponent<PlayerMovement>();
-            CameraController = GameObject.FindObjectOfType<PlayerCamera>();
+            CameraController = FindObjectOfType<PlayerCamera>();
             Camera = CameraController.GetComponentInChildren<Camera>();
-            
-            // Configure shaders
-            foreach (Renderer render in GetComponentsInChildren<Renderer>())
-            {
-                foreach (Material mat in render.materials)
-                {
-                    if ("Shader Graphs/Player".Equals(mat.shader.name))
-                    {
-                        mat.SetInt(Z_WRITE, 1);
-                    }
-                }
-            }
         }
 
         private void Update()
         {
             #if !UNITY_EDITOR
             Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = displayCursor;
             #endif            
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
