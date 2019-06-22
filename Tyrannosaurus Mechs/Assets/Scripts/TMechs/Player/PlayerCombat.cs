@@ -58,9 +58,10 @@ namespace TMechs.Player
 
         private void Update()
         {
-            BaseTarget target = TargetController.Instance.GetTarget();
+            EnemyTarget enemyTarget = TargetController.Instance.GetTarget<EnemyTarget>();
+            GrappleTarget grappleTarget = TargetController.Instance.GetTarget<GrappleTarget>();
 
-            if (target)
+            if (enemyTarget)
                 GamepadLabels.AddLabel(IconMap.Icon.L1, TargetController.Instance.GetLock() ? "Unlock" : "Lock-on");
             
             if (Input.GetButtonDown(LOCK_ON))
@@ -71,8 +72,8 @@ namespace TMechs.Player
                     TargetController.Instance.HardLock();
             }
 
-            animator.SetBool(Anim.HAS_ENEMY, target is EnemyTarget);
-            animator.SetBool(Anim.HAS_GRAPPLE, target is GrappleTarget);
+            animator.SetBool(Anim.HAS_ENEMY, enemyTarget);
+            animator.SetBool(Anim.HAS_GRAPPLE, grappleTarget);
             animator.SetBool(Anim.DASH, Input.GetButtonDown(DASH));
             animator.SetBool(Anim.LEFT_ARM_HELD, Input.GetButton(LEFT_ARM));
             animator.SetBool(Anim.RIGHT_ARM, Input.GetButtonDown(RIGHT_ARM));
@@ -80,21 +81,21 @@ namespace TMechs.Player
             animator.SetBool(Anim.ATTACK_HELD, Input.GetButton(ATTACK));
             animator.SetBool(Anim.ROCKET_READY, rocketFistCharge <= 0F);
             
-            if(target is EnemyTarget && rocketFistCharge <= 0F || rocketFistCharging)
+            if(enemyTarget && rocketFistCharge <= 0F || rocketFistCharging)
                 GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
                 
             if (Input.GetButtonDown(ATTACK))
                 animator.SetTrigger(Anim.ATTACK);
 
-            if (target is EnemyTarget && Vector3.Distance(transform.position, target.transform.position) < grappleRadius)
+            animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
+            if (enemyTarget && Vector3.Distance(transform.position, enemyTarget.transform.position) < grappleRadius)
             {
-                EnemyTarget enemy = (EnemyTarget) target;
-
-                animator.SetInteger(Anim.PICKUP_TARGET_TYPE, (int) enemy.pickup);
-                GamepadLabels.AddLabel(IconMap.Icon.R2, "Grab");
+                if (!grappleTarget || Player.Instance.Movement.isGrounded)
+                {
+                    animator.SetInteger(Anim.PICKUP_TARGET_TYPE, (int) enemyTarget.pickup);
+                    GamepadLabels.AddLabel(IconMap.Icon.R2, "Grab");
+                }
             }
-            else
-                animator.SetInteger(Anim.PICKUP_TARGET_TYPE, 0);
 
             if (!rocketFistCharging)
                 rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime * rocketFistRechargeSpeedMultiplier, 0F, rocketFistChargeMax);

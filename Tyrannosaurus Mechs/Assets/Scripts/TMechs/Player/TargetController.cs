@@ -31,7 +31,8 @@ namespace TMechs.Player
 
         private void Update()
         {
-            GetTarget()?.Ping(currentTarget);
+            GetTarget<EnemyTarget>()?.Ping(currentTarget);
+            GetTarget<GrappleTarget>()?.Ping(currentTarget);
         }
 
         private void FixedUpdate()

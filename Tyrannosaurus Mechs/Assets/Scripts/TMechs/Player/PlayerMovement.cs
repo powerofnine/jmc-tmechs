@@ -38,7 +38,7 @@ namespace TMechs.Player
         // Movement
         public Vector3 velocity;
         public Vector3 motion;
-        private bool isGrounded;
+        public bool isGrounded;
         private Vector3 contactPoint;
         private bool canRun = true;
         private bool canJump = true;
