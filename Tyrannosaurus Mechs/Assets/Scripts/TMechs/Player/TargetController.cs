@@ -76,7 +76,13 @@ namespace TMechs.Player
                 return null;
 
             if (currentTarget && IsInRange(currentTarget.transform.position))
+            {
+                if (type != null && !type.IsInstanceOfType(currentTarget))
+                    return null;
+                
                 return currentTarget;
+            }
+
             currentTarget = null;
 
             IEnumerable<BaseTarget> targets = targetsInRange.Where(x => x);
