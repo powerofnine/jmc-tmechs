@@ -86,8 +86,14 @@ namespace TMechs.Enemy.AI
                 base.OnTick();
 
                 props.animator.SetBool(FIRING, false);
+
+
+                Vector3 fw = DirectionToTarget;
+
+                fw.y = Mathf.Clamp(fw.y, -.25F, .25F);
+                fw.Normalize();
                 
-                transform.forward = DirectionToTarget;
+                transform.forward = fw;
 
                 if (time >= 0F)
                 {
