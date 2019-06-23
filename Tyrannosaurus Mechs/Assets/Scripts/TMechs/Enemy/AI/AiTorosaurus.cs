@@ -29,7 +29,7 @@ namespace TMechs.Enemy.AI
 
         private void CreateStateMachine(TorosaurusShared shared)
         {
-            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.transform, shared = shared};
+            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.centerOfMass, shared = shared};
 
             stateMachine.ImportProperties(properties);
 

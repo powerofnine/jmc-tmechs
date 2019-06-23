@@ -32,6 +32,7 @@ namespace TMechs.Player
         public GameObject rocketFistGeo;
 
         [Header("Anchors")]
+        public Transform centerOfMass;
         public Transform rocketFistAnchor;
         public Transform pickupAnchor;
 

@@ -28,7 +28,7 @@ namespace TMechs.Enemy.AI
         {
             stateMachine = new AiStateMachine(transform)
             {
-                    target = Player.Player.Instance.transform,
+                    target = Player.Player.Instance.centerOfMass,
                     shared = shared
             };
 
@@ -86,7 +86,6 @@ namespace TMechs.Enemy.AI
                 base.OnTick();
 
                 props.animator.SetBool(FIRING, false);
-
 
                 Vector3 fw = DirectionToTarget;
 
