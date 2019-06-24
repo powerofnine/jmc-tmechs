@@ -1,7 +1,7 @@
 ﻿using TMechs.Environment.Targets;
 using UnityEngine;
 
-namespace TMechs.Player.Behaviour
+namespace TMechs.Player.BehaviourOld
 {
     public class Pickup : StateMachineBehaviour
     {

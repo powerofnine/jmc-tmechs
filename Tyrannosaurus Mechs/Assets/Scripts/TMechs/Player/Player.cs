@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using fuj1n.MinimalDebugConsole;
 using TMechs.Data;
-using TMechs.Environment.Targets;
+using TMechs.Player.Behavior;
 using TMechs.UI;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -55,10 +55,11 @@ namespace TMechs.Player
 
         private float health = 1F;
 
-        private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
-
         private bool displayCursor;
-
+        
+        private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
+        public PlayerBehavior Behavior => behaviorStack.Count > 0 ? behaviorStack.Peek() : null;
+        
         private void Awake()
         {
             Instance = this;
@@ -96,6 +97,8 @@ namespace TMechs.Player
 
             if (Animator)
                 Animator.SetBool(Anim.IS_CARRYING, pickedUp);
+            
+            Behavior?.OnUpdate();
         }
 
         public void Damage(float damage)
@@ -132,12 +135,12 @@ namespace TMechs.Player
 
         private void OnEnable()
         {
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+            DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
         }
 
         private void OnDisable()
         {
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+            DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
         }
 
         private void OnConsoleToggle(bool state)
@@ -163,7 +166,7 @@ namespace TMechs.Player
         private static void ToggleGodMode()
         {
             isGod = !isGod;
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+            DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
         }
 
         [DebugConsoleCommand("tp")]
@@ -199,7 +202,7 @@ namespace TMechs.Player
                     break;
             }
             
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+            DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
         }
 
         private enum PlayerVar
