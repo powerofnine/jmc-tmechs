@@ -19,6 +19,9 @@ namespace TMechs.Player
         public CharacterController Controller { get; private set; }
         public PlayerCombat Combat { get; private set; }
         public PlayerMovement Movement { get; private set; }
+        
+        public PlayerCamera CameraController { get; private set; }
+        public Camera Camera { get; private set; }
 
         public int maxHealth;
         public float damageCooldown = 0.25F;
@@ -29,6 +32,7 @@ namespace TMechs.Player
         public GameObject rocketFistGeo;
 
         [Header("Anchors")]
+        public Transform centerOfMass;
         public Transform rocketFistAnchor;
         public Transform pickupAnchor;
 
@@ -44,7 +48,7 @@ namespace TMechs.Player
             {
                 if (isGod && value <= health)
                     return;
-                health = value;
+                health = Mathf.Clamp01(value);
                 UpdateHealth();
             }
         }
@@ -53,7 +57,7 @@ namespace TMechs.Player
 
         private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
 
-        private bool displayCursor = false;
+        private bool displayCursor;
 
         private void Awake()
         {
@@ -66,23 +70,16 @@ namespace TMechs.Player
             Controller = GetComponent<CharacterController>();
             Combat = GetComponent<PlayerCombat>();
             Movement = GetComponent<PlayerMovement>();
-
-            // Configure shaders
-            foreach (Renderer render in GetComponentsInChildren<Renderer>())
-            {
-                foreach (Material mat in render.materials)
-                {
-                    if ("Shader Graphs/Player".Equals(mat.shader.name))
-                    {
-                        mat.SetInt(Z_WRITE, 1);
-                    }
-                }
-            }
+            CameraController = FindObjectOfType<PlayerCamera>();
+            Camera = CameraController.GetComponentInChildren<Camera>();
         }
 
         private void Update()
         {
+            #if !UNITY_EDITOR
             Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = displayCursor;
+            #endif            
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
             {
                 Instantiate(Resources.Load<GameObject>("UI/Menu"));
@@ -92,14 +89,20 @@ namespace TMechs.Player
             if (damageTimer >= 0F)
                 damageTimer -= Time.deltaTime;
 
-            UpdateIcons();
+            if (pickedUp)
+                GamepadLabels.AddLabel(IconMap.Icon.R2, "Throw");
+            else
+                GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
+
+            if (Animator)
+                Animator.SetBool(Anim.IS_CARRYING, pickedUp);
         }
 
-        public void Damage(int damage)
+        public void Damage(float damage)
         {
             if (damage > 0 && damageTimer > 0F)
                 return;
-            Health -= (float) damage / maxHealth;
+            Health -= damage / maxHealth;
         }
 
         public void SavePlayerData(ref SaveSystem.SaveData data)
@@ -124,48 +127,6 @@ namespace TMechs.Player
 
                 Animator.SetTrigger(Anim.DIE);
                 StartCoroutine(Death());
-            }
-        }
-
-        private void UpdateIcons()
-        {
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow1, "Jump");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "");
-            GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow2, "Interact");
-
-            if (pickedUp)
-            {
-                // State: picked up
-
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Throw");
-
-                return;
-            }
-
-            if (Input.GetButton(Controls.Action.ANGERY))
-            {
-                //State: angry
-
-                if (Animator.GetBool(Anim.HAS_ENEMY))
-                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Rocket Fist");
-            }
-            else
-            {
-                //State: normal
-
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionTopRow1, "Attack");
-            }
-
-            // Grab/Grapple label
-            if (Animator.GetInteger(Anim.PICKUP_TARGET_TYPE) != 0)
-                GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, "Grab");
-            else if (Animator.GetBool(Anim.HAS_GRAPPLE))
-            {
-                GrappleTarget target = TargetController.Instance.GetTarget<GrappleTarget>();
-
-                if (target)
-                    GamepadLabels.SetLabel(GamepadLabels.ButtonLabel.ActionBottomRow2, target.isSwing ? "Swing" : "Grapple");
             }
         }
 

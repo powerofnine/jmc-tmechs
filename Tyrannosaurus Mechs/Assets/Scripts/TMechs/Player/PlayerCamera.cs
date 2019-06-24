@@ -47,6 +47,9 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
+            if (Time.timeScale <= float.Epsilon)
+                return;
+            
             if (TargetController.Instance.GetLock())
                 LockedCamera();
             else
@@ -105,12 +108,15 @@ namespace TMechs.Player
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
             if (Input.GetButtonDown(CAMERA_CENTER))
-            {
-                state.rotationX = 0F;
-                state.rotationY = player.localEulerAngles.y;
-            }
+                RecenterCamera();
         }
 
+        public void RecenterCamera()
+        {
+            state.rotationX = 0F;
+            state.rotationY = player.localEulerAngles.y;
+        }
+        
         private struct CameraState
         {
             public PlayerCamera parent;

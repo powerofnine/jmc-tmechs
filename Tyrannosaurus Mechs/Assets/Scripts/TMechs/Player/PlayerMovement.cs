@@ -2,6 +2,7 @@
 using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
+using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -37,11 +38,13 @@ namespace TMechs.Player
         // Movement
         public Vector3 velocity;
         public Vector3 motion;
-        private bool isGrounded;
+        public bool isGrounded;
         private Vector3 contactPoint;
         private bool canRun = true;
         private bool canJump = true;
 
+        private bool isSprinting;
+        
         private void Awake()
         {
             animator = Player.Instance.Animator;
@@ -53,18 +56,20 @@ namespace TMechs.Player
                 aaCamera = transform;
             }
 
-            intendedY = transform.eulerAngles.y;
+            ResetIntendedY();
 
             controller = Player.Instance.Controller;
         }
 
         private void Update()
         {
+//            GamepadLabels.AddLabel(IconMap.IconGeneric.Down, "Test");
+            
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 return;
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
+                canJump = true;
 
-            bool angry = Input.GetButton(ANGERY);
-            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
 
             // Multiply movement by camera quaternion so that it is relative to the camera
@@ -74,22 +79,39 @@ namespace TMechs.Player
 
             if (movementMag > float.Epsilon)
             {
+                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, isSprinting ? "Stop Sprinting" : "Sprint", -100);
+                
+                if (Input.GetButtonDown(SPRINT))
+                    isSprinting = !isSprinting;
+                
                 if (movementMag > 1F)
                     movement.Normalize();
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
             }
+            else
+            {
+                isSprinting = false;
+            }
 
-            float speed = angry ? runSpeed : movementSpeed;
+            float speed = isSprinting ? runSpeed : movementSpeed;
             if (!canRun)
                 speed = movementSpeed * .85F;
             
             motion = movement * speed;
+
+//            if(isGrounded)
+//                GamepadLabels.AddLabel(IconMap.Icon.R1, "Dash");
             
-            if (canJump && Input.GetButtonDown(JUMP) && jumps < maxJumps)
+            if (canJump && jumps < maxJumps)
             {
-                animator.SetTrigger(isGrounded ? Anim.JUMP : Anim.AIR_JUMP);
-                canJump = false;
+                GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow1, "Jump");
+                
+                if (Input.GetButtonDown(JUMP))
+                {
+                    animator.SetTrigger(isGrounded ? Anim.JUMP : Anim.AIR_JUMP);
+                    canJump = false;
+                }
             }
         }
 
@@ -110,10 +132,13 @@ namespace TMechs.Player
             
             EnemyTarget target = TargetController.Instance.GetLock();
 
+            if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
+                return;
+            
             if (target)
             {
                 transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));
-                intendedY = transform.eulerAngles.y;
+                ResetIntendedY();
                 return;
             }
 
@@ -178,10 +203,18 @@ namespace TMechs.Player
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
 
+        public void ResetIntendedY()
+        {
+            intendedY = transform.eulerAngles.y;
+        }
+        
         public void OnAnimationEvent(string id)
         {
             if ("jump".Equals(id))
             {
+                if(isGrounded)
+                    Player.Instance.Combat.PerformAoe();
+                
                 if (!isGrounded)
                     jumps++;
                 velocity.y = jumpForce;

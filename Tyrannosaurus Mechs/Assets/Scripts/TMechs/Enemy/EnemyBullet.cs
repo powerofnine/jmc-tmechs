@@ -9,7 +9,7 @@ namespace TMechs.Enemy
         public float lifeTime;
 
         [NonSerialized]
-        public int damage;
+        public float damage;
         [NonSerialized]
         public Vector3 direction;
         [NonSerialized]

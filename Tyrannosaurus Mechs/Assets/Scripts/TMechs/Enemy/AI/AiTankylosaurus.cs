@@ -22,10 +22,11 @@ namespace TMechs.Enemy.AI
         public TankylosaurusProperties properties = new TankylosaurusProperties();
 
         private float yVelocity;
+        private Vector3 motion;
 
         private void Start()
         {
-            CreateStateMachine(new TankyloShared {animator = GetComponentInChildren<Animator>(), controller = GetComponent<CharacterController>()});
+            CreateStateMachine(new TankyloShared {parent = this, animator = GetComponentInChildren<Animator>(), controller = GetComponent<CharacterController>()});
         }
 
         private void Update()
@@ -38,7 +39,8 @@ namespace TMechs.Enemy.AI
 
             if (controller)
             {
-                controller.Move(Vector3.down * yVelocity);
+                controller.Move(Vector3.down * yVelocity + motion.Remove(Utility.Axis.Y) * Time.deltaTime);
+                motion = Vector3.zero;
 
                 if (controller.isGrounded)
                     yVelocity = 0F;
@@ -52,7 +54,7 @@ namespace TMechs.Enemy.AI
 
         private void CreateStateMachine(TankyloShared shared)
         {
-            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.transform, shared = shared};
+            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.centerOfMass, shared = shared};
 
             stateMachine.ImportProperties(properties);
 
@@ -105,8 +107,10 @@ namespace TMechs.Enemy.AI
 
                 transform.forward = direction;
 
-                if (DistanceToTarget >= Machine.Get<Radius>("attackRange"))
-                    shared.controller.Move(Machine.Get<float>("moveSpeed") * Time.deltaTime * direction);
+                if (HorizontalDistanceToTarget >= Machine.Get<Radius>("attackRange"))
+                    shared.parent.motion = Machine.Get<float>("moveSpeed") * direction;
+                else if(HorizontalDistanceToTarget >= Machine.Get<Radius>("attackRange") / 2F)
+                    shared.parent.motion = Machine.Get<float>("moveSpeed") * 4F * -direction;
             }
         }
 
@@ -226,6 +230,7 @@ namespace TMechs.Enemy.AI
 
         private class TankyloShared
         {
+            public AiTankylosaurus parent;
             public Animator animator;
             public CharacterController controller;
         }

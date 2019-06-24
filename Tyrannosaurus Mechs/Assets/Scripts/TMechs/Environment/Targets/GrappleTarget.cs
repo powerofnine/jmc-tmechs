@@ -1,3 +1,4 @@
+using TMechs.UI.GamePad;
 using UnityEngine;
 
 namespace TMechs.Environment.Targets
@@ -21,7 +22,22 @@ namespace TMechs.Environment.Targets
         public override Color GetHardLockColor() => throw new System.NotImplementedException();
 
         public override bool CanTarget() => currentCooldown <= 0F;
-        
+
+        private GamepadLabelComponent label;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            label = UseSpecific("GamepadLabel")?.GetComponent<GamepadLabelComponent>();
+            if (label != null)
+            {
+                label.switcher.icon = IconMap.Icon.R2;
+                label.switcher.isGeneric = false;
+                label.label.text = isSwing ? "HOLD" : "";
+            }
+        }
+
         private void Update()
         {
             if(currentCooldown > 0F)

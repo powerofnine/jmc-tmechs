@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.IO;
+using fuj1n.MinimalDebugConsole;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +27,17 @@ namespace TMechs.UI
                 render.color = Color.clear;
         }
 
+        [DebugConsoleCommand("level")]
+        public static void LoadScene(string name)
+        {
+            int index = SceneUtility.GetBuildIndexByScenePath(name);
+            
+            if(index == -1)
+                throw new FileNotFoundException($"Scene {name} not found");
+            
+            LoadScene(SceneUtility.GetBuildIndexByScenePath(name));
+        }
+        
         public static void LoadScene(int index, Action sceneLoaded = null)
         {
             if (!instance)

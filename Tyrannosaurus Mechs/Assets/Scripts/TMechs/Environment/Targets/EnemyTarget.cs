@@ -24,7 +24,7 @@ namespace TMechs.Environment.Targets
         {
             base.Awake();
 
-            healthValue = targetRoot.Find("EnemyHealth").GetComponent<Image>();
+            healthValue = UseSpecific("EnemyHealth")?.GetComponent<Image>();
             health = GetComponentInParent<EntityHealth>();
 
             if (health && healthValue)

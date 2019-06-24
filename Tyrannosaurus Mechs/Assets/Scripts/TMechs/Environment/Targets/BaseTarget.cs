@@ -6,7 +6,7 @@ namespace TMechs.Environment.Targets
 {
     public abstract class BaseTarget : MonoBehaviour
     {
-        private Transform player;
+        private Transform lookTarget;
 
         private byte lastPing;
         private bool hardLock;
@@ -15,6 +15,8 @@ namespace TMechs.Environment.Targets
         private Transform lookAnchor;
         private Image targetImage;
 
+        private Transform specifics;
+        
         private void OnEnable()
         {
             TargetController.Add(this);
@@ -42,7 +44,13 @@ namespace TMechs.Environment.Targets
             targetImage = targetRoot.Find("Target").GetComponent<Image>();
             targetRoot.gameObject.SetActive(false);
 
-            player = Player.Player.Instance.transform;
+            specifics = targetRoot.transform.Find("Specifics")?.transform;
+
+            if (specifics != null)
+                foreach(Transform t in specifics)
+                    t.gameObject.SetActive(false);
+
+            lookTarget = Player.Player.Instance.Camera.transform;
         }
 
         private void LateUpdate()
@@ -52,15 +60,27 @@ namespace TMechs.Environment.Targets
                 targetRoot.gameObject.SetActive(shouldShow);
             targetImage.color = hardLock ? GetHardLockColor() : GetColor();
 
-            if (player)
+            if (!shouldShow)
+                return;
+            lastPing--;
+            
+            if (lookTarget)
             {
-                lookAnchor.transform.LookAt(player);
+                lookAnchor.transform.LookAt(lookTarget);
                 lookAnchor.Rotate(0F, 180F, 0F);
             }
+        }
 
+        public GameObject UseSpecific(string name)
+        {
+            if (!specifics)
+                return null;
+            
+            GameObject go = specifics.Find(name)?.gameObject;
+            if(go != null)
+                go.SetActive(true);
 
-            if (shouldShow)
-                lastPing--;
+            return go;
         }
 
         public void Ping(bool hardLock = false)
