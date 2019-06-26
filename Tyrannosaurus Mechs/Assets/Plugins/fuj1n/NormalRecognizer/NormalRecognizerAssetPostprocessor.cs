@@ -8,10 +8,17 @@ namespace fuj1n.NormalRecognizer
     {
         private void OnPostprocessTexture(Texture2D texture)
         {
+            // Packages are inherently readonly, so trying to change it and reimport will cause it to reimport without
+            // changes, which will cause Unity to try to reimport the same asset over and over again.
+            
+            // So let's not do that
+            if (assetPath.StartsWith("Packages"))
+                return;
+            
             TextureImporter importer = (TextureImporter) assetImporter;
             if (importer.textureType != TextureImporterType.Default)
                 return;
-
+            
             for (int x = -5; x < 5; x++)
             {
                 for (int y = -5; y < 5; y++)
