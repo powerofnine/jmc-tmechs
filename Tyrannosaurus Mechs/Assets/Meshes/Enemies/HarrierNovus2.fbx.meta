@@ -11,7 +11,7 @@ ModelImporter:
     second: Idle2
   - first:
       74: 6720303635017113406
-    second: Attack
+    second: Shoot
   - first:
       74: 5054536776457384431
     second: Primer
@@ -129,7 +129,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack
+      name: Shoot
       takeName: Take 001
       internalID: 6720303635017113406
       firstFrame: 510
@@ -152,7 +152,35 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.3016393
+        functionName: OnAnimationEvent
+        data: Shoot
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.53114754
+        functionName: OnAnimationEvent
+        data: Shoot
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.74098366
+        functionName: OnAnimationEvent
+        data: Shoot
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.92459023
+        functionName: OnAnimationEvent
+        data: ShootDone
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -191,7 +219,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 6344608922005362703
       firstFrame: 910
-      lastFrame: 1038
+      lastFrame: 1030
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
