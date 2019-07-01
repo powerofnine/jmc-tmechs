@@ -1,22 +1,41 @@
 namespace TMechs.Player.Behavior
 {
-    public abstract class PlayerBehavior
+    public class PlayerBehavior
     {
+        public static readonly PlayerBehavior SPRINTING = new BehaviorSprinting();
+        public static readonly PlayerBehavior ROCKET_FIST = new BehaviorRocketFist();
+        
         protected Player player;
 
-        public virtual void OnEnter()
+        /**
+         * Called when this behavior is pushed
+         */
+        public virtual void OnPush()
         {
         }
 
-        public virtual void OnExit()
+        /**
+         * Called when another behavior is pushed in front of this one
+         */
+        public virtual void OnShadowed()
         {
         }
         
+        /**
+         * Called when this behavior is popped
+         */
+        public virtual void OnPop()
+        {
+        }
+        
+        /**
+         * Called on player tick
+         */
         public virtual void OnUpdate()
         {
         }
 
-        public virtual float GetSpeedMultiplier() => CanMove() ? 1F : 0F;
+        public virtual float GetSpeed() => player.Movement.movementSpeed;
         public virtual bool CanMove() => true;
 
         public void SetProperties(Player player)
