@@ -29,9 +29,7 @@ namespace TMechs.Entity
                 foreach (IDeath evt in GetComponentsInChildren<IDeath>(true))
                     evt.OnDying(ref customDestroy);
                 
-                if(customDestroy)
-                    Destroy(this);
-                else
+                if(!customDestroy)
                     Destroy(gameObject);
             }
         }
