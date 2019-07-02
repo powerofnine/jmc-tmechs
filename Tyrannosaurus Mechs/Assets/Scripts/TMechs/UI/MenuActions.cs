@@ -12,6 +12,7 @@ namespace TMechs.UI
 {
     public class MenuActions : MonoBehaviour
     {
+        public static bool pauseLocked;
         public const string FIRST_SCENE = "Assets/Scenes/Level1.unity";
 
         public MenuController controller;
@@ -77,12 +78,16 @@ namespace TMechs.UI
         }
 
         [DebugConsoleCommand("pause")]
-        public static void SetPause(bool pause)
+        public static void SetPause(bool pause, bool doBlur = true)
         {
+            if (pauseLocked)
+                return;
+            
             Time.timeScale = pause ? 0F : 1F;
             ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER).controllers.maps.SetMapsEnabled(!pause, Controls.Category.DEFAULT);
 
-            BlurFade.Fade(pause);
+            if(doBlur)
+                BlurFade.Fade(pause);
         }
 
         public void ExitGame()
