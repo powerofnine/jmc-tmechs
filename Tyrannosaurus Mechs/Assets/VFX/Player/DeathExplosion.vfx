@@ -684,7 +684,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":21.61332130432129,"g":17.94635581970215,"b":1.1214460134506226,"a":1.0},"time":0.0},{"color":{"r":2.0,"g":1.761966347694397,"b":0.6698113679885864,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":21.61332130432129,"g":17.94635581970215,"b":1.1214460134506226,"a":1.0},"time":0.0},{"color":{"r":1.4980392456054688,"g":1.3254902362823487,"b":0.501960813999176,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
@@ -1708,8 +1708,8 @@ VisualEffectResource:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.04940796
-              value: 0.09140015
+              time: 0.19583511
+              value: 0.3201599
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -1724,9 +1724,9 @@ VisualEffectResource:
         - m_ExpressionIndex: 1
           m_Value:
             serializedVersion: 2
-            key0: {r: 1, g: 0.99338686, b: 0.3820755, a: 0}
-            key1: {r: 1.9999998, g: 1.9895285, b: 0.76439786, a: 1}
-            key2: {r: 0, g: 0, b: 0, a: 0.9577465}
+            key0: {r: 11.984314, g: 8.407844, b: 0, a: 1}
+            key1: {r: 1.9999998, g: 1.9895285, b: 0.76439786, a: 0}
+            key2: {r: 0, g: 0, b: 0, a: 0}
             key3: {r: 0, g: 0, b: 0, a: 0}
             key4: {r: 0, g: 0, b: 0, a: 0}
             key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1741,21 +1741,21 @@ VisualEffectResource:
             ctime6: 0
             ctime7: 0
             atime0: 0
-            atime1: 5975
-            atime2: 65535
+            atime1: 65535
+            atime2: 0
             atime3: 0
             atime4: 0
             atime5: 0
             atime6: 0
             atime7: 0
-            m_Mode: 1
+            m_Mode: 0
             m_NumColorKeys: 2
-            m_NumAlphaKeys: 3
+            m_NumAlphaKeys: 2
         - m_ExpressionIndex: 3
           m_Value:
             serializedVersion: 2
             key0: {r: 21.613321, g: 17.946356, b: 1.121446, a: 1}
-            key1: {r: 2, g: 1.7619663, b: 0.66981137, a: 1}
+            key1: {r: 1.4980392, g: 1.3254902, b: 0.5019608, a: 1}
             key2: {r: 0, g: 0, b: 0, a: 0}
             key3: {r: 0, g: 0, b: 0, a: 0}
             key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1786,7 +1786,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 9
           m_Value: {fileID: 2800000, guid: 363ff926b7c6f5940bb2383b9911eb9b, type: 3}
         - m_ExpressionIndex: 22
-          m_Value: {fileID: 2800000, guid: 05d28cfea07db9246a54e7f84eac3157, type: 3}
+          m_Value: {fileID: 2800000, guid: 4cbbdca55046fcb4b8894ae0e5e1acd7, type: 3}
       m_Bool:
         m_Array: []
     m_ExposedExpressions: []
@@ -3247,7 +3247,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"05d28cfea07db9246a54e7f84eac3157","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"4cbbdca55046fcb4b8894ae0e5e1acd7","type":3}}'
     m_Space: 2147483647
   m_Property:
     name: mainTexture
@@ -3330,7 +3330,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.049407958984375,"value":0.091400146484375,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.19583511352539063,"value":0.320159912109375,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -3388,7 +3388,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":0.9933868646621704,"b":0.3820754885673523,"a":1.0},"time":0.0},{"color":{"r":1.999999761581421,"g":1.9895285367965699,"b":0.7643978595733643,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.09117265790700913},{"alpha":0.9577465057373047,"time":1.0}],"gradientMode":1}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":11.98431396484375,"g":8.407843589782715,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":1.999999761581421,"g":1.9895285367965699,"b":0.7643978595733643,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
