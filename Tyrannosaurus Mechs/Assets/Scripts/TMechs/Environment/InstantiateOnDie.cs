@@ -1,9 +1,10 @@
 ﻿using JetBrains.Annotations;
+using TMechs.Entity;
 using UnityEngine;
 
 namespace TMechs.Environment
 {
-    public class InstantiateOnDie : MonoBehaviour
+    public class InstantiateOnDie : MonoBehaviour, EntityHealth.IDeath
     {
         public GameObject template;
 
@@ -15,8 +16,7 @@ namespace TMechs.Environment
         [ConditionalHide("explode", true)]
         public float explosionRadius;
 
-        [UsedImplicitly]
-        private void OnDied()
+        public void OnDying(ref bool customDestroy)
         {
             GameObject go = Instantiate(template, transform.position, transform.rotation);
 
@@ -26,7 +26,7 @@ namespace TMechs.Environment
             foreach (Rigidbody rb in go.GetComponentsInChildren<Rigidbody>())
                 rb.AddExplosionForce(explosionForce, transform.position + explosionCenter, explosionRadius);
         }
-
+        
         private void OnDrawGizmosSelected()
         {
             if (!explode)

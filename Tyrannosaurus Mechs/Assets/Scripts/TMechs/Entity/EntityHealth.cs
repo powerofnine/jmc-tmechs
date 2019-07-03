@@ -24,14 +24,39 @@ namespace TMechs.Entity
             if (health <= 0F && !isDead)
             {
                 isDead = true;
-                SendMessage("OnDied", SendMessageOptions.DontRequireReceiver);
-                Destroy(gameObject);
+                bool customDestroy = false;
+                
+                foreach (IDeath evt in GetComponentsInChildren<IDeath>(true))
+                    evt.OnDying(ref customDestroy);
+                
+                if(!customDestroy)
+                    Destroy(gameObject);
             }
         }
 
         public void Damage(float damage)
         {
+            bool cancel = false;
+
+            foreach (IDamage evt in GetComponentsInChildren<IDamage>(true))
+            {
+                evt.OnDamaged(this, ref cancel);
+
+                if (cancel)
+                    return;
+            }
+
             Health -= damage / maxHealth;
+        }
+
+        public interface IDamage
+        {
+            void OnDamaged(EntityHealth health, ref bool cancel);
+        }
+
+        public interface IDeath
+        {
+            void OnDying(ref bool customDestroy);
         }
     }
 }

@@ -98,7 +98,9 @@ namespace TMechs.Player
             }
 
             if (!rocketFistCharging)
-                rocketFistCharge = Mathf.Clamp(rocketFistCharge - Time.deltaTime * rocketFistRechargeSpeedMultiplier, 0F, rocketFistChargeMax);
+                rocketFistCharge -= Time.deltaTime * rocketFistRechargeSpeedMultiplier;
+
+            rocketFistCharge = Mathf.Clamp(rocketFistCharge, 0F, rocketFistChargeMax);
         }
 
         public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)
