@@ -77,8 +77,15 @@ namespace TMechs.UI
             action?.Invoke();
         }
 
+        public void _SetPause(bool pause)
+        {
+            SetPause(pause);
+        }
+        
         [DebugConsoleCommand("pause")]
-        public static void SetPause(bool pause, bool doBlur = true)
+        public static void SetPause(bool pause) => SetPause(pause, true);
+        
+        public static void SetPause(bool pause, bool doBlur)
         {
             if (pauseLocked)
                 return;
