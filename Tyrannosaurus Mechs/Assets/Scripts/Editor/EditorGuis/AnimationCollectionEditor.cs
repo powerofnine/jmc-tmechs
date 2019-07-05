@@ -35,7 +35,10 @@ namespace Editor.EditorGuis
             EditorGUILayout.BeginHorizontal();
             Type typeVal = AnimationCollection.ParseType(type.stringValue);
 
-            string[] stringTypes = availableTypes.Select(x => x.FullName).Prepend("None").ToArray();
+            string[] stringTypes = availableTypes
+                    .Select(x => new {obj = x, attr = x.GetCustomAttribute(typeof(AnimationCollection.EnumAttribute)) as AnimationCollection.EnumAttribute})
+                    .Select(x => string.IsNullOrWhiteSpace(x.attr.name) ? x.obj.FullName : x.attr.name)
+                    .Prepend("None").ToArray();
 
             int index = typeVal != null ? Array.IndexOf(availableTypes, typeVal) : -1;
             

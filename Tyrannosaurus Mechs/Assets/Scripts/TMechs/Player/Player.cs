@@ -5,7 +5,7 @@ namespace TMechs.Player
 {
     public class Player : MonoBehaviour
     {
-        [AnimationCollection.EnumAttribute]
+        [AnimationCollection.Enum("Player Animations")]
         public enum PlayerAnims
         {
             [Header("Basic")]

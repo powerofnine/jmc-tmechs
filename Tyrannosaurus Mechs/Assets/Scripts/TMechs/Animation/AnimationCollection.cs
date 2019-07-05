@@ -71,7 +71,14 @@ namespace TMechs.Animation
 
         [AttributeUsage(AttributeTargets.Enum)]
         public sealed class EnumAttribute : Attribute
-        {}
+        {
+            public readonly string name;
+
+            public EnumAttribute(string name = "")
+            {
+                this.name = name;
+            }
+        }
 
         public sealed class ValidateAttribute : PropertyAttribute
         {
