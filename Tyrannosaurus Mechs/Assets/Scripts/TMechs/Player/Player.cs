@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using fuj1n.MinimalDebugConsole;
+using JetBrains.Annotations;
 using TMechs.Data;
-using TMechs.Environment.Targets;
+using TMechs.Player.Behavior;
 using TMechs.UI;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -55,10 +56,15 @@ namespace TMechs.Player
 
         private float health = 1F;
 
-        private static readonly int Z_WRITE = Shader.PropertyToID("_ZWrite");
-
         private bool displayCursor;
-
+        
+        private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
+        
+        [NotNull]
+        public PlayerBehavior Behavior => behaviorStack.Peek();
+        public bool CanMove => Behavior.CanMove();
+        public float Speed => Behavior.GetSpeed();
+        
         private void Awake()
         {
             Instance = this;
@@ -72,6 +78,11 @@ namespace TMechs.Player
             Movement = GetComponent<PlayerMovement>();
             CameraController = FindObjectOfType<PlayerCamera>();
             Camera = CameraController.GetComponentInChildren<Camera>();
+            
+            // Push the basic behavior state
+            // _Do variant is used to avoid accessing the empty stack, this is done to avoid having an empty check for 
+            // a stack that is only empty in this one occasion
+            PushBehavior_Do(new PlayerBehavior());
         }
 
         private void Update()
@@ -96,6 +107,8 @@ namespace TMechs.Player
 
             if (Animator)
                 Animator.SetBool(Anim.IS_CARRYING, pickedUp);
+            
+            Behavior?.OnUpdate();
         }
 
         public void Damage(float damage)
@@ -115,6 +128,32 @@ namespace TMechs.Player
             Health = data.health;
         }
 
+        public void PushBehavior([NotNull] PlayerBehavior behavior)
+        { 
+            Behavior?.OnShadowed();
+            
+            PushBehavior_Do(behavior);
+        }
+
+        private void PushBehavior_Do([NotNull] PlayerBehavior behavior)
+        {
+            behaviorStack.Push(behavior);
+
+            behavior.SetProperties(this);
+            behavior.OnPush();
+        }
+        
+        [NotNull]
+        public PlayerBehavior PopBehavior()
+        {
+            Behavior.OnPop();
+
+            if(behaviorStack.Count > 1)
+                return behaviorStack.Pop();
+
+            throw new InvalidOperationException("Cannot pop the last player behavior");
+        }
+
         private void UpdateHealth()
         {
             if (health <= 0F)
@@ -132,12 +171,12 @@ namespace TMechs.Player
 
         private void OnEnable()
         {
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+            DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
         }
 
         private void OnDisable()
         {
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+            DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
         }
 
         private void OnConsoleToggle(bool state)
@@ -163,7 +202,7 @@ namespace TMechs.Player
         private static void ToggleGodMode()
         {
             isGod = !isGod;
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+            DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
         }
 
         [DebugConsoleCommand("tp")]
@@ -199,7 +238,7 @@ namespace TMechs.Player
                     break;
             }
             
-            fuj1n.MinimalDebugConsole.DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+            DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
         }
 
         private enum PlayerVar

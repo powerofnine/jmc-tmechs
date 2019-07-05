@@ -1,0 +1,32 @@
+﻿using TMechs.Environment.Targets;
+using UnityEngine;
+
+namespace TMechs.Player.BehaviourOld
+{
+    public class Throw : StateMachineBehaviour
+    {
+        public float throwForce = 5F;
+        public float launchAngle = 45F;
+
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            base.OnStateExit(animator, stateInfo, layerIndex);
+
+            ThrowableContainer grabbed = Player.Instance.pickedUp;
+            Player.Instance.pickedUp = null;
+
+            EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
+
+            grabbed.transform.SetParent(null);
+
+            Vector3 ballisticVelocity;
+
+            if (target)
+                ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
+            else
+                ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, animator.transform.position + animator.transform.forward * throwForce, launchAngle);
+
+            grabbed.Throw(ballisticVelocity);
+        }
+    }
+}

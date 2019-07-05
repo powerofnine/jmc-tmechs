@@ -855,6 +855,8 @@ MonoBehaviour:
         name: useGUILayout
       - target: {fileID: 3634027011725909719}
         name: worldCamera
+      - target: {fileID: 582611062796153188}
+        name: _SetPause (Boolean pause)
       - target: {fileID: 4293540914663443972}
         name: add_reapplyDrivenProperties (RectTransform+ReapplyDrivenProperties value)
       - target: {fileID: 3634027011725909719}
@@ -907,9 +909,9 @@ MonoBehaviour:
         name: GetSiblingIndex ()
       - target: {fileID: 4293540914663443972}
         name: GetWorldCorners (Vector3[] fourCornersArray)
-      - target: {fileID: 2457290418723782767}
-        name: IsActive ()
       - target: {fileID: 2656701751929934939}
+        name: IsActive ()
+      - target: {fileID: 2457290418723782767}
         name: IsActive ()
       - target: {fileID: 4293540914663443972}
         name: IsChildOf (Transform parent)
@@ -951,8 +953,6 @@ MonoBehaviour:
       - target: {fileID: 4293540914663443972}
         name: SetInsetAndSizeFromParentEdge (RectTransform+Edge edge, Single inset,
           Single size)
-      - target: {fileID: 582611062796153188}
-        name: SetPause (Boolean pause)
       - target: {fileID: 4293540914663443972}
         name: SetPositionAndRotation (Vector3 position, Quaternion rotation)
       - target: {fileID: 4293540914663443972}
@@ -972,7 +972,7 @@ MonoBehaviour:
       - target: {fileID: 4744706801910707804}
         name: StopAnimation ()
       mTarget: {fileID: 582611062796153188}
-      mMethodName: SetPause
+      mMethodName: _SetPause
       mParameters:
       - obj: {fileID: 0}
         field: 
@@ -7448,6 +7448,56 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4306513311418027211, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306513311418027211, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808443825104938629, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808443825104938629, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471494817477260656, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471494817477260656, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666529051702766714, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666529051702766714, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858199541502192621, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858199541502192621, guid: dec880a02f8833a4ab76fa1032c0279e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4069765480635814127, guid: dec880a02f8833a4ab76fa1032c0279e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -7472,56 +7522,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306513311418027211, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306513311418027211, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7808443825104938629, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7808443825104938629, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6471494817477260656, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6471494817477260656, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666529051702766714, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666529051702766714, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6858199541502192621, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6858199541502192621, guid: dec880a02f8833a4ab76fa1032c0279e,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec880a02f8833a4ab76fa1032c0279e, type: 3}

@@ -1,7 +1,7 @@
 ﻿using System;
-using TMechs.Data;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
+using TMechs.Player.Behavior;
 using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
@@ -11,6 +11,7 @@ namespace TMechs.Player
     public class PlayerMovement : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
     {
         private static Rewired.Player Input => Player.Input;
+        private static Player Player => Player.Instance;
 
         [Name("AA Camera")]
         public Transform aaCamera;
@@ -43,8 +44,6 @@ namespace TMechs.Player
         private bool canRun = true;
         private bool canJump = true;
 
-        private bool isSprinting;
-        
         private void Awake()
         {
             animator = Player.Instance.Animator;
@@ -64,7 +63,9 @@ namespace TMechs.Player
         private void Update()
         {
 //            GamepadLabels.AddLabel(IconMap.IconGeneric.Down, "Test");
-            
+
+            if (!Player.CanMove)
+                return;
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 return;
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
@@ -79,10 +80,15 @@ namespace TMechs.Player
 
             if (movementMag > float.Epsilon)
             {
-                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, isSprinting ? "Stop Sprinting" : "Sprint", -100);
+                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, Player.Behavior == PlayerBehavior.SPRINTING ? "Stop Sprinting" : "Sprint", -100);
                 
                 if (Input.GetButtonDown(SPRINT))
-                    isSprinting = !isSprinting;
+                {
+                    if (Player.Behavior == PlayerBehavior.SPRINTING)
+                        Player.PopBehavior();
+                    else
+                        Player.PushBehavior(PlayerBehavior.SPRINTING);
+                }
                 
                 if (movementMag > 1F)
                     movement.Normalize();
@@ -91,10 +97,11 @@ namespace TMechs.Player
             }
             else
             {
-                isSprinting = false;
+                if (Player.Behavior == PlayerBehavior.SPRINTING)
+                    Player.PopBehavior();
             }
 
-            float speed = isSprinting ? runSpeed : movementSpeed;
+            float speed = Player.Speed;
             if (!canRun)
                 speed = movementSpeed * .85F;
             
