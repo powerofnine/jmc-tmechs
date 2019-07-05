@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class CameraZoom : MonoBehaviour
     {

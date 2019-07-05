@@ -24,7 +24,7 @@ namespace TMechs.Enemy.AI
         {
             stateMachine = new AiStateMachine(transform)
             {
-                    target = Player.Player.Instance.transform,
+                    target = PlayerOld.Player.Instance.transform,
                     shared = shared
             };
 
@@ -237,7 +237,7 @@ namespace TMechs.Enemy.AI
                     attackTriggered = true;
                     
                     if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                        Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                        PlayerOld.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
                 }
             }
         }

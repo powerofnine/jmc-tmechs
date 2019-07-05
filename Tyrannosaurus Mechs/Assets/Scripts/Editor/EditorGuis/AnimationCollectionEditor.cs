@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TMechs.Animation;
@@ -59,12 +60,34 @@ namespace Editor.EditorGuis
                 return;
             }
 
-            EditorGUILayout.LabelField("Clips", EditorStyles.boldLabel);
-            
+            EditorGUILayout.Space();
+
             string[] vals = Enum.GetNames(typeVal);
 
             for (int i = 0; i < clips.arraySize && i < vals.Length; i++)
-                EditorGUILayout.PropertyField(clips.GetArrayElementAtIndex(i), new GUIContent(vals[i]));
+            {
+                MemberInfo info = typeVal.GetMember(vals[i]).FirstOrDefault();
+                if (info != null)
+                {
+                    IEnumerable<PropertyAttribute> attribs = info.GetCustomAttributes<PropertyAttribute>();
+                    
+                    foreach(PropertyAttribute attrib in attribs)
+                    {
+                        switch (attrib)
+                        {
+                            case SpaceAttribute _:
+                                EditorGUILayout.Space();
+                                break;
+                            case HeaderAttribute header:
+                                EditorGUILayout.Space();
+                                EditorGUILayout.LabelField(header.header, EditorStyles.centeredGreyMiniLabel);
+                                break;
+                        }
+                    }
+                }
+
+                EditorGUILayout.PropertyField(clips.GetArrayElementAtIndex(i), new GUIContent(ObjectNames.NicifyVariableName(vals[i])));
+            }
         }
 
         private static Type[] FetchTypes() => 

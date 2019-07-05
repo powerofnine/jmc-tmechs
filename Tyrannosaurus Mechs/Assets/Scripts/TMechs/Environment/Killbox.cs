@@ -10,7 +10,7 @@ namespace TMechs.Environment
         {
             if (other.CompareTag("Player"))
             {
-                Player.Player.Instance.Damage(5000000);
+                PlayerOld.Player.Instance.Damage(5000000);
                 return;
             }
 

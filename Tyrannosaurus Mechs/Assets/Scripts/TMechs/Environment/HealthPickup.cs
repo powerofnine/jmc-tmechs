@@ -18,9 +18,9 @@ namespace TMechs.Environment
         public void OnDying(ref bool customDestroy)
         {
             if (restorePercentage)
-                Player.Player.Instance.Health += healthRestorePercent;
+                PlayerOld.Player.Instance.Health += healthRestorePercent;
             else
-                Player.Player.Instance.Health += healthRestoreAbsolute / Player.Player.Instance.maxHealth;
+                PlayerOld.Player.Instance.Health += healthRestoreAbsolute / PlayerOld.Player.Instance.maxHealth;
         }
     }
 }

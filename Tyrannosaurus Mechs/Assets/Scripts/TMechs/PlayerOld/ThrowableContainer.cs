@@ -3,7 +3,7 @@ using System.Linq;
 using TMechs.Entity;
 using UnityEngine;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     [AddComponentMenu("")]
     public class ThrowableContainer : MonoBehaviour

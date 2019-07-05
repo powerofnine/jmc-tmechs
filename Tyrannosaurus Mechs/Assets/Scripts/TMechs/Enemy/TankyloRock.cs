@@ -11,7 +11,7 @@ namespace TMechs.Enemy
         private void OnCollisionEnter(Collision other)
         {
             if(other.collider.CompareTag("Player"))
-                Player.Player.Instance.Damage(damage);
+                PlayerOld.Player.Instance.Damage(damage);
 
             if (effect)
                 Instantiate(effect, transform.position, transform.rotation);

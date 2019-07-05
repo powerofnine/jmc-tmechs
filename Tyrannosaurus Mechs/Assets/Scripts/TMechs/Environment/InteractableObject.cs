@@ -33,7 +33,7 @@ namespace TMechs.Environment
 
             overrideLabel = 3; 
             
-            if (Player.Player.Input.GetButtonDown(Controls.Action.INTERACT) && onToggle != null)
+            if (PlayerOld.Player.Input.GetButtonDown(Controls.Action.INTERACT) && onToggle != null)
             {
                 OnToggle();
             }
@@ -61,8 +61,8 @@ namespace TMechs.Environment
 
         public virtual bool IsWithinAngle()
         {
-            Vector3 direction = (transform.position - Player.Player.Instance.transform.position).normalized;
-            return Vector3.Angle(direction, Player.Player.Instance.transform.forward) < 90F;
+            Vector3 direction = (transform.position - PlayerOld.Player.Instance.transform.position).normalized;
+            return Vector3.Angle(direction, PlayerOld.Player.Instance.transform.forward) < 90F;
         }
     }
 }

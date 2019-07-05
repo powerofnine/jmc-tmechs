@@ -30,7 +30,7 @@ namespace TMechs.Enemy
                 return;
             
             if(other.CompareTag("Player"))
-                Player.Player.Instance.Damage(damage);
+                PlayerOld.Player.Instance.Damage(damage);
             
             Destroy(gameObject);
         }

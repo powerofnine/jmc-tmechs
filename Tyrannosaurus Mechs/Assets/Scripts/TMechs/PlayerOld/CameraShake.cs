@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class CameraShake : MonoBehaviour
     {

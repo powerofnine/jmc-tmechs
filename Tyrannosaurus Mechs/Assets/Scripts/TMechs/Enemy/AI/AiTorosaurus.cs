@@ -29,7 +29,7 @@ namespace TMechs.Enemy.AI
 
         private void CreateStateMachine(TorosaurusShared shared)
         {
-            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.centerOfMass, shared = shared};
+            stateMachine = new AiStateMachine(transform) {target = PlayerOld.Player.Instance.centerOfMass, shared = shared};
 
             stateMachine.ImportProperties(properties);
 
@@ -185,7 +185,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "chargeHit":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Damage(Machine.Get<int>("chargeHitDamage"));
+                            PlayerOld.Player.Instance.Damage(Machine.Get<int>("chargeHitDamage"));
                         break;
                 }
             }
@@ -236,7 +236,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "attack":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                            PlayerOld.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
                         break;
                 }
             }

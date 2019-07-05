@@ -1,12 +1,12 @@
 ﻿using System;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
-using TMechs.Player.Behavior;
+using TMechs.PlayerOld.Behavior;
 using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class PlayerMovement : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
     {

@@ -21,7 +21,7 @@ namespace TMechs.Entity
 
         private void Awake()
         {
-            anchor = Player.Player.Instance.rocketFistAnchor;
+            anchor = PlayerOld.Player.Instance.rocketFistAnchor;
 
             transform.position = anchor.position;
             transform.forward = anchor.forward;
@@ -80,7 +80,7 @@ namespace TMechs.Entity
                 yield return null;
             }
 
-            Player.Player.Instance.Animator.SetTrigger(Anim.ROCKET_RETURN);
+            PlayerOld.Player.Instance.Animator.SetTrigger(Anim.ROCKET_RETURN);
             Destroy(gameObject);
         }
 

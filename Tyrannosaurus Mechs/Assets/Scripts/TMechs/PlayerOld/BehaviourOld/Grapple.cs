@@ -2,7 +2,7 @@
 using TMechs.Environment.Targets;
 using UnityEngine;
 
-namespace TMechs.Player.BehaviourOld
+namespace TMechs.PlayerOld.BehaviourOld
 {
     public class Grapple : StateMachineBehaviour
     {

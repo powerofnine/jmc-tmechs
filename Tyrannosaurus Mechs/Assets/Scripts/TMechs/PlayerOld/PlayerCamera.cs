@@ -4,7 +4,7 @@ using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class PlayerCamera : MonoBehaviour
     {

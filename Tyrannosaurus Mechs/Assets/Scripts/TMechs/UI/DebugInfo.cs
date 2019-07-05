@@ -29,8 +29,8 @@ namespace TMechs.UI
             {
                 string ret = "Player Info: ";
 
-                if (Player.Player.Instance)
-                    ret += "\n" + string.Join("\n", Player.Player.Instance.GetDebugInfo());
+                if (PlayerOld.Player.Instance)
+                    ret += "\n" + string.Join("\n", PlayerOld.Player.Instance.GetDebugInfo());
                 else
                     ret += "Unavailable";
 

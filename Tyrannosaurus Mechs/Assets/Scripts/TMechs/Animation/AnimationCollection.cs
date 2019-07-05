@@ -61,8 +61,8 @@ namespace TMechs.Animation
                 return null;
             
             Type enumType = Type.GetType(type);
-            if(enumType == null)
-                throw new ArgumentException($"Specified type {type} cannot be found");
+            if (enumType == null)
+                return null;
             if (!enumType.IsEnum)
                 throw new ArgumentException($"Specified type {type} is not enum");
 

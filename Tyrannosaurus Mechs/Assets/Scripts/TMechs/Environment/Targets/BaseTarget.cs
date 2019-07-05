@@ -1,4 +1,4 @@
-﻿using TMechs.Player;
+﻿using TMechs.PlayerOld;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +50,7 @@ namespace TMechs.Environment.Targets
                 foreach(Transform t in specifics)
                     t.gameObject.SetActive(false);
 
-            lookTarget = Player.Player.Instance.Camera.transform;
+            lookTarget = PlayerOld.Player.Instance.Camera.transform;
         }
 
         private void LateUpdate()

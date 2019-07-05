@@ -57,15 +57,15 @@ namespace TMechs.Environment
 
         private void MovePlayer()
         {
-            if (!Player.Player.Instance)
+            if (!PlayerOld.Player.Instance)
             {
                 Debug.LogError("Could not spawn player as the player could not be found");
                 return;
             }
 
-            Player.Player.Instance.Controller.enabled = false;
-            Player.Player.Instance.transform.position = transform.position + anchorOffset;
-            Player.Player.Instance.Controller.enabled = true;
+            PlayerOld.Player.Instance.Controller.enabled = false;
+            PlayerOld.Player.Instance.transform.position = transform.position + anchorOffset;
+            PlayerOld.Player.Instance.Controller.enabled = true;
         }
 
         private IEnumerator Transition(Color c)
@@ -136,7 +136,7 @@ namespace TMechs.Environment
                         checkpointId = id
                 };
 
-                Player.Player.Instance.SavePlayerData(ref data);
+                PlayerOld.Player.Instance.SavePlayerData(ref data);
                 
                 string meta = "";
 

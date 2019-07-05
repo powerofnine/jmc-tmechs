@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TMechs.Player.Behavior
+namespace TMechs.PlayerOld.Behavior
 {
     public class BehaviorRocketFist : PlayerBehavior
     {

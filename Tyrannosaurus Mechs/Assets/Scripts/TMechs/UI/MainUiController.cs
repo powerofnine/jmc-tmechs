@@ -21,7 +21,7 @@ namespace TMechs.UI
 
         private void Update()
         {
-            Player.Player player = Player.Player.Instance;
+            PlayerOld.Player player = PlayerOld.Player.Instance;
             health.FillAmount = player.Health;
             charge.localEulerAngles = -charge.localEulerAngles.Set(Mathf.Lerp(0F, 180F, player.Combat.rocketFistCharge / player.Combat.rocketFistChargeMax), Utility.Axis.Z);
 

@@ -1,7 +1,7 @@
 ﻿using TMechs.Entity;
 using UnityEngine;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class PlayerHitBox : MonoBehaviour
     {

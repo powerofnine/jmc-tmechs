@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static TMechs.Controls.Action;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class PlayerCombat : MonoBehaviour
     {
