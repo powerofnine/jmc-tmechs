@@ -1,7 +1,7 @@
 ﻿using System;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
-using TMechs.PlayerOld.Behavior;
+using TMechs.Player.Behavior;
 using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
@@ -44,6 +44,8 @@ namespace TMechs.PlayerOld
         private bool canRun = true;
         private bool canJump = true;
 
+        private bool sprinting;
+        
         private void Awake()
         {
             animator = Player.Instance.Animator;
@@ -80,14 +82,11 @@ namespace TMechs.PlayerOld
 
             if (movementMag > float.Epsilon)
             {
-                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, Player.Behavior == PlayerBehavior.SPRINTING ? "Stop Sprinting" : "Sprint", -100);
+                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, sprinting ? "Stop Sprinting" : "Sprint", -100);
                 
                 if (Input.GetButtonDown(SPRINT))
                 {
-                    if (Player.Behavior == PlayerBehavior.SPRINTING)
-                        Player.PopBehavior();
-                    else
-                        Player.PushBehavior(PlayerBehavior.SPRINTING);
+                    sprinting = !sprinting;
                 }
                 
                 if (movementMag > 1F)
@@ -97,8 +96,7 @@ namespace TMechs.PlayerOld
             }
             else
             {
-                if (Player.Behavior == PlayerBehavior.SPRINTING)
-                    Player.PopBehavior();
+                sprinting = false;
             }
 
             float speed = Player.Speed;

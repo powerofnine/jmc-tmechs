@@ -7,14 +7,18 @@ namespace TMechs
     {
         private static GameObject preload;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void Initialize()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void PreInitialize()
         {
             GameObject input = Resources.Load<GameObject>("Input");
 
             if (input)
                 Instantiate(input);
-            
+        }
+        
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void Initialize()
+        {
             GameObject preloadObject = Resources.Load<GameObject>("PRELOAD");
 
             if (preloadObject)

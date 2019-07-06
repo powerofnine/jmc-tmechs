@@ -1,8 +1,7 @@
-namespace TMechs.PlayerOld.Behavior
+namespace TMechs.Player.Behavior
 {
     public class PlayerBehavior
     {
-        public static readonly PlayerBehavior SPRINTING = new BehaviorSprinting();
         public static readonly PlayerBehavior ROCKET_FIST = new BehaviorRocketFist();
         
         protected Player player;
@@ -35,7 +34,7 @@ namespace TMechs.PlayerOld.Behavior
         {
         }
 
-        public virtual float GetSpeed() => player.Movement.movementSpeed;
+        public virtual float GetSpeed() => player.movement.movementSpeed;
         public virtual bool CanMove() => true;
 
         public void SetProperties(Player player)

@@ -12,8 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461aa86daf69ba743ac45585502c6926, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  serializedType: TMechs.Player.Player+PlayerAnims, Assembly-CSharp, Version=0.0.0.0,
+  serializedType: TMechs.Player.Player+PlayerAnim, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
+  enums:
+  - Idle
+  - Death
+  - Walk
+  - Run
+  - Dash
+  - Jump
+  - AirJump
+  - Attack1
+  - Attack2
+  - Attack3
+  - GrabObject
+  - ThrowObject
+  - Grapple
+  - RocketChargeIntro
+  - RocketCharge
+  - RocketHold
+  - RocketRecover
+  - RocketReturn
   animations:
   - {fileID: 7400004, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
   - {fileID: 7400008, guid: 5504b19f465286c4a8515eb9e8479699, type: 3}

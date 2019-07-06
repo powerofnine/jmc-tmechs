@@ -8,6 +8,8 @@ namespace TMechs.Player.Modules
     [PublicAPI]
     public abstract class PlayerModule
     {
+        protected static Rewired.Player Input => Player.Input;
+        
         [NonSerialized]
         public Player player;
 

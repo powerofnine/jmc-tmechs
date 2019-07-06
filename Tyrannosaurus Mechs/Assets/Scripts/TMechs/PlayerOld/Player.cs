@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using fuj1n.MinimalDebugConsole;
 using JetBrains.Annotations;
 using TMechs.Data;
-using TMechs.PlayerOld.Behavior;
+using TMechs.Player.Behavior;
 using TMechs.UI;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -82,7 +82,7 @@ namespace TMechs.PlayerOld
             // Push the basic behavior state
             // _Do variant is used to avoid accessing the empty stack, this is done to avoid having an empty check for 
             // a stack that is only empty in this one occasion
-            PushBehavior_Do(new PlayerBehavior());
+//            PushBehavior_Do(new PlayerBehavior());
         }
 
         private void Update()
@@ -128,31 +128,31 @@ namespace TMechs.PlayerOld
             Health = data.health;
         }
 
-        public void PushBehavior([NotNull] PlayerBehavior behavior)
-        { 
-            Behavior?.OnShadowed();
-            
-            PushBehavior_Do(behavior);
-        }
-
-        private void PushBehavior_Do([NotNull] PlayerBehavior behavior)
-        {
-            behaviorStack.Push(behavior);
-
-            behavior.SetProperties(this);
-            behavior.OnPush();
-        }
-        
-        [NotNull]
-        public PlayerBehavior PopBehavior()
-        {
-            Behavior.OnPop();
-
-            if(behaviorStack.Count > 1)
-                return behaviorStack.Pop();
-
-            throw new InvalidOperationException("Cannot pop the last player behavior");
-        }
+//        public void PushBehavior([NotNull] PlayerBehavior behavior)
+//        { 
+//            Behavior?.OnShadowed();
+//            
+//            PushBehavior_Do(behavior);
+//        }
+//
+//        private void PushBehavior_Do([NotNull] PlayerBehavior behavior)
+//        {
+//            behaviorStack.Push(behavior);
+//
+//            behavior.SetProperties(null);
+//            behavior.OnPush();
+//        }
+//        
+//        [NotNull]
+//        public PlayerBehavior PopBehavior()
+//        {
+//            Behavior.OnPop();
+//
+//            if(behaviorStack.Count > 1)
+//                return behaviorStack.Pop();
+//
+//            throw new InvalidOperationException("Cannot pop the last player behavior");
+//        }
 
         private void UpdateHealth()
         {
