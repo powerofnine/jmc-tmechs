@@ -29,13 +29,15 @@ namespace TMechs.Player
         [Header("Modules")]
         public ForcesModule forces = new ForcesModule();
         public MovementModule movement = new MovementModule();
-        
+
         [Header("Behavior")]
+        public BehaviorStandard standard = new BehaviorStandard();
+        public BehaviorJump jump = new BehaviorJump();
         
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
         
         [NotNull]
-        public PlayerBehavior Behavior => behaviorStack.Peek();
+        public PlayerBehavior Behavior => behaviorStack.Count > 0 ? behaviorStack.Peek() : standard;
         public bool CanMove => Behavior.CanMove();
         public float Speed => Behavior.GetSpeed();
 
@@ -49,10 +51,7 @@ namespace TMechs.Player
             RegisterModule(forces);
             RegisterModule(movement);
             
-            // Push the basic behavior state
-            // _Do variant is used to avoid accessing the empty stack, this is done to avoid having an empty check for 
-            // a stack that is only empty in this one occasion
-            PushBehavior_Do(new PlayerBehavior());
+            PushBehavior(standard);
         }
 
         private void Update()
@@ -74,6 +73,8 @@ namespace TMechs.Player
             foreach (PlayerModule module in modules)
                 if(module.enabled)
                     module.OnUpdate();
+            
+            Behavior.OnUpdate();
         }
 
         private void LateUpdate()
@@ -108,19 +109,14 @@ namespace TMechs.Player
         
         public void PushBehavior([NotNull] PlayerBehavior behavior)
         { 
-            Behavior?.OnShadowed();
+            Behavior.OnShadowed();
             
-            PushBehavior_Do(behavior);
-        }
-
-        private void PushBehavior_Do([NotNull] PlayerBehavior behavior)
-        {
             behaviorStack.Push(behavior);
 
-            behavior.SetProperties(this);
+            behavior.player = this;
             behavior.OnPush();
         }
-        
+
         [NotNull]
         public PlayerBehavior PopBehavior()
         {
@@ -128,6 +124,8 @@ namespace TMechs.Player
 
             if(behaviorStack.Count > 1)
                 return behaviorStack.Pop();
+            
+            Behavior.OnSurfaced();
 
             throw new InvalidOperationException("Cannot pop the last player behavior");
         }

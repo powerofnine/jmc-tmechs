@@ -34,7 +34,7 @@ namespace TMechs.Entity
             }
         }
 
-        public void Damage(float damage)
+        public void Damage(float damage, bool percent = false)
         {
             bool cancel = false;
 
@@ -59,12 +59,12 @@ namespace TMechs.Entity
                 }
             }
 
-            Health -= damage / maxHealth;
+            Health -= damage / (percent ? 1F : maxHealth);
         }
 
-        public void Heal(float health)
+        public void Heal(float health, bool percent = false)
         {
-            Damage(-health);
+            Damage(-health, percent);
         }
 
         public interface IDamage

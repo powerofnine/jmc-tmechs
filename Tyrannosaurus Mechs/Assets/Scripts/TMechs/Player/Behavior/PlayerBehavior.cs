@@ -1,10 +1,21 @@
+using System;
+using JetBrains.Annotations;
+using UnityEngine;
+
 namespace TMechs.Player.Behavior
 {
-    public class PlayerBehavior
+    [PublicAPI]
+    public abstract class PlayerBehavior
     {
-        public static readonly PlayerBehavior ROCKET_FIST = new BehaviorRocketFist();
+        protected static Rewired.Player Input => Player.Input;
         
-        protected Player player;
+        [NonSerialized]
+        public Player player;
+        
+        // ReSharper disable once InconsistentNaming - keep consistency with Unity naming
+        public Transform transform => player.transform;
+        // ReSharper disable once InconsistentNaming - keep consistency with Unity naming
+        public GameObject gameObject => player.gameObject;
 
         /**
          * Called when this behavior is pushed
@@ -17,6 +28,13 @@ namespace TMechs.Player.Behavior
          * Called when another behavior is pushed in front of this one
          */
         public virtual void OnShadowed()
+        {
+        }
+        
+        /**
+         * Called when the behavior in front of this one is popped
+         */
+        public virtual void OnSurfaced()
         {
         }
         
@@ -37,9 +55,13 @@ namespace TMechs.Player.Behavior
         public virtual float GetSpeed() => player.movement.movementSpeed;
         public virtual bool CanMove() => true;
 
-        public void SetProperties(Player player)
-        {
-            this.player = player;
-        }
+        public T GetComponent<T>()
+            => player.GetComponent<T>();
+
+        public T GetComponentInChildren<T>(bool includeInactive = false)
+            => player.GetComponentInChildren<T>(includeInactive);
+
+        public T GetComponentInParent<T>()
+            => player.GetComponentInParent<T>();
     }
 }

@@ -16,10 +16,6 @@ namespace TMechs.Player.Modules
         
         public float movementSpeed = 25F;
         public float runSpeed = 40F;
-        public float jumpForce = 25F;
-
-        [Space]
-        public int airJumps = 1;
 
         [HideInInspector]
         public float intendedY;

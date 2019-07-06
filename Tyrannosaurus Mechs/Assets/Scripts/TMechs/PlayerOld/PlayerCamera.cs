@@ -1,6 +1,5 @@
 using System;
 using TMechs.Data.Settings;
-using TMechs.Environment.Targets;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -8,7 +7,7 @@ namespace TMechs.PlayerOld
 {
     public class PlayerCamera : MonoBehaviour
     {
-        private static Rewired.Player Input => Player.Input;
+        private static Rewired.Player Input => TMechs.Player.Player.Input;
 
         public Transform player;
         public float cameraSpeed = 10F;
