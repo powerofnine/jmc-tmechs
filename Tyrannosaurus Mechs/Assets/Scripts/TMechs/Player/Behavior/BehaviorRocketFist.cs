@@ -18,6 +18,9 @@ namespace TMechs.Player.Behavior
         public float maxChargeTime = 5F;
         public float rechargeSpeed = 2F;
         public float rocketFistReturnTime = 1.5F;
+        
+        [NonSerialized]
+        public float rocketFistCharge;
 
         [Space]
         public GameObject rocketFistTemplate;
@@ -74,7 +77,7 @@ namespace TMechs.Player.Behavior
             base.OnUpdate();
 
             if (charging)
-                player.standard.rocketFistCharge += Time.deltaTime;
+                rocketFistCharge += Time.deltaTime;
 
             if (rocketReturned)
             {
@@ -100,7 +103,8 @@ namespace TMechs.Player.Behavior
                 GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
                 EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
                 
-                transform.LookAt(enemy.transform.position.Set(transform.position.y, Utility.Axis.Y));
+                if(enemy)
+                    transform.LookAt(enemy.transform.position.Set(transform.position.y, Utility.Axis.Y));
                 player.movement.ResetIntendedY();
             }
             
@@ -120,7 +124,7 @@ namespace TMechs.Player.Behavior
                 }
                 
                 RocketFist rf = Object.Instantiate(rocketFistTemplate, rocketFistAnchor.position, rocketFistAnchor.rotation).GetComponent<RocketFist>();
-                rf.damage = Mathf.Lerp(baseDamage, maxDamage, player.standard.rocketFistCharge / maxChargeTime);
+                rf.damage = Mathf.Lerp(baseDamage, maxDamage, rocketFistCharge / maxChargeTime);
                 rf.target = enemy.transform;
                 rocketFistGeo.SetActive(false);
                 

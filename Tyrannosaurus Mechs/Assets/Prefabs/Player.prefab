@@ -1716,10 +1716,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c9742931cafb64283336e4ac8bec04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centerOfMass: {fileID: 8747315497052649858}
   animations: {fileID: 11400000, guid: acd7ac55f1f5b7247b74615d4b9ed76c, type: 2}
   forces:
     enabled: 1
     gravityMultiplier: 1
+    stickyGroundForce: 200
   movement:
     enabled: 1
     aaCamera: {fileID: 5996704746580931528}
@@ -1738,6 +1740,10 @@ MonoBehaviour:
     jumpForce: 25
     aoeRange: 20
     aoeDamage: {x: 5, y: 10}
+  grapple:
+    pullSpeedMin: 50
+    pullSpeedMax: 100
+    pullExitDistance: 2
   attack:
     forwardSpeed: 10
     attack1Damage: 10

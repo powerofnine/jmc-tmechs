@@ -54,7 +54,7 @@ namespace TMechs.Enemy.AI
 
         private void CreateStateMachine(TankyloShared shared)
         {
-            stateMachine = new AiStateMachine(transform) {target = PlayerOld.Player.Instance.centerOfMass, shared = shared};
+            stateMachine = new AiStateMachine(transform) {target = Player.Player.Instance.centerOfMass, shared = shared};
 
             stateMachine.ImportProperties(properties);
 

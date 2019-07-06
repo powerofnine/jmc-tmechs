@@ -16,10 +16,8 @@ namespace TMechs.Player.Modules
         [NonSerialized]
         public Vector3 motion;
 
-        public Vector3 ControllerVelocity => controllerVelocity;
+        public Vector3 ControllerVelocity { get; private set; }
 
-        private Vector3 controllerVelocity;
-        
         public bool IsGrounded => groundedFrames > 0;
 
         private int groundedFrames;
@@ -40,7 +38,7 @@ namespace TMechs.Player.Modules
             velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.deltaTime;
             
             controller.Move((velocity + motion) * Time.deltaTime);
-            controllerVelocity = controller.velocity;
+            ControllerVelocity = controller.velocity;
 
             if (groundedFrames > 1 && velocity.y < Mathf.Epsilon)
                 controller.Move(stickyGroundForce * Time.deltaTime * Vector3.down);
@@ -54,6 +52,8 @@ namespace TMechs.Player.Modules
             
             GroundedCheck();
         }
+
+        public void ResetGround() => groundedFrames = 0;
         
         private void GroundedCheck()
         {
@@ -90,7 +90,7 @@ namespace TMechs.Player.Modules
 
             player.movement.intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             controller.Move(player.movement.runSpeed * 1.15F * Time.deltaTime * direction);
-            controllerVelocity = controller.velocity;
+            ControllerVelocity = controller.velocity;
         }
     }
 }

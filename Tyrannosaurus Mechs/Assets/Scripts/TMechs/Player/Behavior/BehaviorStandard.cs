@@ -12,15 +12,12 @@ namespace TMechs.Player.Behavior
     {
         private int jumps;
 
-        [NonSerialized]
-        public float rocketFistCharge;
-        
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            if (rocketFistCharge > 0F)
-                rocketFistCharge -= player.rocketFist.rechargeSpeed * Time.deltaTime;
+            if (player.rocketFist.rocketFistCharge > 0F)
+                player.rocketFist.rocketFistCharge -= player.rocketFist.rechargeSpeed * Time.deltaTime;
             if (player.forces.IsGrounded)
                 jumps = 0;
             
@@ -68,12 +65,23 @@ namespace TMechs.Player.Behavior
 
             EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
 
-            if (enemy != null)
+            if (enemy != null && player.rocketFist.rocketFistCharge <= Mathf.Epsilon)
             {
                 GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
                 if (Input.GetButton(LEFT_ARM))
                 {
                     player.PushBehavior(player.rocketFist);
+                    return;
+                }
+            }
+
+            GrappleTarget grapple = TargetController.Instance.GetTarget<GrappleTarget>();
+
+            if (grapple != null)
+            {
+                if (Input.GetButton(RIGHT_ARM))
+                {
+                    player.PushBehavior(player.grapple);
                     return;
                 }
             }

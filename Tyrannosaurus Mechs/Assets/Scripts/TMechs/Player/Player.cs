@@ -17,6 +17,8 @@ namespace TMechs.Player
         public static Player Instance { get; private set; }
         public static Rewired.Player Input { get; private set; }
 
+        public Transform centerOfMass;
+        
         public EntityHealth Health { get; private set; }
         public EventfulAnimancerComponent Animancer { get; private set; }
         public PlayerCamera CameraController { get; private set; }
@@ -41,6 +43,7 @@ namespace TMechs.Player
         public PlayerBehavior sprint = new BehaviorSprinting();
         public BehaviorDash dash = new BehaviorDash();
         public BehaviorJump jump = new BehaviorJump();
+        public BehaviorGrapple grapple = new BehaviorGrapple();
         public BehaviorAttack attack = new BehaviorAttack();
         public BehaviorRocketFist rocketFist = new BehaviorRocketFist();
         

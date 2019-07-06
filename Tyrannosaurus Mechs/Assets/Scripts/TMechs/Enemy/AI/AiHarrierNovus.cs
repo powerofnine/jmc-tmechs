@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
-using TMechs.PlayerOld;
 using TMechs.Types;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -40,7 +39,7 @@ namespace TMechs.Enemy.AI
         {
             stateMachine = new AiStateMachine(transform)
             {
-                    target = PlayerOld.Player.Instance.centerOfMass,
+                    target = Player.Player.Instance.centerOfMass,
                     shared = shared
             };
 

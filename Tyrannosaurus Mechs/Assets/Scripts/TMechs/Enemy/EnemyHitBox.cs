@@ -18,7 +18,7 @@ namespace TMechs.Enemy
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-                PlayerOld.Player.Instance.Damage(damage);
+                Player.Player.Instance.Health.Damage(damage);
         }
     }
 }
