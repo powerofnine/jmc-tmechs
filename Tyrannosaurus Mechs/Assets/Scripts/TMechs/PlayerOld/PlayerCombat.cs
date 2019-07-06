@@ -4,6 +4,7 @@ using System.Linq;
 using TMechs.Attributes;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
+using TMechs.Player;
 using TMechs.UI.GamePad;
 using UnityEditor;
 using UnityEngine;

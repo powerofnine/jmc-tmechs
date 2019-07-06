@@ -7,6 +7,7 @@ using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Player.Behavior;
 using TMechs.Player.Modules;
+using TMechs.PlayerOld;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -18,6 +19,8 @@ namespace TMechs.Player
 
         public EntityHealth Health { get; private set; }
         public EventfulAnimancerComponent Animancer { get; private set; }
+        public PlayerCamera CameraController { get; private set; }
+        public Camera Camera { get; private set; }
         
         private readonly List<PlayerModule> newModules = new List<PlayerModule>();
         private readonly List<PlayerModule> modules = new List<PlayerModule>();
@@ -53,6 +56,9 @@ namespace TMechs.Player
             
             Input = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
             Health = GetComponent<EntityHealth>();
+            CameraController = FindObjectOfType<PlayerCamera>();
+            Camera = CameraController.GetComponentInChildren<Camera>();
+            
             Animancer = GetComponentInChildren<EventfulAnimancerComponent>();
             Animancer.onEvent = new AnimationEventReceiver(null, OnAnimationEvent);
             

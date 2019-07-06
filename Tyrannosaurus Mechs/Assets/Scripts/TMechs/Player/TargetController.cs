@@ -4,7 +4,7 @@ using TMechs.Environment.Targets;
 using UnityEditor;
 using UnityEngine;
 
-namespace TMechs.PlayerOld
+namespace TMechs.Player
 {
     public class TargetController : MonoBehaviour
     {

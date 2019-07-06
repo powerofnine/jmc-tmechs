@@ -1,6 +1,7 @@
 ﻿using System;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
+using TMechs.Player;
 using TMechs.Player.Behavior;
 using TMechs.UI.GamePad;
 using UnityEngine;

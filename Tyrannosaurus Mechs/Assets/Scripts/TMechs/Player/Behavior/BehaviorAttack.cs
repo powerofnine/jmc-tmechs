@@ -19,6 +19,9 @@ namespace TMechs.Player.Behavior
         private AnimancerState attackString1;
         private AnimancerState attackString2;
         private AnimancerState attackString3;
+
+        [NonSerialized]
+        public bool singleAttack;
         
         public override void OnInit()
         {
@@ -75,6 +78,9 @@ namespace TMechs.Player.Behavior
 
             applyForward = false;
             attackCount++;
+            if (singleAttack)
+                attackCount = 2000;
+            singleAttack = false;
             Animancer.CrossFadeFromStart(next, 0.1F).OnEnd = OnAnimEnd;
         }
 
