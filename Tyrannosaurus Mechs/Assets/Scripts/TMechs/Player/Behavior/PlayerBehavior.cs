@@ -1,4 +1,5 @@
 using System;
+using Animancer;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ namespace TMechs.Player.Behavior
         // ReSharper disable once InconsistentNaming - keep consistency with Unity naming
         public GameObject gameObject => player.gameObject;
 
+        public AnimancerComponent Animancer => player.Animancer;
+
+        public virtual void OnInit()
+        {
+        }
+        
         /**
          * Called when this behavior is pushed
          */
@@ -49,6 +56,13 @@ namespace TMechs.Player.Behavior
          * Called on player tick
          */
         public virtual void OnUpdate()
+        {
+        }
+
+        /**
+         * Called when an animation event is triggered
+         */
+        public virtual void OnAnimationEvent(AnimationEvent e)
         {
         }
 

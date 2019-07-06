@@ -1,4 +1,5 @@
 ﻿using System;
+using Animancer;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace TMechs.Player.Modules
     public abstract class PlayerModule
     {
         protected static Rewired.Player Input => Player.Input;
+        
+        public AnimancerComponent Animancer => player.Animancer;
         
         [NonSerialized]
         public Player player;

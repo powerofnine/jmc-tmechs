@@ -21,9 +21,11 @@ namespace TMechs.UI
 
         private void Update()
         {
-            PlayerOld.Player player = PlayerOld.Player.Instance;
-            health.FillAmount = player.Health;
-            charge.localEulerAngles = -charge.localEulerAngles.Set(Mathf.Lerp(0F, 180F, player.Combat.rocketFistCharge / player.Combat.rocketFistChargeMax), Utility.Axis.Z);
+            Player.Player player = Player.Player.Instance;
+            health.FillAmount = player.Health.Health;
+            
+            //TODO update when rocket fist readded
+            //charge.localEulerAngles = -charge.localEulerAngles.Set(Mathf.Lerp(0F, 180F, player.Combat.rocketFistCharge / player.Combat.rocketFistChargeMax), Utility.Axis.Z);
 
             bool shouldBeEnabled = Time.timeScale > float.Epsilon;
 

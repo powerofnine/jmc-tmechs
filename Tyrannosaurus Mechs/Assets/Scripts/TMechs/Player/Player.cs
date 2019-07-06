@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Animancer;
 using JetBrains.Annotations;
 using Rewired;
 using TMechs.Animation;
@@ -16,6 +17,7 @@ namespace TMechs.Player
         public static Rewired.Player Input { get; private set; }
 
         public EntityHealth Health { get; private set; }
+        public EventfulAnimancerComponent Animancer { get; private set; }
         
         private readonly List<PlayerModule> newModules = new List<PlayerModule>();
         private readonly List<PlayerModule> modules = new List<PlayerModule>();
@@ -32,10 +34,12 @@ namespace TMechs.Player
 
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
+        public PlayerBehavior sprint = new BehaviorSprinting();
         public BehaviorJump jump = new BehaviorJump();
         
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
-        
+        private readonly HashSet<PlayerBehavior> initializedBehaviors = new HashSet<PlayerBehavior>();
+
         [NotNull]
         public PlayerBehavior Behavior => behaviorStack.Count > 0 ? behaviorStack.Peek() : standard;
         public bool CanMove => Behavior.CanMove();
@@ -47,6 +51,8 @@ namespace TMechs.Player
             
             Input = ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER);
             Health = GetComponent<EntityHealth>();
+            Animancer = GetComponentInChildren<EventfulAnimancerComponent>();
+            Animancer.onEvent = new AnimationEventReceiver(null, OnAnimationEvent);
             
             RegisterModule(forces);
             RegisterModule(movement);
@@ -94,6 +100,9 @@ namespace TMechs.Player
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
 
+        private void OnAnimationEvent(AnimationEvent e)
+            => Behavior.OnAnimationEvent(e);
+        
         public void RegisterModule(PlayerModule module)
         {
             if (module == null)
@@ -111,9 +120,16 @@ namespace TMechs.Player
         { 
             Behavior.OnShadowed();
             
+            behavior.player = this;
+
+            if (!initializedBehaviors.Contains(behavior))
+            {
+                behavior.OnInit();
+                initializedBehaviors.Add(behavior);
+            }
+
             behaviorStack.Push(behavior);
 
-            behavior.player = this;
             behavior.OnPush();
         }
 

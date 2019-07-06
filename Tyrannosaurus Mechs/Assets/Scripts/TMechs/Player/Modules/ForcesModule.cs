@@ -30,9 +30,9 @@ namespace TMechs.Player.Modules
             controller = GetComponent<CharacterController>();
         }
 
-        public override void OnFixedUpdate()
+        public override void OnLateUpdate()
         {
-            base.OnFixedUpdate();
+            base.OnLateUpdate();
 
             velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.fixedDeltaTime;
             controller.Move((velocity + motion) * Time.deltaTime);
@@ -72,7 +72,7 @@ namespace TMechs.Player.Modules
 
             if (!sliding)
             {
-                groundedFrames = 5;                
+                groundedFrames = 2;                
                 return;
             }
 
