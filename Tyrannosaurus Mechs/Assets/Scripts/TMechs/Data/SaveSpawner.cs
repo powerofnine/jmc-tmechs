@@ -29,7 +29,7 @@ namespace TMechs.Data
             if (!string.IsNullOrWhiteSpace(data.checkpointId))
                 Checkpoint.CheckpointRegistry.Instance.MovePlayerTo(data.checkpointId);
             
-            PlayerOld.Player.Instance.LoadPlayerData(data);
+            Player.Player.Instance.LoadPlayerData(data);
 
             Destroy(gameObject);
         }

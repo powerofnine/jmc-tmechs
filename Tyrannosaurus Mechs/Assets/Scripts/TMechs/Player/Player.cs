@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Animancer;
+using fuj1n.MinimalDebugConsole;
 using JetBrains.Annotations;
 using Rewired;
 using TMechs.Animation;
+using TMechs.Data;
 using TMechs.Entity;
 using TMechs.Player.Behavior;
 using TMechs.Player.Modules;
 using TMechs.PlayerOld;
+using TMechs.UI;
 using UnityEngine;
 
 namespace TMechs.Player
 {
-    public class Player : MonoBehaviour, EntityHealth.IDeath
+    public class Player : MonoBehaviour, EntityHealth.IDeath, EntityHealth.IDamage
     {
         public static Player Instance { get; private set; }
         public static Rewired.Player Input { get; private set; }
@@ -54,7 +57,10 @@ namespace TMechs.Player
         public PlayerBehavior Behavior => behaviorStack.Count > 0 ? behaviorStack.Peek() : standard;
         public bool CanMove => Behavior.CanMove();
         public float Speed => Behavior.GetSpeed();
+        
+        private bool displayCursor;
 
+        #region Events
         private void Awake()
         {
             Instance = this;
@@ -76,6 +82,20 @@ namespace TMechs.Player
 
         private void Update()
         {
+#if !UNITY_EDITOR
+            Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = displayCursor;
+#endif
+            if (Time.timeScale <= Mathf.Epsilon)
+                return;
+            
+            if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
+            {
+                Instantiate(Resources.Load<GameObject>("UI/Menu"));
+                MenuActions.SetPause(true);
+                return;
+            }
+            
             for (int i = 0; i < newModules.Count; i++)
             {
                 PlayerModule module = newModules[i];
@@ -99,6 +119,9 @@ namespace TMechs.Player
 
         private void LateUpdate()
         {
+            if (Time.timeScale <= Mathf.Epsilon)
+                return;
+            
             foreach (PlayerModule module in modules)
                 if(module.enabled)
                     module.OnLateUpdate();
@@ -108,6 +131,9 @@ namespace TMechs.Player
 
         private void FixedUpdate()
         {
+            if (Time.timeScale <= Mathf.Epsilon)
+                return;
+            
             foreach (PlayerModule module in modules)
                 if(module.enabled)
                     module.OnFixedUpdate();
@@ -118,6 +144,40 @@ namespace TMechs.Player
 
         private void OnAnimationEvent(AnimationEvent e)
             => Behavior.OnAnimationEvent(e);
+        
+        private void OnEnable()
+        {
+            DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
+        }
+
+        private void OnDisable()
+        {
+            DebugConsole.Instance.OnConsoleToggle -= OnConsoleToggle;
+        }
+        
+        private void OnConsoleToggle(bool state)
+        {
+            MenuActions.SetPause(state);
+            displayCursor = state;
+        }
+        
+        public void OnDamaged(EntityHealth health, ref bool cancel)
+        {
+            if (isGod)
+                cancel = true;
+        }
+        
+        #endregion
+        
+        public void SavePlayerData(ref SaveSystem.SaveData data)
+        {
+            data.health = Health.Health;
+        }
+
+        public void LoadPlayerData(SaveSystem.SaveData data)
+        {
+            Health.Health = data.health;
+        }
         
         public void RegisterModule(PlayerModule module)
         {
@@ -200,5 +260,72 @@ namespace TMechs.Player
             RocketRecover,
             RocketReturn
         }
+        
+        #region Debug
+        
+        public IEnumerable<string> GetDebugInfo()
+        {
+            List<string> ret = new List<string>
+            {
+                    $"World Position: {transform.position}",
+                    $"World Rotation: {transform.eulerAngles}",
+                    $"Health: {Health.Health * Health.maxHealth} / {Health.maxHealth}",
+                    $"Velocity: {forces.ControllerVelocity}"
+            };
+
+            return ret;
+        }
+
+        private static bool isGod;
+        [DebugConsoleCommand("god")]
+        private static void ToggleGodMode()
+        {
+            isGod = !isGod;
+            DebugConsole.Instance.AddMessage($"God mode {(isGod ? "enabled" : "disabled")}", Color.cyan);
+        }
+
+        [DebugConsoleCommand("tp")]
+        private static void Teleport(Vector3 pos)
+        {
+            Instance.forces.Teleport(pos);
+        }
+
+        [DebugConsoleCommand("playerVar")]
+        private static void SetVariable(PlayerVar variable, float value)
+        {
+            float oldVal = 0F;
+            
+            switch (variable)
+            {
+                case PlayerVar.MovementSpeed:
+                    oldVal = Instance.movement.movementSpeed;
+                    Instance.movement.movementSpeed = value;
+                    break;
+                case PlayerVar.RunSpeed:
+                    oldVal = Instance.movement.runSpeed;
+                    Instance.movement.runSpeed = value;
+                    break;
+                case PlayerVar.JumpForce:
+                    oldVal = Instance.jump.jumpForce;
+                    Instance.jump.jumpForce = value;
+                    break;
+                case PlayerVar.JumpCount:
+                    oldVal = Instance.jump.maxAirJumps;
+                    Instance.jump.maxAirJumps = (int) value;
+                    break;
+            }
+            
+            DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
+        }
+
+        private enum PlayerVar
+        {
+            MovementSpeed,
+            RunSpeed,
+            JumpForce,
+            JumpCount
+        }
+        
+        #endregion
     }
 }

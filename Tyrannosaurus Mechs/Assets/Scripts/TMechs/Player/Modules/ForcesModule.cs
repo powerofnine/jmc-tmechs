@@ -53,6 +53,13 @@ namespace TMechs.Player.Modules
             GroundedCheck();
         }
 
+        public void Teleport(Vector3 position)
+        {
+            controller.enabled = false;
+            transform.position = position;
+            controller.enabled = true;
+        }
+
         public void ResetGround() => groundedFrames = 0;
         
         private void GroundedCheck()

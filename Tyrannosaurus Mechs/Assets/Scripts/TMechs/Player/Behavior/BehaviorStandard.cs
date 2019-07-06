@@ -1,6 +1,5 @@
 using System;
 using TMechs.Environment.Targets;
-using TMechs.PlayerOld;
 using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
