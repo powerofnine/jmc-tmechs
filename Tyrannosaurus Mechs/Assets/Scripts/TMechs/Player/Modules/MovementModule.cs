@@ -17,6 +17,10 @@ namespace TMechs.Player.Modules
         public float movementSpeed = 25F;
         public float runSpeed = 40F;
 
+        [Space]
+        public AvatarMask legs;
+        public AvatarMask arms;
+        
         [NonSerialized]
         public float intendedY;
         private float yDampVelocity;
@@ -24,7 +28,9 @@ namespace TMechs.Player.Modules
         [NonSerialized]
         public float inputMagnitude;
 
-        private LinearMixerState mixer;
+        private LinearMixerState armsMixer;
+        private LinearMixerState legsMixer;
+        private AnimancerLayer legsLayer;
 
         public override void OnRegistered()
         {
@@ -38,14 +44,30 @@ namespace TMechs.Player.Modules
 
             ResetIntendedY();
 
-            mixer = new LinearMixerState(Animancer);
+            AnimancerLayer armsLayer = Animancer;
+            armsLayer.SetName("Arms Layer");
+            armsLayer.SetMask(arms);
+            legsLayer = Animancer.GetLayer(3);
+            legsLayer.SetName("Legs Layer");
+            legsLayer.SetMask(legs);
             
-            mixer.Initialise(
-                    player.GetClip(Player.PlayerAnim.Idle), player.GetClip(Player.PlayerAnim.Walk)
-                    , player.GetClip(Player.PlayerAnim.Run), 
+            armsMixer = new LinearMixerState(armsLayer);
+            legsMixer = new LinearMixerState(legsLayer);
+            
+            armsMixer.Initialise(
+                    player.GetClip(Player.PlayerAnim.Idle), 
+                    player.GetClip(Player.PlayerAnim.Walk), 
+                    player.GetClip(Player.PlayerAnim.Run), 
                     0F, 
-                    movementSpeed + 1F, runSpeed);
-            Animancer.Play(mixer);
+                    movementSpeed + 1F, 
+                    runSpeed);
+            legsMixer.Initialise(
+                    player.GetClip(Player.PlayerAnim.Walk), 
+                    player.GetClip(Player.PlayerAnim.Run), 
+                    movementSpeed + 1F, 
+                    runSpeed);
+            Animancer.Play(armsMixer);
+            Animancer.Play(legsMixer);
         }
 
         public override void OnUpdate()
@@ -54,12 +76,16 @@ namespace TMechs.Player.Modules
 
             if (!player.CanMove)
             {
-                mixer.Parameter = 0F;
+                armsMixer.Parameter = 0F;
+                legsMixer.Parameter = 0F;
+                legsLayer.SetWeight(0F);
                 return;
             }
 
-            mixer.Parameter = player.forces.ControllerVelocity.Remove(Utility.Axis.Y).magnitude;
-
+            armsMixer.Parameter = player.forces.ControllerVelocity.Remove(Utility.Axis.Y).magnitude;
+            legsMixer.Parameter = armsMixer.Parameter;
+            legsLayer.SetWeight(Mathf.Clamp01(Utility.MathRemap(legsMixer.Parameter, 0, movementSpeed + 1F, 0F, 1F)));
+            
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
 
             // Multiply movement by camera quaternion so that it is relative to the camera

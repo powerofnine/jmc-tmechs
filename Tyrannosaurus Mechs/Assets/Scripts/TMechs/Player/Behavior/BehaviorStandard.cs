@@ -1,4 +1,6 @@
 using System;
+using TMechs.Environment.Targets;
+using TMechs.PlayerOld;
 using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
@@ -9,11 +11,19 @@ namespace TMechs.Player.Behavior
     public class BehaviorStandard : PlayerBehavior
     {
         private int jumps;
+
+        [NonSerialized]
+        public float rocketFistCharge;
         
         public override void OnUpdate()
         {
             base.OnUpdate();
 
+            if (rocketFistCharge > 0F)
+                rocketFistCharge -= player.rocketFist.rechargeSpeed * Time.deltaTime;
+            if (player.forces.IsGrounded)
+                jumps = 0;
+            
             if (player.movement.inputMagnitude > Mathf.Epsilon)
             {
                 GamepadLabels.AddLabel(IconMap.IconGeneric.L3, "Sprint", -100);
@@ -45,8 +55,17 @@ namespace TMechs.Player.Behavior
                 return;
             }
 
-            if (player.forces.IsGrounded)
-                jumps = 0;
+            EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
+
+            if (enemy != null)
+            {
+                GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
+                if (Input.GetButton(LEFT_ARM))
+                {
+                    player.PushBehavior(player.rocketFist);
+                    return;
+                }
+            }
         }
     }
 }

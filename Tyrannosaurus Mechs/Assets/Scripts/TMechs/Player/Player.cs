@@ -37,6 +37,7 @@ namespace TMechs.Player
         public PlayerBehavior sprint = new BehaviorSprinting();
         public BehaviorJump jump = new BehaviorJump();
         public BehaviorAttack attack = new BehaviorAttack();
+        public BehaviorRocketFist rocketFist = new BehaviorRocketFist();
         
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
         private readonly HashSet<PlayerBehavior> initializedBehaviors = new HashSet<PlayerBehavior>();
