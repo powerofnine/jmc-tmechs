@@ -11,6 +11,8 @@ namespace TMechs.Animation
         [SerializeField]
         private string serializedType;
         [SerializeField]
+        private string[] enums;
+        [SerializeField]
         private AnimationClip[] animations;
 
         private Type enumType;
@@ -35,6 +37,17 @@ namespace TMechs.Animation
                 return;
             
             serializedType = enumType.AssemblyQualifiedName;
+
+            if (valueMap != null)
+            {
+                enums = valueMap.Keys.Select(x => x.ToString()).ToArray();
+                animations = valueMap.Values.ToArray();
+            }
+            else
+            {
+                enums = new string[0];
+                animations = new AnimationClip[0];
+            }
         }
 
         public void OnAfterDeserialize()
@@ -44,15 +57,23 @@ namespace TMechs.Animation
             if (enumType == null)
                 return;
             
-            int len = Enum.GetValues(enumType).Length;
-            
-            if(animations == null)
-                animations = new AnimationClip[len];
-            else if(animations.Length != len)
-                Array.Resize(ref animations, len);
+            valueMap = Enum.GetValues(enumType).Cast<Enum>().ToDictionary(x => x, x => (AnimationClip)null);
 
-            Enum[] vals = Enum.GetValues(enumType).Cast<Enum>().ToArray();
-            valueMap = Enumerable.Range(0, vals.Length).ToDictionary(x => vals[x], x => animations[x]);
+            if (animations == null || enums == null)
+                return;
+
+            for (int i = 0; i < animations.Length && i < enums.Length; i++)
+            {
+                try
+                {
+                    Enum e = (Enum) Enum.Parse(enumType, enums[i]);
+                    valueMap[e] = animations[i];
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
         }
 
         public static Type ParseType(string type)

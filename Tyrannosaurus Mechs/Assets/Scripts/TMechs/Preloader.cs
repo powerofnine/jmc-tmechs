@@ -10,6 +10,11 @@ namespace TMechs
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Initialize()
         {
+            GameObject input = Resources.Load<GameObject>("Input");
+
+            if (input)
+                Instantiate(input);
+            
             GameObject preloadObject = Resources.Load<GameObject>("PRELOAD");
 
             if (preloadObject)
@@ -21,9 +26,7 @@ namespace TMechs
 
         private void Start()
         {
-            Invoke(nameof(Remove), 1F);
+            Destroy(gameObject, 1F);
         }
-
-        private void Remove() => Destroy(gameObject);
     }
 }
