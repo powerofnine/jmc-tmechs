@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace TMechs.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, EntityHealth.IDeath
     {
         public static Player Instance { get; private set; }
         public static Rewired.Player Input { get; private set; }
@@ -147,6 +147,13 @@ namespace TMechs.Player
             throw new InvalidOperationException("Cannot pop the last player behavior");
         }
 
+        // ReSharper disable once RedundantAssignment
+        public void OnDying(ref bool customDestroy)
+        {
+            customDestroy = true;
+            PushBehavior(new BehaviorDead());
+        }
+        
         [AnimationCollection.Enum("Player Animations")]
         public enum PlayerAnim
         {

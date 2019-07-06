@@ -1,13 +1,17 @@
+using System;
 using Animancer;
 using TMechs.UI.GamePad;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace TMechs.Player.Behavior
 {
+    [Serializable]
     public class BehaviorAttack : PlayerBehavior
     {
         private const int LAYER = 2;
+
+        public float forwardSpeed = 5F;
+        private bool applyForward = false;
         
         private int attackCount;
         private int attackPresses;
@@ -44,6 +48,9 @@ namespace TMechs.Player.Behavior
             GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
             if (Input.GetButtonDown(Controls.Action.ATTACK))
                 attackPresses++;
+
+            if (applyForward)
+                player.forces.motion = transform.forward * forwardSpeed;
         }
 
         public void NextAttack()
@@ -66,6 +73,7 @@ namespace TMechs.Player.Behavior
             if (next == null)
                 return;
 
+            applyForward = false;
             attackCount++;
             Animancer.CrossFadeFromStart(next, 0.1F).OnEnd = OnAnimEnd;
         }
@@ -85,8 +93,13 @@ namespace TMechs.Player.Behavior
                 case "AttackEnd":
                     OnAnimEnd();
                     break;
+                case "AttackForward":
+                    applyForward = true;
+                    break;
             }
         }
+
+        public override bool CanMove() => false;
 
         private void OnAnimEnd()
         {

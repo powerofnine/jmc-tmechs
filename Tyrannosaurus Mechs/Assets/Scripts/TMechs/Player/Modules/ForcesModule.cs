@@ -34,7 +34,7 @@ namespace TMechs.Player.Modules
         {
             base.OnLateUpdate();
 
-            velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.fixedDeltaTime;
+            velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.deltaTime;
             controller.Move((velocity + motion) * Time.deltaTime);
 
             if (controller.isGrounded)

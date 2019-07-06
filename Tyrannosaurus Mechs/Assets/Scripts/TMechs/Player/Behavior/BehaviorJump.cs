@@ -25,16 +25,13 @@ namespace TMechs.Player.Behavior
 
             jump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
             airJump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
-
-            jump.OnEnd = OnAnimEnd;
-            airJump.OnEnd = OnAnimEnd;
         }
 
         public override void OnPush()
         {
             base.OnPush();
 
-            Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump);
+            Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump).OnEnd = OnAnimEnd;
         }
 
         public override void OnUpdate()

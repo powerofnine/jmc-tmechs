@@ -61,9 +61,9 @@ namespace TMechs.PlayerOld
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
         
         [NotNull]
-        public PlayerBehavior Behavior => behaviorStack.Peek();
-        public bool CanMove => Behavior.CanMove();
-        public float Speed => Behavior.GetSpeed();
+//        public PlayerBehavior Behavior => behaviorStack.Peek();
+//        public bool CanMove => Behavior.CanMove();
+//        public float Speed => Behavior.GetSpeed();
         
         private void Awake()
         {
@@ -108,7 +108,7 @@ namespace TMechs.PlayerOld
             if (Animator)
                 Animator.SetBool(Anim.IS_CARRYING, pickedUp);
             
-            Behavior?.OnUpdate();
+//            Behavior?.OnUpdate();
         }
 
         public void Damage(float damage)

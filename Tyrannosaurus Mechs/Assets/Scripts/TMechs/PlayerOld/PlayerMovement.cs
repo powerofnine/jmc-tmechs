@@ -66,8 +66,8 @@ namespace TMechs.PlayerOld
         {
 //            GamepadLabels.AddLabel(IconMap.IconGeneric.Down, "Test");
 
-            if (!Player.CanMove)
-                return;
+//            if (!Player.CanMove)
+//                return;
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Arms")).IsTag("NoMove"))
                 return;
             if (animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Walk")).IsName("Move"))
@@ -99,7 +99,7 @@ namespace TMechs.PlayerOld
                 sprinting = false;
             }
 
-            float speed = Player.Speed;
+            float speed = movementSpeed;
             if (!canRun)
                 speed = movementSpeed * .85F;
             

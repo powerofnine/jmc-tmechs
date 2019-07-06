@@ -24,6 +24,9 @@ namespace TMechs.UI
 
         public void LoadGame(SaveSystem.LexiconEntry save)
         {
+            if (SceneTransition.alreadyLoading)
+                return;
+            
             SaveSystem.SaveData data = null;
             if (save != null)
                 data = SaveSystem.LoadSave(save);
