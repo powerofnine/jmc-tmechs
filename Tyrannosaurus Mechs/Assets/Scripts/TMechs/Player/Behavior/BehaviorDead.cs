@@ -8,7 +8,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
-            Animancer.CrossFadeFromStart(player.GetClip(Player.PlayerAnim.Death), 0.25F, Animancer.AddLayer().PortIndex).OnEnd = OnAnimEnd;
+            Animancer.CrossFadeFromStart(player.GetClip(Player.PlayerAnim.Death), 0.25F, 3).OnEnd = OnAnimEnd;
         }
 
         public override bool CanMove() => false;
