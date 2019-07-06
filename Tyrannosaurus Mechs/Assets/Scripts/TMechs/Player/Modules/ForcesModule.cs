@@ -9,13 +9,16 @@ namespace TMechs.Player.Modules
         private CharacterController controller;
 
         public float gravityMultiplier = 1F;
+        public float stickyGroundForce = 200F;
         
         [NonSerialized]
         public Vector3 velocity;
         [NonSerialized]
         public Vector3 motion;
 
-        public Vector3 ControllerVelocity => controller.velocity;
+        public Vector3 ControllerVelocity => controllerVelocity;
+
+        private Vector3 controllerVelocity;
         
         public bool IsGrounded => groundedFrames > 0;
 
@@ -35,7 +38,12 @@ namespace TMechs.Player.Modules
             base.OnLateUpdate();
 
             velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.deltaTime;
+            
             controller.Move((velocity + motion) * Time.deltaTime);
+            controllerVelocity = controller.velocity;
+
+            if (groundedFrames > 1 && velocity.y < Mathf.Epsilon)
+                controller.Move(stickyGroundForce * Time.deltaTime * Vector3.down);
 
             if (controller.isGrounded)
                 velocity = Vector3.zero;
@@ -82,6 +90,7 @@ namespace TMechs.Player.Modules
 
             player.movement.intendedY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             controller.Move(player.movement.runSpeed * 1.15F * Time.deltaTime * direction);
+            controllerVelocity = controller.velocity;
         }
     }
 }
