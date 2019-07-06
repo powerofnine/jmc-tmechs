@@ -19,17 +19,6 @@ namespace TMechs.Player.Behavior
                 player.rocketFist.rocketFistCharge -= player.rocketFist.rechargeSpeed * Time.deltaTime;
             if (player.forces.IsGrounded)
                 jumps = 0;
-            
-            if (player.movement.inputMagnitude > Mathf.Epsilon)
-            {
-                GamepadLabels.AddLabel(IconMap.IconGeneric.L3, "Sprint", -100);
-
-                if (Input.GetButtonDown(SPRINT))
-                {
-                    player.PushBehavior(player.sprint);
-                    return;
-                }
-            }
 
             if (player.forces.IsGrounded)
             {

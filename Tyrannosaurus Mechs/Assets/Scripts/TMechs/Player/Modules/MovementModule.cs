@@ -2,7 +2,7 @@ using System;
 using Animancer;
 using TMechs.Environment.Targets;
 using TMechs.InspectorAttributes;
-using TMechs.PlayerOld;
+using TMechs.UI.GamePad;
 using UnityEngine;
 using static TMechs.Controls.Action;
 
@@ -24,9 +24,9 @@ namespace TMechs.Player.Modules
         [NonSerialized]
         public float intendedY;
         private float yDampVelocity;
-        
+
         [NonSerialized]
-        public float inputMagnitude;
+        public bool isSprinting;
 
         private LinearMixerState armsMixer;
         private LinearMixerState legsMixer;
@@ -79,8 +79,12 @@ namespace TMechs.Player.Modules
                 armsMixer.Parameter = 0F;
                 legsMixer.Parameter = 0F;
                 legsLayer.SetWeight(0F);
+                isSprinting = false;
                 return;
             }
+
+            if (!player.Behavior.CanRun())
+                isSprinting = false;
 
             armsMixer.Parameter = player.forces.ControllerVelocity.Remove(Utility.Axis.Y).magnitude;
             legsMixer.Parameter = armsMixer.Parameter;
@@ -91,7 +95,7 @@ namespace TMechs.Player.Modules
             // Multiply movement by camera quaternion so that it is relative to the camera
             movement = Quaternion.Euler(0F, aaCamera.eulerAngles.y, 0F) * movement;
 
-            inputMagnitude = movement.sqrMagnitude;
+            float inputMagnitude = movement.sqrMagnitude;
 
             if (inputMagnitude > float.Epsilon)
             {
@@ -99,12 +103,25 @@ namespace TMechs.Player.Modules
                     movement.Normalize();
 
                 intendedY = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+
+                if (player.forces.canRun && player.Behavior.CanRun())
+                {
+                    GamepadLabels.AddLabel(IconMap.IconGeneric.L3, isSprinting ? "Stop Sprinting" : "Sprint", -100);
+
+                    if (Input.GetButtonDown(SPRINT))
+                        isSprinting = !isSprinting;
+                }
             }
+            else
+                isSprinting = false;
 
             float speed = player.Speed;
             if (!player.forces.canRun)
+            {
+                isSprinting = false;
                 speed = movementSpeed * .85F;
-            
+            }
+
             player.forces.motion = movement * speed;
 
             EnemyTarget target = TargetController.Instance.GetLock();

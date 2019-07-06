@@ -43,7 +43,6 @@ namespace TMechs.Player
 
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
-        public PlayerBehavior sprint = new BehaviorSprinting();
         public BehaviorDash dash = new BehaviorDash();
         public BehaviorJump jump = new BehaviorJump();
         public BehaviorGrapple grapple = new BehaviorGrapple();

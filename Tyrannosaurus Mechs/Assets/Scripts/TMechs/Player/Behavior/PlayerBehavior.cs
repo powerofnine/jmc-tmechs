@@ -73,8 +73,9 @@ namespace TMechs.Player.Behavior
         {
         }
 
-        public virtual float GetSpeed() => player.movement.movementSpeed;
+        public virtual float GetSpeed() => CanRun() && player.movement.isSprinting ? player.movement.runSpeed : player.movement.movementSpeed;
         public virtual bool CanMove() => true;
+        public virtual bool CanRun() => true;
 
         public T GetComponent<T>()
             => player.GetComponent<T>();

@@ -138,5 +138,6 @@ namespace TMechs.Player.Behavior
         }
 
         public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .2F);
+        public override bool CanRun() => false;
     }
 }
