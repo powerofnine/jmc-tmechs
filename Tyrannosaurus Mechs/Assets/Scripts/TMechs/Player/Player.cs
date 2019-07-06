@@ -34,6 +34,7 @@ namespace TMechs.Player
         [Header("Modules")]
         public ForcesModule forces = new ForcesModule();
         public MovementModule movement = new MovementModule();
+        public CombatModule combat = new CombatModule();
 
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
@@ -64,6 +65,7 @@ namespace TMechs.Player
             
             RegisterModule(forces);
             RegisterModule(movement);
+            RegisterModule(combat);
             
             PushBehavior(standard);
         }

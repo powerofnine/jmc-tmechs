@@ -1,5 +1,6 @@
 using System;
 using Animancer;
+using TMechs.Attributes;
 using TMechs.UI.GamePad;
 using UnityEngine;
 
@@ -13,6 +14,11 @@ namespace TMechs.Player.Behavior
         public int maxAirJumps = 1;
         public float jumpForce = 25F;
 
+        [Space]
+        public float aoeRange = 10F;
+        [MinMax]
+        public Vector2 aoeDamage = new Vector2(5F, 10F);
+        
         private AnimancerState jump;
         private AnimancerState airJump;
         
@@ -45,10 +51,15 @@ namespace TMechs.Player.Behavior
         {
             base.OnAnimationEvent(e);
 
-            if (e.stringParameter == "Jump")
+            switch (e.stringParameter)
             {
-                player.forces.velocity.y = jumpForce;
-                player.PopBehavior();
+                case "Jump":
+                    player.forces.velocity.y = jumpForce;
+                    player.PopBehavior();
+                    break;
+                case "JumpDamage":
+                    player.combat.DealAoe(aoeRange, aoeDamage.x, aoeDamage.y);
+                    break;
             }
         }
 

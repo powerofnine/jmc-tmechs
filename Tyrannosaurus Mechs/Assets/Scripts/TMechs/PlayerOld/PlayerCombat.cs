@@ -41,16 +41,16 @@ namespace TMechs.PlayerOld
         private static Rewired.Player Input => Player.Input;
 
         private Animator animator;
-        private readonly Dictionary<string, HashSet<PlayerHitBox>> hitboxes = new Dictionary<string, HashSet<PlayerHitBox>>();
+        private readonly Dictionary<string, HashSet<PlayerHitbox>> hitboxes = new Dictionary<string, HashSet<PlayerHitbox>>();
 
         private void Awake()
         {
             animator = Player.Instance.Animator;
 
-            foreach (PlayerHitBox hitbox in GetComponentsInChildren<PlayerHitBox>())
+            foreach (PlayerHitbox hitbox in GetComponentsInChildren<PlayerHitbox>())
             {
                 if (!hitboxes.ContainsKey(hitbox.id))
-                    hitboxes.Add(hitbox.id, new HashSet<PlayerHitBox>());
+                    hitboxes.Add(hitbox.id, new HashSet<PlayerHitbox>());
 
                 hitboxes[hitbox.id].Add(hitbox);
                 hitbox.gameObject.SetActive(false);
@@ -104,7 +104,7 @@ namespace TMechs.PlayerOld
             rocketFistCharge = Mathf.Clamp(rocketFistCharge, 0F, rocketFistChargeMax);
         }
 
-        public void OnHitboxTrigger(PlayerHitBox hitbox, EntityHealth entity)
+        public void OnHitboxTrigger(PlayerHitbox hitbox, EntityHealth entity)
         {
             if (hitbox.id != combat.activeHitbox)
                 return;
@@ -115,7 +115,7 @@ namespace TMechs.PlayerOld
         public void SetHitbox(string hitbox, float damage)
         {
             if (!string.IsNullOrWhiteSpace(combat.activeHitbox) && hitboxes.ContainsKey(combat.activeHitbox))
-                foreach (PlayerHitBox box in hitboxes[combat.activeHitbox])
+                foreach (PlayerHitbox box in hitboxes[combat.activeHitbox])
                     box.gameObject.SetActive(false);
             combat.damage = 0F;
 
@@ -129,7 +129,7 @@ namespace TMechs.PlayerOld
             }
 
             combat.activeHitbox = hitbox;
-            foreach (PlayerHitBox box in hitboxes[combat.activeHitbox])
+            foreach (PlayerHitbox box in hitboxes[combat.activeHitbox])
                 box.gameObject.SetActive(true);
 
             combat.damage = damage;
