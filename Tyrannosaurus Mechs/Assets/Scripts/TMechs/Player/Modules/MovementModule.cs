@@ -109,9 +109,6 @@ namespace TMechs.Player.Modules
 
             EnemyTarget target = TargetController.Instance.GetLock();
 
-            if (!player.CanMove)
-                return;
-            
             if (target)
             {
                 transform.LookAt(target.transform.position.Set(transform.position.y, Utility.Axis.Y));

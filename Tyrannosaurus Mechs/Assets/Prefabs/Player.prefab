@@ -678,8 +678,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 10, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6.0702925, y: 5.694349, z: 1}
+  m_Center: {x: 0, y: -0.9354383, z: 0}
 --- !u!114 &323325242745835994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,6 +1729,10 @@ MonoBehaviour:
     arms: {fileID: 31900000, guid: 4c4b21d8653f03040aede36f49ed6435, type: 2}
   combat:
     enabled: 1
+  dash:
+    dashSpeed: 40
+    chargeHitDamage: 10
+    chargeHitStaggerTime: 1
   jump:
     maxAirJumps: 1
     jumpForce: 25

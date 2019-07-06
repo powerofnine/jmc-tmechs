@@ -58,6 +58,13 @@ namespace TMechs.Player.Behavior
         public virtual void OnUpdate()
         {
         }
+        
+        /**
+         * Called on late player tick
+         */
+        public virtual void OnLateUpdate()
+        {
+        }
 
         /**
          * Called when an animation event is triggered

@@ -17,7 +17,9 @@ namespace TMechs.Player.Modules
         private readonly HashSet<EntityHealth> hits = new HashSet<EntityHealth>();
         private string activeHitbox;
         private float hitboxDamage;
-
+        private Action hitboxHit;
+        private Action hitboxTriggered;
+        
         public override void OnRegistered()
         {
             base.OnRegistered();
@@ -41,7 +43,6 @@ namespace TMechs.Player.Modules
             if (enemyTarget)
                 GamepadLabels.AddLabel(IconMap.Icon.L1, TargetController.Instance.GetLock() ? "Unlock" : "Lock-on");
             
-                        
             if (Input.GetButtonDown(LOCK_ON))
             {
                 if (TargetController.Instance.GetLock())
@@ -51,7 +52,7 @@ namespace TMechs.Player.Modules
             }
         }
 
-        public void SetHitbox(string hitbox, float damage, bool unique = true)
+        public void SetHitbox(string hitbox, float damage, bool unique = true, Action onHit = null, Action onTrigger = null)
         {
             if(!string.IsNullOrWhiteSpace(activeHitbox) && hitboxes.ContainsKey(activeHitbox))
                 foreach(PlayerHitbox box in hitboxes[activeHitbox])
@@ -61,6 +62,8 @@ namespace TMechs.Player.Modules
             hitboxDamage = damage;
             activeHitbox = hitbox;
             hits.Clear();
+            hitboxHit = onHit;
+            hitboxTriggered = onTrigger;
             
             if(!string.IsNullOrWhiteSpace(activeHitbox) && hitboxes.ContainsKey(activeHitbox))
                 foreach(PlayerHitbox box in hitboxes[activeHitbox])
@@ -69,11 +72,10 @@ namespace TMechs.Player.Modules
 
         public void OnHitbox(string id, Collider other)
         {
-            if (other.CompareTag("Player"))
-                return;
-            
             if (other.CompareTag("Player") || id != activeHitbox)
                 return;
+            
+            hitboxTriggered?.Invoke();
 
             EntityHealth health = other.GetComponent<EntityHealth>();
             if (health)
@@ -83,7 +85,7 @@ namespace TMechs.Player.Modules
                 
                 health.Damage(hitboxDamage);
                 hits.Add(health);
-
+                hitboxHit?.Invoke();
             }
         }
         

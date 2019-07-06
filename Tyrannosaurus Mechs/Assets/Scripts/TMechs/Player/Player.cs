@@ -39,6 +39,7 @@ namespace TMechs.Player
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
         public PlayerBehavior sprint = new BehaviorSprinting();
+        public BehaviorDash dash = new BehaviorDash();
         public BehaviorJump jump = new BehaviorJump();
         public BehaviorAttack attack = new BehaviorAttack();
         public BehaviorRocketFist rocketFist = new BehaviorRocketFist();
@@ -98,6 +99,8 @@ namespace TMechs.Player
             foreach (PlayerModule module in modules)
                 if(module.enabled)
                     module.OnLateUpdate();
+            
+            Behavior.OnLateUpdate();
         }
 
         private void FixedUpdate()

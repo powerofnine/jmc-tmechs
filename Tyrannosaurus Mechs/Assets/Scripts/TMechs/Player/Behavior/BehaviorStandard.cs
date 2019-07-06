@@ -34,6 +34,17 @@ namespace TMechs.Player.Behavior
                     return;
                 }
             }
+
+            if (player.forces.IsGrounded)
+            {
+                GamepadLabels.AddLabel(IconMap.Icon.R1, "Dash");
+
+                if (Input.GetButtonDown(DASH))
+                {
+                    player.PushBehavior(player.dash);
+                    return;
+                }
+            }
             
             if (jumps < player.jump.maxAirJumps)
             {
