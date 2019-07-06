@@ -17,9 +17,12 @@ namespace TMechs.Player.Behavior
             if (player.movement.inputMagnitude > Mathf.Epsilon)
             {
                 GamepadLabels.AddLabel(IconMap.IconGeneric.L3, "Sprint", -100);
-                
-                if(Input.GetButtonDown(SPRINT))
+
+                if (Input.GetButtonDown(SPRINT))
+                {
                     player.PushBehavior(player.sprint);
+                    return;
+                }
             }
             
             if (jumps < player.jump.maxAirJumps)
@@ -31,7 +34,15 @@ namespace TMechs.Player.Behavior
                     player.PushBehavior(player.jump);
                     if (!player.forces.IsGrounded)
                         jumps++;
+                    return;
                 }
+            }
+
+            GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
+            if (Input.GetButtonDown(ATTACK))
+            {
+                player.PushBehavior(player.attack);
+                return;
             }
 
             if (player.forces.IsGrounded)

@@ -36,6 +36,7 @@ namespace TMechs.Player
         public BehaviorStandard standard = new BehaviorStandard();
         public PlayerBehavior sprint = new BehaviorSprinting();
         public BehaviorJump jump = new BehaviorJump();
+        public BehaviorAttack attack = new BehaviorAttack();
         
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
         private readonly HashSet<PlayerBehavior> initializedBehaviors = new HashSet<PlayerBehavior>();
@@ -145,7 +146,7 @@ namespace TMechs.Player
 
             throw new InvalidOperationException("Cannot pop the last player behavior");
         }
-        
+
         [AnimationCollection.Enum("Player Animations")]
         public enum PlayerAnim
         {

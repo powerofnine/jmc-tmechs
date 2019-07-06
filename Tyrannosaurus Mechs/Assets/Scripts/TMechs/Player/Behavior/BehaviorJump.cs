@@ -25,14 +25,16 @@ namespace TMechs.Player.Behavior
 
             jump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
             airJump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
+
+            jump.OnEnd = OnAnimEnd;
+            airJump.OnEnd = OnAnimEnd;
         }
 
         public override void OnPush()
         {
             base.OnPush();
 
-            AnimancerState state = Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump);
-            state.OnEnd = () => Animancer.GetLayer(LAYER).StartFade(0F);
+            Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump);
         }
 
         public override void OnUpdate()
@@ -51,6 +53,11 @@ namespace TMechs.Player.Behavior
                 player.forces.velocity.y = jumpForce;
                 player.PopBehavior();
             }
+        }
+
+        private void OnAnimEnd()
+        {
+            Animancer.GetLayer(LAYER).StartFade(0F);
         }
     }
 }
