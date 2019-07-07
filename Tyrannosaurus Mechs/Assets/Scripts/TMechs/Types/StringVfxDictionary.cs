@@ -1,7 +1,5 @@
 using System;
-using TMechs.PlayerOld;
-using UnityEngine;
-using UnityEngine.Experimental.VFX;
+using TMechs.Player;
 
 namespace TMechs.Types
 {

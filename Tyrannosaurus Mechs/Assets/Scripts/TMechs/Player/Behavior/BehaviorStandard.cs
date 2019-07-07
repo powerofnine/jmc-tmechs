@@ -56,7 +56,7 @@ namespace TMechs.Player.Behavior
             if (enemy != null && player.rocketFist.rocketFistCharge <= Mathf.Epsilon)
             {
                 GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
-                if (Input.GetButton(LEFT_ARM))
+                if (Input.GetButtonDown(LEFT_ARM))
                 {
                     player.PushBehavior(player.rocketFist);
                     return;
@@ -67,7 +67,7 @@ namespace TMechs.Player.Behavior
 
             if (grapple != null)
             {
-                if (Input.GetButton(RIGHT_ARM))
+                if (Input.GetButtonDown(RIGHT_ARM))
                 {
                     player.PushBehavior(player.grapple);
                     return;

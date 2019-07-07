@@ -19,8 +19,8 @@ namespace TMechs.UI
         [Range(0F, 1F)]
         private float value;
 
-        [Min(1)]
-        public int steps = 1;
+        [Min(2)]
+        public int steps = 2;
         public Vector2[] positions;
         public float[] rotations;
 

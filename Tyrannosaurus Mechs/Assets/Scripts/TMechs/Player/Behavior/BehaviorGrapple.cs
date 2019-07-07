@@ -1,4 +1,5 @@
 using System;
+using Animancer;
 using TMechs.Environment.Targets;
 using UnityEngine;
 
@@ -19,6 +20,15 @@ namespace TMechs.Player.Behavior
         private float radius;
 
         private float pullSpeed;
+
+        private AnimancerState grapple;
+
+        public override void OnInit()
+        {
+            base.OnInit();
+
+            grapple = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Grapple), 1);
+        }
 
         public override void OnPush()
         {
@@ -45,6 +55,8 @@ namespace TMechs.Player.Behavior
             target.OnGrapple();
             transform.LookAt(target.transform.position.Set(Player.Instance.transform.position.y, Utility.Axis.Y));
             player.movement.ResetIntendedY();
+
+            Animancer.CrossFadeFromStart(grapple);
         }
 
         public override void OnPop()
@@ -54,6 +66,8 @@ namespace TMechs.Player.Behavior
             player.forces.velocity = velocity;
             player.forces.enabled = true;
             target.OnGrapple();
+            
+            Animancer.GetLayer(1).StartFade(0F);
         }
 
         public override void OnUpdate()

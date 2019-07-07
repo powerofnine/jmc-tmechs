@@ -5,7 +5,7 @@ using TMechs.Types;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 
-namespace TMechs.PlayerOld
+namespace TMechs.Player
 {
     public class PlayerVfx : MonoBehaviour
     {
