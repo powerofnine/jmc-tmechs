@@ -118,7 +118,6 @@ namespace TMechs.Player.Modules
             float speed = player.Speed;
             if (!player.forces.canRun)
             {
-                isSprinting = false;
                 speed = movementSpeed * .85F;
             }
 
