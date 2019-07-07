@@ -22,7 +22,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            dash = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Dash), 1);
+            dash = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Dash), 1);
         }
 
         public override void OnPush()

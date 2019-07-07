@@ -43,11 +43,11 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            intro = Animancer.CreateState(player.GetClip(Player.PlayerAnim.RocketChargeIntro), ATTACK_LAYER);
-            charge = Animancer.CreateState(player.GetClip(Player.PlayerAnim.RocketCharge), ATTACK_LAYER);
-            hold = Animancer.CreateState(player.GetClip(Player.PlayerAnim.RocketHold), ATTACK_LAYER);
-            fire = Animancer.CreateState(player.GetClip(Player.PlayerAnim.RocketRecover), ATTACK_LAYER);
-            comeBack = Animancer.CreateState(player.GetClip(Player.PlayerAnim.RocketReturn), ATTACK_LAYER);
+            intro = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketChargeIntro), ATTACK_LAYER);
+            charge = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketCharge), ATTACK_LAYER);
+            hold = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketHold), ATTACK_LAYER);
+            fire = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketRecover), ATTACK_LAYER);
+            comeBack = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketReturn), ATTACK_LAYER);
         }
         
         public override void OnPush()

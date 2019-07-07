@@ -29,8 +29,8 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            grab = Animancer.CreateState(player.GetClip(Player.PlayerAnim.GrabObject), 1);
-            yeet = Animancer.CreateState(player.GetClip(Player.PlayerAnim.ThrowObject), 1);
+            grab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.GrabObject), 1);
+            yeet = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.ThrowObject), 1);
             pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), 2);
         }
 

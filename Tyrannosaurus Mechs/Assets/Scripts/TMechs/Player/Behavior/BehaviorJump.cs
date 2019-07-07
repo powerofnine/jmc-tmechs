@@ -29,8 +29,8 @@ namespace TMechs.Player.Behavior
             AnimancerLayer layer = Animancer.GetLayer(LAYER);
             layer.SetName("Jump Layer");
 
-            jump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
-            airJump = Animancer.CreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
+            jump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
+            airJump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
         }
 
         public override void OnPush()

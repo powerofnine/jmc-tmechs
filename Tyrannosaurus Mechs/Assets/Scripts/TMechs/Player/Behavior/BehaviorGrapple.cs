@@ -27,7 +27,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            grapple = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Grapple), 1);
+            grapple = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Grapple), 1);
         }
 
         public override void OnPush()

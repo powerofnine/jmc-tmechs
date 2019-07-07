@@ -43,9 +43,9 @@ namespace TMechs.Player.Behavior
             AnimancerLayer layer = Animancer.GetLayer(LAYER);
             layer.SetName("Attack Layer");
 
-            attackString1 = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Attack1), LAYER);
-            attackString2 = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Attack2), LAYER);
-            attackString3 = Animancer.CreateState(player.GetClip(Player.PlayerAnim.Attack3), LAYER);
+            attackString1 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), LAYER);
+            attackString2 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack2), LAYER);
+            attackString3 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack3), LAYER);
         }
         
         public override void OnPush()
