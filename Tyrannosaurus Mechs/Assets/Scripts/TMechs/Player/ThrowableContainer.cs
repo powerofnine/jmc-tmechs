@@ -3,7 +3,7 @@ using System.Linq;
 using TMechs.Entity;
 using UnityEngine;
 
-namespace TMechs.PlayerOld
+namespace TMechs.Player
 {
     [AddComponentMenu("")]
     public class ThrowableContainer : MonoBehaviour
@@ -166,8 +166,12 @@ namespace TMechs.PlayerOld
             if (containedObject)
             {
                 EntityHealth containedEntity = containedObject.GetComponent<EntityHealth>();
-                if(containedEntity)
+                if (containedEntity)
+                {
                     containedEntity.Damage(damage);
+                    if(containedEntity.Health <= 0F) // Destroy regardless of how object handles death internally
+                        Destroy(containedEntity.gameObject);
+                }
             }
         }
 

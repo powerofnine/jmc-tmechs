@@ -50,9 +50,9 @@ namespace TMechs.Entity
             }
             else if (damage < 0F)
             {
-                foreach (IDamage evt in GetComponentsInChildren<IDamage>(true))
+                foreach (IHeal evt in GetComponentsInChildren<IHeal>(true))
                 {
-                    evt.OnDamaged(this, ref cancel);
+                    evt.OnHealed(this, ref cancel);
 
                     if (cancel)
                         return;

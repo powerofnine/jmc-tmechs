@@ -21,7 +21,7 @@ namespace TMechs.Player
         public static Rewired.Player Input { get; private set; }
 
         public Transform centerOfMass;
-        
+
         public EntityHealth Health { get; private set; }
         public EventfulAnimancerComponent Animancer { get; private set; }
         public PlayerCamera CameraController { get; private set; }
@@ -48,6 +48,7 @@ namespace TMechs.Player
         public BehaviorGrapple grapple = new BehaviorGrapple();
         public BehaviorAttack attack = new BehaviorAttack();
         public BehaviorRocketFist rocketFist = new BehaviorRocketFist();
+        public BehaviorCarry carry = new BehaviorCarry();
         
         private readonly Stack<PlayerBehavior> behaviorStack = new Stack<PlayerBehavior>();
         private readonly HashSet<PlayerBehavior> initializedBehaviors = new HashSet<PlayerBehavior>();

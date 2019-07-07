@@ -53,13 +53,26 @@ namespace TMechs.Player.Behavior
 
             EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
 
-            if (enemy != null && player.rocketFist.rocketFistCharge <= Mathf.Epsilon)
+            if (enemy != null)
             {
-                GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
-                if (Input.GetButtonDown(LEFT_ARM))
+                if (player.rocketFist.rocketFistCharge <= Mathf.Epsilon)
                 {
-                    player.PushBehavior(player.rocketFist);
-                    return;
+                    GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
+                    if (Input.GetButtonDown(LEFT_ARM))
+                    {
+                        player.PushBehavior(player.rocketFist);
+                        return;
+                    }
+                }
+
+                if (enemy.pickup != EnemyTarget.PickupType.Prohibit && Vector3.Distance(transform.position, enemy.transform.position) <= player.carry.grabRange)
+                {
+                    GamepadLabels.AddLabel(IconMap.Icon.R2, "Grab");
+                    if (Input.GetButtonDown(RIGHT_ARM))
+                    {
+                        player.PushBehavior(player.carry);
+                        return;
+                    }
                 }
             }
 
