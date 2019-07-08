@@ -1,16 +1,27 @@
 ﻿using System;
 using JetBrains.Annotations;
+using TMechs.Entity;
+using TMechs.Environment.Targets;
 using TMechs.Types;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
 {
-    public class AiHarrierNovus : MonoBehaviour, AnimatorEventListener.IAnimatorEvent
+    public class AiHarrierNovus : MonoBehaviour, AnimatorEventListener.IAnimatorEvent, EntityHealth.IDamage, EntityHealth.IDeath
     {
-        public static readonly int MOVE = Anim.Hash("Move");
-        public static readonly int FIRING = Anim.Hash("IsFiring");
-        
+        private bool isDead = false;
+        private float deadVelocity;
+
+        public static readonly int DART = Anim.Hash("Dart");
+        public static readonly int DART_LEFT = Anim.Hash("Dart Left");
+        public static readonly int DART_RIGHT = Anim.Hash("Dart Right");
+        public static readonly int FIRE = Anim.Hash("Fire");
+        public static readonly int TAKE_DAMAGE = Anim.Hash("Take Damage");
+        public static readonly int DEATH_HIGH = Anim.Hash("Death High");
+        public static readonly int DEATH_LOW = Anim.Hash("Death Low");
+        public static readonly int HAS_TARGET = Anim.Hash("Has Target");
+
         public AiStateMachine stateMachine;
 
         public HarrierProperties properties = new HarrierProperties();
@@ -33,22 +44,18 @@ namespace TMechs.Enemy.AI
             };
 
             stateMachine.ImportProperties(properties);
-            
+
             stateMachine.RegisterState(null, "Idle");
+            stateMachine.RegisterState(new Notice(), "Notice");
             stateMachine.RegisterState(new Moving(), "Moving");
             stateMachine.RegisterState(new Shooting(), "Shooting");
-            stateMachine.RegisterState(new Chasing(), "Chasing");
-            stateMachine.RegisterState(new Attacking(), "Attack");
-            
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.DistanceToTarget > machine.Get<Radius>(nameof(HarrierProperties.rangeStopFollow)));
-            stateMachine.RegisterTransition("Idle", "Moving", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.rangeStartFollow)));
-            
+
+            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.DistanceToTarget > machine.Get<Radius>(nameof(HarrierProperties.rangeStopFollow)), machine => ((HarrierShared) machine.shared).animator.SetBool(HAS_TARGET, false));
+            stateMachine.RegisterTransition("Idle", "Notice", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.rangeStartFollow)));
+            stateMachine.RegisterTransition("Notice", "Moving", machine => machine.GetTrigger("NoticeDone"));
             stateMachine.RegisterTransition("Moving", "Shooting", machine => machine.GetTrigger("Shoot"));
-            stateMachine.RegisterTransition("Shooting", "Chasing", machine => machine.GetTrigger("ShootDone", false) && machine.GetAddSet<int>("ShootsNum", 1) >= machine.Get<int>(nameof(HarrierProperties.shootsBeforeChase)), machine => { machine.Set("ShootsNum", 0); machine.SetTrigger("ShootDone", false); }, -1);
             stateMachine.RegisterTransition("Shooting", "Moving", machine => machine.GetTrigger("ShootDone"));
-            stateMachine.RegisterTransition("Chasing", "Attack", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.attackRange)));
-            stateMachine.RegisterTransition("Attack", "Moving", machine => machine.GetTrigger("AttackDone"));
-            
+
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"HarrierNovus:{name}");
         }
@@ -67,12 +74,45 @@ namespace TMechs.Enemy.AI
             }
         }
 
+        private class Notice : HarrierState
+        {
+            private float safetyTimer;
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                props.animator.SetBool(HAS_TARGET, true);
+                safetyTimer = 3.5F;
+                
+                transform.forward = DirectionToTarget;
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                if (safetyTimer > 0F)
+                    safetyTimer -= Time.deltaTime;
+                else
+                    Machine.SetTrigger("NoticeDone");
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type == AiStateMachine.EventType.Animation && "PrimerDone".Equals(id))
+                    Machine.SetTrigger("NoticeDone");
+            }
+        }
+
         private class Moving : HarrierState
         {
             private int dashesDone;
             private float time;
             private Vector3 direction;
-            
+
             public override void OnEnter()
             {
                 base.OnEnter();
@@ -85,13 +125,11 @@ namespace TMechs.Enemy.AI
             {
                 base.OnTick();
 
-                props.animator.SetBool(FIRING, false);
-
                 Vector3 fw = DirectionToTarget;
 
                 fw.y = Mathf.Clamp(fw.y, -.25F, .25F);
                 fw.Normalize();
-                
+
                 transform.forward = fw;
 
                 if (time >= 0F)
@@ -99,7 +137,7 @@ namespace TMechs.Enemy.AI
                     time -= Time.deltaTime;
 
                     props.controller.Move(Machine.Get<float>(nameof(HarrierProperties.dashSpeed)) * Time.deltaTime * direction);
-                    
+
                     return;
                 }
 
@@ -108,7 +146,7 @@ namespace TMechs.Enemy.AI
                     Machine.SetTrigger("Shoot");
                     return;
                 }
-                
+
                 if (direction.sqrMagnitude > Mathf.Epsilon)
                 {
                     direction = Vector3.zero;
@@ -118,47 +156,46 @@ namespace TMechs.Enemy.AI
                 else
                 {
                     direction = new Vector3(Random.Range(-1F, 1F), Random.Range(-.35F, 1F), 0F);
+                    int dir = Mathf.Abs(direction.x) > .25F ? (int) Mathf.Sign(direction.x) : 0;
+
                     direction = transform.TransformDirection(direction);
-                    
+
                     Vector3 heading = target.position - transform.position;
 
                     float distDifference = HorizontalDistanceToTarget - Machine.Get<Radius>(nameof(HarrierProperties.maintainDistance));
-                    
+
                     if (Math.Abs(distDifference) < 5F)
+                    {
                         direction = DirectionToTarget * Mathf.Sign(distDifference);
-                    
+                        dir = 0;
+                    }
+
                     if (Mathf.Abs(heading.y) > 10F)
                         direction.y = Mathf.Sign(heading.y);
-                    
+
                     direction.Normalize();
 
                     time = Machine.Get<Radius>(nameof(HarrierProperties.dashDistance)) / Machine.Get<float>(nameof(HarrierProperties.dashSpeed));
-                    props.animator.SetTrigger(MOVE);
+                    props.animator.SetTrigger(dir == 0 ? DART : dir < 0 ? DART_LEFT : DART_RIGHT);
                 }
             }
         }
 
         private class Shooting : HarrierState
         {
-            private float nextShot;
             private bool leftSide;
-
             private int shots;
+            private float nextShot;
 
             public override void OnEnter()
             {
                 base.OnEnter();
 
-                nextShot = 0F;
                 shots = 0;
-                
-                props.animator.SetBool(FIRING, true);
-            }
+                nextShot = 0F;
+                leftSide = false;
 
-            public override void OnExit()
-            {
-                base.OnExit();
-                props.animator.SetBool(FIRING, false);
+                props.animator.SetTrigger(FIRE);
             }
 
             public override void OnTick()
@@ -166,6 +203,9 @@ namespace TMechs.Enemy.AI
                 base.OnTick();
 
                 transform.forward = DirectionToTarget;
+
+                if (shots <= 0)
+                    return;
 
                 if (nextShot > 0F)
                 {
@@ -173,102 +213,73 @@ namespace TMechs.Enemy.AI
                     return;
                 }
 
-                shots++;
-                
+                shots--;
+
                 Transform anchor = leftSide ? Machine.Get<Transform>(nameof(HarrierProperties.leftGunAnchor)) : Machine.Get<Transform>(nameof(HarrierProperties.rightGunAnchor));
-                leftSide = !leftSide;
-                    
+
                 GameObject go = Instantiate(Machine.Get<GameObject>(nameof(HarrierProperties.bulletTemplate)), anchor.position, anchor.rotation);
                 EnemyBullet bullet = go.GetComponent<EnemyBullet>();
                 bullet.damage = Machine.Get<float>(nameof(HarrierProperties.shotDamage));
                 bullet.direction = transform.forward;
                 bullet.owner = transform;
 
-                if (shots > Machine.Get<int>(nameof(HarrierProperties.shotCount)))
-                {
-                    Machine.SetTrigger("ShootDone");
-                    return;
-                }
-
-                nextShot = Machine.Get<float>(nameof(HarrierProperties.shotDelay));
-            }
-        }
-
-        private class Chasing : HarrierState
-        {
-            public override void OnTick()
-            {
-                base.OnTick();
-
-                transform.forward = DirectionToTarget;
-
-                props.controller.Move(Machine.Get<float>(nameof(HarrierProperties.chaseSpeed)) * Time.deltaTime * transform.forward);
-            }
-        }
-
-        private class Attacking : HarrierState
-        {
-            private int substate;
-
-            private bool attackTriggered = true;
-
-            public override void OnEnter()
-            {
-                base.OnEnter();
-
-                substate = 0;
-            }
-
-            public override void OnTick()
-            {
-                base.OnTick();
-                
-                props.animator.SetBool(FIRING, false);
-                
-                if (!attackTriggered)
-                    return;
-                
-                transform.forward = DirectionToTarget;
-                
-                if (DistanceToTarget > Machine.Get<Radius>(nameof(HarrierProperties.attackRange)))
-                {
-                    Machine.SetTrigger("AttackDone");
-                    return;
-                }
-
-                if (substate < 2)
-                {
-                    props.animator.SetTrigger(Anim.ATTACK);
-                    attackTriggered = false;
-
-                    substate++;
-                    if (Random.Range(0, 100) > Machine.Get<float>(nameof(HarrierProperties.secondaryAttackChance)) * 100F)
-                        substate = 4096;
-                    return;
-                }
-
-                Machine.SetTrigger("AttackDone");
+                if (shots > 0)
+                    nextShot = Machine.Get<float>(nameof(HarrierProperties.burstDelay));
+                else
+                    leftSide = !leftSide;
             }
 
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
 
-                if (type == AiStateMachine.EventType.Animation && "attack".Equals(id))
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                switch (id)
                 {
-                    attackTriggered = true;
-                    
-                    if(DistanceToTarget <= Machine.Get<Radius>(nameof(HarrierProperties.attackRange)) && AngleToTarget <= 35F)
-                        Player.Player.Instance.Damage(Machine.Get<float>(nameof(HarrierProperties.attackDamage)));
+                    case "Shoot":
+                        shots = Machine.Get<int>(nameof(HarrierProperties.burstCount));
+                        break;
+                    case "ShootDone":
+                        Machine.SetTrigger("ShootDone");
+                        break;
                 }
             }
         }
-        
+
         #endregion
-        
+
         private void Update()
         {
+            if (isDead)
+            {
+                deadVelocity += Utility.GRAVITY * Time.deltaTime;
+
+                ((HarrierShared) stateMachine.shared).controller.Move(deadVelocity * Time.deltaTime * Vector3.down);
+                return;
+            }
+
             stateMachine.Tick();
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (isDead)
+            {
+                gameObject.AddComponent<Rigidbody>();
+
+                ((HarrierShared) stateMachine.shared).animator.enabled = false;
+
+                CapsuleCollider cap = gameObject.AddComponent<CapsuleCollider>();
+                cap.center = ((HarrierShared) stateMachine.shared).controller.center;
+                cap.radius = ((HarrierShared) stateMachine.shared).controller.radius;
+                cap.height = ((HarrierShared) stateMachine.shared).controller.height;
+
+                Destroy(((HarrierShared) stateMachine.shared).controller);
+                Destroy(this);
+                Destroy(gameObject, 2F);
+            }
         }
 
         public void OnAnimationEvent(string id)
@@ -292,24 +303,18 @@ namespace TMechs.Enemy.AI
             public Radius maintainDistance = new Radius(20F, true);
 
             [Header("Shooting")]
-            public int shotCount = 5;
-            public float shotDelay = .25F;
+            public int burstCount = 3;
+            public float burstDelay = .1F;
             public float shotDamage = 1;
-            
+
             [Header("Chasing")]
             public float chaseSpeed = 20F;
             public int shootsBeforeChase = 3;
 
-            [Header("Attacking")]
-            [Range(0F, 1F)]
-            public float secondaryAttackChance = .5F;
-            public float attackDamage = 5F;
-            public Radius attackRange;
-
             [Header("Anchors")]
             public Transform leftGunAnchor;
             public Transform rightGunAnchor;
-            
+
             [Header("Templates")]
             public GameObject bulletTemplate;
         }
@@ -318,6 +323,32 @@ namespace TMechs.Enemy.AI
         {
             public Animator animator;
             public CharacterController controller;
+        }
+
+        public void OnDamaged(EntityHealth health, ref bool cancel)
+        {
+            ((HarrierShared) stateMachine.shared).animator.SetTrigger(TAKE_DAMAGE);
+        }
+
+        public void OnDying(ref bool customDestroy)
+        {
+            isDead = true;
+            customDestroy = true;
+
+            Collider col = GetComponent<Collider>();
+
+            if (!col)
+            {
+                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_LOW);
+                return;
+            }
+
+            if (Physics.Raycast(col.bounds.center, Vector3.down, 5F))
+                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_LOW);
+            else
+                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_HIGH);
+            
+            Destroy(GetComponent<EnemyTarget>());
         }
     }
 }

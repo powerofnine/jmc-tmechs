@@ -12,6 +12,7 @@ namespace TMechs.UI
 {
     public class MenuActions : MonoBehaviour
     {
+        public static bool pauseLocked;
         public const string FIRST_SCENE = "Assets/Scenes/Level1.unity";
 
         public MenuController controller;
@@ -23,6 +24,9 @@ namespace TMechs.UI
 
         public void LoadGame(SaveSystem.LexiconEntry save)
         {
+            if (SceneTransition.alreadyLoading)
+                return;
+            
             SaveSystem.SaveData data = null;
             if (save != null)
                 data = SaveSystem.LoadSave(save);
@@ -76,13 +80,24 @@ namespace TMechs.UI
             action?.Invoke();
         }
 
-        [DebugConsoleCommand("pause")]
-        public static void SetPause(bool pause)
+        public void _SetPause(bool pause)
         {
+            SetPause(pause);
+        }
+        
+        [DebugConsoleCommand("pause")]
+        public static void SetPause(bool pause) => SetPause(pause, true);
+        
+        public static void SetPause(bool pause, bool doBlur)
+        {
+            if (pauseLocked)
+                return;
+            
             Time.timeScale = pause ? 0F : 1F;
             ReInput.players.GetPlayer(Controls.Player.MAIN_PLAYER).controllers.maps.SetMapsEnabled(!pause, Controls.Category.DEFAULT);
 
-            BlurFade.Fade(pause);
+            if(doBlur)
+                BlurFade.Fade(pause);
         }
 
         public void ExitGame()

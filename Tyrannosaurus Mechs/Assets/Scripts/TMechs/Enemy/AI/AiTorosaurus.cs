@@ -185,7 +185,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "chargeHit":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Damage(Machine.Get<int>("chargeHitDamage"));
+                            Player.Player.Instance.Health.Damage(Machine.Get<int>("chargeHitDamage"));
                         break;
                 }
             }
@@ -236,7 +236,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "attack":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Damage(Machine.Get<int>("attackDamage"));
+                            Player.Player.Instance.Health.Damage(Machine.Get<int>("attackDamage"));
                         break;
                 }
             }

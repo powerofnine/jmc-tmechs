@@ -196,6 +196,11 @@ namespace TMechs
             return velocity * direction.normalized;
         }
 
+        public static float MathRemap(float value, float min1, float max1, float min2, float max2)
+        {
+            return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+        }
+        
         private static float GetComponent(this Vector3 source, Axis component)
         {
             switch (component)

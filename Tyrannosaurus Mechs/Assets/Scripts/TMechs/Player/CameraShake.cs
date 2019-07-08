@@ -31,6 +31,9 @@ namespace TMechs.Player
         [UsedImplicitly] // Animator event
         private void Shake(float multiplier = 1F)
         {
+            if (!Player.Instance.forces.IsGrounded)
+                return;
+                
             shake = strength * multiplier;
         }
     }

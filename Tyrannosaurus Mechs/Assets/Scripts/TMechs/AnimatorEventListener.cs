@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace TMechs
 {
     public class AnimatorEventListener : MonoBehaviour
     {
+        [UsedImplicitly]
         public void OnAnimationEvent(string id)
         {
             foreach (IAnimatorEvent ev in GetComponentsInParent<IAnimatorEvent>())

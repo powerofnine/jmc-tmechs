@@ -63,9 +63,7 @@ namespace TMechs.Environment
                 return;
             }
 
-            Player.Player.Instance.Controller.enabled = false;
-            Player.Player.Instance.transform.position = transform.position + anchorOffset;
-            Player.Player.Instance.Controller.enabled = true;
+            Player.Player.Instance.forces.Teleport(transform.position + anchorOffset);
         }
 
         private IEnumerator Transition(Color c)

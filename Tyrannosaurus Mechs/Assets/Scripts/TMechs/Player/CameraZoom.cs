@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TMechs.Player
+namespace TMechs.PlayerOld
 {
     public class CameraZoom : MonoBehaviour
     {
@@ -20,8 +20,8 @@ namespace TMechs.Player
         
         private void Update()
         {
-            float dash = Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA) <= .6F ? 0F : zoomDistance;
-            dashZoom = Mathf.SmoothDamp(dashZoom, dash, ref dashZoomVelocity, zoomDamp);
+//            float dash = Player.Instance.Animator.GetFloat(Anim.MOVE_DELTA) <= .6F ? 0F : zoomDistance;
+//            dashZoom = Mathf.SmoothDamp(dashZoom, dash, ref dashZoomVelocity, zoomDamp);
             float maxDistance = this.maxDistance - dashZoom;
             
             float distance = maxDistance;
