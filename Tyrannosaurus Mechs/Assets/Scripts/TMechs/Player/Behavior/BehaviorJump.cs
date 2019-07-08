@@ -1,6 +1,7 @@
 using System;
 using Animancer;
 using TMechs.Attributes;
+using TMechs.Player.Modules;
 using TMechs.UI.GamePad;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace TMechs.Player.Behavior
         
         private AnimancerState jump;
         private AnimancerState airJump;
+
+        private bool isAirJump;
         
         public override void OnInit()
         {
@@ -38,6 +41,7 @@ namespace TMechs.Player.Behavior
             base.OnPush();
 
             Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump).OnEnd = OnAnimEnd;
+            isAirJump = !player.forces.IsGrounded;
         }
 
         public override void OnUpdate()
@@ -54,6 +58,12 @@ namespace TMechs.Player.Behavior
             switch (e.stringParameter)
             {
                 case "Jump":
+                    if (!isAirJump)
+                    {
+                        VfxModule.SpawnEffect(player.vfx.jump, player.centerOfMass.position, transform.rotation, .6F);
+                        player.vfx.SpawnGroundSlam();
+                    }
+
                     player.forces.velocity.y = jumpForce;
                     player.PopBehavior();
                     break;

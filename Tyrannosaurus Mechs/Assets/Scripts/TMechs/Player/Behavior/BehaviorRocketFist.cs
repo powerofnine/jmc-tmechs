@@ -70,6 +70,9 @@ namespace TMechs.Player.Behavior
                     hold.OnEnd = null;
                 };
             };
+            
+            if(player.vfx.rocketFistCharge)
+                player.vfx.rocketFistCharge.gameObject.SetActive(true);
         }
         
         public override void OnUpdate()
@@ -128,6 +131,8 @@ namespace TMechs.Player.Behavior
                 rf.target = enemy.transform;
                 rocketFistGeo.SetActive(false);
                 
+                if(player.vfx.rocketFistCharge)
+                    player.vfx.rocketFistCharge.gameObject.SetActive(false);
                 Animancer.CrossFadeFromStart(fire).OnEnd = () =>
                 {
                     fire.OnEnd = null;
@@ -135,6 +140,14 @@ namespace TMechs.Player.Behavior
                     Animancer.GetLayer(ATTACK_LAYER).StartFade(0F);
                 };
             }
+        }
+
+        public override void OnPop()
+        {
+            base.OnPop();
+            
+            if(player.vfx.rocketFistCharge)
+                player.vfx.rocketFistCharge.gameObject.SetActive(false);
         }
 
         public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .2F);
