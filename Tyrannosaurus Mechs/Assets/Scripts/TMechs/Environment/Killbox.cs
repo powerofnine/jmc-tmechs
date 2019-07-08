@@ -8,12 +8,6 @@ namespace TMechs.Environment
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
-            {
-                Player.Player.Instance.Damage(5000000);
-                return;
-            }
-
             EntityHealth health = other.GetComponent<EntityHealth>();
             
             if(health)

@@ -43,6 +43,9 @@ namespace TMechs.UI.GamePad
         [MenuItem("Tools/TMechs/Process Rewired Controller Files")]
         private static void Reprocess()
         {
+            Debug.LogWarning("Function disabled, doing nothing");
+            return;
+            
             string[] assets = AssetDatabase.FindAssets("t:HardwareJoystickMap").Select(AssetDatabase.GUIDToAssetPath).ToArray();
 
             foreach (string path in assets)

@@ -34,24 +34,47 @@ namespace TMechs.Entity
             }
         }
 
-        public void Damage(float damage)
+        public void Damage(float damage, bool percent = false)
         {
             bool cancel = false;
 
-            foreach (IDamage evt in GetComponentsInChildren<IDamage>(true))
+            if (damage > 0F)
             {
-                evt.OnDamaged(this, ref cancel);
+                foreach (IDamage evt in GetComponentsInChildren<IDamage>(true))
+                {
+                    evt.OnDamaged(this, ref cancel);
 
-                if (cancel)
-                    return;
+                    if (cancel)
+                        return;
+                }
+            }
+            else if (damage < 0F)
+            {
+                foreach (IHeal evt in GetComponentsInChildren<IHeal>(true))
+                {
+                    evt.OnHealed(this, ref cancel);
+
+                    if (cancel)
+                        return;
+                }
             }
 
-            Health -= damage / maxHealth;
+            Health -= damage / (percent ? 1F : maxHealth);
+        }
+
+        public void Heal(float health, bool percent = false)
+        {
+            Damage(-health, percent);
         }
 
         public interface IDamage
         {
             void OnDamaged(EntityHealth health, ref bool cancel);
+        }
+
+        public interface IHeal
+        {
+            void OnHealed(EntityHealth health, ref bool cancel);
         }
 
         public interface IDeath

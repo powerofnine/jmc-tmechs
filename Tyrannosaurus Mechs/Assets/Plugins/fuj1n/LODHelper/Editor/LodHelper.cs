@@ -252,7 +252,7 @@ public class LodHelper : EditorWindow
     {
         // Need to hook into next update as selectionChanged does not allow changing selection
         if(LodHelperSettings.Instance.activelyPreventLodSelection)
-            EditorApplication.update += FilterSelection;
+            EditorApplication.delayCall += FilterSelection;
     }
 
     private static void FilterSelection()
@@ -271,7 +271,5 @@ public class LodHelper : EditorWindow
 
             return grp.gameObject;
         }).ToArray();
-
-        EditorApplication.update -= FilterSelection;
     }
 }
