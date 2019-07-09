@@ -17,6 +17,8 @@ namespace TMechs.UI
         public float transitionTime = 1F;
         private Image render;
 
+        public static bool alreadyLoading { get; private set; } = false;
+
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -49,6 +51,9 @@ namespace TMechs.UI
                 return;
             }
 
+            if (alreadyLoading)
+                throw new Exception("Attempted to load a scene whilst a scene was already loading");
+            
             instance.StartCoroutine(instance._LoadScene(index, sceneLoaded));
         }
 
@@ -63,12 +68,16 @@ namespace TMechs.UI
                 return null;
             }
 
+            if (alreadyLoading)
+                throw new Exception("Attempted to load a scene whilst a scene was already loading");
+
             return instance._LoadScene(index, sceneLoaded);
         }
 
         private IEnumerator _LoadScene(int index, Action sceneLoaded)
         {
             MenuActions.SetPause(true);
+            alreadyLoading = true;
 
             yield return StartCoroutine(Fade(1F));
             yield return SceneManager.LoadSceneAsync(LOADING);
@@ -89,6 +98,7 @@ namespace TMechs.UI
             yield return new WaitForSecondsRealtime(.25F);
             MenuActions.SetPause(false);
             yield return StartCoroutine(Fade(0F));
+            alreadyLoading = false;
         }
 
         private IEnumerator Fade(float alpha)

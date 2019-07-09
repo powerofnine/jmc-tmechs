@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
-using TMechs.Player;
 using TMechs.Types;
 using UnityEngine;
 using Random = UnityEngine.Random;

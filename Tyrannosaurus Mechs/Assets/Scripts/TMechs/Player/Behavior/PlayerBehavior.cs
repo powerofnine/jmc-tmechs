@@ -1,12 +1,29 @@
+using System;
+using Animancer;
+using JetBrains.Annotations;
+using UnityEngine;
+
 namespace TMechs.Player.Behavior
 {
-    public class PlayerBehavior
+    [PublicAPI]
+    public abstract class PlayerBehavior
     {
-        public static readonly PlayerBehavior SPRINTING = new BehaviorSprinting();
-        public static readonly PlayerBehavior ROCKET_FIST = new BehaviorRocketFist();
+        protected static Rewired.Player Input => Player.Input;
         
-        protected Player player;
+        [NonSerialized]
+        public Player player;
+        
+        // ReSharper disable once InconsistentNaming - keep consistency with Unity naming
+        public Transform transform => player.transform;
+        // ReSharper disable once InconsistentNaming - keep consistency with Unity naming
+        public GameObject gameObject => player.gameObject;
 
+        public AnimancerComponent Animancer => player.Animancer;
+
+        public virtual void OnInit()
+        {
+        }
+        
         /**
          * Called when this behavior is pushed
          */
@@ -18,6 +35,13 @@ namespace TMechs.Player.Behavior
          * Called when another behavior is pushed in front of this one
          */
         public virtual void OnShadowed()
+        {
+        }
+        
+        /**
+         * Called when the behavior in front of this one is popped
+         */
+        public virtual void OnSurfaced()
         {
         }
         
@@ -34,13 +58,32 @@ namespace TMechs.Player.Behavior
         public virtual void OnUpdate()
         {
         }
-
-        public virtual float GetSpeed() => player.Movement.movementSpeed;
-        public virtual bool CanMove() => true;
-
-        public void SetProperties(Player player)
+        
+        /**
+         * Called on late player tick
+         */
+        public virtual void OnLateUpdate()
         {
-            this.player = player;
         }
+
+        /**
+         * Called when an animation event is triggered
+         */
+        public virtual void OnAnimationEvent(AnimationEvent e)
+        {
+        }
+
+        public virtual float GetSpeed() => CanRun() && player.movement.isSprinting ? player.movement.runSpeed : player.movement.movementSpeed;
+        public virtual bool CanMove() => true;
+        public virtual bool CanRun() => true;
+
+        public T GetComponent<T>()
+            => player.GetComponent<T>();
+
+        public T GetComponentInChildren<T>(bool includeInactive = false)
+            => player.GetComponentInChildren<T>(includeInactive);
+
+        public T GetComponentInParent<T>()
+            => player.GetComponentInParent<T>();
     }
 }

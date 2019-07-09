@@ -1,4 +1,5 @@
 ﻿using TMechs.Player;
+using TMechs.PlayerOld;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,7 @@ namespace TMechs.Environment.Targets
             lookAnchor.SetParent(transform, false);
 
             targetRoot = Instantiate(Resources.Load<GameObject>("Prefabs/TargetRender"), lookAnchor).transform;
+            
             targetImage = targetRoot.Find("Target").GetComponent<Image>();
             targetRoot.gameObject.SetActive(false);
 

@@ -186,8 +186,8 @@ namespace TMechs.UI.GamePad
                     return false;
                 
                 IconIdentifier other = (IconIdentifier)obj;
-                
-                return isGeneric == other.isGeneric && (int)GetRelevantIcon() == (int)other.GetRelevantIcon();
+
+                return GetHashCode() == other.GetHashCode();
             }
         }
     }
