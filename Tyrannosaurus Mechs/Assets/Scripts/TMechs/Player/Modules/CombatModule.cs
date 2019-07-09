@@ -86,6 +86,10 @@ namespace TMechs.Player.Modules
                 health.Damage(hitboxDamage);
                 hits.Add(health);
                 hitboxHit?.Invoke();
+
+                PlayerHitbox box = hitboxes[id].FirstOrDefault();
+                if(box)
+                    VfxModule.SpawnEffect(player.vfx.hit, box.transform.position, Quaternion.identity, 1.5F);
             }
         }
         
