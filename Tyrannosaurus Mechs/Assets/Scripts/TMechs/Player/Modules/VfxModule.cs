@@ -18,6 +18,7 @@ namespace TMechs.Player.Modules
         public VisualEffectAsset jump;
         public VisualEffectAsset groundSlam;
         public VisualEffectAsset dash;
+        public VisualEffectAsset hit;
 
         [Header("Anchors")]
         public Transform groundSlamAnchor;

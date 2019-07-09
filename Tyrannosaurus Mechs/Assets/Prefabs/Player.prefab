@@ -1640,12 +1640,11 @@ MonoBehaviour:
     rocketFistCharge: {fileID: 1253668737089101906}
     heal: {fileID: 7610884630284823840}
     death: {fileID: 1324886688770619910}
-    hitSpark: {fileID: 8926484042661614526, guid: 1254fb3de2286c34a8ffb649afef529d,
-      type: 3}
     jump: {fileID: 8926484042661614526, guid: 060be554721ce1a41b89c42f38bceca6, type: 3}
     groundSlam: {fileID: 8926484042661614526, guid: a4d3afdb17de7d74b9d2721664fa342c,
       type: 3}
     dash: {fileID: 8926484042661614526, guid: 6f9a1c331c2bc7e43aec9fea16d396e1, type: 3}
+    hit: {fileID: 8926484042661614526, guid: 1254fb3de2286c34a8ffb649afef529d, type: 3}
     groundSlamAnchor: {fileID: 6832322278809113805}
   dash:
     dashSpeed: 55
@@ -1695,7 +1694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damagedEffect: {fileID: 8926484042661614526, guid: 1254fb3de2286c34a8ffb649afef529d,
+  damagedEffect: {fileID: 8926484042661614526, guid: a9ff5398b664e5b46a6693ce1433f1ae,
     type: 3}
   damagedEffectAnchor: {fileID: 8747315497052649858}
   damagedEffectDuration: 1
