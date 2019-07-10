@@ -7,11 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 0effffd934abccc49a395527287bba61,
-        type: 3}
-      propertyPath: m_Name
-      value: Conifer
-      objectReference: {fileID: 0}
     - target: {fileID: -4786304121966999595, guid: 0effffd934abccc49a395527287bba61,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -92,5 +87,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 560aba6381becaf45adf909c1b738147, type: 2}
+    - target: {fileID: -927199367670048503, guid: 0effffd934abccc49a395527287bba61,
+        type: 3}
+      propertyPath: m_Name
+      value: Conifer Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: 0effffd934abccc49a395527287bba61,
+        type: 3}
+      propertyPath: m_FadeMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: 0effffd934abccc49a395527287bba61,
+        type: 3}
+      propertyPath: m_AnimateCrossFading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: 0effffd934abccc49a395527287bba61,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.079558544
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: 0effffd934abccc49a395527287bba61,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.38397318
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0effffd934abccc49a395527287bba61, type: 3}
