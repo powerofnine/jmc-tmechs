@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace TMechs.Player
 {
-    public class Player : MonoBehaviour, EntityHealth.IDeath, EntityHealth.IDamage
+    public class Player : MonoBehaviour, EntityHealth.IDeath, EntityHealth.IDamage, EntityHealth.IHeal
     {
         public static Player Instance { get; private set; }
         public static Rewired.Player Input { get; private set; }
@@ -40,6 +40,7 @@ namespace TMechs.Player
         public ForcesModule forces = new ForcesModule();
         public MovementModule movement = new MovementModule();
         public CombatModule combat = new CombatModule();
+        public VfxModule vfx = new VfxModule();
 
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
@@ -76,6 +77,7 @@ namespace TMechs.Player
             RegisterModule(forces);
             RegisterModule(movement);
             RegisterModule(combat);
+            RegisterModule(vfx);
             
             PushBehavior(standard);
         }
@@ -160,13 +162,7 @@ namespace TMechs.Player
             MenuActions.SetPause(state);
             displayCursor = state;
         }
-        
-        public void OnDamaged(EntityHealth health, ref bool cancel)
-        {
-            if (isGod)
-                cancel = true;
-        }
-        
+
         #endregion
         
         public void SavePlayerData(ref SaveSystem.SaveData data)
@@ -227,6 +223,21 @@ namespace TMechs.Player
         {
             customDestroy = true;
             PushBehavior(new BehaviorDead());
+        }
+        
+        public void OnHealed(EntityHealth health, ref bool cancel)
+        {
+            if(!vfx.heal)
+                return;
+            
+            vfx.heal.gameObject.SetActive(true);
+            vfx.heal.Play();
+        }
+        
+        public void OnDamaged(EntityHealth health, ref bool cancel)
+        {
+            if (isGod)
+                cancel = true;
         }
         
         [AnimationCollection.Enum("Player Animations")]

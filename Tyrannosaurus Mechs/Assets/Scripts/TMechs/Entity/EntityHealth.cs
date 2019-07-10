@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMechs.Player.Modules;
+using UnityEngine;
+using UnityEngine.Experimental.VFX;
 
 namespace TMechs.Entity
 {
@@ -15,6 +17,11 @@ namespace TMechs.Entity
         }
 
         public float maxHealth;
+
+        [Header("Damaged VFX")]
+        public VisualEffectAsset damagedEffect;
+        public Transform damagedEffectAnchor;
+        public float damagedEffectDuration;
 
         private float health = 1F;
         private bool isDead;
@@ -47,6 +54,8 @@ namespace TMechs.Entity
                     if (cancel)
                         return;
                 }
+
+                VfxModule.SpawnEffect(damagedEffect, damagedEffectAnchor ? damagedEffectAnchor.position : transform.position, Quaternion.identity, damagedEffectDuration);
             }
             else if (damage < 0F)
             {

@@ -1,6 +1,7 @@
 using System;
 using Animancer;
 using TMechs.Environment.Targets;
+using TMechs.Player.Modules;
 using UnityEngine;
 
 namespace TMechs.Player.Behavior
@@ -29,6 +30,8 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
+            VfxModule.SpawnEffect(player.vfx.dash, player.centerOfMass.position, transform.rotation, 1F);
+            
             isStaggered = false;
             staggerTimer = 0F;
             

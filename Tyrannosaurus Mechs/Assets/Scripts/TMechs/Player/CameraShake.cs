@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace TMechs.PlayerOld
+namespace TMechs.Player
 {
     public class CameraShake : MonoBehaviour
     {
@@ -31,6 +31,9 @@ namespace TMechs.PlayerOld
         [UsedImplicitly] // Animator event
         private void Shake(float multiplier = 1F)
         {
+            if (!Player.Instance.forces.IsGrounded)
+                return;
+                
             shake = strength * multiplier;
         }
     }

@@ -12,7 +12,8 @@ namespace TMechs.Player.Behavior
         public Transform pickupAnchor;
         public float grabRange = 10F;
         public float throwForce = 5F;
-        public float launchAngle = 45F;
+        public float throwSpeed = 100F;
+        public float launchAngle = 10F;
         public float pummelDamage = 10F;
         
         private AnimancerState grab;
@@ -130,14 +131,14 @@ namespace TMechs.Player.Behavior
 
                 grabbed.transform.SetParent(null);
 
-                Vector3 ballisticVelocity;
-
+                Vector3 throwTarget = transform.position + transform.forward * throwForce;
+                float angle = launchAngle;
                 if (target)
-                    ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
-                else
-                    ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, transform.position + transform.forward * throwForce, launchAngle);
-
-                grabbed.Throw(ballisticVelocity);
+                    throwTarget = target.transform.position;
+                if (Vector3.Distance(transform.position, throwTarget) < 15F)
+                    angle = Mathf.Lerp(0F, angle, Vector3.Distance(transform.position, throwTarget) / 15F);
+                
+                grabbed.Throw(throwTarget, angle, throwSpeed);
             }
 
             Animancer.GetLayer(1).StartFade(0F);

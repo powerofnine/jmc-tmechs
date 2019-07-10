@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TMechs.Entity;
+using TMechs.Environment;
 using UnityEngine;
 
 namespace TMechs.Player
@@ -78,7 +79,7 @@ namespace TMechs.Player
             }
         }
 
-        public void Throw(Vector3 velocity)
+        public void Throw(Vector3 target, float angle, float speed)
         {
             if (!containedObject)
             {
@@ -86,7 +87,7 @@ namespace TMechs.Player
                 return;
             }
 
-            IEnumerable<Collider> colliders = containedObject.GetComponentsInChildren<Collider>(true).Where(x => !x.isTrigger);
+            IEnumerable<Collider> colliders = containedObject.GetComponentsInChildren<Collider>(false).Where(x => !x.isTrigger);
 
             foreach (Collider col in colliders)
             {
@@ -126,7 +127,13 @@ namespace TMechs.Player
             }
 
             rb = gameObject.AddComponent<Rigidbody>();
-            rb.velocity = velocity;
+            rb.useGravity = false;
+
+            ParabolicThrow th = gameObject.AddComponent<ParabolicThrow>();
+            th.target = target;
+            th.inAngle = angle;
+            th.outAngle = angle;
+            th.speed = speed;
         }
 
         private void OnCollisionEnter(Collision other)
