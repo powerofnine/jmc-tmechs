@@ -127,13 +127,19 @@ namespace TMechs.Player
             }
 
             rb = gameObject.AddComponent<Rigidbody>();
-            rb.useGravity = false;
 
             ParabolicThrow th = gameObject.AddComponent<ParabolicThrow>();
             th.target = target;
             th.inAngle = angle;
             th.outAngle = angle;
             th.speed = speed;
+
+            Vector3 dir = target - transform.position;
+            th.onEnd = () =>
+            {
+                rb = gameObject.AddComponent<Rigidbody>();
+                rb.velocity = dir * speed + Vector3.down * 30F;
+            };
         }
 
         private void OnCollisionEnter(Collision other)

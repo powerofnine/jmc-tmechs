@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TMechs.Environment
 {
@@ -11,6 +12,8 @@ namespace TMechs.Environment
         public float trajectory = .25F;
         public float speed = 20F;
 
+        public Action onEnd;
+
         private float progress;
         private float length;
         private Vector3[] cvs;
@@ -19,6 +22,11 @@ namespace TMechs.Environment
         public Mesh previewMesh;
         private float previewProgress;
         #endif
+
+        private void Awake()
+        {
+            onEnd = () => Destroy(gameObject);
+        }
 
         private void Start()
         {
@@ -30,9 +38,12 @@ namespace TMechs.Environment
             progress += speed * Time.deltaTime;
 
             transform.position = ComputeCurve(Mathf.Clamp01(progress / length));
-            
-            if(progress >= length)
-                Destroy(gameObject);
+
+            if (progress >= length)
+            {
+                Destroy(this);
+                onEnd?.Invoke();
+            }
         }
 
         public void SetupCvs()
