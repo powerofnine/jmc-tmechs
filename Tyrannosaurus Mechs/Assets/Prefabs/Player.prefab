@@ -1678,7 +1678,7 @@ MonoBehaviour:
   carry:
     pickupAnchor: {fileID: 3859233158698246847}
     grabRange: 10
-    throwForce: 5
+    throwForce: 25
     throwSpeed: 100
     launchAngle: 10
     pummelDamage: 10
@@ -1736,14 +1736,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4243256085709574702}
     m_Modifications:
-    - target: {fileID: 9500000, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
-      propertyPath: m_KeepAnimatorControllerStateOnDisable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
       propertyPath: m_Name
       value: Mesh
@@ -1835,6 +1827,14 @@ PrefabInstance:
     - target: {fileID: 400016, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
+      propertyPath: m_KeepAnimatorControllerStateOnDisable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 13700010, guid: 2d56ca4ff9d368843815f675b266f5c8, type: 3}
       propertyPath: m_Materials.Array.data[0]

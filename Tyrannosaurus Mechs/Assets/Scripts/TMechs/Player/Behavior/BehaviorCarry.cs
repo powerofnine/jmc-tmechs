@@ -79,7 +79,7 @@ namespace TMechs.Player.Behavior
             if (Input.GetButtonDown(Controls.Action.RIGHT_ARM))
             {
                 isThrowing = true;
-                Animancer.CrossFadeFromStart(yeet, .1F).OnEnd = Throw;
+                Animancer.CrossFadeFromStart(yeet, .1F);
                 return;
             }
             
@@ -119,7 +119,6 @@ namespace TMechs.Player.Behavior
         private void Throw()
         {
             grab.OnEnd = null;
-            yeet.OnEnd = null;
             pummel.OnEnd = null;
 
             if (pickedUp)
@@ -129,7 +128,9 @@ namespace TMechs.Player.Behavior
 
                 EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
 
-                grabbed.transform.SetParent(null);
+                Vector3 pos = grabbed.transform.position;
+                grabbed.transform.SetParent(null, false);
+                grabbed.transform.position = pos;
 
                 Vector3 throwTarget = transform.position + transform.forward * throwForce;
                 float angle = launchAngle;
@@ -144,6 +145,14 @@ namespace TMechs.Player.Behavior
             Animancer.GetLayer(1).StartFade(0F);
             Animancer.GetLayer(2).StartFade(0F);
             player.PopBehavior();
+        }
+
+        public override void OnAnimationEvent(AnimationEvent e)
+        {
+            base.OnAnimationEvent(e);
+            
+            if("Throw".Equals(e.stringParameter))
+                Throw();
         }
 
         public override bool CanMove() => hasPickedUp && !isThrowing && !isPummeling;

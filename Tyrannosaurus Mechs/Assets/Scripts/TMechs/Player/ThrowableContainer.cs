@@ -66,7 +66,7 @@ namespace TMechs.Player
         {
             if (isDead)
                 return;
-            
+
             if(!containedObject)
                 Destroy(gameObject);
             
@@ -127,6 +127,7 @@ namespace TMechs.Player
             }
 
             rb = gameObject.AddComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
             ParabolicThrow th = gameObject.AddComponent<ParabolicThrow>();
             th.target = target;
@@ -137,8 +138,8 @@ namespace TMechs.Player
             Vector3 dir = target - transform.position;
             th.onEnd = () =>
             {
-                rb = gameObject.AddComponent<Rigidbody>();
                 rb.velocity = dir * speed + Vector3.down * 30F;
+                rb.constraints = RigidbodyConstraints.None;
             };
         }
 
@@ -146,6 +147,9 @@ namespace TMechs.Player
         {
             if (isDead || other.collider.CompareTag("Player"))
                 return;
+            
+            Destroy(gameObject.GetComponent<ParabolicThrow>());
+            
             isDead = true;
             EntityHealth entity = other.collider.GetComponent<EntityHealth>();
             if (entity)
