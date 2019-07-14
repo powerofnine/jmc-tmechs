@@ -2,8 +2,12 @@
 using JetBrains.Annotations;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
+using TMechs.FX;
+using TMechs.Player.Modules;
 using TMechs.Types;
 using UnityEngine;
+using UnityEngine.Experimental.VFX;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
@@ -26,6 +30,11 @@ namespace TMechs.Enemy.AI
 
         public HarrierProperties properties = new HarrierProperties();
 
+        [Header("VFX")]
+        public VisualEffect deathEffect;
+        public VisualEffectAsset deathExplosion;
+        public float deathEffectDuration;
+        
         private void Start()
         {
             CreateStateMachine(new HarrierShared()
@@ -267,18 +276,20 @@ namespace TMechs.Enemy.AI
         {
             if (isDead)
             {
-                gameObject.AddComponent<Rigidbody>();
+                VfxModule.SpawnEffect(deathExplosion, transform.position, Quaternion.identity, deathEffectDuration);
 
-                ((HarrierShared) stateMachine.shared).animator.enabled = false;
+                if (deathEffect)
+                {
+                    deathEffect.transform.SetParent(null, true);
+                    deathEffect.Stop();
+                    deathEffect.gameObject.AddComponent<DestroyTimer>().time = 4F;
+                }
 
-                CapsuleCollider cap = gameObject.AddComponent<CapsuleCollider>();
-                cap.center = ((HarrierShared) stateMachine.shared).controller.center;
-                cap.radius = ((HarrierShared) stateMachine.shared).controller.radius;
-                cap.height = ((HarrierShared) stateMachine.shared).controller.height;
-
+                Destroy(((HarrierShared) stateMachine.shared).animator);
                 Destroy(((HarrierShared) stateMachine.shared).controller);
                 Destroy(this);
-                Destroy(gameObject, 2F);
+                
+                Destroy(gameObject, deathEffectDuration / 2F);
             }
         }
 
@@ -334,6 +345,9 @@ namespace TMechs.Enemy.AI
         {
             isDead = true;
             customDestroy = true;
+            
+            if(deathEffect)
+                deathEffect.gameObject.SetActive(true);
 
             Collider col = GetComponent<Collider>();
 
