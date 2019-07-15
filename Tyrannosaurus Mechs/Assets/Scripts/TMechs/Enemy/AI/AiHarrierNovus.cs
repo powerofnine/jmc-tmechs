@@ -1,5 +1,7 @@
 ﻿using System;
+using Animancer;
 using JetBrains.Annotations;
+using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
 using TMechs.FX;
@@ -30,6 +32,9 @@ namespace TMechs.Enemy.AI
 
         public HarrierProperties properties = new HarrierProperties();
 
+        [AnimationCollection.ValidateAttribute(typeof(HarrierAnimations))]
+        public AnimationCollection animations;
+        
         [Header("VFX")]
         public VisualEffect deathEffect;
         public VisualEffectAsset deathExplosion;
@@ -40,6 +45,8 @@ namespace TMechs.Enemy.AI
             CreateStateMachine(new HarrierShared()
             {
                     animator = GetComponentInChildren<Animator>(),
+                    animancer = GetComponentInChildren<AnimancerComponent>(),
+                    animations = animations,
                     controller = GetComponent<CharacterController>()
             });
         }
@@ -332,7 +339,9 @@ namespace TMechs.Enemy.AI
 
         private class HarrierShared
         {
-            public Animator animator;
+            public Animator animator; // TODO delet dis
+            public AnimancerComponent animancer;
+            public AnimationCollection animations;
             public CharacterController controller;
         }
 
@@ -363,6 +372,28 @@ namespace TMechs.Enemy.AI
                 ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_HIGH);
             
             Destroy(GetComponent<EnemyTarget>());
+        }
+
+        [AnimationCollection.Enum]
+        public enum HarrierAnimations
+        {
+            Primer,
+            TakeDamage,
+            Grabbed,
+            Shoot,
+            
+            [Header("Idles")]
+            Idle1,
+            Idle2,
+            
+            [Header("Death")]
+            DeathLow,
+            DeathHigh,
+            
+            [Header("Movement")]
+            DashForward,
+            DashLeft,
+            DashRight
         }
     }
 }
