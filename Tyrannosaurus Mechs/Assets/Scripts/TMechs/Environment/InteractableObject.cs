@@ -1,5 +1,5 @@
 ﻿using TMechs.UI.GamePad;
-using UIEventDelegate;
+using UltEvents;
 using UnityEngine;
 
 namespace TMechs.Environment
@@ -10,7 +10,7 @@ namespace TMechs.Environment
 
         public string displayText = "Press B to Blow";
         public bool isOn;
-        public ReorderableEventList onToggle;
+        public UltEvent onToggle;
         public bool isSingleUse = true;
 
         [Header("Animation")]
@@ -33,7 +33,7 @@ namespace TMechs.Environment
 
             overrideLabel = 3; 
             
-            if (Player.Player.Input.GetButtonDown(Controls.Action.INTERACT) && onToggle != null)
+            if (Player.Player.Input.GetButtonDown(Controls.Action.INTERACT))
             {
                 OnToggle();
             }
@@ -42,7 +42,7 @@ namespace TMechs.Environment
         private void LateUpdate()
         {
             if(overrideLabel-- > 0)
-                GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow2, displayText);
+                GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow2, displayText);
         }
 
         public virtual void OnToggle()
@@ -55,8 +55,7 @@ namespace TMechs.Environment
                 animator.SetBool(propertyName, isOn);
 
             eventToggleValue = isOn;
-            if (onToggle != null)
-                EventDelegate.Execute(onToggle.List);
+            onToggle.InvokeX();
         }
 
         public virtual bool IsWithinAngle()

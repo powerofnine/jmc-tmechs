@@ -466,7 +466,7 @@ PrefabInstance:
     - target: {fileID: 7417840829952718179, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.390636
+      value: -39.817944
       objectReference: {fileID: 0}
     - target: {fileID: 7417840829952718179, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
@@ -476,7 +476,7 @@ PrefabInstance:
     - target: {fileID: 7417840829952718179, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.59
+      value: 49.69935
       objectReference: {fileID: 0}
     - target: {fileID: 7417840829952718179, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
@@ -1156,7 +1156,7 @@ PrefabInstance:
     - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
       propertyPath: displayText
-      value: Toggle
+      value: Toggle (Noop)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ae314a20a501e54db7c91776ed277a1, type: 3}
@@ -2039,6 +2039,16 @@ PrefabInstance:
         type: 3}
       propertyPath: onToggle.List.Array.data[0].mEntryList.Array.size
       value: 109
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggleNew._PersistentCalls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggle._PersistentCalls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
         type: 3}
@@ -3129,6 +3139,31 @@ PrefabInstance:
         type: 3}
       propertyPath: onToggle.List.Array.data[0].mEntryList.Array.data[108].name
       value: StopAnimation ()
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggleNew._PersistentCalls.Array.data[0]._Target
+      value: 
+      objectReference: {fileID: 1889654548}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggleNew._PersistentCalls.Array.data[0]._MethodName
+      value: Fade
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggle.List.Array.data[0].mUpdateEntryList
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggle._PersistentCalls.Array.data[0]._Target
+      value: 
+      objectReference: {fileID: 1889654548}
+    - target: {fileID: 7417840829952718177, guid: 0ae314a20a501e54db7c91776ed277a1,
+        type: 3}
+      propertyPath: onToggle._PersistentCalls.Array.data[0]._MethodName
+      value: Fade
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ae314a20a501e54db7c91776ed277a1, type: 3}
