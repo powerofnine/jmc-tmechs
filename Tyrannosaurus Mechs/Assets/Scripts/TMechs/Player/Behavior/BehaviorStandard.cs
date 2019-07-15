@@ -51,6 +51,17 @@ namespace TMechs.Player.Behavior
                 return;
             }
 
+            GrappleTarget grapple = TargetController.Instance.GetTarget<GrappleTarget>();
+
+            if (grapple != null)
+            {
+                if (Input.GetButtonDown(RIGHT_ARM))
+                {
+                    player.PushBehavior(player.grapple);
+                    return;
+                }
+            }
+            
             EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
 
             if (enemy != null)
@@ -73,17 +84,6 @@ namespace TMechs.Player.Behavior
                         player.PushBehavior(player.carry);
                         return;
                     }
-                }
-            }
-
-            GrappleTarget grapple = TargetController.Instance.GetTarget<GrappleTarget>();
-
-            if (grapple != null)
-            {
-                if (Input.GetButtonDown(RIGHT_ARM))
-                {
-                    player.PushBehavior(player.grapple);
-                    return;
                 }
             }
         }
