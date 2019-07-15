@@ -1,5 +1,6 @@
 using System;
 using Animancer;
+using TMechs.Animation;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace TMechs.Player.Behavior
         public float throwSpeed = 100F;
         public float launchAngle = 10F;
         public float pummelDamage = 10F;
+
+        [Space]
+        public float ikTime = .5F;
         
         private AnimancerState grab;
         private AnimancerState yeet; // Throw is a reserved keyword
@@ -25,7 +29,7 @@ namespace TMechs.Player.Behavior
         private bool hasPickedUp;
         private bool isThrowing;
         private bool isPummeling;
-        
+
         public override void OnInit()
         {
             base.OnInit();
@@ -51,8 +55,20 @@ namespace TMechs.Player.Behavior
                 player.PopBehavior();
                 return;
             }
-            
+
             Animancer.CrossFadeFromStart(grab, .1F).OnEnd = Grab;
+        }
+
+        public override void OnPop()
+        {
+            base.OnPop();
+
+            InverseKinematics ik = player.rightArmIk;
+            if (ik)
+            {
+                ik.Stop();
+                ik.weight = 0F;
+            }
         }
 
         public override void OnUpdate()
@@ -71,6 +87,10 @@ namespace TMechs.Player.Behavior
                 player.PopBehavior();
                 return;
             }
+            
+            InverseKinematics ik = player.rightArmIk;
+            if (ik)
+                ik.targetPosition = target.transform.position;
             
             if (!hasPickedUp || isThrowing || isPummeling)
                 return;
@@ -104,16 +124,36 @@ namespace TMechs.Player.Behavior
             
             if (!target)
                 return;
-            
+
+            InverseKinematics ik = player.rightArmIk;
+
+            if (!ik)
+            {
+                Grab_PostIk();
+                return;
+            }
+            ik.Transition(ikTime, 1F, Grab_PostIk);
+        }
+
+        private void Grab_PostIk()
+        {
             GameObject go = new GameObject($"ThrowableContainer:{target.name}");
             ThrowableContainer container = go.AddComponent<ThrowableContainer>();
-            
+
             container.Initialize(target.gameObject);
-            
+
             go.transform.SetParent(pickupAnchor, false);
             go.transform.localPosition = Vector3.zero;
             pickedUp = container;
-            hasPickedUp = true;
+
+            InverseKinematics ik = player.rightArmIk;
+            if (!ik)
+            {
+                hasPickedUp = true;
+                return;
+            }
+            
+            ik.Transition(ikTime, 0F, () => hasPickedUp = true);
         }
 
         private void Throw()

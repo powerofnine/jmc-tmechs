@@ -21,7 +21,6 @@ namespace TMechs.Player
 
         private GameObject containedObject;
         private Vector3 startScale;
-        private Quaternion startRotation;
         
         private Renderer[] renderCache;
         private readonly Dictionary<Renderer, Mesh> meshCache = new Dictionary<Renderer, Mesh>();
@@ -32,6 +31,7 @@ namespace TMechs.Player
         public void Initialize(GameObject containedObject)
         {
             transform.position = containedObject.transform.position;
+            transform.rotation = containedObject.transform.rotation;
 
             renderCache = containedObject.GetComponentsInChildren<Renderer>();
             foreach (Renderer render in renderCache)
@@ -53,11 +53,11 @@ namespace TMechs.Player
             }
 
             startScale = containedObject.transform.localScale;
-            startRotation = containedObject.transform.localRotation;
             
             containedObject.SetActive(false);
             containedObject.transform.SetParent(transform);
             containedObject.transform.localPosition = Vector3.zero;
+            containedObject.transform.localRotation = Quaternion.identity;
 
             this.containedObject = containedObject;
         }
@@ -170,7 +170,7 @@ namespace TMechs.Player
                 containedObject.SetActive(true);
 
                 containedObject.transform.localScale = startScale;
-                containedObject.transform.localRotation = startRotation;
+                containedObject.transform.rotation = transform.rotation;
             }
 
             // This is stupid, but Unity crashes here if there is no delay before destroying this object
