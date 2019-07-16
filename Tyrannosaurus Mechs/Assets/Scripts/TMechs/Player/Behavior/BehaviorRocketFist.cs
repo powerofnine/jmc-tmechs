@@ -82,6 +82,8 @@ namespace TMechs.Player.Behavior
             if (charging)
                 rocketFistCharge += Time.deltaTime;
 
+            rocketFistCharge = Mathf.Clamp(rocketFistCharge, 0F, maxChargeTime);
+            
             if (rocketReturned)
             {
                 if (returnTimer <= rocketFistReturnTime)

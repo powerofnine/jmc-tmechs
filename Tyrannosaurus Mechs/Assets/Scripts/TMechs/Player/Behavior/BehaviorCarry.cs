@@ -1,5 +1,6 @@
 using System;
 using Animancer;
+using TMechs.Animation;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -12,8 +13,12 @@ namespace TMechs.Player.Behavior
         public Transform pickupAnchor;
         public float grabRange = 10F;
         public float throwForce = 5F;
-        public float launchAngle = 45F;
+        public float throwSpeed = 100F;
+        public float launchAngle = 10F;
         public float pummelDamage = 10F;
+
+        [Space]
+        public float ikTime = .5F;
         
         private AnimancerState grab;
         private AnimancerState yeet; // Throw is a reserved keyword
@@ -24,7 +29,7 @@ namespace TMechs.Player.Behavior
         private bool hasPickedUp;
         private bool isThrowing;
         private bool isPummeling;
-        
+
         public override void OnInit()
         {
             base.OnInit();
@@ -50,8 +55,20 @@ namespace TMechs.Player.Behavior
                 player.PopBehavior();
                 return;
             }
-            
+
             Animancer.CrossFadeFromStart(grab, .1F).OnEnd = Grab;
+        }
+
+        public override void OnPop()
+        {
+            base.OnPop();
+
+            InverseKinematics ik = player.rightArmIk;
+            if (ik)
+            {
+                ik.Stop();
+                ik.weight = 0F;
+            }
         }
 
         public override void OnUpdate()
@@ -71,6 +88,10 @@ namespace TMechs.Player.Behavior
                 return;
             }
             
+            InverseKinematics ik = player.rightArmIk;
+            if (ik)
+                ik.targetPosition = target.transform.position;
+            
             if (!hasPickedUp || isThrowing || isPummeling)
                 return;
             
@@ -78,7 +99,7 @@ namespace TMechs.Player.Behavior
             if (Input.GetButtonDown(Controls.Action.RIGHT_ARM))
             {
                 isThrowing = true;
-                Animancer.CrossFadeFromStart(yeet, .1F).OnEnd = Throw;
+                Animancer.CrossFadeFromStart(yeet, .1F);
                 return;
             }
             
@@ -103,22 +124,41 @@ namespace TMechs.Player.Behavior
             
             if (!target)
                 return;
-            
+
+            InverseKinematics ik = player.rightArmIk;
+
+            if (!ik)
+            {
+                Grab_PostIk();
+                return;
+            }
+            ik.Transition(ikTime, 1F, Grab_PostIk);
+        }
+
+        private void Grab_PostIk()
+        {
             GameObject go = new GameObject($"ThrowableContainer:{target.name}");
             ThrowableContainer container = go.AddComponent<ThrowableContainer>();
-            
+
             container.Initialize(target.gameObject);
-            
+
             go.transform.SetParent(pickupAnchor, false);
             go.transform.localPosition = Vector3.zero;
             pickedUp = container;
-            hasPickedUp = true;
+
+            InverseKinematics ik = player.rightArmIk;
+            if (!ik)
+            {
+                hasPickedUp = true;
+                return;
+            }
+            
+            ik.Transition(ikTime, 0F, () => hasPickedUp = true);
         }
 
         private void Throw()
         {
             grab.OnEnd = null;
-            yeet.OnEnd = null;
             pummel.OnEnd = null;
 
             if (pickedUp)
@@ -128,21 +168,31 @@ namespace TMechs.Player.Behavior
 
                 EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
 
-                grabbed.transform.SetParent(null);
+                Vector3 pos = grabbed.transform.position;
+                grabbed.transform.SetParent(null, false);
+                grabbed.transform.position = pos;
 
-                Vector3 ballisticVelocity;
-
+                Vector3 throwTarget = transform.position + transform.forward * throwForce;
+                float angle = launchAngle;
                 if (target)
-                    ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, target.transform.position, launchAngle);
-                else
-                    ballisticVelocity = Utility.BallisticVelocity(grabbed.transform.position, transform.position + transform.forward * throwForce, launchAngle);
-
-                grabbed.Throw(ballisticVelocity);
+                    throwTarget = target.transform.position;
+                if (Vector3.Distance(transform.position, throwTarget) < 15F)
+                    angle = Mathf.Lerp(0F, angle, Vector3.Distance(transform.position, throwTarget) / 15F);
+                
+                grabbed.Throw(throwTarget, angle, throwSpeed);
             }
 
             Animancer.GetLayer(1).StartFade(0F);
             Animancer.GetLayer(2).StartFade(0F);
             player.PopBehavior();
+        }
+
+        public override void OnAnimationEvent(AnimationEvent e)
+        {
+            base.OnAnimationEvent(e);
+            
+            if("Throw".Equals(e.stringParameter))
+                Throw();
         }
 
         public override bool CanMove() => hasPickedUp && !isThrowing && !isPummeling;

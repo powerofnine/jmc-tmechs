@@ -195,6 +195,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Animator: {fileID: 7490398481367205391}
+--- !u!114 &6869447255712193143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549312522930805094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b39f7321a5e5a9428980c36161d711f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 1827226128182048838, guid: 1e54b3e812c30544bb84871520576dee, type: 3}
+  - {fileID: 3360266130258973430, guid: 1e54b3e812c30544bb84871520576dee, type: 3}
+  randomizeDelayBetweenClips: 1
+  delayBetweenClips: 0
+  minDelayBetweenClips: 2
+  maxDelayBetweenClips: 4
 --- !u!1001 &5477374079852445807
 PrefabInstance:
   m_ObjectHideFlags: 0

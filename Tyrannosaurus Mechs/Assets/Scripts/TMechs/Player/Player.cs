@@ -58,6 +58,9 @@ namespace TMechs.Player
         public PlayerBehavior Behavior => behaviorStack.Count > 0 ? behaviorStack.Peek() : standard;
         public bool CanMove => Behavior.CanMove();
         public float Speed => Behavior.GetSpeed();
+
+        [Header("Visual")]
+        public InverseKinematics rightArmIk;
         
         private bool displayCursor;
 
