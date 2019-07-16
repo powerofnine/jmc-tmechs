@@ -648,7 +648,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1.2
+      m_SerializableObject: 0.6
     m_Space: 2147483647
   m_Property:
     name: Max
@@ -808,10 +808,10 @@ VisualEffectResource:
       VFX_USE_PARTICLEID_CURRENT\n         particleId = particleIndex;\n#endif\n#if
       VFX_USE_SEED_CURRENT\n        seed = WangHash(particleIndex ^ systemSeed);\n#endif\n
       \       \n        {\n            SetAttribute_F01429A3( /*inout */lifetime,
-      \ /*inout */seed, (float)0, (float)1.2);\n        }\n        {\n            PositionSphere_18D(
+      \ /*inout */seed, (float)0, (float)0.6);\n        }\n        {\n            PositionSphere_18D(
       /*inout */position,  /*inout */seed,  /*inout */direction, ArcSphere_sphere_center_b,
       (float)5.5, (float)6.283185, (float)0);\n        }\n        {\n            VelocitySpherical_18D(
-      /*inout */velocity,  /*inout */direction, position, float3(0,0,0), (float)10,
+      /*inout */velocity,  /*inout */direction, position, float3(0,0,0), (float)30.24,
       (float)0);\n        }\n        \n\n\n#if VFX_USE_ALIVE_CURRENT\n        if (alive)\n
       \       {\n\t\t\tuint deadIndex = deadListIn.DecrementCounter();\n            uint
       index = deadListIn[deadIndex];\n            attributeBuffer.Store((index * 0x1
@@ -1137,11 +1137,11 @@ VisualEffectResource:
       m_Float:
         m_Array:
         - m_ExpressionIndex: 7
-          m_Value: 10
+          m_Value: 30.24
         - m_ExpressionIndex: 8
           m_Value: 6.2831855
         - m_ExpressionIndex: 11
-          m_Value: 1.2
+          m_Value: 0.6
         - m_ExpressionIndex: 12
           m_Value: 0
         - m_ExpressionIndex: 16
@@ -2308,7 +2308,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 10
+      m_SerializableObject: 30.24
     m_Space: 2147483647
   m_Property:
     name: Speed

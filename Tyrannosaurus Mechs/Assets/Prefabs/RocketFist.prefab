@@ -78,6 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTime: 5
   speed: 75
+  explodeEffect: {fileID: 8926484042661614526, guid: 6cfafa6eccf5557458948e35ed7c88c0,
+    type: 3}
   target: {fileID: 0}
 --- !u!1 &2993974167917735690
 GameObject:
@@ -162,6 +164,8 @@ VFXRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

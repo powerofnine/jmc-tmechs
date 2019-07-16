@@ -12,6 +12,9 @@ namespace TMechs.Player.Behavior
         public float pullSpeedMax = 100F;
         public float pullExitDistance = 2F;
         
+        [Space]
+        public float ikTime = .25F;
+        
         private GrappleTarget target;
         private Types grappleType;
         private Vector3 velocity;
@@ -57,6 +60,8 @@ namespace TMechs.Player.Behavior
             player.movement.ResetIntendedY();
 
             Animancer.CrossFadeFromStart(grapple);
+            if (player.rightArmIk)
+                player.rightArmIk.Transition(ikTime, 1F);
         }
 
         public override void OnPop()
@@ -68,6 +73,9 @@ namespace TMechs.Player.Behavior
             target.OnGrapple();
             
             Animancer.GetLayer(1).StartFade(0F);
+            
+            if(player.rightArmIk)
+                player.rightArmIk.Transition(ikTime, 0F);
         }
 
         public override void OnUpdate()
@@ -79,6 +87,9 @@ namespace TMechs.Player.Behavior
                 player.PopBehavior();
                 return;
             }
+
+            if (player.rightArmIk)
+                player.rightArmIk.targetPosition = target.transform.position;
             
             switch (grappleType)
             {

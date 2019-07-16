@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using TMechs.Player.Modules;
 using UnityEngine;
+using UnityEngine.Experimental.VFX;
 
 namespace TMechs.Entity
 {
@@ -8,9 +10,13 @@ namespace TMechs.Entity
     {
         public float maxTime = 5F;
         public float speed = 10F;
+
+        [Space]
+        public VisualEffectAsset explodeEffect;
+        
         [NonSerialized]
         public float damage = 10F;
-
+        
         [HideInInspector]
         public Transform target;
 
@@ -53,6 +59,8 @@ namespace TMechs.Entity
             Player.Player.Instance.rocketFist.rocketReturned = true;
             Destroy(gameObject);
             done = true;
+            
+            VfxModule.SpawnEffect(explodeEffect, transform.position, Quaternion.identity, 1F);
         }
     }
 }
