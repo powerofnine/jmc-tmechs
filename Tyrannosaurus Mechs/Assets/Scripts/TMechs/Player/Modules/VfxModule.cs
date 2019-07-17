@@ -13,11 +13,11 @@ namespace TMechs.Player.Modules
         public VisualEffect rocketFistCharge;
         public VisualEffect heal;
         public VisualEffect death;
+        public VisualEffect dash;
 
         [Header("Spawnables")]
         public VisualEffectAsset jump;
         public VisualEffectAsset groundSlam;
-        public VisualEffectAsset dash;
         public VisualEffectAsset hit;
 
         [Header("Anchors")]

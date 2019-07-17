@@ -30,8 +30,6 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
-            VfxModule.SpawnEffect(player.vfx.dash, player.centerOfMass.position, transform.rotation, 1F);
-            
             isStaggered = false;
             staggerTimer = 0F;
             
@@ -55,6 +53,12 @@ namespace TMechs.Player.Behavior
 
             if (movementMag > float.Epsilon)
                 forward = Quaternion.Euler(0F, Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg, 0F) * Vector3.forward;
+
+            if (player.vfx.dash)
+            {
+                player.vfx.dash.gameObject.SetActive(true);
+                player.vfx.dash.Play();
+            }
         }
         
         public override void OnPop()
@@ -62,6 +66,9 @@ namespace TMechs.Player.Behavior
             base.OnPop();
             
             player.combat.SetHitbox(null, 0F);
+            
+            if(player.vfx.dash)
+                player.vfx.dash.Stop();
         }
 
         public override void OnUpdate()
