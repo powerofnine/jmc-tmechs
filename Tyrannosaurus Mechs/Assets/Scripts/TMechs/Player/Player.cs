@@ -61,6 +61,9 @@ namespace TMechs.Player
 
         [Header("Visual")]
         public InverseKinematics rightArmIk;
+
+        [Header("Debug")]
+        public GameObject tankyloIntro;
         
         private bool displayCursor;
 
@@ -304,6 +307,12 @@ namespace TMechs.Player
             Instance.forces.Teleport(pos);
         }
 
+        [DebugConsoleCommand("intro")]
+        private static void SpawnIntro()
+        {
+            Instantiate(Instance.tankyloIntro);
+        }
+        
         [DebugConsoleCommand("playerVar")]
         private static void SetVariable(PlayerVar variable, float value)
         {
