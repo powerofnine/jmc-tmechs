@@ -9,24 +9,14 @@ using TMechs.Player.Modules;
 using TMechs.Types;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
 {
-    public class AiHarrierNovus : MonoBehaviour, AnimatorEventListener.IAnimatorEvent, EntityHealth.IDamage, EntityHealth.IDeath
+    public class AiHarrierNovus : MonoBehaviour, EntityHealth.IDamage, EntityHealth.IDeath
     {
         private bool isDead = false;
         private float deadVelocity;
-
-        public static readonly int DART = Anim.Hash("Dart");
-        public static readonly int DART_LEFT = Anim.Hash("Dart Left");
-        public static readonly int DART_RIGHT = Anim.Hash("Dart Right");
-        public static readonly int FIRE = Anim.Hash("Fire");
-        public static readonly int TAKE_DAMAGE = Anim.Hash("Take Damage");
-        public static readonly int DEATH_HIGH = Anim.Hash("Death High");
-        public static readonly int DEATH_LOW = Anim.Hash("Death Low");
-        public static readonly int HAS_TARGET = Anim.Hash("Has Target");
 
         public AiStateMachine stateMachine;
 
@@ -45,10 +35,12 @@ namespace TMechs.Enemy.AI
             CreateStateMachine(new HarrierShared()
             {
                     animator = GetComponentInChildren<Animator>(),
-                    animancer = GetComponentInChildren<AnimancerComponent>(),
+                    animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
                     animations = animations,
                     controller = GetComponent<CharacterController>()
             });
+
+            ((HarrierShared) stateMachine.shared).animancer.onEvent = new AnimationEventReceiver(null, OnAnimationEvent);
         }
 
         private void CreateStateMachine(HarrierShared shared)
@@ -61,12 +53,12 @@ namespace TMechs.Enemy.AI
 
             stateMachine.ImportProperties(properties);
 
-            stateMachine.RegisterState(null, "Idle");
+            stateMachine.RegisterState(new Idle(), "Idle");
             stateMachine.RegisterState(new Notice(), "Notice");
             stateMachine.RegisterState(new Moving(), "Moving");
             stateMachine.RegisterState(new Shooting(), "Shooting");
 
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.DistanceToTarget > machine.Get<Radius>(nameof(HarrierProperties.rangeStopFollow)), machine => ((HarrierShared) machine.shared).animator.SetBool(HAS_TARGET, false));
+            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.DistanceToTarget > machine.Get<Radius>(nameof(HarrierProperties.rangeStopFollow)));
             stateMachine.RegisterTransition("Idle", "Notice", machine => machine.DistanceToTarget <= machine.Get<Radius>(nameof(HarrierProperties.rangeStartFollow)));
             stateMachine.RegisterTransition("Notice", "Moving", machine => machine.GetTrigger("NoticeDone"));
             stateMachine.RegisterTransition("Moving", "Shooting", machine => machine.GetTrigger("Shoot"));
@@ -82,23 +74,77 @@ namespace TMechs.Enemy.AI
         {
             protected HarrierShared props;
 
-            public override void OnEnter()
+            public override void OnInit()
             {
-                base.OnEnter();
+                base.OnInit();
 
                 props = Machine.shared as HarrierShared;
             }
         }
 
+        private class Idle : HarrierState
+        {
+            private AnimancerState idle1, idle2;
+
+            private int idleState = 0;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                idle1 = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.Idle1));
+                idle2 = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.Idle2));
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                
+                props.animancer.GetLayer(0).Stop();
+                PlayNext();
+            }
+
+            private void PlayNext()
+            {
+                idle1.Stop();
+                idle2.Stop();
+                
+                AnimancerState state = props.animancer.Play(idleState == 0 ? idle1 : idle2);
+                state.OnEnd = PlayNext;
+                state.Time = 0F;
+                
+                idleState++;
+                if (idleState > 1)
+                    idleState = 0;
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+                
+                idle1.Stop();
+                idle2.Stop();
+            }
+        }
+        
         private class Notice : HarrierState
         {
             private float safetyTimer;
+
+            private AnimancerState notice;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                notice = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.Primer));
+            }
 
             public override void OnEnter()
             {
                 base.OnEnter();
 
-                props.animator.SetBool(HAS_TARGET, true);
+                props.animancer.CrossFadeFromStart(notice);
                 safetyTimer = 3.5F;
                 
                 transform.forward = DirectionToTarget;
@@ -128,6 +174,17 @@ namespace TMechs.Enemy.AI
             private int dashesDone;
             private float time;
             private Vector3 direction;
+
+            private AnimancerState forward, left, right;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                forward = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.DashForward));
+                left = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.DashLeft));
+                right = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.DashRight));
+            }
 
             public override void OnEnter()
             {
@@ -192,7 +249,7 @@ namespace TMechs.Enemy.AI
                     direction.Normalize();
 
                     time = Machine.Get<Radius>(nameof(HarrierProperties.dashDistance)) / Machine.Get<float>(nameof(HarrierProperties.dashSpeed));
-                    props.animator.SetTrigger(dir == 0 ? DART : dir < 0 ? DART_LEFT : DART_RIGHT);
+                    props.animancer.CrossFadeFromStart(dir == 0 ? forward : dir < 0 ? left : right);
                 }
             }
         }
@@ -203,6 +260,15 @@ namespace TMechs.Enemy.AI
             private int shots;
             private float nextShot;
 
+            private AnimancerState shoot;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                shoot = props.animancer.CreateState(props.animations.GetClip(HarrierAnimations.Shoot));
+            }
+
             public override void OnEnter()
             {
                 base.OnEnter();
@@ -211,7 +277,7 @@ namespace TMechs.Enemy.AI
                 nextShot = 0F;
                 leftSide = false;
 
-                props.animator.SetTrigger(FIRE);
+                props.animancer.CrossFadeFromStart(shoot, 0.05F);
             }
 
             public override void OnTick()
@@ -292,6 +358,7 @@ namespace TMechs.Enemy.AI
                     deathEffect.gameObject.AddComponent<DestroyTimer>().time = 4F;
                 }
 
+                Destroy(((HarrierShared) stateMachine.shared).animancer);
                 Destroy(((HarrierShared) stateMachine.shared).animator);
                 Destroy(((HarrierShared) stateMachine.shared).controller);
                 Destroy(this);
@@ -300,9 +367,9 @@ namespace TMechs.Enemy.AI
             }
         }
 
-        public void OnAnimationEvent(string id)
+        public void OnAnimationEvent(AnimationEvent e)
         {
-            stateMachine.OnEvent(AiStateMachine.EventType.Animation, id);
+            stateMachine.OnEvent(AiStateMachine.EventType.Animation, e.stringParameter);
         }
 
         [Serializable]
@@ -339,15 +406,18 @@ namespace TMechs.Enemy.AI
 
         private class HarrierShared
         {
-            public Animator animator; // TODO delet dis
-            public AnimancerComponent animancer;
+            public Animator animator;
+            public EventfulAnimancerComponent animancer;
             public AnimationCollection animations;
             public CharacterController controller;
         }
 
         public void OnDamaged(EntityHealth health, ref bool cancel)
         {
-            ((HarrierShared) stateMachine.shared).animator.SetTrigger(TAKE_DAMAGE);
+            ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.TakeDamage), 0.1F, 2).OnEnd = () =>
+            {
+                ((HarrierShared) stateMachine.shared).animancer.GetLayer(2).StartFade(0F);
+            };
         }
 
         public void OnDying(ref bool customDestroy)
@@ -362,19 +432,19 @@ namespace TMechs.Enemy.AI
 
             if (!col)
             {
-                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_LOW);
+                ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.DeathLow), 0.1F, 3);
                 return;
             }
 
             if (Physics.Raycast(col.bounds.center, Vector3.down, 5F))
-                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_LOW);
+                ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.DeathLow), 0.1F, 3);
             else
-                ((HarrierShared) stateMachine.shared).animator.SetTrigger(DEATH_HIGH);
+                ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.DeathHigh), 0.1F, 3);
             
             Destroy(GetComponent<EnemyTarget>());
         }
 
-        [AnimationCollection.Enum]
+        [AnimationCollection.Enum("Harrier Animations")]
         public enum HarrierAnimations
         {
             Primer,
