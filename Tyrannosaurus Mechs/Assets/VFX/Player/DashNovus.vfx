@@ -51,7 +51,7 @@ MonoBehaviour:
     x: -112
     y: -193
     width: 1848
-    height: 1989
+    height: 1988
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,9 +211,9 @@ VisualEffectResource:
       inputAdditional;\n#endif\n\nvoid SetAttribute_F01429A3(inout float lifetime,
       inout uint seed, float Min, float Max) /*attribute:lifetime Composition:Overwrite
       Source:Slot Random:Uniform channels:XYZ */\n{\n    lifetime = lerp(Min,Max,RAND);\n}\nvoid
-      PositionTorus_18D(inout float3 position, inout uint seed, inout float3 direction,
+      PositionTorus_0(inout float3 position, inout uint seed, inout float3 direction,
       float3 Torus_center, float Torus_majorRadius, float Torus_minorRadius, float
-      Torus_arc, float volumeFactor, float r) /*positionMode:Volume spawnMode:Randomized
+      Torus_arc, float volumeFactor, float r) /*positionMode:Surface spawnMode:Randomized
       */\n{\n    float3 u = RAND3;float arc = Torus_arc;\n    float R = sqrt(volumeFactor
       + (1.0f - volumeFactor) * u.z);\n    \n    float sinTheta,cosTheta;\n    sincos(u.x
       * UNITY_TWO_PI,sinTheta,cosTheta);\n    \n    float2 s1_1 = R * r * float2(cosTheta,
@@ -256,11 +256,11 @@ VisualEffectResource:
       VFX_USE_PARTICLEID_CURRENT\n         particleId = particleIndex;\n#endif\n#if
       VFX_USE_SEED_CURRENT\n        seed = WangHash(particleIndex ^ systemSeed);\n#endif\n
       \       \n        {\n            SetAttribute_F01429A3( /*inout */lifetime,
-      \ /*inout */seed, (float)0, (float)0.4);\n        }\n        {\n            PositionTorus_18D(
-      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,2.91),
-      (float)0.06, (float)-0.88, (float)6.283185, (float)0, (float)0);\n        }\n
+      \ /*inout */seed, (float)0, (float)0.4);\n        }\n        {\n            PositionTorus_0(
+      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,1.71),
+      (float)0.33, (float)-1.03, (float)6.283185, (float)1, (float)0);\n        }\n
       \       {\n            VelocityTangent_18D( /*inout */velocity,  /*inout */direction,
-      position, float3(0,0,0), (float)13.6, (float)1, float3(0,0,-1));\n        }\n
+      position, float3(0,0,0), (float)19.4, (float)1, float3(0,0,-1));\n        }\n
       \       \n\n\n#if VFX_USE_ALIVE_CURRENT\n        if (alive)\n        {\n\t\t\tuint
       deadIndex = deadListIn.DecrementCounter();\n            uint index = deadListIn[deadIndex];\n
       \           attributeBuffer.Store((index * 0x1 + 0x0) << 2,asuint(lifetime));\n
@@ -973,13 +973,13 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
-        valueIndex: 63
+        valueIndex: 61
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 3
       - op: 1
         valueIndex: 64
         data[0]: -1
@@ -1025,15 +1025,15 @@ VisualEffectResource:
         - m_ExpressionIndex: 28
           m_Value: 0.4
         - m_ExpressionIndex: 29
-          m_Value: 0.06
+          m_Value: 0.33
         - m_ExpressionIndex: 30
-          m_Value: -0.88
+          m_Value: -1.03
         - m_ExpressionIndex: 31
           m_Value: 6.2831855
-        - m_ExpressionIndex: 33
-          m_Value: 13.6
-        - m_ExpressionIndex: 34
+        - m_ExpressionIndex: 32
           m_Value: 1
+        - m_ExpressionIndex: 34
+          m_Value: 19.4
       m_Vector2f:
         m_Array:
         - m_ExpressionIndex: 22
@@ -1053,19 +1053,19 @@ VisualEffectResource:
         - m_ExpressionIndex: 19
           m_Value: {x: 0, y: 0, z: 1}
         - m_ExpressionIndex: 20
-          m_Value: {x: 2.842171e-13, y: 0, z: 3.9220433}
+          m_Value: {x: 0, y: 0, z: -0.2772751}
         - m_ExpressionIndex: 21
           m_Value: {x: 20, y: 16, z: 10}
         - m_ExpressionIndex: 24
           m_Value: {x: 0.37580538, y: -4, z: -3.9933395}
         - m_ExpressionIndex: 25
           m_Value: {x: 7.273265, y: 2, z: 14.336674}
-        - m_ExpressionIndex: 32
+        - m_ExpressionIndex: 33
           m_Value: {x: 0, y: 0, z: 0}
         - m_ExpressionIndex: 35
           m_Value: {x: 0, y: 0, z: -1}
         - m_ExpressionIndex: 36
-          m_Value: {x: 0, y: 0, z: 2.91}
+          m_Value: {x: 0, y: 0, z: 1.71}
       m_Vector4f:
         m_Array: []
       m_Uint:
@@ -1131,7 +1131,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 2
           m_Value:
             serializedVersion: 2
-            key0: {r: 0.254475, g: 0.8649555, b: 3.5965803, a: 0.047058824}
+            key0: {r: 0.4707397, g: 1.5467162, b: 6.4222345, a: 0.007843138}
             key1: {r: 1.7257855, g: 2.8769004, b: 2.9745245, a: 0}
             key2: {r: 0, g: 0, b: 0, a: 0}
             key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1871,7 +1871,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":2.8421709430404007e-13,"y":0.0,"z":3.9220433235168459},"size":{"x":20.0,"y":16.0,"z":10.0}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":-0.27727508544921877},"size":{"x":20.0,"y":16.0,"z":10.0}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -2999,7 +2999,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614665}
   m_OutputSlots: []
   m_Disabled: 0
-  positionMode: 1
+  positionMode: 0
   spawnMode: 0
 --- !u!114 &8926484042661614665
 MonoBehaviour:
@@ -3029,7 +3029,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.ArcTorus, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":2.9100000858306886},"majorRadius":0.05999999865889549,"minorRadius":-0.8799999952316284,"arc":6.2831854820251469}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":1.7100000381469727},"majorRadius":0.33000001311302187,"minorRadius":-1.0299999713897706,"arc":6.2831854820251469}'
     m_Space: 0
   m_Property:
     name: Torus
@@ -3524,7 +3524,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 13.6
+      m_SerializableObject: 19.4
     m_Space: 2147483647
   m_Property:
     name: Speed
@@ -5393,7 +5393,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.2544749975204468,"g":0.864955484867096,"b":3.5965802669525148,"a":1.0},"time":0.0},{"color":{"r":1.725785493850708,"g":2.8769004344940187,"b":2.97452449798584,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0470588244497776,"time":0.0},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.4707396924495697,"g":1.5467162132263184,"b":6.422234535217285,"a":1.0},"time":0.0},{"color":{"r":1.725785493850708,"g":2.8769004344940187,"b":2.97452449798584,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.007843137718737126,"time":0.0},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
