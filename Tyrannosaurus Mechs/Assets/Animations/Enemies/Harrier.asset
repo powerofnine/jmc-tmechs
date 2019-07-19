@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461aa86daf69ba743ac45585502c6926, type: 3}
+  m_Name: Harrier
+  m_EditorClassIdentifier: 
+  serializedType: TMechs.Enemy.AI.AiHarrierNovus+HarrierAnimations, Assembly-CSharp,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  enums:
+  - Primer
+  - TakeDamage
+  - Grabbed
+  - Shoot
+  - Idle1
+  - Idle2
+  - DeathLow
+  - DeathHigh
+  - DashForward
+  - DashLeft
+  - DashRight
+  animations:
+  - {fileID: 5054536776457384431, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 3651350446308603674, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: -1893445038571968022, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 6720303635017113406, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 1827226128182048838, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 2562888284788868603, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 6344608922005362703, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 6304703273980410860, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 1358262452650834379, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: -1382011998588711323, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}
+  - {fileID: 6978340036137805583, guid: 674c7bd6cea558e459b544e431b00f21, type: 3}

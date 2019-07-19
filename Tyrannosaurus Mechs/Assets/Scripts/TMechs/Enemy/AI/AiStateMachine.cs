@@ -25,6 +25,7 @@ namespace TMechs.Enemy.AI
         private readonly Dictionary<string, State> states = new Dictionary<string, State>();
         private readonly Dictionary<string, List<Transition>> transitions = new Dictionary<string, List<Transition>>();
         public State CurrentState { get; private set; }
+        
         private List<Transition> currentTransitions;
 
         private readonly HashSet<string> triggers = new HashSet<string>();
@@ -67,7 +68,7 @@ namespace TMechs.Enemy.AI
             {
                 foreach (Transition t in transitions[ANY_STATE].OrderBy(x => x.order))
                 {
-                    if (t.condition(this))
+                    if (t.destinationState != state && t.condition(this))
                     {
                         t.onTransition?.Invoke(this);
                         EnterState(t.destinationState);
@@ -100,7 +101,11 @@ namespace TMechs.Enemy.AI
                 throw new ArgumentException($"State name {name} already exists when trying to register {state}");
 
             if (state != null)
+            {
                 state.Machine = this;
+                state.OnInit();
+            }
+
             states.Add(name, state);
 
             BuildSnapshot();
@@ -134,6 +139,9 @@ namespace TMechs.Enemy.AI
                 Debug.LogWarning($"Attempted to enter unregistered state {state}");
                 return;
             }
+
+            if (this.state == state) // No transitioning to current state
+                return;
 
             isInitialized = true;
 
@@ -289,6 +297,10 @@ namespace TMechs.Enemy.AI
             public Vector3 HorizontalDirectionToTarget => Machine.HorizontalDirectionToTarget;
             public float AngleToTarget => Machine.AngleToTarget;
 
+            public virtual void OnInit()
+            {
+            }
+            
             public virtual void OnEnter()
             {
             }

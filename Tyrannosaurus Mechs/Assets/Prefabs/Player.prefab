@@ -733,7 +733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7089055844519821966
 Transform:
   m_ObjectHideFlags: 0
@@ -789,7 +789,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3712172981210752771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1868,6 +1868,8 @@ MonoBehaviour:
     pummelDamage: 10
     ikTime: 0.5
   rightArmIk: {fileID: 6507470694728768995}
+  tankyloIntro: {fileID: 4318489944008235783, guid: cf7724a95600ab441a613b5c5ce0149b,
+    type: 3}
 --- !u!114 &378950363
 MonoBehaviour:
   m_ObjectHideFlags: 0

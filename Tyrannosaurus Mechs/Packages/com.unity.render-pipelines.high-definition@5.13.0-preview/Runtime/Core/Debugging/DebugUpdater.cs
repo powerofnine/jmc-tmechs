@@ -2,7 +2,10 @@ namespace UnityEngine.Experimental.Rendering
 {
     public class DebugUpdater : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        // Don't want the debug menu in the builds
+        #if UNITY_EDITOR
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        #endif
         static void RuntimeInit()
         {
             if (FindObjectOfType<DebugUpdater>() != null)
