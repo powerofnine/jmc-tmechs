@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TMechs.UI
 {
@@ -7,16 +8,27 @@ namespace TMechs.UI
     {
         public HealthBarCollection health;
         public RectTransform charge;
+        public Image chargeGlow;
+
+        public Color[] chargeStages =
+        {
+                Color.red,
+                Color.yellow,
+                Color.cyan
+        };
 
         public float fadeTime = .5F;
 
         private bool isEnabled = true;
-
+        
         private CanvasGroup group;
-
+        
         private void Awake()
         {
             group = GetComponent<CanvasGroup>();
+            
+            if(chargeGlow)
+                chargeGlow.canvasRenderer.SetAlpha(0F);
         }
 
         private void Update()
@@ -24,8 +36,19 @@ namespace TMechs.UI
             Player.Player player = Player.Player.Instance;
             health.FillAmount = player.Health.Health;
             
-            //TODO update when rocket fist readded
             charge.localEulerAngles = charge.localEulerAngles.Set(Mathf.Lerp(0F, -180F, player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime), Utility.Axis.Z);
+
+            if (chargeGlow && chargeStages != null && chargeStages.Length > 0)
+            {
+                int stage = Mathf.Clamp(Mathf.FloorToInt(player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime * chargeStages.Length), 0, chargeStages.Length - 1);
+                
+                Color c = chargeStages[stage];
+                
+                if (player.Behavior != player.rocketFist)
+                    c.a = 0F;
+                
+                chargeGlow.CrossFadeColor(c, .5F, false, true);
+            }
 
             bool shouldBeEnabled = Time.timeScale > float.Epsilon;
 

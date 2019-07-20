@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &4601908111146761918
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604189890171134551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9871639, y: 6.5659895, z: 8.54641}
+  m_Center: {x: 0, y: 3.2729259, z: 0}
 --- !u!1 &7417840829952718180
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,262 +74,7 @@ MonoBehaviour:
   displayText: Single Use
   isOn: 0
   onToggle:
-    List:
-    - mEventName: 
-      mShowGroup: 1
-      mUpdateEntryList: 0
-      mEntryList:
-      - target: {fileID: 0}
-        name: active
-      - target: {fileID: 0}
-        name: additionalVertexStreams
-      - target: {fileID: 0}
-        name: allowOcclusionWhenDynamic
-      - target: {fileID: 0}
-        name: axis
-      - target: {fileID: 0}
-        name: castShadows
-      - target: {fileID: 0}
-        name: center
-      - target: {fileID: 0}
-        name: contactOffset
-      - target: {fileID: 0}
-        name: enabled
-      - target: {fileID: 0}
-        name: enabled
-      - target: {fileID: 0}
-        name: enabled
-      - target: {fileID: 0}
-        name: enabled
-      - target: {fileID: 0}
-        name: eulerAngles
-      - target: {fileID: 0}
-        name: extents
-      - target: {fileID: 0}
-        name: forward
-      - target: {fileID: 0}
-        name: hasChanged
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hideFlags
-      - target: {fileID: 0}
-        name: hierarchyCapacity
-      - target: {fileID: 0}
-        name: isStatic
-      - target: {fileID: 0}
-        name: isTrigger
-      - target: {fileID: 0}
-        name: layer
-      - target: {fileID: 0}
-        name: lightmapIndex
-      - target: {fileID: 0}
-        name: lightmapScaleOffset
-      - target: {fileID: 0}
-        name: lightmapTilingOffset
-      - target: {fileID: 0}
-        name: lightProbeAnchor
-      - target: {fileID: 0}
-        name: lightProbeProxyVolumeOverride
-      - target: {fileID: 0}
-        name: lightProbeUsage
-      - target: {fileID: 0}
-        name: localEulerAngles
-      - target: {fileID: 0}
-        name: localPosition
-      - target: {fileID: 0}
-        name: localRotation
-      - target: {fileID: 0}
-        name: localScale
-      - target: {fileID: 0}
-        name: material
-      - target: {fileID: 0}
-        name: material
-      - target: {fileID: 0}
-        name: materials
-      - target: {fileID: 0}
-        name: mesh
-      - target: {fileID: 0}
-        name: motionVectorGenerationMode
-      - target: {fileID: 0}
-        name: motionVectors
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: name
-      - target: {fileID: 0}
-        name: off
-      - target: {fileID: 0}
-        name: on
-      - target: {fileID: 0}
-        name: parent
-      - target: {fileID: 0}
-        name: position
-      - target: {fileID: 0}
-        name: probeAnchor
-      - target: {fileID: 0}
-        name: realtimeLightmapIndex
-      - target: {fileID: 0}
-        name: realtimeLightmapScaleOffset
-      - target: {fileID: 0}
-        name: receiveShadows
-      - target: {fileID: 0}
-        name: reflectionProbeUsage
-      - target: {fileID: 0}
-        name: rendererPriority
-      - target: {fileID: 0}
-        name: renderingLayerMask
-      - target: {fileID: 0}
-        name: right
-      - target: {fileID: 0}
-        name: rotation
-      - target: {fileID: 0}
-        name: runInEditMode
-      - target: {fileID: 0}
-        name: runInEditMode
-      - target: {fileID: 0}
-        name: shadowCastingMode
-      - target: {fileID: 0}
-        name: sharedMaterial
-      - target: {fileID: 0}
-        name: sharedMaterial
-      - target: {fileID: 0}
-        name: sharedMaterials
-      - target: {fileID: 0}
-        name: sharedMesh
-      - target: {fileID: 0}
-        name: size
-      - target: {fileID: 0}
-        name: sortingLayerID
-      - target: {fileID: 0}
-        name: sortingLayerName
-      - target: {fileID: 0}
-        name: sortingOrder
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: tag
-      - target: {fileID: 0}
-        name: up
-      - target: {fileID: 0}
-        name: useGUILayout
-      - target: {fileID: 0}
-        name: useGUILayout
-      - target: {fileID: 0}
-        name: useLightProbes
-      - target: {fileID: 0}
-        name: ClosestPoint (Vector3 position)
-      - target: {fileID: 0}
-        name: ClosestPointOnBounds (Vector3 position)
-      - target: {fileID: 0}
-        name: CreatePrimitive (PrimitiveType type)
-      - target: {fileID: 0}
-        name: DetachChildren ()
-      - target: {fileID: 0}
-        name: Find (String n)
-      - target: {fileID: 0}
-        name: Find (String name)
-      - target: {fileID: 0}
-        name: FindChild (String n)
-      - target: {fileID: 0}
-        name: FindGameObjectsWithTag (String tag)
-      - target: {fileID: 0}
-        name: FindGameObjectWithTag (String tag)
-      - target: {fileID: 0}
-        name: FindWithTag (String tag)
-      - target: {fileID: 0}
-        name: GetChild (Int32 index)
-      - target: {fileID: 0}
-        name: GetChildCount ()
-      - target: {fileID: 0}
-        name: GetClosestReflectionProbes (ReflectionProbeBlendInfo] result)
-      - target: {fileID: 0}
-        name: GetEnumerator ()
-      - target: {fileID: 0}
-        name: GetMaterials (Material] m)
-      - target: {fileID: 0}
-        name: GetSharedMaterials (Material] m)
-      - target: {fileID: 0}
-        name: GetSiblingIndex ()
-      - target: {fileID: 0}
-        name: HasPropertyBlock ()
-      - target: {fileID: 0}
-        name: IsChildOf (Transform parent)
-      - target: {fileID: 0}
-        name: PlayAnimation (Object animation)
-      - target: {fileID: 0}
-        name: Raycast (Ray ray, RaycastHit& hitInfo, Single maxDistance)
-      - target: {fileID: 0}
-        name: RotateAroundLocal (Vector3 axis, Single angle)
-      - target: {fileID: 0}
-        name: SampleAnimation (Object clip, Single time)
-      - target: {fileID: 0}
-        name: SetActive (Boolean value)
-      - target: {fileID: 0}
-        name: SetActiveRecursively (Boolean state)
-      - target: {fileID: 0}
-        name: SetAsFirstSibling ()
-      - target: {fileID: 0}
-        name: SetAsLastSibling ()
-      - target: {fileID: 0}
-        name: SetColor ()
-      - target: {fileID: 0}
-        name: SetPositionAndRotation (Vector3 position, Quaternion rotation)
-      - target: {fileID: 0}
-        name: SetSiblingIndex (Int32 index)
-      - target: {fileID: 0}
-        name: StopAllCoroutines ()
-      - target: {fileID: 0}
-        name: StopAllCoroutines ()
-      - target: {fileID: 0}
-        name: StopAnimation ()
-      mTarget: {fileID: 0}
-      mMethodName: SetColor
-      mParameters:
-      - obj: {fileID: 0}
-        field: 
-        paramRefType: 0
-        argStringValue: 
-        argIntValue: 0
-        argFloatValue: 0
-        argDoubleValue: 0
-        argBoolValue: 0
-        argColor: {r: 0, g: 0, b: 0, a: 0}
-        argVector2: {x: 0, y: 0}
-        argVector3: {x: 0, y: 0, z: 0}
-        argVector4: {x: 0, y: 0, z: 0, w: 0}
-      mCached: 0
-      oneShot: 0
+    _PersistentCalls: []
   isSingleUse: 1
   animator: {fileID: 990449915221212146}
   propertyName: IsOn
@@ -392,6 +150,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: d3ba543a6e8785144a953fc14aeeab32,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
+    - target: {fileID: 8498549730845195872, guid: d3ba543a6e8785144a953fc14aeeab32,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
+    - target: {fileID: 6773417790645483276, guid: d3ba543a6e8785144a953fc14aeeab32,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
+    - target: {fileID: -5854355002792063080, guid: d3ba543a6e8785144a953fc14aeeab32,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3ba543a6e8785144a953fc14aeeab32, type: 3}
 --- !u!4 &7148561928087393928 stripped
@@ -403,6 +181,12 @@ Transform:
 --- !u!95 &990449915221212146 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: d3ba543a6e8785144a953fc14aeeab32,
+    type: 3}
+  m_PrefabInstance: {fileID: 2760284343730339218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &604189890171134551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3327311840393174981, guid: d3ba543a6e8785144a953fc14aeeab32,
     type: 3}
   m_PrefabInstance: {fileID: 2760284343730339218}
   m_PrefabAsset: {fileID: 0}

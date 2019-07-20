@@ -12,9 +12,14 @@ namespace TMechs.Player.Behavior
     public class BehaviorRocketFist : PlayerBehavior
     {
         private const int ATTACK_LAYER = 2;
+
+        public float[] damageStages =
+        {
+                10F,
+                30F,
+                70F
+        };
         
-        public float baseDamage = 10F;
-        public float maxDamage = 100F;
         public float maxChargeTime = 5F;
         public float rechargeSpeed = 2F;
         public float rocketFistReturnTime = 1.5F;
@@ -129,7 +134,10 @@ namespace TMechs.Player.Behavior
                 }
                 
                 RocketFist rf = Object.Instantiate(rocketFistTemplate, rocketFistAnchor.position, rocketFistAnchor.rotation).GetComponent<RocketFist>();
-                rf.damage = Mathf.Lerp(baseDamage, maxDamage, rocketFistCharge / maxChargeTime);
+                
+                int stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
+                
+                rf.damage = damageStages[stage];
                 rf.target = enemy.transform;
                 rocketFistGeo.SetActive(false);
                 
