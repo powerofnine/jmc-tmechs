@@ -86,6 +86,8 @@ namespace TMechs.Player.Behavior
                     }
                 }
             }
+            
+            player.interaction.ProcessInteractions();
         }
     }
 }

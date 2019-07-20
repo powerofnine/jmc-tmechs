@@ -41,6 +41,7 @@ namespace TMechs.Player
         public MovementModule movement = new MovementModule();
         public CombatModule combat = new CombatModule();
         public VfxModule vfx = new VfxModule();
+        public InteractionModule interaction = new InteractionModule();
 
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
