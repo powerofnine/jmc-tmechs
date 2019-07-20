@@ -4,7 +4,6 @@ namespace TMechs.FX
 {
     public class SineBob : MonoBehaviour
     {
-        public float amplitude = 1F;
         public float frequency = 1F;
 
         public Vector3 min;
@@ -26,8 +25,8 @@ namespace TMechs.FX
 
         private void Update()
         {
-            angle += Time.deltaTime;
-            float alpha = Mathf.Clamp01(Mathf.Sin(angle * frequency) * amplitude);
+            angle += Time.deltaTime * frequency;
+            float alpha = Utility.MathRemap(Mathf.Sin(angle), -1F, 1F, 0F, 1F);
 
             transform.localPosition = neutralPosition + Vector3.Lerp(min, max, alpha);
 
