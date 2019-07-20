@@ -138,7 +138,8 @@ namespace TMechs.Player.Behavior
                 player.combat.SetHitbox(nextHitbox, nextDamage);
         }
 
-        public override bool CanMove() => false;
+        public override float GetSpeed() => base.GetSpeed() * .2F;
+        public override bool CanRun() => false;
 
         private void OnAnimEnd()
         {
