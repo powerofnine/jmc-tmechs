@@ -9,6 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8580206903256092443}
+  - component: {fileID: 3355340010170718655}
+  - component: {fileID: 5994780470767799819}
+  - component: {fileID: 3802575070286335835}
+  - component: {fileID: 8368873923304070302}
+  - component: {fileID: 3731722153037595627}
   m_Layer: 0
   m_Name: Desert Destructable Log
   m_TagString: Untagged
@@ -26,58 +31,25 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 678.9811, y: 50.359356, z: 498.4031}
   m_LocalScale: {x: 2.238719, y: 2.238719, z: 2.238719}
-  m_Children:
-  - {fileID: 3061139641157343845}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4890596036302619911
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3061139641157343845}
-  - component: {fileID: 6024136674997567885}
-  - component: {fileID: 8814324430325426432}
-  m_Layer: 0
-  m_Name: Group12518
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3061139641157343845
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4890596036302619911}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8580206903256092443}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6024136674997567885
+--- !u!33 &3355340010170718655
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4890596036302619911}
+  m_GameObject: {fileID: 4704112542521883912}
   m_Mesh: {fileID: 4215473276733872825, guid: 128663f6b7da0de408bb28c835310ecc, type: 3}
---- !u!23 &8814324430325426432
+--- !u!23 &5994780470767799819
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4890596036302619911}
+  m_GameObject: {fileID: 4704112542521883912}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -108,3 +80,46 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!136 &3802575070286335835
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704112542521883912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.43
+  m_Height: 4.06
+  m_Direction: 0
+  m_Center: {x: -0.9460724, y: 0.041348338, z: -0.10016188}
+--- !u!65 &8368873923304070302
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704112542521883912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.598841, y: 1.5662026, z: 2.627468}
+  m_Center: {x: -0.9460724, y: 0.041348338, z: -0.10016188}
+--- !u!114 &3731722153037595627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704112542521883912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86b9169fcb9a0e43a7863010ff2c41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayText: Pick Up
+  destroyVfx: {fileID: 8926484042661614526, guid: 6e90e239aae134b41af290dbce15b45a,
+    type: 3}
+  destroyVfxTime: 2

@@ -171,6 +171,9 @@ namespace TMechs.Player
 
                 containedObject.transform.localScale = startScale;
                 containedObject.transform.rotation = transform.rotation;
+                
+                foreach(IOnThrowableReleased e in containedObject.GetComponentsInChildren<IOnThrowableReleased>())
+                    e.OnThrowableReleased();
             }
 
             // This is stupid, but Unity crashes here if there is no delay before destroying this object
@@ -195,6 +198,11 @@ namespace TMechs.Player
         private void Destroy()
         {
             DestroyImmediate(gameObject);
+        }
+        
+        public interface IOnThrowableReleased
+        {
+            void OnThrowableReleased();
         }
     }
 }

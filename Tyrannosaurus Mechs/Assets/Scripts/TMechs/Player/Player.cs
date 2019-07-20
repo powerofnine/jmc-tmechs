@@ -85,6 +85,7 @@ namespace TMechs.Player
             RegisterModule(movement);
             RegisterModule(combat);
             RegisterModule(vfx);
+            RegisterModule(interaction);
             
             PushBehavior(standard);
         }

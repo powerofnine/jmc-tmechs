@@ -1,4 +1,5 @@
-﻿using UltEvents;
+﻿using System;
+using UltEvents;
 using UnityEngine;
 
 namespace TMechs.Environment.Interactables
@@ -6,7 +7,7 @@ namespace TMechs.Environment.Interactables
     public class Lever : Interactable
     {
         public bool isOn;
-        public UltEvent<bool> onToggle;
+        public ToggleEvent onToggle;
         public bool isSingleUse = true;
 
         [Header("Animation")]
@@ -34,5 +35,9 @@ namespace TMechs.Environment.Interactables
         }
 
         public override bool IsInteractable() => !isSingleUse || !used;
+
+        [Serializable]
+        public sealed class ToggleEvent : UltEvent<bool>
+        {}
     }
 }

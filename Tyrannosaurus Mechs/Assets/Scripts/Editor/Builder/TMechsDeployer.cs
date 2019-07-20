@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Net;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
@@ -84,12 +86,31 @@ namespace Editor.Builder
 
             using (StreamWriter streamWriter = new StreamWriter(hook.GetRequestStream()))
             {
-                string json = $@"{{""id"": ""{DeploySecrets.BuildHookSecret}"",""description"": ""{description}"",""title"": ""Playtest - {tag}"",""message"": ""{message}"",""url"": ""https://github.com/powerofnine/jmc-tmechs/releases/tag/{tag}""}}";
+                ServerData data = new ServerData()
+                {
+                    id = DeploySecrets.BuildHookSecret,
+                    description = description,
+                    title = $"Playtest - {tag}",
+                    message = message,
+                    url = $"https://github.com/powerofnine/jmc-tmechs/releases/tag/{tag}"
+                };
                 
-                streamWriter.Write(json);
+                string json = JsonConvert.SerializeObject(data);
+                
+                streamWriter.Write(json.Replace("\r\n", "\n"));
             }
 
             hook.GetResponse();
+        }
+
+        [UsedImplicitly(ImplicitUseTargetFlags.Members)]
+        private struct ServerData
+        {
+            public string id;
+            public string description;
+            public string title;
+            public string message;
+            public string url;
         }
     }
 }

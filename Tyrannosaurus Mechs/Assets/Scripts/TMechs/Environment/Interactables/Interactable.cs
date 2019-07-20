@@ -7,12 +7,23 @@ namespace TMechs.Environment.Interactables
     {
         public string displayText;
         
+        private int inRange;
+
+        protected virtual void Update()
+        {
+            if (inRange > 0)
+            {
+                inRange--;
+                Player.Player.Instance.interaction.AddInteraction(this);
+            }
+        }
+
         private void OnTriggerStay(Collider other)
         {
             if (!other.CompareTag("Player") || !IsInteractable() || !IsWithinAngle())
                 return;
-            
-            Player.Player.Instance.interaction.AddInteraction(this);
+
+            inRange = 3;
         }
         
         public virtual bool IsWithinAngle()
@@ -23,6 +34,7 @@ namespace TMechs.Environment.Interactables
 
         public virtual bool IsInteractable() => true;
         public abstract void OnInteract();
-        public virtual PlayerBehavior PushBehavior() => null;
+        public virtual PlayerBehavior GetPushBehavior() => null;
+        public virtual int GetSortPriority() => 0;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMechs.Environment.Interactables;
 using TMechs.Player.Behavior;
 using TMechs.UI.GamePad;
@@ -7,7 +8,7 @@ using TMechs.UI.GamePad;
 namespace TMechs.Player.Modules
 {
     [Serializable]
-    public class InteractionModule : PlayerBehavior
+    public class InteractionModule : PlayerModule
     {
         private readonly List<Interactable> interactables = new List<Interactable>();
         
@@ -22,6 +23,18 @@ namespace TMechs.Player.Modules
                 return;
             
             GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow2, interactables[0].displayText);
+
+            if (Player.Input.GetButtonDown(Controls.Action.INTERACT))
+            {
+                Interactable interactable = interactables.OrderByDescending(x => x.GetSortPriority()).First();
+                interactable.OnInteract();
+
+                PlayerBehavior beh = interactable.GetPushBehavior();
+                if(beh != null)
+                    player.PushBehavior(beh);
+            }
+            
+            interactables.Clear();
         }
     }
 }

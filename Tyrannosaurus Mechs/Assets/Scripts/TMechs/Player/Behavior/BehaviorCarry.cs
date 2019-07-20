@@ -17,6 +17,9 @@ namespace TMechs.Player.Behavior
         public float launchAngle = 10F;
         public float pummelDamage = 10F;
 
+        [NonSerialized]
+        public GameObject overrideTarget;
+
         [Space]
         public float ikTime = .5F;
         
@@ -24,7 +27,7 @@ namespace TMechs.Player.Behavior
         private AnimancerState yeet; // Throw is a reserved keyword
         private AnimancerState pummel;
 
-        private EnemyTarget target;
+        private GameObject target;
         private ThrowableContainer pickedUp;
         private bool hasPickedUp;
         private bool isThrowing;
@@ -43,7 +46,11 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
-            target = TargetController.Instance.GetTarget<EnemyTarget>();
+            if (overrideTarget)
+                target = overrideTarget.gameObject;
+            else
+                target = TargetController.Instance.GetTarget<EnemyTarget>().gameObject;
+            overrideTarget = null;
             pickedUp = null;
 
             hasPickedUp = false;
