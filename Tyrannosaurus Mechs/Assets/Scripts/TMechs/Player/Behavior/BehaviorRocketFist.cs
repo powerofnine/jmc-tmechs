@@ -160,7 +160,7 @@ namespace TMechs.Player.Behavior
                 player.vfx.rocketFistCharge.gameObject.SetActive(false);
         }
 
-        public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .2F);
+        public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .4F);
         public override bool CanRun() => false;
     }
 }
