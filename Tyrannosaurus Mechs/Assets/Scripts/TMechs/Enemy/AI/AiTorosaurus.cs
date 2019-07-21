@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using JetBrains.Annotations;
 using TMechs.Types;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace TMechs.Enemy.AI
 {
     public class AiTorosaurus : MonoBehaviour, AnimatorEventListener.IAnimatorEvent, EnemyTrigger.ITriggerListener
     {
+        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        
         public static readonly int IS_MOVING = Anim.Hash("Is Moving");
         public static readonly int IS_CHARGING = Anim.Hash("Is Charging");
         public static readonly int CHARGE_HIT = Anim.Hash("Charge Hit");
@@ -22,6 +25,7 @@ namespace TMechs.Enemy.AI
         {
             CreateStateMachine(new TorosaurusShared
             {
+                    self = this,
                     animator = GetComponentInChildren<Animator>(),
                     controller = GetComponent<CharacterController>()
             });
@@ -33,7 +37,7 @@ namespace TMechs.Enemy.AI
 
             stateMachine.ImportProperties(properties);
 
-            stateMachine.RegisterState(null, "Idle");
+            stateMachine.RegisterState(new Idle(), "Idle");
             stateMachine.RegisterState(new Chasing(), "Chasing");
             stateMachine.RegisterState(new Charging(), "Charging");
             stateMachine.RegisterState(new Attacking(), "Attacking");
@@ -100,6 +104,25 @@ namespace TMechs.Enemy.AI
                 base.OnEnter();
 
                 shared = Machine.shared as TorosaurusShared;
+            }
+        }
+
+        private class Idle : TorosaurusState
+        {
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                shared.self.StopAllCoroutines();
+                shared.self.StartCoroutine(shared.self.FadeNightrider(false));
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+                
+                shared.self.StopAllCoroutines();
+                shared.self.StartCoroutine(shared.self.FadeNightrider(true));
             }
         }
 
@@ -244,6 +267,24 @@ namespace TMechs.Enemy.AI
 
         #endregion
 
+        private IEnumerator FadeNightrider(bool aggressive)
+        {
+            if (!properties.nightriderDisplay)
+                yield break;
+
+            float time = 0F;
+            Color sourceColor = properties.nightriderDisplay.material.GetColor(COLOR);
+            Color destColor = aggressive ? properties.nightriderAggressive : properties.nightriderPassive;
+
+            while (time <= properties.nightriderFadeTime)
+            {
+                time += Time.deltaTime;
+                properties.nightriderDisplay.material.SetColor(COLOR, Color.Lerp(sourceColor, destColor, time / properties.nightriderFadeTime));
+                    
+                yield return null;
+            }
+        }
+        
         [Serializable]
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         public class TorosaurusProperties
@@ -269,10 +310,17 @@ namespace TMechs.Enemy.AI
             [Header("Attack")]
             public float attackCooldown = 2F;
             public int attackDamage = 20;
+
+            [Header("Nightrider")]
+            public Renderer nightriderDisplay;
+            public Color nightriderPassive = Color.green;
+            public Color nightriderAggressive = Color.red;
+            public float nightriderFadeTime = 1F;
         }
 
         private class TorosaurusShared
         {
+            public AiTorosaurus self;
             public Animator animator;
             public CharacterController controller;
         }
