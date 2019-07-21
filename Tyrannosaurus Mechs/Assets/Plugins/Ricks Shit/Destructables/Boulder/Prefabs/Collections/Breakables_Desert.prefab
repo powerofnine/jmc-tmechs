@@ -1,0 +1,381 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6123655204294598737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8864051884605402714}
+  - component: {fileID: 3397320779985116354}
+  - component: {fileID: 2850864977530955365}
+  - component: {fileID: 3628618295550954840}
+  m_Layer: 0
+  m_Name: Breakables_Desert
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8864051884605402714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123655204294598737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4208704961855321231}
+  - {fileID: 2332000387810930520}
+  - {fileID: 8529321489245001972}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3397320779985116354
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123655204294598737}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0726801, y: 4.8771534, z: 1.2706138}
+  m_Center: {x: 0.18387473, y: 1.7095957, z: 0.1353069}
+--- !u!114 &2850864977530955365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123655204294598737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be92c0dc72c4cf428cd94f616c34579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  damagedEffect: {fileID: 0}
+  damagedEffectAnchor: {fileID: 0}
+  damagedEffectDuration: 0
+--- !u!114 &3628618295550954840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123655204294598737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916aa4238af6d0846b7cd36984755531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  template: {fileID: 4528494569826679154, guid: 3809cd2d942161843a916f7532f104b2,
+    type: 3}
+  explode: 1
+  explosionForce: 6
+  explosionCenter: {x: 0, y: -0.84, z: 0}
+  explosionRadius: 7
+--- !u!1001 &2970525819971168193
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8864051884605402714}
+    m_Modifications:
+    - target: {fileID: 2669058409782337885, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_Name
+      value: Desert Destructable Boulder
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.71249056
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7016817
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.1624131
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.1624131
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513521307494355879, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.02477645
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7359172435175871600, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+    - {fileID: 2512031789517789806, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+--- !u!4 &4208704961855321231 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2970525819971168193}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3678827766897556502
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8864051884605402714}
+    m_Modifications:
+    - target: {fileID: 2669058409782337885, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_Name
+      value: Desert Destructable Boulder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.3144468
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.038809
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1745696
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6722423
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7016252
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.2229827
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.07804578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.6257689
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.6257691
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.6257688
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513521307494355879, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.27970555
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513521307494355879, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.0179378
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7359172435175871600, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+    - {fileID: 2512031789517789806, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+--- !u!4 &2332000387810930520 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3678827766897556502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7282042523386858426
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8864051884605402714}
+    m_Modifications:
+    - target: {fileID: 2669058409782337885, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_Name
+      value: Desert Destructable Boulder (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03487876
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.6233802
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1719648
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.31777802
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.20713441
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.6616975
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6467372
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0641766
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.064177
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0641768
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513521307494355879, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.19494835
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513521307494355879, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.0031242315
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7359172435175871600, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+    - {fileID: 2512031789517789806, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: ae3e8f763d4943c4c9b1654ab223d1a3, type: 3}
+--- !u!4 &8529321489245001972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1391963731567481678, guid: ae3e8f763d4943c4c9b1654ab223d1a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7282042523386858426}
+  m_PrefabAsset: {fileID: 0}
