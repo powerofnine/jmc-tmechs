@@ -141,6 +141,9 @@ namespace TMechs.Player
                 rb.velocity = dir * speed + Vector3.down * 30F;
                 rb.constraints = RigidbodyConstraints.None;
             };
+
+            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>())
+                t.gameObject.layer = LayerMask.NameToLayer("Thrown");
         }
 
         private void OnCollisionEnter(Collision other)

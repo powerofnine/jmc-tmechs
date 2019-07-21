@@ -46,6 +46,7 @@ namespace TMechs.Player.Behavior
             attackString1 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), LAYER);
             attackString2 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack2), LAYER);
             attackString3 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack3), LAYER);
+            attackString3.Speed = .8F;
         }
         
         public override void OnPush()

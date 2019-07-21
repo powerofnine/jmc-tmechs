@@ -33,6 +33,8 @@ namespace TMechs.Player.Behavior
             layer.SetName("Jump Layer");
 
             jump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
+            jump.Speed = 2F;
+            
             airJump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
         }
 
