@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be92c0dc72c4cf428cd94f616c34579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 600
   damagedEffect: {fileID: 8926484042661614526, guid: b3011c74d9e4aa742bd760d9995b7194,
     type: 3}
   damagedEffectAnchor: {fileID: 2305433449467659754}
@@ -679,11 +679,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: b7f65ff2c2463f3438305086d812a680,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 897c03eb1ceffd04f9eaf7d2d3192d8e, type: 2}
     - target: {fileID: -1083429309176543669, guid: b7f65ff2c2463f3438305086d812a680,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -704,6 +699,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 290b1a2618a0502419c5a8db35d364fa, type: 2}
+    - target: {fileID: -6057140222963153312, guid: b7f65ff2c2463f3438305086d812a680,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 897c03eb1ceffd04f9eaf7d2d3192d8e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7f65ff2c2463f3438305086d812a680, type: 3}
 --- !u!4 &4466880430898404560 stripped
