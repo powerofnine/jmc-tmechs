@@ -148,6 +148,10 @@ MonoBehaviour:
     chargeHitDamage: 20
     attackCooldown: 1
     attackDamage: 10
+    nightriderDisplay: {fileID: 4647970233906289254}
+    nightriderPassive: {r: 0, g: 1, b: 0, a: 1}
+    nightriderAggressive: {r: 1, g: 0, b: 0, a: 1}
+    nightriderFadeTime: 1
 --- !u!114 &2937862568076211965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,16 +343,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Renderer
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 70af78c191aa73f4ca7b5b706b2658b2, type: 2}
-    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e373b02451dd08d4eb0a84ec654f455d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -402,6 +396,16 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e373b02451dd08d4eb0a84ec654f455d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 70af78c191aa73f4ca7b5b706b2658b2, type: 2}
+    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 206394208991666944, guid: e373b02451dd08d4eb0a84ec654f455d,
