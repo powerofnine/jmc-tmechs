@@ -23,7 +23,7 @@ namespace TMechs.Environment
         private void Awake()
         {
             #if !UNITY_EDITOR
-            Debug.LogWarning("Warning: removing ruler object")
+            Debug.LogWarning("Warning: removing ruler object");
             Destroy(this);
             #endif
         }
