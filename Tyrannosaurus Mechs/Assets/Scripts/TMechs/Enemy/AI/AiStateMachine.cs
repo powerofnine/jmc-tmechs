@@ -195,6 +195,20 @@ namespace TMechs.Enemy.AI
             return (T) properties[name];
         }
 
+        public T Get<T>(string name, T def)
+        {
+            if (!properties.ContainsKey(name))
+                return def;
+
+            if (!(properties[name] is T))
+            {
+                Debug.LogWarning($"[Type Mismatch] Attempted to get value {name} of type {typeof(T)} when real type is {properties[name].GetType()}");
+                return def;
+            }
+
+            return (T) properties[name];
+        }
+
         public T GetAddSet<T>(string name, int value)
         {
             return GetAddSet<T>(name, (float) value);
