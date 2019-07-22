@@ -253,7 +253,9 @@ namespace TMechs.Player
         {
             [Header("Basic")]
             Idle,
+            IdleBreather,
             Death,
+            TakeDamage,
         
             [Header("Movement")]
             Walk,
@@ -261,6 +263,7 @@ namespace TMechs.Player
             Dash,
             Jump,
             AirJump,
+            Land,
         
             [Header("Attack String")]
             Attack1,
@@ -276,6 +279,7 @@ namespace TMechs.Player
             RocketChargeIntro,
             RocketCharge,
             RocketHold,
+            RocketBuckle,
             RocketRecover,
             RocketReturn
         }

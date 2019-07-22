@@ -65,6 +65,8 @@ MonoBehaviour:
   damagedEffect: {fileID: 0}
   damagedEffectAnchor: {fileID: 0}
   damagedEffectDuration: 0
+  assignBossBar: 0
+  bossBarTitle: 
 --- !u!114 &3628618295550954840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,9 +82,9 @@ MonoBehaviour:
   template: {fileID: 4528494569826679154, guid: 3809cd2d942161843a916f7532f104b2,
     type: 3}
   explode: 1
-  explosionForce: 6
-  explosionCenter: {x: 0, y: -0.84, z: 0}
-  explosionRadius: 7
+  explosionForce: 15
+  explosionCenter: {x: 1.34, y: 1.99, z: 0}
+  explosionRadius: 20
 --- !u!1001 &2970525819971168193
 PrefabInstance:
   m_ObjectHideFlags: 0

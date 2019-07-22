@@ -1,4 +1,5 @@
 using System;
+using Animancer;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -11,10 +12,41 @@ namespace TMechs.Player.Behavior
     {
         private int jumps;
 
+        private AnimancerState extendedIdle;
+        private float idleTimer;
+        
+        public override void OnInit()
+        {
+            base.OnInit();
+
+            extendedIdle = Animancer.CreateState(player.GetClip(Player.PlayerAnim.IdleBreather), 2);
+        }
+
+        public override void OnShadowed()
+        {
+            base.OnShadowed();
+
+            idleTimer = 0F;
+        }
+
         public override void OnUpdate()
         {
             base.OnUpdate();
 
+            idleTimer += Time.deltaTime;
+
+            if (player.forces.ControllerVelocity.sqrMagnitude > Mathf.Epsilon)
+                idleTimer = 0F;
+            
+            if (idleTimer > 4F && !extendedIdle.IsPlaying)
+            {
+                Animancer.CrossFadeFromStart(extendedIdle).OnEnd = () =>
+                {
+                    idleTimer = 0F;
+                    Animancer.GetLayer(2).StartFade(0F);
+                };
+            }
+            
             if (player.rocketFist.rocketFistCharge > 0F)
                 player.rocketFist.rocketFistCharge -= player.rocketFist.rechargeSpeed * Time.deltaTime;
             if (player.forces.IsGrounded)

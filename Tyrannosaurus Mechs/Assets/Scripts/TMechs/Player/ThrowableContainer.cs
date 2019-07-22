@@ -36,6 +36,9 @@ namespace TMechs.Player
             renderCache = containedObject.GetComponentsInChildren<Renderer>();
             foreach (Renderer render in renderCache)
             {
+                if(!render.enabled)
+                    continue;
+                
                 switch (render)
                 {
                     case MeshRenderer _:

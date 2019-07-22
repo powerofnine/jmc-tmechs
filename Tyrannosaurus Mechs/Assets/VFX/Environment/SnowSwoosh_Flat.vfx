@@ -159,7 +159,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":-3.643718719482422,"y":5.7035017013549809,"z":44.143699645996097},"size":{"x":23.17081069946289,"y":12.407002449035645,"z":76.12763977050781}}'
+      m_SerializableObject: '{"center":{"x":-2.957630157470703,"y":5.7035017013549809,"z":57.4530029296875},"size":{"x":52.53252410888672,"y":12.407002449035645,"z":121.23025512695313}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -1483,18 +1483,18 @@ VisualEffectResource:
         data[1]: -1
         data[2]: -1
         data[3]: 1
-      - op: 1
-        valueIndex: 25
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
       - op: 50
-        valueIndex: 26
+        valueIndex: 25
         data[0]: 3
         data[1]: -1
         data[2]: -1
         data[3]: 1
+      - op: 6
+        valueIndex: 29
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: -1
       - op: 1
         valueIndex: 30
         data[0]: -1
@@ -1560,27 +1560,33 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 3
       - op: 1
-        valueIndex: 49
+        valueIndex: 51
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
         valueIndex: 52
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
-      - op: 6
+      - op: 1
         valueIndex: 55
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 58
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
       - op: 9
-        valueIndex: 56
+        valueIndex: 59
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -1595,8 +1601,6 @@ VisualEffectResource:
           m_Value: 500
         - m_ExpressionIndex: 5
           m_Value: 0.35
-        - m_ExpressionIndex: 14
-          m_Value: 5.34
         - m_ExpressionIndex: 16
           m_Value: 1
         - m_ExpressionIndex: 17
@@ -1609,8 +1613,10 @@ VisualEffectResource:
           m_Value: 1.5
         - m_ExpressionIndex: 24
           m_Value: 0
-        - m_ExpressionIndex: 26
+        - m_ExpressionIndex: 27
           m_Value: 100
+        - m_ExpressionIndex: 30
+          m_Value: 5.34
       m_Vector2f:
         m_Array: []
       m_Vector3f:
@@ -1629,10 +1635,12 @@ VisualEffectResource:
           m_Value: {x: -2.984314, y: 4.0283217, z: 31.635426}
         - m_ExpressionIndex: 25
           m_Value: {x: 23.17081, y: 12.407, z: 76.12764}
-        - m_ExpressionIndex: 27
-          m_Value: {x: 23.17081, y: 12.407002, z: 76.12764}
-        - m_ExpressionIndex: 28
+        - m_ExpressionIndex: 26
           m_Value: {x: -3.6437187, y: 5.7035017, z: 44.1437}
+        - m_ExpressionIndex: 28
+          m_Value: {x: 52.532524, y: 12.407002, z: 121.230255}
+        - m_ExpressionIndex: 29
+          m_Value: {x: -2.9576302, y: 5.7035017, z: 57.453003}
       m_Vector4f:
         m_Array: []
       m_Uint:
@@ -2103,7 +2111,7 @@ VisualEffectResource:
       buffers: []
       values:
       - nameId: Rate
-        index: 26
+        index: 27
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -2147,9 +2155,9 @@ VisualEffectResource:
       index: 8
     values:
     - nameId: bounds_center
-      index: 28
+      index: 29
     - nameId: bounds_size
-      index: 27
+      index: 28
     tasks:
     - type: 536870912
       buffers:
@@ -2164,9 +2172,9 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 28
+        index: 29
       - nameId: bounds_size
-        index: 27
+        index: 28
       processor: {fileID: 0}
       shaderSourceIndex: 0
     - type: 805306368
@@ -2179,7 +2187,7 @@ VisualEffectResource:
         index: 6
       values:
       - nameId: deltaTime_b
-        index: 29
+        index: 15
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 1
@@ -2195,7 +2203,7 @@ VisualEffectResource:
         index: 5
       values:
       - nameId: localToWorld
-        index: 30
+        index: 31
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 6
@@ -2209,7 +2217,7 @@ VisualEffectResource:
         index: 5
       values:
       - nameId: Size_b
-        index: 15
+        index: 14
       - nameId: gradient_c
         index: 13
       - nameId: mainTexture
@@ -2244,7 +2252,7 @@ VisualEffectResource:
       index: 15
     values:
     - nameId: bounds_center
-      index: 28
+      index: 26
     - nameId: bounds_size
       index: 25
     tasks:
@@ -2261,7 +2269,7 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 28
+        index: 26
       - nameId: bounds_size
         index: 25
       processor: {fileID: 0}
@@ -2276,7 +2284,7 @@ VisualEffectResource:
         index: 13
       values:
       - nameId: deltaTime_c
-        index: 29
+        index: 15
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 5
@@ -2292,7 +2300,7 @@ VisualEffectResource:
         index: 12
       values:
       - nameId: localToWorld
-        index: 30
+        index: 31
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 7

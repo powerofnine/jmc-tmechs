@@ -35,14 +35,19 @@ namespace TMechs.Player.Behavior
         private AnimancerState intro;
         private AnimancerState charge;
         private AnimancerState hold;
+        private AnimancerState buckle;
         private AnimancerState fire;
         private AnimancerState comeBack;
 
+        private AnimancerState current;
+        
         private bool charging;
         private bool fired;
         private float returnTimer;
         [NonSerialized]
         public bool rocketReturned;
+
+        private int prevStage;
         
         public override void OnInit()
         {
@@ -51,6 +56,7 @@ namespace TMechs.Player.Behavior
             intro = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketChargeIntro), ATTACK_LAYER);
             charge = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketCharge), ATTACK_LAYER);
             hold = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketHold), ATTACK_LAYER);
+            buckle = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketBuckle), ATTACK_LAYER);
             fire = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketRecover), ATTACK_LAYER);
             comeBack = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketReturn), ATTACK_LAYER);
         }
@@ -59,6 +65,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
+            prevStage = 0;
             charging = false;
             fired = false;
             rocketReturned = false;
@@ -69,9 +76,11 @@ namespace TMechs.Player.Behavior
                 intro.OnEnd = null;
                 
                 charging = true;
-                Animancer.CrossFadeFromStart(charge, .1F).OnEnd = () =>
+                current = Animancer.CrossFadeFromStart(charge, .1F);
+                
+                current.OnEnd = () =>
                 {
-                    Animancer.CrossFadeFromStart(hold, .1F);
+                    current = Animancer.CrossFadeFromStart(hold, .1F);
                     hold.OnEnd = null;
                 };
             };
@@ -84,10 +93,26 @@ namespace TMechs.Player.Behavior
         {
             base.OnUpdate();
 
+            int stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
             if (charging)
+            {
                 rocketFistCharge += Time.deltaTime;
+                stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
+                
+                if (stage > prevStage)
+                {
+                    Animancer.CrossFadeFromStart(buckle, 0F).OnEnd = () =>
+                    {
+                        buckle.OnEnd = null;
+                        buckle.Stop();
+                        current?.Play();
+                    };
+                }
+            }
 
             rocketFistCharge = Mathf.Clamp(rocketFistCharge, 0F, maxChargeTime);
+
+            prevStage = stage;
             
             if (rocketReturned)
             {
@@ -134,8 +159,6 @@ namespace TMechs.Player.Behavior
                 }
                 
                 RocketFist rf = Object.Instantiate(rocketFistTemplate, rocketFistAnchor.position, rocketFistAnchor.rotation).GetComponent<RocketFist>();
-                
-                int stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
                 
                 rf.damage = damageStages[stage];
                 rf.target = enemy.transform;

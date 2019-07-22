@@ -13,11 +13,11 @@ namespace TMechs.Animation
         public float weight = 0F;
 
         public Transform[] aimJoints;
-        public Transform[] extendJoints;
+        public Transform extendJoint;
         
         public Vector3 targetPosition;
 
-        private Vector3[] defaultPositions;
+        private Vector3 defaultPosition;
         private Quaternion[] defaultRotations;
         private Transform[] parents;
 
@@ -25,7 +25,7 @@ namespace TMechs.Animation
 
         private void Awake()
         {
-            defaultPositions = extendJoints.Select(x => x.localPosition).ToArray();
+            defaultPosition = extendJoint.localPosition;
             defaultRotations = aimJoints.Select(x => x.localRotation).ToArray();
             parents = aimJoints.Select(x => x.parent).ToArray();
         }
@@ -39,39 +39,37 @@ namespace TMechs.Animation
             {
                 isReset = true;
 
-                for (int i = 0; i < extendJoints.Length; i++)
+                for (int i = 0; i < aimJoints.Length; i++)
                 {
-                    extendJoints[i].localPosition = defaultPositions[i];
-                    extendJoints[i].localRotation = defaultRotations[i];
+                    aimJoints[i].localRotation = defaultRotations[i];
                 }
+
+                extendJoint.localPosition = defaultPosition;
                 
                 return;
             }
 
+            weight = Mathf.Clamp(weight, 0F, .9F);
+
             isReset = false;
 
-            Vector3 target = Vector3.Lerp(parents.Last().TransformPoint(defaultPositions.Last()), targetPosition, weight);
+            OrientJoints();
+            ExtendJoints();
+        }
 
-            for (int i = 0; i < aimJoints.Length; i++)
-            {
-                float localWeight = (float)i / aimJoints.Length;
-                aimJoints[i].position = Vector3.Lerp(parents[i].TransformPoint(defaultPositions[i]), target, localWeight);
-            }
+        private void OrientJoints()
+        {
+            foreach (Transform t in aimJoints)
+                t.right = -(targetPosition - t.position).normalized;
+        }
+
+        private void ExtendJoints()
+        {
+            if (!extendJoint)
+                return;
             
-            for (int i = 0; i < aimJoints.Length; i++)
-            {
-                Vector3 targetLook;
-
-                if (i + 1 < aimJoints.Length)
-                    targetLook = aimJoints[i + 1].position;
-                else
-                    targetLook = targetPosition;
-
-                aimJoints[i].right = -(targetLook - aimJoints[i].position).normalized;
-                
-                float localWeight = (float)i / aimJoints.Length;
-                aimJoints[i].position = Vector3.Lerp(parents[i].TransformPoint(defaultPositions[i]), target, localWeight);
-            }
+            Vector3 target = Vector3.Lerp(parents.Last().TransformPoint(defaultPosition), targetPosition, weight);
+            extendJoint.position = target;
         }
         
         public void Transition(float time, float targetWeight, Action callback = null)
