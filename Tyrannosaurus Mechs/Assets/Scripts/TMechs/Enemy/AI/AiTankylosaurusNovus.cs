@@ -58,7 +58,7 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterTransition("Chase", "Standby", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(TankyloProperties.midStopRange)));
             stateMachine.RegisterTransition("Standby", "Chase", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(TankyloProperties.midRange)));
             
-            stateMachine.RegisterTransition("Chase", "Rock Throw", );
+//            stateMachine.RegisterTransition("Chase", "Rock Throw", );
             
             // State Machine
             stateMachine.SetDefaultState("Primer");
