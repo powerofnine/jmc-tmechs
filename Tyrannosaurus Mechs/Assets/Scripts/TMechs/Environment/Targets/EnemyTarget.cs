@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using TMechs.Entity;
+using TMechs.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +14,7 @@ namespace TMechs.Environment.Targets
         private Image healthValue;
         private EntityHealth health;
         private float healthVelocity;
+        private float alphaVelocity;
         
         public override int GetPriority() => 100;
         public override Color GetHardLockColor() => Color.red;
@@ -32,8 +33,21 @@ namespace TMechs.Environment.Targets
 
         private void Update()
         {
-            if (health && healthValue)
-                healthValue.fillAmount = Mathf.SmoothDamp(healthValue.fillAmount, health.Health, ref healthVelocity, .1F);
+            if (!health && healthValue)
+            {
+                healthValue.gameObject.SetActive(false);
+                return;
+            }
+
+            if (!healthValue)
+                return;
+            
+            healthValue.fillAmount = Mathf.SmoothDamp(healthValue.fillAmount, health.Health, ref healthVelocity, .1F);
+
+            bool shouldBeActive = BossHealthBar.activeHealthBar != health;
+            
+            if(healthValue.gameObject.activeSelf != shouldBeActive)
+                healthValue.gameObject.SetActive(shouldBeActive);
         }
 
         public enum PickupType

@@ -1,4 +1,5 @@
 ﻿using TMechs.Player.Modules;
+using TMechs.UI;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 
@@ -23,8 +24,22 @@ namespace TMechs.Entity
         public Transform damagedEffectAnchor;
         public float damagedEffectDuration;
 
+        [Header("Boss Bar")]
+        public bool assignBossBar;
+        [ConditionalHide("assignBossBar", true)]
+        public string bossBarTitle;
+
         private float health = 1F;
         private bool isDead;
+
+        private void Start()
+        {
+            if (assignBossBar)
+            {
+                BossHealthBar.activeHealthBar = this;
+                BossHealthBar.text = bossBarTitle;
+            }
+        }
 
         private void UpdateHealth()
         {

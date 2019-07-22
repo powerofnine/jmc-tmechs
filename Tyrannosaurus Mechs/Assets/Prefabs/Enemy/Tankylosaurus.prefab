@@ -353,6 +353,8 @@ MonoBehaviour:
     type: 3}
   damagedEffectAnchor: {fileID: 2305433449467659754}
   damagedEffectDuration: 2
+  assignBossBar: 1
+  bossBarTitle: Tankylosaurus
 --- !u!114 &4155833151189894200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,11 +691,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 290b1a2618a0502419c5a8db35d364fa, type: 2}
-    - target: {fileID: 9148006646110114036, guid: b7f65ff2c2463f3438305086d812a680,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6cec26ee963adce42a37ebcf48221965, type: 2}
     - target: {fileID: -8938453600025596210, guid: b7f65ff2c2463f3438305086d812a680,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -704,6 +701,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 290b1a2618a0502419c5a8db35d364fa, type: 2}
+    - target: {fileID: 9148006646110114036, guid: b7f65ff2c2463f3438305086d812a680,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6cec26ee963adce42a37ebcf48221965, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7f65ff2c2463f3438305086d812a680, type: 3}
 --- !u!4 &4466880430898404560 stripped
