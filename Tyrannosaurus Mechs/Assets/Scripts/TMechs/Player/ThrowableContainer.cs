@@ -10,7 +10,7 @@ namespace TMechs.Player
     public class ThrowableContainer : MonoBehaviour
     {
         /// <summary>
-        /// Amount of damage that an entity that this entity collides with is dealth
+        /// Amount of damage that an entity that this entity collides with is dealt
         /// </summary>
         public float recepientDamage = 10F;
 
@@ -19,6 +19,8 @@ namespace TMechs.Player
         /// </summary>
         public float sourceDamage = 10F;
 
+        public bool enemyRock;
+        
         private GameObject containedObject;
         private Vector3 startScale;
         
@@ -84,6 +86,11 @@ namespace TMechs.Player
 
         public void Throw(Vector3 target, float angle, float speed)
         {
+            Throw(target, angle, angle, speed);
+        }
+        
+        public void Throw(Vector3 target, float inAngle, float outAngle, float speed)
+        {
             if (!containedObject)
             {
                 Debug.LogError("Contained object has been destroyed");
@@ -134,8 +141,8 @@ namespace TMechs.Player
 
             ParabolicThrow th = gameObject.AddComponent<ParabolicThrow>();
             th.target = target;
-            th.inAngle = angle;
-            th.outAngle = angle;
+            th.inAngle = inAngle;
+            th.outAngle = outAngle;
             th.speed = speed;
 
             Vector3 dir = target - transform.position;
@@ -144,14 +151,14 @@ namespace TMechs.Player
                 rb.velocity = dir * speed + Vector3.down * 30F;
                 rb.constraints = RigidbodyConstraints.None;
             };
-
-            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>())
-                t.gameObject.layer = LayerMask.NameToLayer("Thrown");
         }
 
         private void OnCollisionEnter(Collision other)
         {
-            if (isDead || other.collider.CompareTag("Player"))
+            if (isDead)
+                return;
+
+            if (!enemyRock && other.collider.CompareTag("Player") || enemyRock && other.collider.CompareTag("Enemy"))
                 return;
             
             Destroy(gameObject.GetComponent<ParabolicThrow>());

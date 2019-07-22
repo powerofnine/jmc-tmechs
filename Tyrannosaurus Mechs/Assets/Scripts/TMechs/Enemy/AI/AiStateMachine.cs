@@ -76,18 +76,29 @@ namespace TMechs.Enemy.AI
                 }
             }
 
-            foreach (Transition t in currentTransitions.OrderBy(x => x.order))
+            if (currentTransitions != null)
             {
-                if (t.condition(this))
+                foreach (Transition t in currentTransitions.OrderBy(x => x.order))
                 {
-                    t.onTransition?.Invoke(this);
-                    EnterState(t.destinationState);
+                    if (t.condition(this))
+                    {
+                        t.onTransition?.Invoke(this);
+                        EnterState(t.destinationState);
+                    }
                 }
             }
 
             UpdateSnapshot();
 
             CurrentState?.OnTick();
+        }
+
+        public void LateTick()
+        {
+            if(!tickWhenPaused && Time.timeScale <= float.Epsilon)
+                return;
+
+            CurrentState?.LateTick();
         }
 
         public void OnEvent(EventType type, string id)
@@ -155,6 +166,14 @@ namespace TMechs.Enemy.AI
             CurrentState?.OnEnter();
         }
 
+        public State FindState(string state)
+        {
+            if (states.ContainsKey(state))
+                return states[state];
+
+            return null;
+        }
+
         #region Properties
 
         public void SetTrigger(string name, bool active = true)
@@ -214,10 +233,10 @@ namespace TMechs.Enemy.AI
             return GetAddSet<T>(name, (float) value);
         }
 
-        public T GetAddSet<T>(string name, float value)
+        public T GetAddSet<T>(string name, float value, T defaultValue = default)
         {
             if (!HasValue(name))
-                Set(name, default(T));
+                Set(name, defaultValue);
 
             object ob = Get<object>(name);
 
@@ -311,24 +330,44 @@ namespace TMechs.Enemy.AI
             public Vector3 HorizontalDirectionToTarget => Machine.HorizontalDirectionToTarget;
             public float AngleToTarget => Machine.AngleToTarget;
 
+            public State backgroundState;
+            
             public virtual void OnInit()
             {
             }
             
             public virtual void OnEnter()
             {
+                backgroundState?.OnEnter();
             }
 
             public virtual void OnExit()
             {
+                backgroundState?.OnExit();
             }
 
             public virtual void OnTick()
             {
+                backgroundState?.OnTick();
+            }
+
+            public virtual void LateTick()
+            {
+                backgroundState?.LateTick();
             }
 
             public virtual void OnEvent(EventType type, string id)
             {
+                backgroundState?.OnEvent(type, id);
+            }
+        }
+
+        [PublicAPI]
+        public class ProxyState : State
+        {
+            public ProxyState(State state)
+            {
+                backgroundState = state;
             }
         }
 

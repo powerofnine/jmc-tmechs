@@ -10,6 +10,14 @@ namespace TMechs
         public const float GRAVITY = 55F;
 
         /// <summary>
+        /// Generates a random number between x and y of <paramref name="source"/>
+        /// </summary>
+        public static float Random(this Vector2 source)
+        {
+            return UnityEngine.Random.Range(source.x, source.y);
+        }
+        
+        /// <summary>
         /// Isolates the given <paramref name="axis"/>
         /// </summary>
         /// <param name="source">Source Vector</param>

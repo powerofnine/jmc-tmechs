@@ -71,14 +71,14 @@ namespace TMechs.Player.Modules
 
             bool sliding = false;
 
-            if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F))
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 1F, LayerMask.GetMask("Player", "Ignore Raycast")))
             {
                 if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
                     sliding = true;
             }
             else
             {
-                Physics.Raycast(player.contactPoint + Vector3.up, Vector3.down, out hit);
+                Physics.Raycast(player.contactPoint + Vector3.up, Vector3.down, out hit, LayerMask.GetMask("Player", "Ignore Raycast"));
                 if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit - 1F)
                     sliding = true;
             }
