@@ -58,6 +58,13 @@ namespace TMechs.Player.Behavior
             NextAttack();
         }
 
+        public override void OnPop()
+        {
+            base.OnPop();
+            
+            player.combat.SetHitbox(null, 0F);
+        }
+
         public override void OnUpdate()
         {
             base.OnUpdate();

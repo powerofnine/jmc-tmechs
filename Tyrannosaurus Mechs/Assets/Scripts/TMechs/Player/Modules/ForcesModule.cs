@@ -15,6 +15,8 @@ namespace TMechs.Player.Modules
         public Vector3 velocity;
         [NonSerialized]
         public Vector3 motion;
+        [NonSerialized]
+        public Vector3 frictionedVelocity;
 
         public Vector3 ControllerVelocity { get; private set; }
 
@@ -37,8 +39,10 @@ namespace TMechs.Player.Modules
 
             velocity.y -= Utility.GRAVITY * gravityMultiplier * Time.deltaTime;
             
-            controller.Move((velocity + motion) * Time.deltaTime);
+            controller.Move((velocity + motion + frictionedVelocity) * Time.deltaTime);
             ControllerVelocity = controller.velocity;
+
+            frictionedVelocity = Vector3.Lerp(frictionedVelocity, Vector3.zero, Time.deltaTime * 5F);
 
             if (groundedFrames > 1 && velocity.y < Mathf.Epsilon)
                 controller.Move(stickyGroundForce * Time.deltaTime * Vector3.down);
