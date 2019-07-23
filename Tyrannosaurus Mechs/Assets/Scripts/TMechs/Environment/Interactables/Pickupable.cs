@@ -10,6 +10,8 @@ namespace TMechs.Environment.Interactables
     {
         public VisualEffectAsset destroyVfx;
         public float destroyVfxTime = 2F;
+
+        public bool destroy = true;
         
         public override void OnInteract()
         {
@@ -26,7 +28,9 @@ namespace TMechs.Environment.Interactables
         public void OnThrowableReleased()
         {
             VfxModule.SpawnEffect(destroyVfx, transform.position, Quaternion.identity, destroyVfxTime);
-            Destroy(gameObject);
+            
+            if(destroy)
+                Destroy(gameObject);
         }
     }
 }

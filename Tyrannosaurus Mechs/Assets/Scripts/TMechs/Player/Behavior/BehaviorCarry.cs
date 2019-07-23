@@ -96,7 +96,7 @@ namespace TMechs.Player.Behavior
             }
             
             InverseKinematics ik = player.rightArmIk;
-            if (ik)
+            if (ik && target)
                 ik.targetPosition = target.transform.position;
             
             if (!hasPickedUp || isThrowing || isPummeling)

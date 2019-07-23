@@ -10,7 +10,7 @@ namespace TMechs.FX
 
         private LineRenderer render;
         
-        private void Update()
+        private void LateUpdate()
         {
             if (!render)
                 render = GetComponent<LineRenderer>();

@@ -166,6 +166,12 @@ namespace TMechs.Enemy.AI
             CurrentState?.OnEnter();
         }
 
+        public void Exit()
+        {
+            CurrentState?.OnExit();
+            CurrentState = null;
+        }
+        
         public State FindState(string state)
         {
             if (states.ContainsKey(state))

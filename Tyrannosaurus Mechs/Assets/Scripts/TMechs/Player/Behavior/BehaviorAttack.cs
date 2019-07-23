@@ -33,6 +33,8 @@ namespace TMechs.Player.Behavior
         private string nextHitbox;
         private float nextDamage;
 
+        private bool queueDash;
+
         [NonSerialized]
         public bool singleAttack;
         
@@ -55,6 +57,7 @@ namespace TMechs.Player.Behavior
 
             attackCount = 0;
             attackPresses = 0;
+            queueDash = false;
             NextAttack();
         }
 
@@ -69,10 +72,14 @@ namespace TMechs.Player.Behavior
         {
             base.OnUpdate();
 
+            if (queueDash)
+                return;
+            
             GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
             if (Input.GetButtonDown(Controls.Action.ATTACK))
                 attackPresses++;
-
+            else if (Input.GetButtonDown(Controls.Action.DASH))
+                queueDash = true;
             if (applyForward)
                 player.forces.motion = transform.forward * forwardSpeed;
         }
@@ -117,9 +124,20 @@ namespace TMechs.Player.Behavior
 
             switch (e.stringParameter)
             {
+                case "AttackCancel" when queueDash && player.forces.IsGrounded:
+                    attackString1.Stop();
+                    attackString2.Stop();
+                    attackString3.Stop();
+                    
+                    player.PopBehavior();
+                    player.PushBehavior(player.dash);
+                    
+                    break;
                 case "AttackCancel" when attackPresses <= 0:
+                    queueDash = false;
                     break;
                 case "AttackCancel":
+                    queueDash = false;
                     attackPresses--;
                     NextAttack();
                     break;

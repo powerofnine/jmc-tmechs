@@ -99,7 +99,7 @@ namespace TMechs.Player
                 Vector3 heading = x.transform.position + Vector3.up * .5F - transform.position;
                 float distance = heading.magnitude;
 
-                bool wasHit = Physics.Raycast(transform.position, heading / distance, out RaycastHit hit, distance, ~LayerMask.GetMask("Ignore Raycast"), QueryTriggerInteraction.Ignore);
+                bool wasHit = Physics.Raycast(transform.position, heading / distance, out RaycastHit hit, distance, ~LayerMask.GetMask("Ignore Raycast", "Player", "ARC"), QueryTriggerInteraction.Ignore);
 
                 return !wasHit || hit.rigidbody && hit.rigidbody.transform == x.transform || hit.transform == x.transform;
             });

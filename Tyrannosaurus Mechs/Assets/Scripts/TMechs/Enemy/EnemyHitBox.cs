@@ -8,7 +8,7 @@ namespace TMechs.Enemy
         public string id = "";
 
         [NonSerialized]
-        public int damage;
+        public float damage;
 
         private void Awake()
         {

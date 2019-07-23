@@ -3,8 +3,11 @@ using Animancer;
 using TMechs.Animation;
 using TMechs.Attributes;
 using TMechs.Entity;
+using TMechs.Environment;
+using TMechs.FX;
 using TMechs.Player;
 using TMechs.Types;
+using TMechs.UI;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 
@@ -28,16 +31,27 @@ namespace TMechs.Enemy.AI
         public VisualEffect moveVfx;
         public VisualEffect[] shotgunVfx = { };
         public VisualEffect[] shotgunBlast;
+        public SetShaderProperty deathLights;
 
+        [Header("Enrage")]
+        public GameObject enrageAnimationPreset;
+        public SetShaderProperty enrageLights;
+        
         private CharacterController controller;
         private Vector3 motion;
         private float yVelocity;
 
         private float moveAlpha;
         private float moveAlphaVelocity;
-        
+
+        private Vector3 startPosition;
+        private Quaternion startOrientation;
+
         private void Start()
         {
+            startPosition = transform.position;
+            startOrientation = transform.rotation;
+            
             controller = GetComponent<CharacterController>();
 
             TankyloShared shared = new TankyloShared()
@@ -70,7 +84,7 @@ namespace TMechs.Enemy.AI
 
             stateMachine.RegisterState(new Standby(), "Standby");
             stateMachine.RegisterState(new Shotgun(), "Shotgun");
-            stateMachine.RegisterState(null, "Tail Whip");
+            stateMachine.RegisterState(new TailWhip(), "Tail Whip");
 
             stateMachine.RegisterState(new EnterRage(), "Enter Rage");
 
@@ -89,7 +103,7 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterTransition("Standby", "Shotgun", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(TankyloProperties.shortRange)) && machine.GetTrigger("Oriented"));
             stateMachine.RegisterTransition("Shotgun", "Standby", machine => machine.GetTrigger("ShotgunDone"));
 
-//            stateMachine.RegisterTransition("Standby", "Tail Whip", machine => machine.GetAddSet("TailWhipTimer", -Time.deltaTime, 2F) <= 0F, machine => machine.Set("TailWhipTimer", 2F));
+            stateMachine.RegisterTransition("Standby", "Tail Whip", machine => machine.HorizontalDistanceToTarget >= machine.Get<Radius>(nameof(TankyloProperties.shortRange)) && machine.GetAddSet("TailWhipTimer", -Time.deltaTime, 1F) <= 0F, machine => machine.Set("TailWhipTimer", 1F));
             stateMachine.RegisterTransition("Tail Whip", "Standby", machine => machine.GetTrigger("TailWhipDone"));
 
             // State Machine
@@ -109,7 +123,7 @@ namespace TMechs.Enemy.AI
                 shared = (TankyloShared) Machine.shared;
             }
 
-            public AnimationClip GetClip(TankyloAnimation clip)
+            protected AnimationClip GetClip(TankyloAnimation clip)
             {
                 if (!shared.parent.animations)
                     return null;
@@ -141,8 +155,34 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEnter();
 
-                // TODO: fanfare
-                Machine.SetTrigger("RageDone");
+                if(!shared.parent.enrageAnimationPreset)
+                {
+                    Machine.SetTrigger("RageDone");
+                    return;
+                }
+
+                GameObject go = Instantiate(shared.parent.enrageAnimationPreset);
+                CharacterIntroUtils utils = go.GetComponent<CharacterIntroUtils>();
+                if (utils)
+                    utils.onIntroDone = () => Machine.SetTrigger("RageDone");
+
+                SetShaderProperty ssp = go.GetComponent<SetShaderProperty>();
+                if(ssp)
+                    ssp.Signal();
+                
+                if(shared.parent.enrageLights)
+                    shared.parent.enrageLights.Signal();
+                
+                MenuActions.SetPause(true, false);
+                MenuActions.pauseLocked = true;
+
+                shared.parent.controller.enabled = false;
+                transform.position = shared.parent.startPosition;
+                transform.rotation = shared.parent.startOrientation;
+                shared.parent.controller.enabled = true;
+                
+                //TODO janky hack mate
+                FindObjectOfType<CharacterIntroTrigger>().TeleportPlayer();
             }
         }
 
@@ -254,7 +294,7 @@ namespace TMechs.Enemy.AI
                 {
                     timer += Time.deltaTime;
 
-                    if (timer > 2F)
+                    if (timer > 1F)
                     {
                         Machine.SetTrigger("Oriented");
                         oriented = true;
@@ -386,11 +426,84 @@ namespace TMechs.Enemy.AI
                         vfx.gameObject.SetActive(true);
                         vfx.Play();
                     }
+
+                    if (DistanceToTarget <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && AngleToTarget <= 50F)
+                    {
+                        Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)));
+                        Player.Player.Instance.forces.frictionedVelocity = HorizontalDirectionToTarget * Machine.Get<float>(nameof(TankyloProperties.shotgunKnockback));
+                    }
                 }
             }
         }
 
-        private void Update()
+        private class TailWhip : TankyloState
+        {
+            private AnimancerState tailWhip;
+
+            private EnemyHitBox[] colliders;
+            
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                tailWhip = Animancer.GetOrCreateState(GetClip(TankyloAnimation.TailWhip), 1);
+                colliders = Machine.Get<EnemyHitBox[]>(nameof(TankyloProperties.tailWhipColliders));
+                foreach (EnemyHitBox box in colliders)
+                {
+                    box.gameObject.SetActive(false);
+                    box.damage = 0F;
+                }
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                Animancer.CrossFadeFromStart(tailWhip, .1F).OnEnd = () =>
+                {
+                    tailWhip.Stop();
+                    Machine.SetTrigger("TailWhipDone");
+                };
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                if (HorizontalDistanceToTarget * 1.2F >= Machine.Get<Radius>(nameof(TankyloProperties.midStopRange)))
+                    shared.parent.motion = Machine.Get<float>(nameof(TankyloProperties.chaseSpeed)) * .5F * HorizontalDirectionToTarget;
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                foreach (EnemyHitBox box in colliders)
+                {
+                    box.gameObject.SetActive(false);
+                    box.damage = 0F;
+                }
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                float damage = Machine.Get<float>(nameof(TankyloProperties.tailWhipDamage));
+                
+                if("WhipActive".Equals(id))
+                    foreach (EnemyHitBox box in colliders)
+                    {
+                        box.gameObject.SetActive(true);
+                        box.damage = damage;
+                    }
+            }
+        }
+
+    private void Update()
         {
             stateMachine.Tick();
             
@@ -414,10 +527,18 @@ namespace TMechs.Enemy.AI
         public void OnDying(ref bool customDestroy)
         {
             customDestroy = true;
+            
+            stateMachine.Exit();
 
-            Destroy(((TankyloShared) stateMachine.shared).animancer);
             Destroy(((TankyloShared) stateMachine.shared).health);
             Destroy(this);
+            Destroy(GetComponentInChildren<TargetController>());
+
+            ((TankyloShared) stateMachine.shared).animancer.Stop();
+            ((TankyloShared) stateMachine.shared).animancer.Play(animations.GetClip(TankyloAnimation.Death)).Time = 0;
+
+            if (deathLights)
+                deathLights.Signal();
         }
 
         private void OnAnimationEvent(AnimationEvent e)
@@ -451,6 +572,14 @@ namespace TMechs.Enemy.AI
             public float rockInAngle = 0F;
             public float rockOutAngle = 20F;
             public float rockDamage = 20F;
+
+            [Header("Shotgun")]
+            public float shotgunDamage = 25F;
+            public float shotgunKnockback = 10F;
+
+            [Header("Tail Whip")]
+            public EnemyHitBox[] tailWhipColliders = {};
+            public float tailWhipDamage = 10F;
         }
 
         [AnimationCollection.EnumAttribute("Tankylosaurus Animations")]

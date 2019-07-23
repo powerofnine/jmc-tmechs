@@ -347,6 +347,18 @@ namespace TMechs.Player
             DebugConsole.Instance.AddMessage($"{variable}: old = {oldVal} new = {value}", Color.cyan);
         }
 
+        [DebugConsoleCommand("damage")]
+        private static void DebugDamage(string entity, float amount)
+        {
+            EntityHealth[] healths = FindObjectsOfType<EntityHealth>();
+
+            foreach (EntityHealth health in healths)
+            {
+                if(health.gameObject.name.Contains(entity))
+                    health.Damage(amount);
+            }
+        }
+
         private enum PlayerVar
         {
             MovementSpeed,
