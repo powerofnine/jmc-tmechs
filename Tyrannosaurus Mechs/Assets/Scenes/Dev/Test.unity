@@ -168,6 +168,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &644006935
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4155833151189894199, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_Name
+      value: Tankylosaurus
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 30.70966
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.8678598
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.0592895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155833151189894204, guid: f6866c0a5bb20e24490f61bfccc8d4ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 89932380, guid: f6866c0a5bb20e24490f61bfccc8d4ce, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6866c0a5bb20e24490f61bfccc8d4ce, type: 3}
 --- !u!1 &881136040
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,77 +526,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1623565628
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3794618128849563965, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_Name
-      value: Tankylosaurus
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0068678856
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.5950584
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.2510376
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 829109798357855304, guid: 24672921cb021c34193f39787202f305,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 24672921cb021c34193f39787202f305, type: 3}
 --- !u!1001 &1631841069
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,10 +3,10 @@ using Animancer;
 using TMechs.Animation;
 using TMechs.Attributes;
 using TMechs.Entity;
-using TMechs.Environment;
 using TMechs.Player;
 using TMechs.Types;
 using UnityEngine;
+using UnityEngine.Experimental.VFX;
 
 namespace TMechs.Enemy.AI
 {
@@ -14,24 +14,32 @@ namespace TMechs.Enemy.AI
     {
         public AiStateMachine stateMachine;
         public TankyloProperties properties = new TankyloProperties();
-        
+
         [Header("Animations")]
         [AnimationCollection.ValidateAttribute(typeof(TankyloAnimation))]
         public AnimationCollection animations;
         public AvatarMask leftMask;
         public AvatarMask rightMask;
-        
+
         [Header("Anchors")]
         public Transform shellBone;
+
+        [Header("VFX")]
+        public VisualEffect moveVfx;
+        public VisualEffect[] shotgunVfx = { };
+        public VisualEffect[] shotgunBlast;
 
         private CharacterController controller;
         private Vector3 motion;
         private float yVelocity;
 
+        private float moveAlpha;
+        private float moveAlphaVelocity;
+        
         private void Start()
         {
             controller = GetComponent<CharacterController>();
-            
+
             TankyloShared shared = new TankyloShared()
             {
                     parent = this,
@@ -60,8 +68,8 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Chase(), "Chase");
             stateMachine.RegisterState(new RockThrow(), "Rock Throw");
 
-            stateMachine.RegisterState(new AiStateMachine.ProxyState(stateMachine.FindState("Chase")), "Standby");
-            stateMachine.RegisterState(null, "Shotgun");
+            stateMachine.RegisterState(new Standby(), "Standby");
+            stateMachine.RegisterState(new Shotgun(), "Shotgun");
             stateMachine.RegisterState(null, "Tail Whip");
 
             stateMachine.RegisterState(new EnterRage(), "Enter Rage");
@@ -78,7 +86,7 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterTransition("Chase", "Rock Throw", machine => machine.GetAddSet("RockThrowTimer", -Time.deltaTime, machine.Get<Vector2>(nameof(TankyloProperties.rockThrowCooldown)).Random()) <= 0F, machine => machine.Set("RockThrowTimer", machine.Get<Vector2>(nameof(TankyloProperties.rockThrowCooldown)).Random()));
             stateMachine.RegisterTransition("Rock Throw", "Chase", machine => machine.GetTrigger("RockThrowDone"));
 
-//            stateMachine.RegisterTransition("Standby", "Shotgun", machine => machine.HorizontalDistanceToTarget < machine.Get<Radius>(nameof(TankyloProperties.shortRange)) && machine.GetTrigger("Oriented"));
+            stateMachine.RegisterTransition("Standby", "Shotgun", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(TankyloProperties.shortRange)) && machine.GetTrigger("Oriented"));
             stateMachine.RegisterTransition("Shotgun", "Standby", machine => machine.GetTrigger("ShotgunDone"));
 
 //            stateMachine.RegisterTransition("Standby", "Tail Whip", machine => machine.GetAddSet("TailWhipTimer", -Time.deltaTime, 2F) <= 0F, machine => machine.Set("TailWhipTimer", 2F));
@@ -132,7 +140,7 @@ namespace TMechs.Enemy.AI
             public override void OnEnter()
             {
                 base.OnEnter();
-                
+
                 // TODO: fanfare
                 Machine.SetTrigger("RageDone");
             }
@@ -144,29 +152,29 @@ namespace TMechs.Enemy.AI
 
             private LinearMixerState leftTread;
             private LinearMixerState rightTread;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
-                
+
                 AnimancerLayer leftLayer = Animancer.GetLayer(2);
                 AnimancerLayer rightLayer = Animancer.GetLayer(3);
 
                 leftLayer.SetWeight(1F);
                 rightLayer.SetWeight(1F);
-                
+
                 leftLayer.SetName("Left Tread");
                 rightLayer.SetName("Right Tread");
-                
+
                 leftLayer.SetMask(shared.parent.leftMask);
                 rightLayer.SetMask(shared.parent.rightMask);
-                
+
                 leftTread = new LinearMixerState(leftLayer);
                 rightTread = new LinearMixerState(rightLayer);
-                
+
                 leftTread.Initialise(GetClip(TankyloAnimation.Backward), GetClip(TankyloAnimation.Still), GetClip(TankyloAnimation.Forward));
                 rightTread.Initialise(GetClip(TankyloAnimation.Backward), GetClip(TankyloAnimation.Still), GetClip(TankyloAnimation.Forward));
-                
+
                 leftTread.Play();
                 rightTread.Play();
             }
@@ -201,7 +209,7 @@ namespace TMechs.Enemy.AI
                         rightTread.Parameter = 0F;
                         return;
                     }
-                    
+
                     shared.parent.motion = transform.forward * Machine.Get<float>(nameof(TankyloProperties.chaseSpeed));
                 }
             }
@@ -209,8 +217,53 @@ namespace TMechs.Enemy.AI
             public override void LateTick()
             {
                 base.LateTick();
-             
+
                 shared.parent.shellBone.right = -HorizontalDirectionToTarget;
+            }
+        }
+
+        private class Standby : TankyloState
+        {
+            private float timer;
+            private bool oriented;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                backgroundState = Machine.FindState("Chase");
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                Machine.SetTrigger("Oriented", false);
+                timer = 0F;
+                oriented = false;
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                if (oriented)
+                    return;
+
+                if (HorizontalDistanceToTarget <= Machine.Get<Radius>(nameof(TankyloProperties.shortRange)))
+                {
+                    timer += Time.deltaTime;
+
+                    if (timer > 2F)
+                    {
+                        Machine.SetTrigger("Oriented");
+                        oriented = true;
+                    }
+                }
+                else
+                {
+                    timer = 0F;
+                }
             }
         }
 
@@ -220,7 +273,7 @@ namespace TMechs.Enemy.AI
             private Transform anchor;
 
             private ThrowableContainer rock;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
@@ -255,14 +308,14 @@ namespace TMechs.Enemy.AI
                 {
                     case "RockReady":
                         GameObject go = Instantiate(Machine.Get<GameObject>(nameof(TankyloProperties.rockTemplate)), anchor, false);
-                        
+
                         GameObject container = new GameObject("Tankylo Rock");
                         rock = container.AddComponent<ThrowableContainer>();
 
                         rock.enemyRock = true;
                         rock.recepientDamage = Machine.Get<float>(nameof(TankyloProperties.rockDamage));
                         rock.Initialize(go);
-                        
+
                         rock.transform.SetParent(anchor, true);
                         rock.transform.position = anchor.position;
 
@@ -270,9 +323,9 @@ namespace TMechs.Enemy.AI
                     case "RockThrow":
                         if (!rock)
                             return;
-                        
+
                         rock.transform.SetParent(null, true);
-                        
+
                         // Very naive trajectory projection, but it works surprisingly well
                         rock.Throw(target.position + Player.Player.Instance.forces.ControllerVelocity * .75F, Machine.Get<float>(nameof(TankyloProperties.rockInAngle)), Machine.Get<float>(nameof(TankyloProperties.rockOutAngle)), Machine.Get<float>(nameof(TankyloProperties.rockSpeed)));
 
@@ -280,14 +333,74 @@ namespace TMechs.Enemy.AI
                 }
             }
         }
-        
+
+        private class Shotgun : TankyloState
+        {
+            private AnimancerState shotgun;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                shotgun = Animancer.GetOrCreateState(GetClip(TankyloAnimation.Shotgun), 1);
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                Animancer.CrossFadeFromStart(shotgun, .1F).OnEnd = () =>
+                {
+                    shotgun.Stop();
+                    Machine.SetTrigger("ShotgunDone");
+                };
+
+                foreach (VisualEffect vfx in shared.parent.shotgunVfx)
+                {
+                    vfx.gameObject.SetActive(true);
+                    vfx.Play();
+                }
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                foreach (VisualEffect vfx in shared.parent.shotgunVfx)
+                    vfx.Stop();
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                if ("ShotgunBlast".Equals(id))
+                {
+                    foreach (VisualEffect vfx in shared.parent.shotgunVfx)
+                        vfx.Stop();
+                    foreach (VisualEffect vfx in shared.parent.shotgunBlast)
+                    {
+                        vfx.gameObject.SetActive(true);
+                        vfx.Play();
+                    }
+                }
+            }
+        }
+
         private void Update()
         {
             stateMachine.Tick();
-
+            
             yVelocity += Utility.GRAVITY * Time.deltaTime;
             controller.Move((motion + Vector3.down * yVelocity) * Time.deltaTime);
             motion = Vector3.zero;
+
+            float desiredAlpha = controller.velocity.sqrMagnitude > 3F ? 1F : 0F;
+            moveAlpha = Mathf.SmoothDamp(moveAlpha, desiredAlpha, ref moveAlphaVelocity, .25F);
+            moveVfx.SetFloat("Alpha", moveAlpha);
 
             if (controller.isGrounded)
                 yVelocity = 0F;
@@ -344,14 +457,17 @@ namespace TMechs.Enemy.AI
         public enum TankyloAnimation
         {
             Primer,
-            
+            Death,
+
             [Header("Movement")]
             Forward,
             Backward,
             Still,
-            
+
             [Header("Attacks")]
-            RockThrow
+            RockThrow,
+            TailWhip,
+            Shotgun
         }
     }
 }
