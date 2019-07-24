@@ -12,7 +12,7 @@ namespace TMechs.Environment.Interactables
         public float destroyVfxTime = 2F;
 
         public bool destroy = true;
-        
+
         public override void OnInteract()
         {
         }

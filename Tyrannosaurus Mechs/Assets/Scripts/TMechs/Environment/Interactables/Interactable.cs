@@ -6,6 +6,7 @@ namespace TMechs.Environment.Interactables
     public abstract class Interactable : MonoBehaviour
     {
         public string displayText;
+        public GameObject display;
         
         private int inRange;
 
@@ -15,6 +16,14 @@ namespace TMechs.Environment.Interactables
             {
                 inRange--;
                 Player.Player.Instance.interaction.AddInteraction(this);
+            }
+
+            if (display)
+            {
+                bool shouldShow = inRange > 0;
+                
+                if(display.activeSelf != shouldShow)
+                    display.SetActive(shouldShow);
             }
         }
 
