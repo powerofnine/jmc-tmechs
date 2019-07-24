@@ -101,6 +101,12 @@ namespace TMechs.Player.Behavior
                 
                 if (stage > prevStage)
                 {
+                    if (player.vfx.rocketBurst)
+                    {
+                        player.vfx.rocketBurst.gameObject.SetActive(true);
+                        player.vfx.rocketBurst.Play();
+                    }
+                    
                     Animancer.CrossFadeFromStart(buckle, 0F).OnEnd = () =>
                     {
                         buckle.OnEnd = null;
