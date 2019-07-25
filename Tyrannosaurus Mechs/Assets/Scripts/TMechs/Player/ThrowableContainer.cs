@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMechs.Entity;
 using TMechs.Environment;
@@ -23,9 +24,8 @@ namespace TMechs.Player
         
         private GameObject containedObject;
         private Vector3 startScale;
-        
-        private Renderer[] renderCache;
-        private readonly Dictionary<Renderer, Mesh> meshCache = new Dictionary<Renderer, Mesh>();
+
+        private Tuple<Renderer, Mesh>[] drawCache;
 
         private Rigidbody rb;
         private bool isDead;
@@ -35,8 +35,10 @@ namespace TMechs.Player
             transform.position = containedObject.transform.position;
             transform.rotation = containedObject.transform.rotation;
 
-            renderCache = containedObject.GetComponentsInChildren<Renderer>();
-            foreach (Renderer render in renderCache)
+            Renderer[] renderers = containedObject.GetComponentsInChildren<Renderer>();
+            List<Tuple<Renderer, Mesh>> drawables = new List<Tuple<Renderer, Mesh>>();
+            
+            foreach (Renderer render in renderers)
             {
                 if(!render.enabled)
                     continue;
@@ -46,16 +48,18 @@ namespace TMechs.Player
                     case MeshRenderer _:
                     {
                         MeshFilter filter = render.GetComponent<MeshFilter>();
-                        if (filter)
-                            meshCache.Add(render, filter.mesh);
+                        if (filter && filter.sharedMesh)
+                            drawables.Add(new Tuple<Renderer, Mesh>(render, filter.sharedMesh));
                         break;
                     }
 
                     case SkinnedMeshRenderer skinned:
-                        meshCache.Add(render, skinned.sharedMesh);
+                        drawables.Add(new Tuple<Renderer, Mesh>(render, skinned.sharedMesh));
                         break;
                 }
             }
+
+            drawCache = drawables.ToArray();
 
             startScale = containedObject.transform.localScale;
             
@@ -67,7 +71,7 @@ namespace TMechs.Player
             this.containedObject = containedObject;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (isDead)
                 return;
@@ -75,12 +79,12 @@ namespace TMechs.Player
             if(!containedObject)
                 Destroy(gameObject);
             
-            foreach (Renderer render in renderCache)
+            foreach (Tuple<Renderer, Mesh> draw in drawCache)
             {
-                if (!render || !meshCache.ContainsKey(render))
+                if (draw == null || !draw.Item1 || !draw.Item2)
                     return;
 
-                Graphics.DrawMesh(meshCache[render], render.localToWorldMatrix, render.material, render.gameObject.layer);
+                Graphics.DrawMesh(draw.Item2, draw.Item1.localToWorldMatrix, draw.Item1.material, draw.Item1.gameObject.layer);
             }
         }
 
