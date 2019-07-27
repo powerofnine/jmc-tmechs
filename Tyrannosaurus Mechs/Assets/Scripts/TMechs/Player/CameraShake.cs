@@ -26,6 +26,9 @@ namespace TMechs.Player
             
             if (shake >= 0F)
                 shake -= falloff * Time.deltaTime;
+
+            shake = Mathf.Max(0F, shake);
+            Rumble.SetRumble(Rumble.CHANNEL_CAMERA, Mathf.Clamp01(Utility.MathRemap(shake, 0F, 4F, 0F, 1F)), .1F, 0F);
         }
 
         [UsedImplicitly] // Animator event

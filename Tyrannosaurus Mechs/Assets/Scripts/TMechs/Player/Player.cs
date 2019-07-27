@@ -246,6 +246,8 @@ namespace TMechs.Player
         {
             if (isGod)
                 cancel = true;
+            
+            Rumble.SetRumble(Rumble.CHANNEL_DAMAGED, .5F, .25F, .05F);
         }
         
         [AnimationCollection.Enum("Player Animations")]
