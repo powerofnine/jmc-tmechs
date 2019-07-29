@@ -123,7 +123,6 @@ namespace TMechs.Player.Behavior
                     pummel.OnEnd = null;
                     isPummeling = false;
                     Animancer.GetLayer(2).StartFade(0F);
-                    pickedUp.DamageContainedObject(pummelDamage, pummelDamageSource.GetWithSource(transform));
                 };
             }
         }
@@ -200,9 +199,16 @@ namespace TMechs.Player.Behavior
         public override void OnAnimationEvent(AnimationEvent e)
         {
             base.OnAnimationEvent(e);
-            
-            if("Throw".Equals(e.stringParameter))
-                Throw();
+
+            switch (e.stringParameter)
+            {
+                case "Throw":
+                    Throw();
+                    break;
+                case "AttackHit":
+                    pickedUp.DamageContainedObject(pummelDamage, pummelDamageSource.GetWithSource(transform));
+                    break;
+            }
         }
 
         public override bool CanMove() => hasPickedUp && !isThrowing && !isPummeling;

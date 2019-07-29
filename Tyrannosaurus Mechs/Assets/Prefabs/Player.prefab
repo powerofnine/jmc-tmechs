@@ -2292,6 +2292,13 @@ MonoBehaviour:
     arms: {fileID: 31900000, guid: 4c4b21d8653f03040aede36f49ed6435, type: 2}
   combat:
     enabled: 1
+    damageSource:
+      cancelDefaultVfx: 0
+      effect: {fileID: 8926484042661614526, guid: 1254fb3de2286c34a8ffb649afef529d,
+        type: 3}
+      effectDuration: 1.5
+      location: 1
+      orient: 0
   vfx:
     enabled: 1
     sprint: {fileID: 5040574679660250249}
@@ -2347,6 +2354,13 @@ MonoBehaviour:
     launchAngle: 10
     pummelDamage: 10
     ikTime: 0.5
+    pummelDamageSource:
+      cancelDefaultVfx: 1
+      effect: {fileID: 8926484042661614526, guid: 4b896b70ecca56c4cbbe220c140906b2,
+        type: 3}
+      effectDuration: 1.5
+      location: 0
+      orient: 0
   rightArmIk: {fileID: 6484260114591465230}
   tankyloIntro: {fileID: 4318489944008235783, guid: cf7724a95600ab441a613b5c5ce0149b,
     type: 3}

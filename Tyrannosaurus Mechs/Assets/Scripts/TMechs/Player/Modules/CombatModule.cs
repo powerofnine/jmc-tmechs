@@ -85,14 +85,15 @@ namespace TMechs.Player.Modules
                 if (hitboxUnique && hits.Contains(health))
                     return;
 
-                health.Damage(hitboxDamage, damageSource.GetWithSource(transform));
+                Transform source = transform;
+                PlayerHitbox box = hitboxes[id].FirstOrDefault();
+                if (box)
+                    source = box.transform;
+                
+                health.Damage(hitboxDamage, damageSource.GetWithSource(source));
                 hits.Add(health);
                 hitboxHit?.Invoke();
 
-                PlayerHitbox box = hitboxes[id].FirstOrDefault();
-                if (box)
-                    VfxModule.SpawnEffect(player.vfx.hit, box.transform.position, Quaternion.identity, 1.5F);
-                
                 Rumble.SetRumble(Rumble.CHANNEL_ATTACK, .25F, .25F, .05F);
             }
         }

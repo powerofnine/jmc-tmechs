@@ -158,7 +158,7 @@ namespace TMechs.Player.Behavior
             if (nextHitbox == "aoe")
             {
                 player.combat.DealAoe(attack3Range, attack3Damage.x, attack3Damage.y);
-                player.vfx.SpawnGroundSlam();
+//                player.vfx.SpawnGroundSlam();
             }
             else
                 player.combat.SetHitbox(nextHitbox, nextDamage);
