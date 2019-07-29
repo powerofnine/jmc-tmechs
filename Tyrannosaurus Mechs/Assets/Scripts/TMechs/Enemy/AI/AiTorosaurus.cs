@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using JetBrains.Annotations;
+using TMechs.Entity;
 using TMechs.Types;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,9 +17,10 @@ namespace TMechs.Enemy.AI
         public static readonly int CHARGE_HIT = Anim.Hash("Charge Hit");
 
         public AiStateMachine stateMachine;
+        public EntityHealth.DamageSource damageSource;
 
         public TorosaurusProperties properties = new TorosaurusProperties();
-
+        
         private float yVelocity;
 
         private void Start()
@@ -208,7 +210,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "chargeHit":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Health.Damage(Machine.Get<int>("chargeHitDamage"));
+                            Player.Player.Instance.Health.Damage(Machine.Get<int>("chargeHitDamage"), shared.self.damageSource.GetWithSource(transform));
                         break;
                 }
             }
@@ -259,7 +261,7 @@ namespace TMechs.Enemy.AI
                         break;
                     case "attack":
                         if(DistanceToTarget <= Machine.Get<Radius>("attackRange") && AngleToTarget <= 35F)
-                            Player.Player.Instance.Health.Damage(Machine.Get<int>("attackDamage"));
+                            Player.Player.Instance.Health.Damage(Machine.Get<int>("attackDamage"), shared.self.damageSource.GetWithSource(transform));
                         break;
                 }
             }

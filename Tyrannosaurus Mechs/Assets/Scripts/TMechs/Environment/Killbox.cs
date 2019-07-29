@@ -11,7 +11,7 @@ namespace TMechs.Environment
             EntityHealth health = other.GetComponent<EntityHealth>();
             
             if(health)
-                health.Damage(5000000F);
+                health.Damage(5000000F, default);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace TMechs.Player
         public float sourceDamage = 10F;
 
         public bool enemyRock;
+        public EntityHealth.DamageSource damageSource;
         
         private GameObject containedObject;
         private Vector3 startScale;
@@ -170,13 +171,13 @@ namespace TMechs.Player
             isDead = true;
             EntityHealth entity = other.collider.GetComponent<EntityHealth>();
             if (entity)
-                entity.Damage(recepientDamage);
+                entity.Damage(recepientDamage, damageSource.GetWithSource(transform));
 
             if (containedObject)
             {
                 EntityHealth containedEntity = containedObject.GetComponent<EntityHealth>();
                 if (containedEntity)
-                    containedEntity.Damage(sourceDamage);
+                    containedEntity.Damage(sourceDamage, damageSource.GetWithSource(transform));
 
                 Rigidbody containedRb = containedObject.GetComponent<Rigidbody>();
                 if (containedRb)
@@ -198,14 +199,14 @@ namespace TMechs.Player
             Invoke(nameof(Destroy), .25F);
         }
 
-        public void DamageContainedObject(float damage)
+        public void DamageContainedObject(float damage, EntityHealth.DamageSource source)
         {
             if (containedObject)
             {
                 EntityHealth containedEntity = containedObject.GetComponent<EntityHealth>();
                 if (containedEntity)
                 {
-                    containedEntity.Damage(damage);
+                    containedEntity.Damage(damage, source);
                     if(containedEntity.Health <= 0F) // Destroy regardless of how object handles death internally
                         Destroy(containedEntity.gameObject);
                 }

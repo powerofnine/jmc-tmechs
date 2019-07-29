@@ -12,6 +12,8 @@ namespace TMechs.Player.Modules
     [Serializable]
     public class CombatModule : PlayerModule
     {
+        public EntityHealth.DamageSource damageSource;
+        
         private readonly Dictionary<string, List<PlayerHitbox>> hitboxes = new Dictionary<string, List<PlayerHitbox>>();
         private bool hitboxUnique;
         private readonly HashSet<EntityHealth> hits = new HashSet<EntityHealth>();
@@ -83,7 +85,7 @@ namespace TMechs.Player.Modules
                 if (hitboxUnique && hits.Contains(health))
                     return;
 
-                health.Damage(hitboxDamage);
+                health.Damage(hitboxDamage, damageSource.GetWithSource(transform));
                 hits.Add(health);
                 hitboxHit?.Invoke();
 
@@ -109,7 +111,7 @@ namespace TMechs.Player.Modules
                     select h;
             
             foreach(EntityHealth health in targets)
-                health.Damage(Mathf.Lerp(maxDamage, minDamage, Vector3.Distance(transform.position.Remove(Utility.Axis.Y), health.transform.position.Remove(Utility.Axis.Y)) / radius));
+                health.Damage(Mathf.Lerp(maxDamage, minDamage, Vector3.Distance(transform.position.Remove(Utility.Axis.Y), health.transform.position.Remove(Utility.Axis.Y)) / radius), damageSource.GetWithSource(transform));
 
         }
     }

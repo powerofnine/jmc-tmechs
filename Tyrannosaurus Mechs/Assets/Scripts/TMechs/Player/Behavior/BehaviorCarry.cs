@@ -1,6 +1,7 @@
 using System;
 using Animancer;
 using TMechs.Animation;
+using TMechs.Entity;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace TMechs.Player.Behavior
 
         [Space]
         public float ikTime = .5F;
+
+        public EntityHealth.DamageSource pummelDamageSource;
         
         private AnimancerState grab;
         private AnimancerState yeet; // Throw is a reserved keyword
@@ -120,7 +123,7 @@ namespace TMechs.Player.Behavior
                     pummel.OnEnd = null;
                     isPummeling = false;
                     Animancer.GetLayer(2).StartFade(0F);
-                    pickedUp.DamageContainedObject(pummelDamage);
+                    pickedUp.DamageContainedObject(pummelDamage, pummelDamageSource.GetWithSource(transform));
                 };
             }
         }

@@ -1,4 +1,5 @@
 using System;
+using TMechs.Entity;
 using UnityEngine;
 
 namespace TMechs.Enemy
@@ -8,6 +9,8 @@ namespace TMechs.Enemy
         public float speed;
         public float lifeTime;
 
+        public EntityHealth.DamageSource damageSource;
+        
         [NonSerialized]
         public float damage;
         [NonSerialized]
@@ -30,7 +33,7 @@ namespace TMechs.Enemy
                 return;
             
             if(other.CompareTag("Player"))
-                Player.Player.Instance.Health.Damage(damage);
+                Player.Player.Instance.Health.Damage(damage, damageSource.GetWithSource(transform));
             
             Destroy(gameObject);
         }

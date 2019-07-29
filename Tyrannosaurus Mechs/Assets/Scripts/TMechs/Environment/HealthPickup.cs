@@ -8,6 +8,7 @@ namespace TMechs.Environment
     public class HealthPickup : MonoBehaviour, EntityHealth.IDeath
     {
         public bool restorePercentage = true;
+        public EntityHealth.DamageSource healSource; 
 
         [ConditionalHide("restorePercentage", true)]
         public float healthRestorePercent = 0.25F;
@@ -18,9 +19,9 @@ namespace TMechs.Environment
         public void OnDying(ref bool customDestroy)
         {
             if (restorePercentage)
-                Player.Player.Instance.Health.Heal(healthRestorePercent, true);
+                Player.Player.Instance.Health.Heal(healthRestorePercent, healSource.GetWithSource(transform), true);
             else
-                Player.Player.Instance.Health.Heal(healthRestoreAbsolute, false);
+                Player.Player.Instance.Health.Heal(healthRestoreAbsolute, healSource.GetWithSource(transform), false);
         }
     }
 }

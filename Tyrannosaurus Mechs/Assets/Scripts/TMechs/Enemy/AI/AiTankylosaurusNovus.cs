@@ -18,6 +18,8 @@ namespace TMechs.Enemy.AI
         public AiStateMachine stateMachine;
         public TankyloProperties properties = new TankyloProperties();
 
+        public EntityHealth.DamageSource damageSource;
+        
         [Header("Animations")]
         [AnimationCollection.ValidateAttribute(typeof(TankyloAnimation))]
         public AnimationCollection animations;
@@ -429,7 +431,7 @@ namespace TMechs.Enemy.AI
 
                     if (DistanceToTarget <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && AngleToTarget <= 50F)
                     {
-                        Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)));
+                        Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)), shared.parent.damageSource.GetWithSource(transform));
                         Player.Player.Instance.forces.frictionedVelocity = HorizontalDirectionToTarget * Machine.Get<float>(nameof(TankyloProperties.shotgunKnockback));
                     }
                 }

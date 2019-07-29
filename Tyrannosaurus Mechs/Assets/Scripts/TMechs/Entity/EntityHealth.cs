@@ -1,4 +1,5 @@
-﻿using TMechs.Player.Modules;
+﻿using System;
+using TMechs.Player.Modules;
 using TMechs.UI;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
@@ -56,7 +57,7 @@ namespace TMechs.Entity
             }
         }
 
-        public void Damage(float damage, bool percent = false)
+        public void Damage(float damage, DamageSource source, bool percent = false)
         {
             bool cancel = false;
 
@@ -70,7 +71,8 @@ namespace TMechs.Entity
                         return;
                 }
 
-                VfxModule.SpawnEffect(damagedEffect, damagedEffectAnchor ? damagedEffectAnchor.position : transform.position, Quaternion.identity, damagedEffectDuration);
+                if(!source.cancelDefaultVfx)
+                    VfxModule.SpawnEffect(damagedEffect, damagedEffectAnchor ? damagedEffectAnchor.position : transform.position, Quaternion.identity, damagedEffectDuration);
             }
             else if (damage < 0F)
             {
@@ -84,11 +86,45 @@ namespace TMechs.Entity
             }
 
             Health -= damage / (percent ? 1F : maxHealth);
+
+            if (source.effect)
+            {
+                Vector3 pos = transform.position;
+                Vector3 forward = Vector3.forward;
+
+                switch (source.location)
+                {
+                    case DamageSource.EffectLocation.CenterSource when source.Source:
+                        pos = source.Source.position;
+                        break;
+                    case DamageSource.EffectLocation.CenterSource:
+                    case DamageSource.EffectLocation.TargetEffectAnchor:
+                        pos = damagedEffectAnchor ? damagedEffectAnchor.position : transform.position;
+                        break;
+                }
+
+                if (source.Source)
+                {
+                    switch (source.orient)
+                    {
+                        case DamageSource.EffectOrient.FaceSource:
+                            forward = source.Source.position - transform.position;
+                            break;
+                        case DamageSource.EffectOrient.FaceTarget:
+                            forward = transform.position - source.Source.position;
+                            break;
+                    }
+                    
+                    forward.Normalize();
+                }
+
+                VfxModule.SpawnEffect(source.effect, pos, Quaternion.identity, source.effectDuration).transform.forward = forward;
+            }
         }
 
-        public void Heal(float health, bool percent = false)
+        public void Heal(float health, DamageSource source, bool percent = false)
         {
-            Damage(-health, percent);
+            Damage(-health, source, percent);
         }
 
         public interface IDamage
@@ -104,6 +140,39 @@ namespace TMechs.Entity
         public interface IDeath
         {
             void OnDying(ref bool customDestroy);
+        }
+        
+        [Serializable]
+        public struct DamageSource
+        {
+            [Header("VFX")]
+            public bool cancelDefaultVfx;
+            public VisualEffectAsset effect;
+            public float effectDuration;
+            public EffectLocation location;
+            public EffectOrient orient;
+            
+            public Transform Source { get; private set; }
+            
+            public DamageSource GetWithSource(Transform t)
+            {
+                DamageSource source = this;
+                source.Source = t;
+                return source;
+            }
+
+            public enum EffectLocation
+            {
+                TargetEffectAnchor,
+                CenterSource
+            }
+
+            public enum EffectOrient
+            {
+                Identity,
+                FaceTarget,
+                FaceSource
+            }
         }
     }
 }
