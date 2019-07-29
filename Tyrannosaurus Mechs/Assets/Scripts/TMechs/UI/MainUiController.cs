@@ -10,13 +10,6 @@ namespace TMechs.UI
         public RectTransform charge;
         public Image chargeGlow;
 
-        public Color[] chargeStages =
-        {
-                Color.red,
-                Color.yellow,
-                Color.cyan
-        };
-
         public float fadeTime = .5F;
 
         private bool isEnabled = true;
@@ -38,11 +31,11 @@ namespace TMechs.UI
             
             charge.localEulerAngles = charge.localEulerAngles.Set(Mathf.Lerp(0F, -180F, player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime), Utility.Axis.Z);
 
-            if (chargeGlow && chargeStages != null && chargeStages.Length > 0)
+            if (chargeGlow && player.rocketFist.damageColors != null && player.rocketFist.damageColors.Length > 0)
             {
-                int stage = Mathf.Clamp(Mathf.FloorToInt(player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime * chargeStages.Length), 0, chargeStages.Length - 1);
+                int stage = player.rocketFist.ChargeStage;
                 
-                Color c = chargeStages[stage];
+                Color c = player.rocketFist.damageColors[stage];
                 
                 if (player.Behavior != player.rocketFist)
                     c.a = 0F;

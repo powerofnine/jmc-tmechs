@@ -16,8 +16,18 @@ namespace TMechs.Player.Behavior
         public float[] damageStages =
         {
                 10F,
+                15F,
                 30F,
-                70F
+                50F,
+                75F
+        };
+        public Color[] damageColors =
+        {
+            Color.red,
+            new Color(1F, .5F, 0), 
+            Color.yellow,
+            Color.cyan,
+            Color.blue
         };
         
         public float maxChargeTime = 5F;
@@ -26,6 +36,8 @@ namespace TMechs.Player.Behavior
         
         [NonSerialized]
         public float rocketFistCharge;
+        
+        public int ChargeStage => Mathf.Clamp(Mathf.CeilToInt(rocketFistCharge / ((maxChargeTime + 1F) / damageStages.Length)) - 1, 0, damageStages.Length - 1);
 
         [Space]
         public GameObject rocketFistTemplate;
@@ -59,8 +71,11 @@ namespace TMechs.Player.Behavior
             buckle = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketBuckle), ATTACK_LAYER);
             fire = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketRecover), ATTACK_LAYER);
             comeBack = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketReturn), ATTACK_LAYER);
+            
+            if(damageColors.Length != damageStages.Length)
+                Debug.LogWarning("Damage colors list is different length to damage stage list");
         }
-        
+
         public override void OnPush()
         {
             base.OnPush();
@@ -74,30 +89,33 @@ namespace TMechs.Player.Behavior
             Animancer.CrossFadeFromStart(intro).OnEnd = () =>
             {
                 intro.OnEnd = null;
-                
+
                 charging = true;
                 current = Animancer.CrossFadeFromStart(charge, .1F);
-                
+
                 current.OnEnd = () =>
                 {
                     current = Animancer.CrossFadeFromStart(hold, .1F);
                     hold.OnEnd = null;
                 };
             };
-            
-            if(player.vfx.rocketFistCharge)
+
+            if (player.vfx.rocketFistCharge)
+            {
                 player.vfx.rocketFistCharge.gameObject.SetActive(true);
+                player.vfx.rocketFistCharge.Play();
+            }
         }
-        
+
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            int stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
+            int stage = ChargeStage;
             if (charging)
             {
                 rocketFistCharge += Time.deltaTime;
-                stage = Mathf.Clamp(Mathf.FloorToInt(rocketFistCharge / maxChargeTime * damageStages.Length), 0, damageStages.Length - 1);
+                stage = ChargeStage;
                 
                 if (stage > prevStage)
                 {
@@ -107,12 +125,18 @@ namespace TMechs.Player.Behavior
                         player.vfx.rocketBurst.Play();
                     }
                     
+                    buckle.Stop();
                     Animancer.CrossFadeFromStart(buckle, 0F).OnEnd = () =>
                     {
-                        buckle.OnEnd = null;
                         buckle.Stop();
                         current?.Play();
                     };
+                    
+                    if(stage >= damageStages.Length - 1 && player.vfx.rocketOvercharge)
+                    {
+                        player.vfx.rocketOvercharge.gameObject.SetActive(true);
+                        player.vfx.rocketOvercharge.Play();
+                    }
                 }
             }
 
@@ -169,9 +193,18 @@ namespace TMechs.Player.Behavior
                 rf.damage = damageStages[stage];
                 rf.target = enemy.transform;
                 rocketFistGeo.SetActive(false);
+
+                if (player.vfx.rocketShot)
+                {
+                    player.vfx.rocketShot.gameObject.SetActive(true);
+                    player.vfx.rocketShot.Play();
+                }
+                
+                if(player.vfx.rocketOvercharge)
+                    player.vfx.rocketOvercharge.Stop();
                 
                 if(player.vfx.rocketFistCharge)
-                    player.vfx.rocketFistCharge.gameObject.SetActive(false);
+                    player.vfx.rocketFistCharge.Stop();
                 Animancer.CrossFadeFromStart(fire).OnEnd = () =>
                 {
                     fire.OnEnd = null;
@@ -187,6 +220,9 @@ namespace TMechs.Player.Behavior
             
             if(player.vfx.rocketFistCharge)
                 player.vfx.rocketFistCharge.gameObject.SetActive(false);
+            
+            if(player.vfx.rocketOvercharge)
+                player.vfx.rocketOvercharge.Stop();
         }
 
         public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .4F);

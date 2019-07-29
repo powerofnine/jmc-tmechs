@@ -10,11 +10,17 @@ namespace TMechs.Player.Modules
     {
         [Header("References")]
         public VisualEffect sprint;
-        public VisualEffect rocketFistCharge;
         public VisualEffect heal;
         public VisualEffect death;
         public VisualEffect dash;
+        
+        [Space]
+        public VisualEffect rocketFistCharge;
         public VisualEffect rocketBurst;
+        public VisualEffect rocketShot;
+        public VisualEffect rocketOvercharge;
+        
+        [Space]
         public VisualEffect leftPunchTrail;
         public VisualEffect rightPunchTrail;
         
