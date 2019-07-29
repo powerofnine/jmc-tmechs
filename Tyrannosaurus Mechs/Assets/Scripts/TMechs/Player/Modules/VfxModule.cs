@@ -15,7 +15,9 @@ namespace TMechs.Player.Modules
         public VisualEffect death;
         public VisualEffect dash;
         public VisualEffect rocketBurst;
-
+        public VisualEffect leftPunchTrail;
+        public VisualEffect rightPunchTrail;
+        
         [Header("Spawnables")]
         public VisualEffectAsset jump;
         public VisualEffectAsset groundSlam;

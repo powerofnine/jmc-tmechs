@@ -66,6 +66,10 @@ namespace TMechs.Player.Behavior
             base.OnPop();
             
             player.combat.SetHitbox(null, 0F);
+            if(player.vfx.leftPunchTrail)
+                player.vfx.leftPunchTrail.Stop();
+            if(player.vfx.rightPunchTrail)
+                player.vfx.rightPunchTrail.Stop();
         }
 
         public override void OnUpdate()
@@ -88,21 +92,51 @@ namespace TMechs.Player.Behavior
         {
             AnimancerState next = null;
 
+            if(player.vfx.leftPunchTrail)
+                player.vfx.leftPunchTrail.Stop();
+            if(player.vfx.rightPunchTrail)
+                player.vfx.rightPunchTrail.Stop();
+            
             switch (attackCount)
             {
                 case 0:
                     next = attackString1;
                     nextHitbox = "left";
                     nextDamage = attack1Damage;
+
+                    if (player.vfx.leftPunchTrail)
+                    {
+                        player.vfx.leftPunchTrail.gameObject.SetActive(true);
+                        player.vfx.leftPunchTrail.Play();
+                    }
+
                     break;
                 case 1:
                     next = attackString2;
                     nextHitbox = "right";
                     nextDamage = attack2Damage;
+                    
+                    if (player.vfx.rightPunchTrail)
+                    {
+                        player.vfx.rightPunchTrail.gameObject.SetActive(true);
+                        player.vfx.rightPunchTrail.Play();
+                    }
+                    
                     break;
                 case 2:
                     next = attackString3;
                     nextHitbox = "aoe";
+                    
+                    if (player.vfx.leftPunchTrail)
+                    {
+                        player.vfx.leftPunchTrail.gameObject.SetActive(true);
+                        player.vfx.leftPunchTrail.Play();
+                    }
+                    if (player.vfx.rightPunchTrail)
+                    {
+                        player.vfx.rightPunchTrail.gameObject.SetActive(true);
+                        player.vfx.rightPunchTrail.Play();
+                    }
                     break;
             }
 
