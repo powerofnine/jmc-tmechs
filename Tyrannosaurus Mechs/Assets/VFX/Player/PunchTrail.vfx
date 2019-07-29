@@ -256,7 +256,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":1.0,"z":0.0},"size":{"x":2.0,"y":3.0,"z":2.0}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.042958974838256839,"z":0.13451024889945985},"size":{"x":2.0,"y":2.05393123626709,"z":2.0962657928466799}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -1658,24 +1658,24 @@ VisualEffectResource:
         data[1]: -1
         data[2]: -1
         data[3]: 13
-      - op: 9
+      - op: 1
         valueIndex: 2
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 14
+      - op: 9
+        valueIndex: 3
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: -1
       - op: 1
-        valueIndex: 18
+        valueIndex: 19
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
-      - op: 1
-        valueIndex: 21
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 14
       - op: 1
         valueIndex: 22
         data[0]: -1
@@ -1726,7 +1726,7 @@ VisualEffectResource:
         data[3]: 7
       - op: 51
         valueIndex: 35
-        data[0]: 4
+        data[0]: 2
         data[1]: -1
         data[2]: -1
         data[3]: 1
@@ -1750,8 +1750,8 @@ VisualEffectResource:
         data[3]: 3
       - op: 41
         valueIndex: 44
-        data[0]: 2
-        data[1]: 3
+        data[0]: 3
+        data[1]: 4
         data[2]: -1
         data[3]: -1
       - op: 1
@@ -1783,27 +1783,39 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 54
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 57
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
         data[3]: 1
-      - op: 1
-        valueIndex: 52
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 3
-      - op: 1
-        valueIndex: 55
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 3
       - op: 1
         valueIndex: 58
         data[0]: -1
         data[1]: -1
         data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 61
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 64
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 59
+        valueIndex: 65
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -1828,24 +1840,28 @@ VisualEffectResource:
           m_Value: 1
         - m_ExpressionIndex: 21
           m_Value: 0
-        - m_ExpressionIndex: 22
+        - m_ExpressionIndex: 24
           m_Value: 100
-        - m_ExpressionIndex: 25
+        - m_ExpressionIndex: 27
           m_Value: 0.77
-        - m_ExpressionIndex: 26
+        - m_ExpressionIndex: 28
           m_Value: 6.2831855
       m_Vector2f:
         m_Array: []
       m_Vector3f:
         m_Array:
-        - m_ExpressionIndex: 3
+        - m_ExpressionIndex: 4
           m_Value: {x: 0, y: 0, z: 0}
         - m_ExpressionIndex: 16
           m_Value: {x: 1, y: 1, z: 1}
+        - m_ExpressionIndex: 22
+          m_Value: {x: 2, y: 1.5314898, z: 1.6263773}
         - m_ExpressionIndex: 23
-          m_Value: {x: 2, y: 3, z: 2}
-        - m_ExpressionIndex: 24
-          m_Value: {x: 0, y: 1, z: 0}
+          m_Value: {x: 0, y: 0.029853702, z: 0.08479571}
+        - m_ExpressionIndex: 25
+          m_Value: {x: 2, y: 2.0539312, z: 2.0962658}
+        - m_ExpressionIndex: 26
+          m_Value: {x: 0, y: 0.042958975, z: 0.13451025}
       m_Vector4f:
         m_Array: []
       m_Uint:
@@ -1938,7 +1954,7 @@ VisualEffectResource:
             m_Mode: 0
             m_NumColorKeys: 2
             m_NumAlphaKeys: 5
-        - m_ExpressionIndex: 4
+        - m_ExpressionIndex: 2
           m_Value:
             serializedVersion: 2
             key0: {r: 13.428402, g: 7.357275, b: 2.3436363, a: 0}
@@ -2265,7 +2281,7 @@ VisualEffectResource:
       buffers: []
       values:
       - nameId: Rate
-        index: 22
+        index: 24
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -2303,9 +2319,9 @@ VisualEffectResource:
       index: 2
     values:
     - nameId: bounds_center
-      index: 24
+      index: 26
     - nameId: bounds_size
-      index: 23
+      index: 25
     tasks:
     - type: 536870912
       buffers:
@@ -2322,9 +2338,9 @@ VisualEffectResource:
         index: 17
       params:
       - nameId: bounds_center
-        index: 24
+        index: 26
       - nameId: bounds_size
-        index: 23
+        index: 25
       processor: {fileID: 0}
       shaderSourceIndex: 0
     - type: 805306368
@@ -2378,9 +2394,9 @@ VisualEffectResource:
       index: 12
     values:
     - nameId: bounds_center
-      index: 24
-    - nameId: bounds_size
       index: 23
+    - nameId: bounds_size
+      index: 22
     tasks:
     - type: 536870912
       buffers:
@@ -2397,9 +2413,9 @@ VisualEffectResource:
         index: 17
       params:
       - nameId: bounds_center
-        index: 24
-      - nameId: bounds_size
         index: 23
+      - nameId: bounds_size
+        index: 22
       processor: {fileID: 0}
       shaderSourceIndex: 5
     - type: 805306368
@@ -3399,7 +3415,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":1.0,"z":0.0},"size":{"x":2.0,"y":3.0,"z":2.0}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0298537015914917,"z":0.08479571342468262},"size":{"x":2.0,"y":1.5314898490905762,"z":1.6263773441314698}}'
     m_Space: 0
   m_Property:
     name: bounds
