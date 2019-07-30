@@ -12,6 +12,8 @@ namespace TMechs.Player.Modules
     [Serializable]
     public class CombatModule : PlayerModule
     {
+        public EntityHealth.DamageSource damageSource;
+        
         private readonly Dictionary<string, List<PlayerHitbox>> hitboxes = new Dictionary<string, List<PlayerHitbox>>();
         private bool hitboxUnique;
         private readonly HashSet<EntityHealth> hits = new HashSet<EntityHealth>();
@@ -82,14 +84,17 @@ namespace TMechs.Player.Modules
             {
                 if (hitboxUnique && hits.Contains(health))
                     return;
+
+                Transform source = transform;
+                PlayerHitbox box = hitboxes[id].FirstOrDefault();
+                if (box)
+                    source = box.transform;
                 
-                health.Damage(hitboxDamage);
+                health.Damage(hitboxDamage, damageSource.GetWithSource(source));
                 hits.Add(health);
                 hitboxHit?.Invoke();
 
-                PlayerHitbox box = hitboxes[id].FirstOrDefault();
-                if(box)
-                    VfxModule.SpawnEffect(player.vfx.hit, box.transform.position, Quaternion.identity, 1.5F);
+                Rumble.SetRumble(Rumble.CHANNEL_ATTACK, .25F, .25F, .05F);
             }
         }
         
@@ -107,7 +112,7 @@ namespace TMechs.Player.Modules
                     select h;
             
             foreach(EntityHealth health in targets)
-                health.Damage(Mathf.Lerp(maxDamage, minDamage, Vector3.Distance(transform.position.Remove(Utility.Axis.Y), health.transform.position.Remove(Utility.Axis.Y)) / radius));
+                health.Damage(Mathf.Lerp(maxDamage, minDamage, Vector3.Distance(transform.position.Remove(Utility.Axis.Y), health.transform.position.Remove(Utility.Axis.Y)) / radius), damageSource.GetWithSource(transform));
 
         }
     }

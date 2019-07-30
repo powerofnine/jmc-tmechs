@@ -29,11 +29,13 @@ namespace TMechs.Enemy.AI
         public VisualEffect deathEffect;
         public VisualEffectAsset deathExplosion;
         public float deathEffectDuration;
+        public VisualEffect dashEffect;
         
         private void Start()
         {
             CreateStateMachine(new HarrierShared()
             {
+                    parent = this,
                     animator = GetComponentInChildren<Animator>(),
                     animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
                     animations = animations,
@@ -194,6 +196,14 @@ namespace TMechs.Enemy.AI
                 time = 0F;
             }
 
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                if (props.parent.dashEffect)
+                    props.parent.dashEffect.Stop();
+            }
+
             public override void OnTick()
             {
                 base.OnTick();
@@ -225,6 +235,9 @@ namespace TMechs.Enemy.AI
                     direction = Vector3.zero;
                     dashesDone++;
                     time = Machine.Get<float>(nameof(HarrierProperties.dashDelay));
+                    
+                    if (props.parent.dashEffect)
+                        props.parent.dashEffect.Stop();
                 }
                 else
                 {
@@ -250,6 +263,13 @@ namespace TMechs.Enemy.AI
 
                     time = Machine.Get<Radius>(nameof(HarrierProperties.dashDistance)) / Machine.Get<float>(nameof(HarrierProperties.dashSpeed));
                     props.animancer.CrossFadeFromStart(dir == 0 ? forward : dir < 0 ? left : right);
+
+                    if (props.parent.dashEffect)
+                    {
+                        props.parent.dashEffect.gameObject.SetActive(true);
+                        props.parent.dashEffect.Play();
+                        props.parent.dashEffect.transform.forward = direction;
+                    }
                 }
             }
         }
@@ -406,6 +426,7 @@ namespace TMechs.Enemy.AI
 
         private class HarrierShared
         {
+            public AiHarrierNovus parent;
             public Animator animator;
             public EventfulAnimancerComponent animancer;
             public AnimationCollection animations;

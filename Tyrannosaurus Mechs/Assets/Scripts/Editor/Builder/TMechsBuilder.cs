@@ -61,6 +61,7 @@ namespace Editor.Builder
       
         private void DoBuild()
         {
+            BuildTarget last = EditorUserBuildSettings.activeBuildTarget;
             string buildPath = Path.Combine(Application.dataPath, "..", "Builds");
             
             if(Directory.Exists(buildPath))
@@ -71,6 +72,7 @@ namespace Editor.Builder
 
             BuildReport report = BuildPipeline.BuildPlayer(levels, Path.Combine(buildPath, PlayerSettings.productName + ".exe"), target, BuildOptions.None);
 
+            EditorUserBuildSettings.SwitchActiveBuildTargetAsync(BuildPipeline.GetBuildTargetGroup(last), last);
             if (report.summary.result != BuildResult.Succeeded)
                 return;
 
@@ -140,6 +142,12 @@ namespace Editor.Builder
         private static void ExitHandler(object o, EventArgs e)
         {
             EditorApplication.delayCall += EditorUtility.ClearProgressBar;
+        }
+
+        [MenuItem("Tools/TMechs/Clear Progress Bar")]
+        private static void ClearProgressBar()
+        {
+            EditorUtility.ClearProgressBar();
         }
     }
 }

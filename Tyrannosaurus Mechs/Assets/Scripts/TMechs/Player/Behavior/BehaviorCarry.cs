@@ -1,6 +1,7 @@
 using System;
 using Animancer;
 using TMechs.Animation;
+using TMechs.Entity;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace TMechs.Player.Behavior
 
         [Space]
         public float ikTime = .5F;
+
+        public EntityHealth.DamageSource pummelDamageSource;
         
         private AnimancerState grab;
         private AnimancerState yeet; // Throw is a reserved keyword
@@ -120,7 +123,6 @@ namespace TMechs.Player.Behavior
                     pummel.OnEnd = null;
                     isPummeling = false;
                     Animancer.GetLayer(2).StartFade(0F);
-                    pickedUp.DamageContainedObject(pummelDamage);
                 };
             }
         }
@@ -197,9 +199,16 @@ namespace TMechs.Player.Behavior
         public override void OnAnimationEvent(AnimationEvent e)
         {
             base.OnAnimationEvent(e);
-            
-            if("Throw".Equals(e.stringParameter))
-                Throw();
+
+            switch (e.stringParameter)
+            {
+                case "Throw":
+                    Throw();
+                    break;
+                case "AttackHit":
+                    pickedUp.DamageContainedObject(pummelDamage, pummelDamageSource.GetWithSource(transform));
+                    break;
+            }
         }
 
         public override bool CanMove() => hasPickedUp && !isThrowing && !isPummeling;

@@ -247,7 +247,7 @@ MonoBehaviour:
   - {fileID: 114986932069951040}
   - {fileID: 114963171269329408}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 114307113894698210}
   m_MasterData:
@@ -256,7 +256,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.6343402862548828,"y":0.35544848442077639,"z":0.0},"size":{"x":1.7592964172363282,"y":0.4976687431335449,"z":2.0}}'
+      m_SerializableObject: '{"center":{"x":0.6343402862548828,"y":0.0947376936674118,"z":0.0},"size":{"x":1.7592964172363282,"y":0.39651116728782656,"z":0.4099999964237213}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -917,7 +917,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614550}
   - {fileID: 8926484042661614560}
   - {fileID: 8926484042661614567}
-  m_UIPosition: {x: 708, y: 56}
+  m_UIPosition: {x: 709, y: 56}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -1964,13 +1964,13 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 14
+        data[3]: 13
       - op: 1
         valueIndex: 1
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 13
+        data[3]: 14
       - op: 1
         valueIndex: 2
         data[0]: -1
@@ -2000,7 +2000,13 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 7
+      - op: 50
+        valueIndex: 8
+        data[0]: 3
+        data[1]: -1
+        data[2]: -1
+        data[3]: 0
       - op: 51
         valueIndex: 7
         data[0]: 3
@@ -2008,13 +2014,13 @@ VisualEffectResource:
         data[2]: -1
         data[3]: 0
       - op: 1
-        valueIndex: 8
+        valueIndex: 13
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 7
       - op: 1
-        valueIndex: 10
+        valueIndex: 15
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -2042,7 +2048,7 @@ VisualEffectResource:
         data[0]: 4
         data[1]: -1
         data[2]: -1
-        data[3]: 0
+        data[3]: 1
       - op: 51
         valueIndex: 24
         data[0]: 2
@@ -2086,7 +2092,7 @@ VisualEffectResource:
         data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 40
+        valueIndex: 42
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -2138,7 +2144,7 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 3
       - op: 1
         valueIndex: 58
         data[0]: -1
@@ -2259,7 +2265,7 @@ VisualEffectResource:
         m_Array: []
       m_AnimationCurve:
         m_Array:
-        - m_ExpressionIndex: 1
+        - m_ExpressionIndex: 0
           m_Value:
             serializedVersion: 2
             m_Curve:
@@ -2336,7 +2342,7 @@ VisualEffectResource:
             m_RotationOrder: 4
       m_Gradient:
         m_Array:
-        - m_ExpressionIndex: 0
+        - m_ExpressionIndex: 1
           m_Value:
             serializedVersion: 2
             key0: {r: 29.575386, g: 14.063956, b: 13.532135, a: 0}
@@ -2428,7 +2434,9 @@ VisualEffectResource:
             m_NumAlphaKeys: 5
       m_NamedObject:
         m_Array:
-        - m_ExpressionIndex: 8
+        - m_ExpressionIndex: 6
+          m_Value: {fileID: 2800000, guid: 4cbbdca55046fcb4b8894ae0e5e1acd7, type: 3}
+        - m_ExpressionIndex: 9
           m_Value: {fileID: 2800000, guid: ed32baefb82b1134b9505306f2fa6687, type: 3}
         - m_ExpressionIndex: 21
           m_Value: {fileID: 2800000, guid: 4cbbdca55046fcb4b8894ae0e5e1acd7, type: 3}
@@ -2937,7 +2945,7 @@ VisualEffectResource:
       buffers: []
       values:
       - nameId: Rate
-        index: 6
+        index: 17
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -3125,9 +3133,9 @@ VisualEffectResource:
       - nameId: Size_b
         index: 19
       - nameId: gradient_c
-        index: 7
-      - nameId: mainTexture
         index: 8
+      - nameId: mainTexture
+        index: 9
       params:
       - nameId: sortPriority
         index: 0
@@ -3220,9 +3228,9 @@ VisualEffectResource:
         index: 20
       values:
       - nameId: Size_b
-        index: 13
-      - nameId: gradient_c
         index: 14
+      - nameId: gradient_c
+        index: 15
       - nameId: mainTexture
         index: 21
       params:
@@ -4268,7 +4276,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614587}
   - {fileID: 8926484042661614591}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661614586}
   m_MasterData:
@@ -4277,7 +4285,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.6343402862548828,"y":0.35544848442077639,"z":0.0},"size":{"x":1.7592964172363282,"y":0.4976687431335449,"z":2.0}}'
+      m_SerializableObject: '{"center":{"x":0.4791923761367798,"y":-0.024782180786132814,"z":0.0},"size":{"x":2.069592237472534,"y":0.6995599269866943,"z":0.9200000166893005}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -5798,7 +5806,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614702}
   - {fileID: 8926484042661614706}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661614701}
   m_MasterData:
@@ -5807,7 +5815,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.6343402862548828,"y":0.35544848442077639,"z":0.0},"size":{"x":1.7592964172363282,"y":0.4976687431335449,"z":2.0}}'
+      m_SerializableObject: '{"center":{"x":0.6343402862548828,"y":0.05470508337020874,"z":0.0},"size":{"x":1.7592964172363282,"y":0.7106055021286011,"z":0.8100000023841858}}'
     m_Space: 0
   m_Property:
     name: bounds

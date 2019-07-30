@@ -114,6 +114,12 @@ MonoBehaviour:
     state: None
     transform: {fileID: 0}
     target: {fileID: 0}
+  damageSource:
+    cancelDefaultVfx: 0
+    effect: {fileID: 0}
+    effectDuration: 0
+    location: 0
+    orient: 0
   properties:
     rangeStartFollow:
       radius: 150
@@ -165,10 +171,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  damagedEffect: {fileID: 8926484042661614526, guid: 2f9c90e919d33484dae4fe84c149d0eb,
+  damagedEffect: {fileID: 8926484042661614526, guid: 888c6eda160c942469c2a57e8cac9c0c,
     type: 3}
   damagedEffectAnchor: {fileID: 1124698302008013055}
   damagedEffectDuration: 2.4
+  assignBossBar: 0
+  bossBarTitle: 
 --- !u!114 &2937862568076211966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +262,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: charge
+  damageSource:
+    cancelDefaultVfx: 0
+    effect: {fileID: 0}
+    effectDuration: 0
+    location: 0
+    orient: 0
 --- !u!1 &9145607498512614067
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +357,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Renderer
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 70af78c191aa73f4ca7b5b706b2658b2, type: 2}
+    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e373b02451dd08d4eb0a84ec654f455d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,16 +420,6 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e373b02451dd08d4eb0a84ec654f455d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 70af78c191aa73f4ca7b5b706b2658b2, type: 2}
-    - target: {fileID: -6057140222963153312, guid: e373b02451dd08d4eb0a84ec654f455d,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 206394208991666944, guid: e373b02451dd08d4eb0a84ec654f455d,

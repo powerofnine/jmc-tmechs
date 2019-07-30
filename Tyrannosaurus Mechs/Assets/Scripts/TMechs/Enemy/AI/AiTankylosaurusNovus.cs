@@ -6,6 +6,7 @@ using TMechs.Entity;
 using TMechs.Environment;
 using TMechs.FX;
 using TMechs.Player;
+using TMechs.Player.Modules;
 using TMechs.Types;
 using TMechs.UI;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace TMechs.Enemy.AI
         public AiStateMachine stateMachine;
         public TankyloProperties properties = new TankyloProperties();
 
+        public EntityHealth.DamageSource damageSource;
+        
         [Header("Animations")]
         [AnimationCollection.ValidateAttribute(typeof(TankyloAnimation))]
         public AnimationCollection animations;
@@ -32,6 +35,10 @@ namespace TMechs.Enemy.AI
         public VisualEffect[] shotgunVfx = { };
         public VisualEffect[] shotgunBlast;
         public SetShaderProperty deathLights;
+        public VisualEffectAsset digEffect;
+        public Transform digAnchor;
+        public float digDuration;
+        public VisualEffect attackTrail;
 
         [Header("Enrage")]
         public GameObject enrageAnimationPreset;
@@ -180,9 +187,23 @@ namespace TMechs.Enemy.AI
                 transform.position = shared.parent.startPosition;
                 transform.rotation = shared.parent.startOrientation;
                 shared.parent.controller.enabled = true;
-                
+
+                if (shared.parent.attackTrail)
+                {
+                    shared.parent.attackTrail.gameObject.SetActive(true);
+                    shared.parent.attackTrail.Play();
+                }
+
                 //TODO janky hack mate
                 FindObjectOfType<CharacterIntroTrigger>().TeleportPlayer();
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+                
+                if (shared.parent.attackTrail)
+                    shared.parent.attackTrail.Stop();
             }
         }
 
@@ -337,6 +358,14 @@ namespace TMechs.Enemy.AI
                 };
             }
 
+            public override void OnExit()
+            {
+                base.OnExit();
+                
+                if (shared.parent.attackTrail)
+                    shared.parent.attackTrail.Stop();
+            }
+
             public override void OnEvent(AiStateMachine.EventType type, string id)
             {
                 base.OnEvent(type, id);
@@ -359,6 +388,14 @@ namespace TMechs.Enemy.AI
                         rock.transform.SetParent(anchor, true);
                         rock.transform.position = anchor.position;
 
+                        VfxModule.SpawnEffect(shared.parent.digEffect, shared.parent.digAnchor ? shared.parent.digAnchor.position : transform.position, Quaternion.identity, shared.parent.digDuration);
+
+                        if (shared.parent.attackTrail)
+                        {
+                            shared.parent.attackTrail.gameObject.SetActive(true);
+                            shared.parent.attackTrail.Play();
+                        }
+                        
                         break;
                     case "RockThrow":
                         if (!rock)
@@ -366,6 +403,9 @@ namespace TMechs.Enemy.AI
 
                         rock.transform.SetParent(null, true);
 
+                        if (shared.parent.attackTrail)
+                            shared.parent.attackTrail.Stop();
+                        
                         // Very naive trajectory projection, but it works surprisingly well
                         rock.Throw(target.position + Player.Player.Instance.forces.ControllerVelocity * .75F, Machine.Get<float>(nameof(TankyloProperties.rockInAngle)), Machine.Get<float>(nameof(TankyloProperties.rockOutAngle)), Machine.Get<float>(nameof(TankyloProperties.rockSpeed)));
 
@@ -429,7 +469,7 @@ namespace TMechs.Enemy.AI
 
                     if (DistanceToTarget <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && AngleToTarget <= 50F)
                     {
-                        Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)));
+                        Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)), shared.parent.damageSource.GetWithSource(transform));
                         Player.Player.Instance.forces.frictionedVelocity = HorizontalDirectionToTarget * Machine.Get<float>(nameof(TankyloProperties.shotgunKnockback));
                     }
                 }
@@ -464,6 +504,12 @@ namespace TMechs.Enemy.AI
                     tailWhip.Stop();
                     Machine.SetTrigger("TailWhipDone");
                 };
+                
+                if (shared.parent.attackTrail)
+                {
+                    shared.parent.attackTrail.gameObject.SetActive(true);
+                    shared.parent.attackTrail.Play();
+                }
             }
 
             public override void OnTick()
@@ -483,6 +529,9 @@ namespace TMechs.Enemy.AI
                     box.gameObject.SetActive(false);
                     box.damage = 0F;
                 }
+                
+                if (shared.parent.attackTrail)
+                    shared.parent.attackTrail.Stop();
             }
 
             public override void OnEvent(AiStateMachine.EventType type, string id)

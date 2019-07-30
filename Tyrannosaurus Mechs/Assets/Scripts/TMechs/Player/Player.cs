@@ -246,6 +246,8 @@ namespace TMechs.Player
         {
             if (isGod)
                 cancel = true;
+            
+            Rumble.SetRumble(Rumble.CHANNEL_DAMAGED, .5F, .25F, .05F);
         }
         
         [AnimationCollection.Enum("Player Animations")]
@@ -355,7 +357,7 @@ namespace TMechs.Player
             foreach (EntityHealth health in healths)
             {
                 if(health.gameObject.name.Contains(entity))
-                    health.Damage(amount);
+                    health.Damage(amount, default(EntityHealth.DamageSource).GetWithSource(Instance.transform));
             }
         }
 

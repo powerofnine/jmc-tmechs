@@ -15,7 +15,6 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661614550}
-  - {fileID: 8926484042661614564}
   m_UIPosition: {x: 707.8936, y: -190.26595}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
@@ -160,7 +159,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"size":{"x":10.0,"y":9.0,"z":10.0}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":-2.2469773292541506,"z":0.0},"size":{"x":2.390000104904175,"y":6.184512138366699,"z":2.390000104904175}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -191,7 +190,7 @@ MonoBehaviour:
     x: 702
     y: -190
     width: 421
-    height: 1934
+    height: 1935
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1042,13 +1041,13 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 13
       - op: 1
-        valueIndex: 3
+        valueIndex: 1
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 13
+        data[3]: 3
       - op: 9
         valueIndex: 4
         data[0]: -1
@@ -1081,7 +1080,7 @@ VisualEffectResource:
         data[3]: 0
       - op: 50
         valueIndex: 27
-        data[0]: 1
+        data[0]: 0
         data[1]: -1
         data[2]: -1
         data[3]: 0
@@ -1100,7 +1099,7 @@ VisualEffectResource:
       - op: 43
         valueIndex: 33
         data[0]: 2
-        data[1]: 3
+        data[1]: 1
         data[2]: -1
         data[3]: -1
       - op: 1
@@ -1124,7 +1123,7 @@ VisualEffectResource:
       - op: 41
         valueIndex: 39
         data[0]: 2
-        data[1]: 0
+        data[1]: 3
         data[2]: -1
         data[3]: -1
       - op: 1
@@ -1150,15 +1149,21 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 50
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
         data[3]: 2
       - op: 1
-        valueIndex: 49
+        valueIndex: 52
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 1
-        valueIndex: 50
+        valueIndex: 53
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -1172,7 +1177,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 9
           m_Value: 0.2
         - m_ExpressionIndex: 11
-          m_Value: 0
+          m_Value: 4.5
         - m_ExpressionIndex: 12
           m_Value: 6.2831855
         - m_ExpressionIndex: 13
@@ -1181,22 +1186,24 @@ VisualEffectResource:
           m_Value: 1.2
         - m_ExpressionIndex: 16
           m_Value: 1
-        - m_ExpressionIndex: 19
-          m_Value: 4.5
+        - m_ExpressionIndex: 20
+          m_Value: 0
       m_Vector2f:
         m_Array:
         - m_ExpressionIndex: 5
           m_Value: {x: 50, y: 50}
-        - m_ExpressionIndex: 18
+        - m_ExpressionIndex: 19
           m_Value: {x: 0, y: 0}
       m_Vector3f:
         m_Array:
-        - m_ExpressionIndex: 0
-          m_Value: {x: 0, y: 0, z: 0}
-        - m_ExpressionIndex: 3
+        - m_ExpressionIndex: 1
           m_Value: {x: 0, y: -1, z: 0}
+        - m_ExpressionIndex: 3
+          m_Value: {x: 0, y: 0, z: 0}
         - m_ExpressionIndex: 17
-          m_Value: {x: 10, y: 9, z: 10}
+          m_Value: {x: 2.39, y: 6.184512, z: 2.39}
+        - m_ExpressionIndex: 18
+          m_Value: {x: 0, y: -2.2469773, z: 0}
       m_Vector4f:
         m_Array: []
       m_Uint:
@@ -1207,7 +1214,7 @@ VisualEffectResource:
         m_Array: []
       m_AnimationCurve:
         m_Array:
-        - m_ExpressionIndex: 1
+        - m_ExpressionIndex: 0
           m_Value:
             serializedVersion: 2
             m_Curve:
@@ -1266,7 +1273,7 @@ VisualEffectResource:
             m_NumAlphaKeys: 6
       m_NamedObject:
         m_Array:
-        - m_ExpressionIndex: 20
+        - m_ExpressionIndex: 21
           m_Value: {fileID: 2800000, guid: afd039d31a2f58f4ab059ebf6879fc1b, type: 3}
       m_Bool:
         m_Array: []
@@ -1447,7 +1454,7 @@ VisualEffectResource:
       - nameId: Count
         index: 5
       - nameId: Delay
-        index: 18
+        index: 19
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: -1
@@ -1474,7 +1481,7 @@ VisualEffectResource:
       index: 7
     values:
     - nameId: bounds_center
-      index: 0
+      index: 18
     - nameId: bounds_size
       index: 17
     tasks:
@@ -1493,7 +1500,7 @@ VisualEffectResource:
         index: 14
       params:
       - nameId: bounds_center
-        index: 0
+        index: 18
       - nameId: bounds_size
         index: 17
       processor: {fileID: 0}
@@ -1542,7 +1549,7 @@ VisualEffectResource:
       - nameId: gradient_c
         index: 6
       - nameId: mainTexture
-        index: 20
+        index: 21
       params:
       - nameId: sortPriority
         index: 0
@@ -2084,73 +2091,6 @@ MonoBehaviour:
   m_Disabled: 0
   composition: 1
   speedMode: 1
---- !u!114 &8926484042661614564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f05c6884b705ce14d82ae720f0ec209f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 114023846229194376}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
-  m_UISuperCollapsed: 0
-  m_InputSlots:
-  - {fileID: 8926484042661614565}
-  m_OutputSlots: []
-  m_Disabled: 1
---- !u!114 &8926484042661614565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614565}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614564}
-    m_Value:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1000
-    m_Space: 2147483647
-  m_Property:
-    name: Rate
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes:
-    - m_Type: 1
-      m_Min: 0
-      m_Max: Infinity
-      m_Tooltip: 
-      m_Regex: 
-      m_RegexMaxLength: 0
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: Spawn Rate (in number per seconds)
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots: []
 --- !u!114 &8926484042661614595
 MonoBehaviour:
   m_ObjectHideFlags: 0

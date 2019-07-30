@@ -10,9 +10,11 @@ namespace TMechs.Entity
     {
         public float maxTime = 5F;
         public float speed = 10F;
-
+        
         [Space]
         public VisualEffectAsset explodeEffect;
+
+        public EntityHealth.DamageSource damageSource;
         
         [NonSerialized]
         public float damage = 10F;
@@ -50,7 +52,7 @@ namespace TMechs.Entity
                 
                 EntityHealth entity = target.GetComponent<EntityHealth>();
                 if (entity)
-                    entity.Damage(damage);
+                    entity.Damage(damage, damageSource.GetWithSource(transform));
             }
         }
 
