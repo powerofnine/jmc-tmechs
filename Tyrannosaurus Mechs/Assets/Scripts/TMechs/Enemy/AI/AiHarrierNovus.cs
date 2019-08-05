@@ -435,6 +435,9 @@ namespace TMechs.Enemy.AI
 
         public void OnDamaged(EntityHealth health, ref bool cancel)
         {
+            if("Idle".Equals(stateMachine.CurrentStateName))
+                stateMachine.EnterState("Notice");
+            
             ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.TakeDamage), 0.1F, 2).OnEnd = () =>
             {
                 ((HarrierShared) stateMachine.shared).animancer.GetLayer(2).StartFade(0F);

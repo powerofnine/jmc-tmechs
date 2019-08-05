@@ -24,6 +24,8 @@ namespace TMechs.Enemy.AI
 
         private readonly Dictionary<string, State> states = new Dictionary<string, State>();
         private readonly Dictionary<string, List<Transition>> transitions = new Dictionary<string, List<Transition>>();
+
+        public string CurrentStateName => state;
         public State CurrentState { get; private set; }
         
         private List<Transition> currentTransitions;
