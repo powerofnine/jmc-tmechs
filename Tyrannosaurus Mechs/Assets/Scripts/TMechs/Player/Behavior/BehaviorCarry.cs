@@ -25,7 +25,7 @@ namespace TMechs.Player.Behavior
         public float ikTime = .5F;
 
         public EntityHealth.DamageSource pummelDamageSource;
-        
+
         private AnimancerState grab;
         private AnimancerState yeet; // Throw is a reserved keyword
         private AnimancerState pummel;
@@ -59,7 +59,7 @@ namespace TMechs.Player.Behavior
             hasPickedUp = false;
             isThrowing = false;
             isPummeling = false;
-            
+
             if (!target)
             {
                 player.PopBehavior();
@@ -73,11 +73,10 @@ namespace TMechs.Player.Behavior
         {
             base.OnPop();
 
-            InverseKinematics ik = player.rightArmIk;
-            if (ik)
+            if (player.rightArmIk)
             {
-                ik.Stop();
-                ik.weight = 0F;
+                player.rightArmIk.Stop();
+                player.rightArmIk.weight = 0F;
             }
         }
 
@@ -86,33 +85,53 @@ namespace TMechs.Player.Behavior
             base.OnUpdate();
 
             // If object got destroyed whilst in our hands
-            if (hasPickedUp && !pickedUp)
+            if (hasPickedUp && !pickedUp || !target)
             {
                 grab.OnEnd = null;
                 yeet.OnEnd = null;
                 pummel.OnEnd = null;
+
+                if(player.rightArmIk)
+                    player.rightArmIk.Transition(.1F, 0F);
                 
                 Animancer.GetLayer(1).StartFade(0F);
                 Animancer.GetLayer(2).StartFade(0F);
                 player.PopBehavior();
                 return;
             }
-            
-            InverseKinematics ik = player.rightArmIk;
-            if (ik && target)
-                ik.targetPosition = target.transform.position;
-            
+
+            if (isThrowing)
+            {
+                EnemyTarget target = TargetController.Instance.GetTarget<EnemyTarget>();
+
+                if (target)
+                {
+                    transform.LookAt(target.transform.position.Set(Player.Instance.transform.position.y, Utility.Axis.Y));
+                    player.movement.ResetIntendedY();
+                }
+            }
+
+            if (player.rightArmIk)
+                player.rightArmIk.targetPosition = target.transform.position;
+
+            if (!hasPickedUp)
+            {
+                    transform.LookAt(target.transform.position.Set(Player.Instance.transform.position.y, Utility.Axis.Y));
+                    player.movement.ResetIntendedY();
+            }
+
             if (!hasPickedUp || isThrowing || isPummeling)
                 return;
-            
+
             GamepadLabels.AddLabel(IconMap.Icon.R2, "Throw");
             if (Input.GetButtonDown(Controls.Action.RIGHT_ARM))
             {
                 isThrowing = true;
                 Animancer.CrossFadeFromStart(yeet, .1F);
+
                 return;
             }
-            
+
             GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Pummel");
             if (Input.GetButtonDown(Controls.Action.ATTACK))
             {
@@ -130,18 +149,17 @@ namespace TMechs.Player.Behavior
         private void Grab()
         {
             grab.OnEnd = null;
-            
+
             if (!target)
                 return;
 
-            InverseKinematics ik = player.rightArmIk;
-
-            if (!ik)
+            if (!player.rightArmIk)
             {
                 Grab_PostIk();
                 return;
             }
-            ik.Transition(ikTime, 1F, Grab_PostIk);
+
+            player.rightArmIk.Transition(ikTime, 1F, Grab_PostIk);
         }
 
         private void Grab_PostIk()
@@ -155,14 +173,13 @@ namespace TMechs.Player.Behavior
             go.transform.localPosition = Vector3.zero;
             pickedUp = container;
 
-            InverseKinematics ik = player.rightArmIk;
-            if (!ik)
+            if (!player.rightArmIk)
             {
                 hasPickedUp = true;
                 return;
             }
-            
-            ik.Transition(ikTime, 0F, () => hasPickedUp = true);
+
+            player.rightArmIk.Transition(ikTime, 0F, () => hasPickedUp = true);
         }
 
         private void Throw()
@@ -185,9 +202,10 @@ namespace TMechs.Player.Behavior
                 float angle = launchAngle;
                 if (target)
                     throwTarget = target.transform.position;
+
                 if (Vector3.Distance(transform.position, throwTarget) < 15F)
                     angle = Mathf.Lerp(0F, angle, Vector3.Distance(transform.position, throwTarget) / 15F);
-                
+
                 grabbed.Throw(throwTarget, angle, throwSpeed);
             }
 

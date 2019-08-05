@@ -163,6 +163,8 @@ namespace TMechs.Player.Behavior
             ball.position = ClampPosition(anchor.position, ball.position + velocity * Time.deltaTime);
         }
 
+        public override bool CanMove() => false;
+
         private Vector3 ClampPosition(Vector3 anchorPos, Vector3 newPos)
         {
             return anchorPos + radius * Vector3.Normalize(newPos - anchorPos);
