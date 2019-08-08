@@ -61,7 +61,7 @@ namespace TMechs.Enemy.AI
              */
             
             stateMachine.SetDefaultState("Idle");
-            stateMachine.RegisterVisualizer($"Horndriver:{name}");
+            stateMachine.RegisterVisualizer($"HorndriverNovus:{name}");
         }
         
         #region States
