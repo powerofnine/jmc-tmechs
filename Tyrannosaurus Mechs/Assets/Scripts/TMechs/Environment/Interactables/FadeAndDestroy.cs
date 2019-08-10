@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace TMechs.Environment.Interactables
@@ -28,21 +29,27 @@ namespace TMechs.Environment.Interactables
 
         private IEnumerator Fade_Do()
         {
-            Renderer ren = GetComponent<Renderer>();
+            Renderer[] ren = GetComponentsInChildren<Renderer>().Where(x => x.material).ToArray();
 
-            if (!ren || !ren.material)
+            if (ren.Length == 0)
                 yield break;
 
-            Color startColor = ren.material.GetColor(MAIN_COLOR);
-            Color endColor = startColor;
-            endColor.a = 0F;
-
-
+            Color[] startColor = ren.Select(x => x.material.GetColor(MAIN_COLOR)).ToArray();
+            Color[] endColor = startColor.Select(x =>
+            {
+                x.a = 0F;
+                return x;
+            }).ToArray();
+            
             float time = 0F;
             while (time <= fadeTime)
             {
                 time += Time.deltaTime;
-                ren.material.SetColor(MAIN_COLOR, Color.Lerp(startColor, endColor, time / fadeTime));
+
+                for (int i = 0; i < ren.Length; i++)
+                {
+                    ren[i].material.SetColor(MAIN_COLOR, Color.Lerp(startColor[i], endColor[i], time / fadeTime));
+                }
 
                 yield return null;
             }

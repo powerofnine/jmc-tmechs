@@ -66,7 +66,7 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Thrash(), "Thrash");
 
             stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.rangeStopFollow)), machine => StartCoroutine(FadeNightrider(false)));
-            stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)), machine => StartCoroutine(FadeNightrider(true)));
+            stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)));
 
             stateMachine.RegisterTransition("Chasing", "Charge", machine => machine.GetAddSet<float>("ChargeTimer", -Time.deltaTime) <= 0F, machine => machine.Set("ChargeTimer", machine.Get<float>(nameof(ToroProperties.chargeCooldown))));
 
@@ -224,6 +224,8 @@ namespace TMechs.Enemy.AI
                     primer.OnEnd = null;
                     Machine.EnterState("Chasing");
                 };
+
+                shared.parent.StartCoroutine(shared.parent.FadeNightrider(true));
             }
 
             public override void OnExit()
@@ -435,17 +437,8 @@ namespace TMechs.Enemy.AI
 
         private void Update()
         {
-            bool lazyModeNew = stateMachine.DistanceToTarget >= 200F;
+            lazyMode = stateMachine.DistanceToTarget >= 200F;
             
-            ToroShared shared = (ToroShared) stateMachine.shared;
-            if (lazyModeNew != lazyMode)
-            {
-                if (shared.agent.enabled)
-                    shared.agent.enabled = !lazyModeNew;
-
-                lazyMode = lazyModeNew;
-            }
-
             if (!lazyMode && !isDead)
                 stateMachine.Tick();
         }
