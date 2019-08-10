@@ -4,7 +4,6 @@ using Animancer;
 using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
-using TMechs.Player;
 using TMechs.Types;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,7 +26,8 @@ namespace TMechs.Enemy.AI
 
         private AnimancerState hurt;
         private bool isDead;
-
+        private bool lazyMode;
+        
         private void Start()
         {
             ToroShared shared = new ToroShared()
@@ -435,25 +435,36 @@ namespace TMechs.Enemy.AI
 
         private void Update()
         {
-            if(!isDead)
+            bool lazyModeNew = stateMachine.DistanceToTarget >= 200F;
+            
+            ToroShared shared = (ToroShared) stateMachine.shared;
+            if (lazyModeNew != lazyMode)
+            {
+                if (shared.agent.enabled)
+                    shared.agent.enabled = !lazyModeNew;
+
+                lazyMode = lazyModeNew;
+            }
+
+            if (!lazyMode && !isDead)
                 stateMachine.Tick();
         }
 
         private void LateUpdate()
         {
-            if(!isDead)
+            if (!lazyMode && !isDead)
                 stateMachine.LateTick();
         }
 
         private void OnAnimatorEvent(AnimationEvent e)
         {
-            if(!isDead)
+            if (!lazyMode && !isDead)
                 stateMachine.OnEvent(AiStateMachine.EventType.Animation, e.stringParameter);
         }
 
         public void OnDamaged(EntityHealth health, ref bool cancel)
         {
-            if (isDead)
+            if (lazyMode || isDead)
                 return;
             if ("Idle".Equals(stateMachine.CurrentStateName))
                 stateMachine.EnterState("Notice");
@@ -467,14 +478,17 @@ namespace TMechs.Enemy.AI
 
         public void OnDying(ref bool customDestroy)
         {
+            if (isDead)
+                return;
+            
             customDestroy = true;
             isDead = true;
 
             stateMachine.Exit();
             StopAllCoroutines();
-            
+
             ToroShared shared = (ToroShared) stateMachine.shared;
-            
+
             Destroy(shared.agent);
             Destroy(shared.controller);
             Destroy(GetComponent<EnemyTarget>());
