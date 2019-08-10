@@ -10,8 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 461aa86daf69ba743ac45585502c6926, type: 3}
-  m_Name: Torosaurus
+  m_Name: Horndriver
   m_EditorClassIdentifier: 
-  serializedType: 
-  enums: []
-  animations: []
+  serializedType: TMechs.Enemy.AI.AiTorosaurusNovus+ToroAnimation, Assembly-CSharp,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  enums:
+  - Idle1
+  - Idle2
+  - Wander
+  - Run
+  - Primer
+  - TakeDamage
+  - Death
+  - ChargeIntro
+  - Charge
+  - Thrash
+  animations:
+  - {fileID: 7140164145223568829, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: 2562888284788868603, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: 3556567201144725539, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: 5522812681064789136, guid: e373b02451dd08d4eb0a84ec654f455d, type: 3}
+  - {fileID: -7196021925583362733, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: 8170462086786650189, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: 280274147197249703, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: -2540780794463839052, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: -8201672089044723916, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}
+  - {fileID: -2558506767050957745, guid: 4f45e62451458454db949dbeed6faa3e, type: 3}

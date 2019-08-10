@@ -5,6 +5,7 @@ using TMechs.Entity;
 using TMechs.Types;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
 {
@@ -23,8 +24,9 @@ namespace TMechs.Enemy.AI
             {
                 parent = this,
                 animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
-                controller = GetComponent<CharacterController>()
+                agent = GetComponent<NavMeshAgent>()
             };
+            shared.agent.isStopped = true;
             
             shared.animancer.onEvent = new AnimationEventReceiver(null, OnAnimatorEvent);
             
@@ -43,7 +45,7 @@ namespace TMechs.Enemy.AI
             
             stateMachine.ImportProperties(properties);
             
-            stateMachine.RegisterState(null, "Idle");
+            stateMachine.RegisterState(new Idle(), "Idle");
             stateMachine.RegisterState(null, "Notice");
             stateMachine.RegisterState(null, "Chasing");
             stateMachine.RegisterState(null, "Charge");
@@ -77,6 +79,8 @@ namespace TMechs.Enemy.AI
         {
             protected ToroShared shared;
             protected AnimancerComponent Animancer => shared.animancer;
+
+            private float yFaceVelocity;
             
             public override void OnInit()
             {
@@ -89,6 +93,16 @@ namespace TMechs.Enemy.AI
             {
                 return shared.parent.animations.GetClip(clip);
             }
+
+            protected void Face(Vector3 targetDirection, float smoothTime = .15F)
+            {
+                targetDirection.y = 0F;
+
+                float target = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target, ref yFaceVelocity, smoothTime);
+
+                transform.eulerAngles = transform.eulerAngles.Set(angle, Utility.Axis.Y);
+            }
         }
 
         private class Idle : ToroState
@@ -97,17 +111,130 @@ namespace TMechs.Enemy.AI
             private AnimancerState idle1;
             private AnimancerState idle2;
 
+            private bool isWandering;
+
             public override void OnInit()
             {
                 base.OnInit();
 
                 wander = Animancer.GetOrCreateState(GetClip(ToroAnimation.Wander));
-                idle1 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle1));
-                idle2 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle2));
+                idle1 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle1), 1);
+                idle2 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle2), 1);
+            }
+            
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                shared.agent.isStopped = true;
+                shared.agent.speed = Machine.Get<float>(nameof(ToroProperties.wanderSpeed));
+                
+                SetWander();
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                shared.agent.isStopped = true;
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                if (isWandering)
+                {
+                    if(!wander.IsPlaying)
+                        wander.Play();
+                    Animancer.GetLayer(0).SetWeight(Mathf.Clamp01(shared.agent.velocity.magnitude / Machine.Get<float>(nameof(ToroProperties.wanderSpeed))));
+
+                    if (shared.agent.pathPending)
+                        return;
+                    
+                    if (shared.agent.remainingDistance <= Mathf.Epsilon || shared.agent.pathStatus == NavMeshPathStatus.PathInvalid)
+                    {
+                        isWandering = false;
+                        
+                        if(Random.Range(0, 100) < 15)
+                            SetWander();
+                        else
+                        {
+                            AnimancerState state = idle1;
+                            if (Random.Range(0, 100) > 50)
+                                state = idle2;
+
+                            Animancer.GetLayer(0).StartFade(0F, .15F);
+                            Animancer.CrossFadeFromStart(state, .15F).OnEnd = () =>
+                            {
+                                idle1.OnEnd = null;
+                                idle2.OnEnd = null;
+                                
+                                SetWander();
+                                Animancer.GetLayer(1).StartFade(0F, .15F);
+                            };
+                        }
+                    }
+                }
+            }
+
+            private void SetWander()
+            {
+                isWandering = true;
+
+                shared.agent.isStopped = false;
+                shared.agent.SetDestination(shared.parent.unitPosition + Random.insideUnitCircle.RemapXZ() * Machine.Get<Radius>(nameof(ToroProperties.wanderRange)));
+            }
+        }
+
+        private class Chasing : ToroState
+        {
+            private AnimancerState run;
+            
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                run = Animancer.GetOrCreateState(GetClip(ToroAnimation.Run));
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                shared.agent.speed = Machine.Get<float>(nameof(ToroProperties.chaseSpeed));
+                shared.agent.isStopped = false;
+                
+                Animancer.CrossFadeFromStart(run, .15F);
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+                
+                shared.agent.isStopped = true;
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                run.Weight = Mathf.Clamp01(shared.agent.velocity.magnitude / Machine.Get<float>(nameof(ToroProperties.chaseSpeed)));
+                shared.agent.SetDestination(target.position);
             }
         }
         
         #endregion
+        
+        private void Update()
+        {
+            stateMachine.Tick();
+        }
+
+        private void LateUpdate()
+        {
+            stateMachine.LateTick();
+        }
 
         private void OnAnimatorEvent(AnimationEvent e)
         {
@@ -124,7 +251,7 @@ namespace TMechs.Enemy.AI
         {
             public AiTorosaurusNovus parent;
             public EventfulAnimancerComponent animancer;
-            public CharacterController controller;
+            public NavMeshAgent agent;
         }
 
         [Serializable]
@@ -136,6 +263,13 @@ namespace TMechs.Enemy.AI
             public Radius attackRange;
             public Radius stoppingRange;
 
+            [Header("Idle")]
+            public Radius wanderRange;
+            public float wanderSpeed = 8F;
+
+            [Header("Chase")]
+            public float chaseSpeed = 25F;
+            
             [Header("Charge")]
             public float chargeCooldown = 4F;
 
