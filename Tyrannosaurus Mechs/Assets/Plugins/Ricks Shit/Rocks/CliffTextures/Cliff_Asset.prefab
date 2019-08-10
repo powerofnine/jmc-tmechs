@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3181509107613240094}
   - component: {fileID: 6426118840485635581}
+  - component: {fileID: 6524372432667951741}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -44,6 +45,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 36.112278, y: 14.096479, z: 6.887454}
   m_Center: {x: -0.2994938, y: -0.93587214, z: -1.1840166}
+--- !u!114 &6524372432667951741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505517564471696549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7031220893219469775
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +118,7 @@ GameObject:
   - component: {fileID: 4310622297122516131}
   - component: {fileID: 8603690973372039141}
   - component: {fileID: 696044272998274486}
+  - component: {fileID: 7324951379093102372}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -180,6 +198,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 36.630356, y: 44.119278, z: 2.7285767}
   m_Center: {x: -0.17269135, y: 43.013435, z: 0.55288696}
+--- !u!114 &7324951379093102372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799886073237312353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7993496559632748275
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 685367566349163325}
   - component: {fileID: 464507175856248059}
+  - component: {fileID: 8028978010179312724}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -224,6 +259,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 35.89711, y: 10.734665, z: 4.228176}
   m_Center: {x: 0.27629852, y: 0.5924593, z: -1.6140765}
+--- !u!114 &8028978010179312724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993496559632748275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8385787910223191789
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4790628246304114778}
+  - component: {fileID: 5377099904217343696}
   m_Layer: 0
   m_Name: ARC
   m_TagString: Untagged
@@ -257,6 +309,22 @@ Transform:
   m_Father: {fileID: 2192185000997292177}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5377099904217343696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385787910223191789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &727078814125931422
 PrefabInstance:
   m_ObjectHideFlags: 0

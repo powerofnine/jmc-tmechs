@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5652074674838994381}
   - component: {fileID: 8655245681743825374}
+  - component: {fileID: 2827315624529088687}
   m_Layer: 0
   m_Name: Slide
   m_TagString: Untagged
@@ -44,6 +45,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.74707, y: 10.969907, z: 1.4559617}
   m_Center: {x: -2.873535, y: 11.288857, z: 1.9933081}
+--- !u!114 &2827315624529088687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576280094470261814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5784602574635999185
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7420331101706234562}
   - component: {fileID: 6962457893267248837}
+  - component: {fileID: 5323499788704722687}
   m_Layer: 0
   m_Name: ARC
   m_TagString: Untagged
@@ -90,6 +108,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.74707, y: 10.99387, z: 1.4632416}
   m_Center: {x: -2.873535, y: 15.137424, z: -4.3166885}
+--- !u!114 &5323499788704722687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784602574635999185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6859852870834533865
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6764659439220120176}
   - component: {fileID: 1368938903710018405}
+  - component: {fileID: 3184096902248840838}
   m_Layer: 0
   m_Name: Slide (1)
   m_TagString: Untagged
@@ -134,6 +169,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.74707, y: 6.5839176, z: 1.075332}
   m_Center: {x: -2.873535, y: 10.221352, z: 0.4380146}
+--- !u!114 &3184096902248840838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6859852870834533865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7329413633186945196
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963182094580109888}
   - component: {fileID: 1075636120033549029}
+  - component: {fileID: 5412828820122089661}
   m_Layer: 0
   m_Name: ARC
   m_TagString: Untagged
@@ -89,6 +90,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 59.92382, y: 10.50117, z: 20.800802}
   m_Center: {x: 0.23033059, y: -3.1854725, z: -7.396477}
+--- !u!114 &5412828820122089661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865193877531311875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &3879541859148049192
 PrefabInstance:
   m_ObjectHideFlags: 0

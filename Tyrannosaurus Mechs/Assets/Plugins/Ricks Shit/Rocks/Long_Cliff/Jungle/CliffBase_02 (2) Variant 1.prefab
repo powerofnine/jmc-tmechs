@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2234127856090836327}
   - component: {fileID: 6079822386263035027}
+  - component: {fileID: 3716291177671968224}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ARC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +45,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 46.78581, y: 11.054685, z: 18.441816}
   m_Center: {x: 0.44023877, y: -5.0274534, z: -8.720952}
+--- !u!114 &3716291177671968224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292868038857402551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!65 &250240970676188244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124,22 +141,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -1492509509670996361, guid: 01d842a664b0cdd42b7d33684b5f8f31,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4c21b4067b957154da9934a39decccbc, type: 2}
-    - target: {fileID: 1606627013804803567, guid: 01d842a664b0cdd42b7d33684b5f8f31,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4c21b4067b957154da9934a39decccbc, type: 2}
     - target: {fileID: 6517996884270368020, guid: 01d842a664b0cdd42b7d33684b5f8f31,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4c21b4067b957154da9934a39decccbc, type: 2}
+    - target: {fileID: -1492509509670996361, guid: 01d842a664b0cdd42b7d33684b5f8f31,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c21b4067b957154da9934a39decccbc, type: 2}
     - target: {fileID: 8039431415913442974, guid: 01d842a664b0cdd42b7d33684b5f8f31,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c21b4067b957154da9934a39decccbc, type: 2}
+    - target: {fileID: 1606627013804803567, guid: 01d842a664b0cdd42b7d33684b5f8f31,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

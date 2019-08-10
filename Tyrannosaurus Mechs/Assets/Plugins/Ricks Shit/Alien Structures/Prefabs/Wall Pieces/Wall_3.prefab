@@ -192,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5788623188757291622}
   - component: {fileID: 2493760423952229082}
+  - component: {fileID: 5521053016950986590}
   m_Layer: 0
   m_Name: ARC
   m_TagString: Untagged
@@ -227,6 +228,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.747003, y: 13.11586, z: 0.788867}
   m_Center: {x: -2.7275727, y: 7.77285, z: -2.1493287}
+--- !u!114 &5521053016950986590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6341706578124475350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8781809666703423339
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1072700131941313636}
   - component: {fileID: 3005613767675143742}
+  - component: {fileID: 2402911729520691239}
   m_Layer: 0
   m_Name: ARC (1)
   m_TagString: Untagged
@@ -271,3 +289,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.747003, y: 3.473989, z: 0.86477757}
   m_Center: {x: -2.7275727, y: 2.9518988, z: -2.187299}
+--- !u!114 &2402911729520691239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8781809666703423339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
