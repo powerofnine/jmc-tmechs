@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!205 &8065956788040024026
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587920899369686859}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.018692493, y: 1.2317932, z: 0.24693656}
+  m_Size: 7.743325
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.15040274
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8951114315151589437}
+  m_Enabled: 1
+--- !u!1001 &292594993994534466
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_Name
+      value: FlooR_Fern_Revamped Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1095.7844
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 50.009155
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 414.86093
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662461212079705727, guid: 5594151610e861b40b8b18b9c06c72c7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e7616e7e6a7049e4ba5260752d2e94f3, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5594151610e861b40b8b18b9c06c72c7, type: 3}
+--- !u!1 &8587920899369686859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 5594151610e861b40b8b18b9c06c72c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 292594993994534466}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8951114315151589437 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8662461212079705727, guid: 5594151610e861b40b8b18b9c06c72c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 292594993994534466}
+  m_PrefabAsset: {fileID: 0}
