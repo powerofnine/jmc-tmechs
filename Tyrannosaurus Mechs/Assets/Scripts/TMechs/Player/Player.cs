@@ -9,7 +9,6 @@ using TMechs.Data;
 using TMechs.Entity;
 using TMechs.Player.Behavior;
 using TMechs.Player.Modules;
-using TMechs.PlayerOld;
 using TMechs.UI;
 using UnityEngine;
 

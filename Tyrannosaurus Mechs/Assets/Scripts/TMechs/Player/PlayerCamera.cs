@@ -1,18 +1,17 @@
 using System;
 using TMechs.Data.Settings;
-using TMechs.Player;
 using UnityEngine;
-using static TMechs.Controls.Action;
+using Action = TMechs.Controls.Action;
 
-namespace TMechs.PlayerOld
+namespace TMechs.Player
 {
     public class PlayerCamera : MonoBehaviour
     {
-        private static Rewired.Player Input => TMechs.Player.Player.Input;
+        private static Rewired.Player Input => Player.Input;
 
         public Transform player;
         public float cameraSpeed = 10F;
-
+        
         [Header("Limits")]
         public float minX;
         public float maxX;
@@ -26,6 +25,9 @@ namespace TMechs.PlayerOld
 
         private CameraState state;
 
+        [NonSerialized]
+        public CameraZoom zoom;
+        
         private void Awake()
         {
             state.parent = this;
@@ -43,6 +45,7 @@ namespace TMechs.PlayerOld
             }
 
             state.rotationX = verticalRig.localEulerAngles.x;
+            zoom = GetComponentInChildren<CameraZoom>();
         }
 
         private void LateUpdate()
@@ -101,13 +104,13 @@ namespace TMechs.PlayerOld
                     throw new ArgumentOutOfRangeException();
             }
 
-            Vector2 input = Input.GetAxis2DRaw(CAMERA_HORIZONTAL, CAMERA_VERTICAL);
+            Vector2 input = Input.GetAxis2DRaw(Action.CAMERA_HORIZONTAL, Action.CAMERA_VERTICAL);
 
             state.rotationY += input.x * cameraSpeed * Time.deltaTime * (settings.invertHorizontal ? -1 : 1);
             state.rotationX += -input.y * cameraSpeed * Time.deltaTime * (settings.invertVertical ? -1 : 1);
             state.rotationX = Mathf.Clamp(state.rotationX, minX, maxX);
 
-            if (Input.GetButtonDown(CAMERA_CENTER))
+            if (Input.GetButtonDown(Action.CAMERA_CENTER))
                 RecenterCamera();
         }
 
