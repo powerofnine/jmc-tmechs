@@ -419,6 +419,8 @@ namespace TMechs.Enemy.AI
         {
             private AnimancerState shotgun;
 
+            private Vector3 shellDirection;
+
             public override void OnInit()
             {
                 base.OnInit();
@@ -441,6 +443,15 @@ namespace TMechs.Enemy.AI
                     vfx.gameObject.SetActive(true);
                     vfx.Play();
                 }
+                
+                shellDirection = -HorizontalDirectionToTarget;
+            }
+
+            public override void LateTick()
+            {
+                base.LateTick();
+
+                shared.parent.shellBone.right = shellDirection;
             }
 
             public override void OnExit()
