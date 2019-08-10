@@ -4,6 +4,7 @@ using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Types;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace TMechs.Enemy.AI
 {
@@ -11,6 +12,10 @@ namespace TMechs.Enemy.AI
     {
         public AiStateMachine stateMachine;
         public ToroProperties properties;
+        [AnimationCollection.ValidateAttribute(typeof(ToroAnimation))]
+        public AnimationCollection animations;
+
+        private Vector3 unitPosition;
         
         private void Start()
         {
@@ -24,6 +29,8 @@ namespace TMechs.Enemy.AI
             shared.animancer.onEvent = new AnimationEventReceiver(null, OnAnimatorEvent);
             
             CreateStateMachine(shared);
+
+            unitPosition = transform.position;
         }
 
         private void CreateStateMachine(ToroShared shared)
@@ -68,13 +75,35 @@ namespace TMechs.Enemy.AI
 
         private class ToroState : AiStateMachine.State
         {
-            private ToroShared shared;
+            protected ToroShared shared;
+            protected AnimancerComponent Animancer => shared.animancer;
             
             public override void OnInit()
             {
                 base.OnInit();
                 
                 shared = Machine.shared as ToroShared;
+            }
+
+            protected AnimationClip GetClip(ToroAnimation clip)
+            {
+                return shared.parent.animations.GetClip(clip);
+            }
+        }
+
+        private class Idle : ToroState
+        {
+            private AnimancerState wander;
+            private AnimancerState idle1;
+            private AnimancerState idle2;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                wander = Animancer.GetOrCreateState(GetClip(ToroAnimation.Wander));
+                idle1 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle1));
+                idle2 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle2));
             }
         }
         
@@ -115,7 +144,7 @@ namespace TMechs.Enemy.AI
         }
 
         [AnimationCollection.EnumAttribute("Horndriver Animations")]
-        public enum ToroAnimations
+        public enum ToroAnimation
         {
             Idle1,
             Idle2,
