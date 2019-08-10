@@ -4,6 +4,7 @@ using TMechs.Animation;
 using TMechs.Attributes;
 using TMechs.Entity;
 using TMechs.Environment;
+using TMechs.Environment.Targets;
 using TMechs.FX;
 using TMechs.Player;
 using TMechs.Player.Modules;
@@ -581,7 +582,7 @@ namespace TMechs.Enemy.AI
 
             Destroy(((TankyloShared) stateMachine.shared).health);
             Destroy(this);
-            Destroy(GetComponentInChildren<TargetController>());
+            Destroy(GetComponentInChildren<EnemyTarget>());
 
             ((TankyloShared) stateMachine.shared).animancer.Stop();
             ((TankyloShared) stateMachine.shared).animancer.Play(animations.GetClip(TankyloAnimation.Death)).Time = 0;

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using Animancer;
 using TMechs.Animation;
 using TMechs.Entity;
+using TMechs.Environment.Targets;
+using TMechs.Player;
 using TMechs.Types;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,27 +12,37 @@ using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
 {
-    public class AiTorosaurusNovus : MonoBehaviour, EntityHealth.IDamage
+    public class AiTorosaurusNovus : MonoBehaviour, EntityHealth.IDamage, EntityHealth.IDeath
     {
+        private static readonly int COLOR = Shader.PropertyToID("_Color");
+
         public AiStateMachine stateMachine;
-        public ToroProperties properties;
         [AnimationCollection.ValidateAttribute(typeof(ToroAnimation))]
         public AnimationCollection animations;
+        public ToroProperties properties;
+
+        public EntityHealth.DamageSource damageSource;
 
         private Vector3 unitPosition;
-        
+
+        private AnimancerState hurt;
+        private bool isDead;
+
         private void Start()
         {
             ToroShared shared = new ToroShared()
             {
-                parent = this,
-                animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
-                agent = GetComponent<NavMeshAgent>()
+                    parent = this,
+                    animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
+                    agent = GetComponent<NavMeshAgent>(),
+                    controller = GetComponent<CharacterController>(),
+                    damageSource = damageSource
             };
-            shared.agent.isStopped = true;
-            
+            shared.controller.enabled = false;
+
             shared.animancer.onEvent = new AnimationEventReceiver(null, OnAnimatorEvent);
-            
+            hurt = shared.animancer.GetOrCreateState(animations.GetClip(ToroAnimation.TakeDamage), 3);
+
             CreateStateMachine(shared);
 
             unitPosition = transform.position;
@@ -42,37 +55,37 @@ namespace TMechs.Enemy.AI
                     target = Player.Player.Instance.transform,
                     shared = shared
             };
-            
+
             stateMachine.ImportProperties(properties);
-            
+
             stateMachine.RegisterState(new Idle(), "Idle");
-            stateMachine.RegisterState(null, "Notice");
-            stateMachine.RegisterState(null, "Chasing");
-            stateMachine.RegisterState(null, "Charge");
-            stateMachine.RegisterState(null, "Standby");
-            stateMachine.RegisterState(null, "Thrash");
-            
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.rangeStopFollow)));
-            stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)));
-            
+            stateMachine.RegisterState(new Notice(), "Notice");
+            stateMachine.RegisterState(new Chasing(), "Chasing");
+            stateMachine.RegisterState(new Charge(), "Charge");
+            stateMachine.RegisterState(new Standby(), "Standby");
+            stateMachine.RegisterState(new Thrash(), "Thrash");
+
+            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.rangeStopFollow)), machine => StartCoroutine(FadeNightrider(false)));
+            stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)), machine => StartCoroutine(FadeNightrider(true)));
+
             stateMachine.RegisterTransition("Chasing", "Charge", machine => machine.GetAddSet<float>("ChargeTimer", -Time.deltaTime) <= 0F, machine => machine.Set("ChargeTimer", machine.Get<float>(nameof(ToroProperties.chargeCooldown))));
-            
+
             stateMachine.RegisterTransition("Chasing", "Standby", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.stoppingRange)));
             stateMachine.RegisterTransition("Standby", "Chasing", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.attackRange)));
 
-            stateMachine.RegisterTransition("Standby", "Thrash", machine => machine.GetAddSet<float>("AttackTimer", -Time.deltaTime, machine.Get<float>(nameof(ToroProperties.attackCooldown))) < 0F, machine => machine.Set("AttackTimer", machine.Get<float>(nameof(ToroProperties.attackCooldown))));
-            
+            stateMachine.RegisterTransition("Standby", "Thrash", machine => machine.GetAddSet("AttackTimer", -Time.deltaTime, machine.Get<float>(nameof(ToroProperties.attackCooldown))) < 0F, machine => machine.Set("AttackTimer", machine.Get<float>(nameof(ToroProperties.attackCooldown))));
+
             /*
              * Explicit transitions:
              * Notice -> Chasing
              * Charge -> Chasing
              * Thrash -> Standby
              */
-            
+
             stateMachine.SetDefaultState("Idle");
             stateMachine.RegisterVisualizer($"HorndriverNovus:{name}");
         }
-        
+
         #region States
 
         private class ToroState : AiStateMachine.State
@@ -81,11 +94,11 @@ namespace TMechs.Enemy.AI
             protected AnimancerComponent Animancer => shared.animancer;
 
             private float yFaceVelocity;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
-                
+
                 shared = Machine.shared as ToroShared;
             }
 
@@ -121,14 +134,14 @@ namespace TMechs.Enemy.AI
                 idle1 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle1), 1);
                 idle2 = Animancer.GetOrCreateState(GetClip(ToroAnimation.Idle2), 1);
             }
-            
+
             public override void OnEnter()
             {
                 base.OnEnter();
 
                 shared.agent.isStopped = true;
                 shared.agent.speed = Machine.Get<float>(nameof(ToroProperties.wanderSpeed));
-                
+
                 SetWander();
             }
 
@@ -137,6 +150,9 @@ namespace TMechs.Enemy.AI
                 base.OnExit();
 
                 shared.agent.isStopped = true;
+
+                wander.StartFade(0F, .15F);
+                Animancer.GetLayer(1).StartFade(0F, .15F);
             }
 
             public override void OnTick()
@@ -145,18 +161,18 @@ namespace TMechs.Enemy.AI
 
                 if (isWandering)
                 {
-                    if(!wander.IsPlaying)
+                    if (!wander.IsPlaying)
                         wander.Play();
                     Animancer.GetLayer(0).SetWeight(Mathf.Clamp01(shared.agent.velocity.magnitude / Machine.Get<float>(nameof(ToroProperties.wanderSpeed))));
 
                     if (shared.agent.pathPending)
                         return;
-                    
+
                     if (shared.agent.remainingDistance <= Mathf.Epsilon || shared.agent.pathStatus == NavMeshPathStatus.PathInvalid)
                     {
                         isWandering = false;
-                        
-                        if(Random.Range(0, 100) < 15)
+
+                        if (Random.Range(0, 100) < 15)
                             SetWander();
                         else
                         {
@@ -169,7 +185,7 @@ namespace TMechs.Enemy.AI
                             {
                                 idle1.OnEnd = null;
                                 idle2.OnEnd = null;
-                                
+
                                 SetWander();
                                 Animancer.GetLayer(1).StartFade(0F, .15F);
                             };
@@ -187,10 +203,48 @@ namespace TMechs.Enemy.AI
             }
         }
 
+        private class Notice : ToroState
+        {
+            private AnimancerState primer;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                primer = Animancer.GetOrCreateState(GetClip(ToroAnimation.Primer));
+                primer.Speed *= 3F;
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                Animancer.CrossFadeFromStart(primer, .15F).OnEnd = () =>
+                {
+                    primer.OnEnd = null;
+                    Machine.EnterState("Chasing");
+                };
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                primer.Stop();
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                Face(HorizontalDirectionToTarget, .075F);
+            }
+        }
+
         private class Chasing : ToroState
         {
             private AnimancerState run;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
@@ -204,15 +258,17 @@ namespace TMechs.Enemy.AI
 
                 shared.agent.speed = Machine.Get<float>(nameof(ToroProperties.chaseSpeed));
                 shared.agent.isStopped = false;
-                
+
                 Animancer.CrossFadeFromStart(run, .15F);
             }
 
             public override void OnExit()
             {
                 base.OnExit();
-                
+
                 shared.agent.isStopped = true;
+
+                run.StartFade(0F, .15F);
             }
 
             public override void OnTick()
@@ -223,28 +279,235 @@ namespace TMechs.Enemy.AI
                 shared.agent.SetDestination(target.position);
             }
         }
-        
+
+        private class Charge : ToroState
+        {
+            private AnimancerState chargeIntro;
+            private AnimancerState chargeLoop;
+
+            private bool isCharging;
+
+            private float gravity;
+
+            private Vector3 targetPoint;
+
+            private float lockoutTimer;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                chargeIntro = Animancer.GetOrCreateState(GetClip(ToroAnimation.ChargeIntro));
+                chargeLoop = Animancer.GetOrCreateState(GetClip(ToroAnimation.Charge));
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                shared.agent.isStopped = true;
+                shared.controller.enabled = true;
+
+                isCharging = false;
+                gravity = 0F;
+
+                transform.forward = HorizontalDirectionToTarget;
+                targetPoint = target.transform.position.Remove(Utility.Axis.Y);
+
+                lockoutTimer = 0F;
+
+                Animancer.CrossFadeFromStart(chargeIntro, .15F).OnEnd = () =>
+                {
+                    chargeIntro.Stop();
+                    Animancer.Play(chargeLoop).Time = 0F;
+
+                    isCharging = true;
+                };
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                shared.controller.enabled = false;
+
+                chargeIntro.Stop();
+                chargeLoop.Stop();
+            }
+
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                gravity += Utility.GRAVITY * Time.deltaTime;
+
+                Vector3 movement = Vector3.zero;
+
+                if (isCharging)
+                    movement = transform.forward * Machine.Get<float>(nameof(ToroProperties.chargeSpeed));
+
+                shared.controller.Move((movement + Vector3.down * gravity) * Time.deltaTime);
+
+                if (shared.controller.isGrounded)
+                    gravity = 0F;
+
+                if (isCharging)
+                {
+                    lockoutTimer += Time.deltaTime;
+                    if (Vector3.Distance(transform.position.Remove(Utility.Axis.Y), targetPoint) <= Machine.Get<Radius>(nameof(ToroProperties.stoppingRange)) ||
+                        HorizontalDistanceToTarget <= Machine.Get<Radius>(nameof(ToroProperties.stoppingRange)) ||
+                        lockoutTimer > 4F)
+                    {
+                        if (HorizontalDistanceToTarget <= Machine.Get<Radius>(nameof(ToroProperties.attackRange)) && AngleToTarget <= 35F)
+                            Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(ToroProperties.chargeDamage)), shared.damageSource.GetWithSource(transform));
+
+                        Machine.EnterState("Chasing");
+                    }
+                }
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type == AiStateMachine.EventType.Animation && "charge".Equals(id))
+                    isCharging = true;
+            }
+        }
+
+        private class Standby : ToroState
+        {
+            public override void OnTick()
+            {
+                base.OnTick();
+
+                Face(DirectionToTarget);
+            }
+        }
+
+        private class Thrash : ToroState
+        {
+            private AnimancerState thrash;
+
+            public override void OnInit()
+            {
+                base.OnInit();
+
+                thrash = Animancer.GetOrCreateState(GetClip(ToroAnimation.Thrash));
+            }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                Animancer.CrossFadeFromStart(thrash, 0.1F);
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                thrash.StartFade(0F, .15F);
+            }
+
+            public override void OnEvent(AiStateMachine.EventType type, string id)
+            {
+                base.OnEvent(type, id);
+
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                switch (id)
+                {
+                    case "attack":
+                        if (HorizontalDistanceToTarget <= Machine.Get<Radius>(nameof(ToroProperties.attackRange)) && AngleToTarget <= 45F)
+                            Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(ToroProperties.attackDamage)), shared.damageSource.GetWithSource(transform));
+
+                        break;
+                    case "attackDone":
+                        Machine.EnterState("Standby");
+                        break;
+                }
+            }
+        }
+
         #endregion
-        
+
         private void Update()
         {
-            stateMachine.Tick();
+            if(!isDead)
+                stateMachine.Tick();
         }
 
         private void LateUpdate()
         {
-            stateMachine.LateTick();
+            if(!isDead)
+                stateMachine.LateTick();
         }
 
         private void OnAnimatorEvent(AnimationEvent e)
         {
-            stateMachine.OnEvent(AiStateMachine.EventType.Animation, e.stringParameter);
+            if(!isDead)
+                stateMachine.OnEvent(AiStateMachine.EventType.Animation, e.stringParameter);
         }
-        
+
         public void OnDamaged(EntityHealth health, ref bool cancel)
         {
-            if("Idle".Equals(stateMachine.CurrentStateName))
+            if (isDead)
+                return;
+            if ("Idle".Equals(stateMachine.CurrentStateName))
                 stateMachine.EnterState("Notice");
+
+            ((ToroShared) stateMachine.shared).animancer.CrossFadeFromStart(hurt, .1F).OnEnd = () =>
+            {
+                hurt.OnEnd = null;
+                hurt.StartFade(0F, .1F);
+            };
+        }
+
+        public void OnDying(ref bool customDestroy)
+        {
+            customDestroy = true;
+            isDead = true;
+
+            stateMachine.Exit();
+            StopAllCoroutines();
+            
+            ToroShared shared = (ToroShared) stateMachine.shared;
+            
+            Destroy(shared.agent);
+            Destroy(shared.controller);
+            Destroy(GetComponent<EnemyTarget>());
+
+            StartCoroutine(FadeNightrider(Color.black));
+            AnimancerState state = shared.animancer.CrossFadeFromStart(animations.GetClip(ToroAnimation.Death), .1F, 3);
+            state.OnEnd = () =>
+            {
+                state.OnEnd = null;
+                Destroy(gameObject, .5F);
+            };
+        }
+
+        private IEnumerator FadeNightrider(bool aggressive)
+        {
+            yield return FadeNightrider(aggressive ? properties.nightriderAggressive : properties.nightriderPassive);
+        }
+
+        private IEnumerator FadeNightrider(Color destColor)
+        {
+            if (!properties.nightriderDisplay)
+                yield break;
+
+            float time = 0F;
+            Color sourceColor = properties.nightriderDisplay.material.GetColor(COLOR);
+
+            while (time <= properties.nightriderFadeTime)
+            {
+                time += Time.deltaTime;
+                properties.nightriderDisplay.material.SetColor(COLOR, Color.Lerp(sourceColor, destColor, time / properties.nightriderFadeTime));
+
+                yield return null;
+            }
         }
 
         private class ToroShared
@@ -252,6 +515,8 @@ namespace TMechs.Enemy.AI
             public AiTorosaurusNovus parent;
             public EventfulAnimancerComponent animancer;
             public NavMeshAgent agent;
+            public CharacterController controller;
+            public EntityHealth.DamageSource damageSource;
         }
 
         [Serializable]
@@ -269,12 +534,21 @@ namespace TMechs.Enemy.AI
 
             [Header("Chase")]
             public float chaseSpeed = 25F;
-            
+
             [Header("Charge")]
             public float chargeCooldown = 4F;
+            public float chargeSpeed = 45F;
+            public float chargeDamage = 10F;
 
             [Header("Attack")]
             public float attackCooldown = 1F;
+            public float attackDamage = 5F;
+
+            [Header("Nightrider")]
+            public Renderer nightriderDisplay;
+            public Color nightriderPassive = Color.green;
+            public Color nightriderAggressive = Color.red;
+            public float nightriderFadeTime = 1F;
         }
 
         [AnimationCollection.EnumAttribute("Horndriver Animations")]
@@ -287,12 +561,11 @@ namespace TMechs.Enemy.AI
             Primer,
             TakeDamage,
             Death,
-            
+
             [Header("Attack")]
             ChargeIntro,
             Charge,
             Thrash
-            
         }
     }
 }
