@@ -32,6 +32,8 @@ namespace TMechs.Player.Modules
         private LinearMixerState legsMixer;
         private AnimancerLayer legsLayer;
 
+        private float paramVelocity;
+        
         public override void OnRegistered()
         {
             base.OnRegistered();
@@ -44,11 +46,9 @@ namespace TMechs.Player.Modules
 
             ResetIntendedY();
 
-            AnimancerLayer armsLayer = Animancer;
-            armsLayer.SetName("Arms Layer");
+            AnimancerLayer armsLayer = Animancer.GetLayer(Player.LAYER_ARMS);
             armsLayer.SetMask(arms);
-            legsLayer = Animancer.GetLayer(3);
-            legsLayer.SetName("Legs Layer");
+            legsLayer = Animancer.GetLayer(Player.LAYER_LEGS);
             legsLayer.SetMask(legs);
             
             armsMixer = new LinearMixerState(armsLayer);
@@ -86,8 +86,10 @@ namespace TMechs.Player.Modules
             if (!player.Behavior.CanRun())
                 isSprinting = false;
 
-            armsMixer.Parameter = player.forces.ControllerVelocity.Remove(Utility.Axis.Y).magnitude;
+            armsMixer.Parameter = Mathf.SmoothDamp(armsMixer.Parameter, player.forces.ControllerVelocity.Remove(Utility.Axis.Y).magnitude, ref paramVelocity, .25F);
             legsMixer.Parameter = armsMixer.Parameter;
+            if (player.Behavior.OverridesLegs())
+                legsMixer.Parameter = 0F;
             legsLayer.SetWeight(Mathf.Clamp01(Utility.MathRemap(legsMixer.Parameter, 0, movementSpeed + 1F, 0F, 1F)));
             
             Vector3 movement = Input.GetAxis2DRaw(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();

@@ -36,13 +36,15 @@ namespace TMechs.Player.Behavior
         private bool isThrowing;
         private bool isPummeling;
 
+        private bool dontUpdateIkTarget;
+
         public override void OnInit()
         {
             base.OnInit();
 
-            grab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.GrabObject), 1);
-            yeet = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.ThrowObject), 1);
-            pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), 2);
+            grab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.GrabObject), Player.LAYER_GENERIC_1);
+            yeet = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.ThrowObject), Player.LAYER_GENERIC_1);
+            pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), Player.LAYER_GENERIC_2);
         }
 
         public override void OnPush()
@@ -59,6 +61,7 @@ namespace TMechs.Player.Behavior
             hasPickedUp = false;
             isThrowing = false;
             isPummeling = false;
+            dontUpdateIkTarget = false;
 
             if (!target)
             {
@@ -94,8 +97,8 @@ namespace TMechs.Player.Behavior
                 if(player.rightArmIk)
                     player.rightArmIk.Transition(.1F, 0F);
                 
-                Animancer.GetLayer(1).StartFade(0F);
-                Animancer.GetLayer(2).StartFade(0F);
+                Animancer.GetLayer(Player.LAYER_GENERIC_1).StartFade(0F);
+                Animancer.GetLayer(Player.LAYER_GENERIC_2).StartFade(0F);
                 player.PopBehavior();
                 return;
             }
@@ -111,7 +114,7 @@ namespace TMechs.Player.Behavior
                 }
             }
 
-            if (player.rightArmIk)
+            if (!dontUpdateIkTarget && player.rightArmIk)
                 player.rightArmIk.targetPosition = target.transform.position;
 
             if (!hasPickedUp)
@@ -136,7 +139,7 @@ namespace TMechs.Player.Behavior
             {
                 isPummeling = true;
 
-                Animancer.CrossFadeFromStart(pummel).OnEnd = () =>
+                Animancer.CrossFadeFromStart(pummel, .1F).OnEnd = () =>
                 {
                     pummel.OnEnd = null;
                     isPummeling = false;
@@ -158,6 +161,8 @@ namespace TMechs.Player.Behavior
                 return;
             }
 
+            dontUpdateIkTarget = true;
+            player.rightArmIk.targetPosition = target.transform.position;
             player.rightArmIk.Transition(ikTime, 1F, Grab_PostIk);
         }
 
@@ -208,8 +213,8 @@ namespace TMechs.Player.Behavior
                 grabbed.Throw(throwTarget, angle, throwSpeed);
             }
 
-            Animancer.GetLayer(1).StartFade(0F);
-            Animancer.GetLayer(2).StartFade(0F);
+            Animancer.GetLayer(Player.LAYER_GENERIC_1).StartFade(0F);
+            Animancer.GetLayer(Player.LAYER_GENERIC_2).StartFade(0F);
             player.PopBehavior();
         }
 

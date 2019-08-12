@@ -9,7 +9,7 @@ namespace TMechs.Player.Behavior
     [Serializable]
     public class BehaviorAttack : PlayerBehavior
     {
-        private const int LAYER = 2;
+        private const int LAYER = Player.LAYER_GENERIC_2;
 
         public float forwardSpeed = 5F;
 
@@ -41,9 +41,6 @@ namespace TMechs.Player.Behavior
         public override void OnInit()
         {
             base.OnInit();
-
-            AnimancerLayer layer = Animancer.GetLayer(LAYER);
-            layer.SetName("Attack Layer");
 
             attackString1 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), LAYER);
             attackString2 = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack2), LAYER);

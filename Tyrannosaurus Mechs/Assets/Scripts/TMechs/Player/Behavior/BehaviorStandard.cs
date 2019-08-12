@@ -27,6 +27,7 @@ namespace TMechs.Player.Behavior
             base.OnShadowed();
 
             idleTimer = 0F;
+            extendedIdle.Stop();
         }
 
         public override void OnUpdate()
@@ -36,14 +37,17 @@ namespace TMechs.Player.Behavior
             idleTimer += Time.deltaTime;
 
             if (player.forces.ControllerVelocity.sqrMagnitude > Mathf.Epsilon)
+            {
                 idleTimer = 0F;
-            
+                extendedIdle.Stop();
+            }
+
             if (idleTimer > 4F && !extendedIdle.IsPlaying)
             {
-                Animancer.CrossFadeFromStart(extendedIdle).OnEnd = () =>
+                Animancer.CrossFadeFromStart(extendedIdle, .1F).OnEnd = () =>
                 {
                     idleTimer = 0F;
-                    Animancer.GetLayer(2).StartFade(0F);
+                    Animancer.GetLayer(Player.LAYER_GENERIC_2).StartFade(0F);
                 };
             }
             

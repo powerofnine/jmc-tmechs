@@ -16,6 +16,13 @@ namespace TMechs.Player
 {
     public class Player : MonoBehaviour, EntityHealth.IDeath, EntityHealth.IDamage, EntityHealth.IHeal
     {
+        public const int LAYER_ARMS = 0;
+        public const int LAYER_FALL = 1;
+        public const int LAYER_GENERIC_1 = 2;
+        public const int LAYER_GENERIC_2 = 3;
+        public const int LAYER_LEGS = 4;
+        public const int LAYER_TOP = 5;
+
         public static Player Instance { get; private set; }
         public static Rewired.Player Input { get; private set; }
 
@@ -67,6 +74,8 @@ namespace TMechs.Player
         
         private bool displayCursor;
 
+        private AnimancerState takeDamage;
+
         #region Events
         private void Awake()
         {
@@ -79,6 +88,15 @@ namespace TMechs.Player
             
             Animancer = GetComponentInChildren<EventfulAnimancerComponent>();
             Animancer.onEvent = new AnimationEventReceiver(null, OnAnimationEvent);
+            AnimancerPlayable.maxLayerCount = 6;
+            takeDamage = Animancer.GetOrCreateState(GetClip(PlayerAnim.TakeDamage), LAYER_TOP);
+
+            Animancer.GetLayer(LAYER_ARMS).SetName("Arms Layer");
+            Animancer.GetLayer(LAYER_FALL).SetName("Fall Layer");
+            Animancer.GetLayer(LAYER_GENERIC_1).SetName("Generic Layer 1");
+            Animancer.GetLayer(LAYER_GENERIC_2).SetName("Generic Layer 2");
+            Animancer.GetLayer(LAYER_LEGS).SetName("Legs Layer");
+            Animancer.GetLayer(LAYER_TOP).SetName("Topmost Layer");
             
             RegisterModule(forces);
             RegisterModule(movement);
@@ -197,18 +215,16 @@ namespace TMechs.Player
         
         public void PushBehavior([NotNull] PlayerBehavior behavior)
         { 
-            Behavior.OnShadowed();
-            
             behavior.player = this;
-
             if (!initializedBehaviors.Contains(behavior))
             {
                 behavior.OnInit();
                 initializedBehaviors.Add(behavior);
             }
+            
+            Behavior.OnShadowed();
 
             behaviorStack.Push(behavior);
-
             behavior.OnPush();
         }
 
@@ -247,6 +263,11 @@ namespace TMechs.Player
                 cancel = true;
             
             Rumble.SetRumble(Rumble.CHANNEL_DAMAGED, .5F, .25F, .05F);
+            Animancer.CrossFadeFromStart(takeDamage, .025F).OnEnd = () =>
+            {
+                takeDamage.OnEnd = null;
+                takeDamage.StartFade(0F, .025F);
+            };
         }
         
         [AnimationCollection.Enum("Player Animations")]
@@ -264,6 +285,7 @@ namespace TMechs.Player
             Dash,
             Jump,
             AirJump,
+            Fall,
             Land,
         
             [Header("Attack String")]
@@ -282,7 +304,10 @@ namespace TMechs.Player
             RocketHold,
             RocketBuckle,
             RocketRecover,
-            RocketReturn
+            RocketReturn,
+            
+            [Header("Interaction")]
+            PullLever
         }
         
         #region Debug

@@ -63,7 +63,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.554262, y: 2.428671, z: 7.6387696}
-  m_Center: {x: -0.03906536, y: -0.21433544, z: 0.8125322}
+  m_Center: {x: -0.03906536, y: 0.56, z: 0.8125322}
 --- !u!114 &6149658509492374051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +80,12 @@ MonoBehaviour:
   speed: 75
   explodeEffect: {fileID: 8926484042661614526, guid: 6cfafa6eccf5557458948e35ed7c88c0,
     type: 3}
+  damageSource:
+    cancelDefaultVfx: 0
+    effect: {fileID: 0}
+    effectDuration: 0
+    location: 0
+    orient: 0
   target: {fileID: 0}
 --- !u!1 &2993974167917735690
 GameObject:
@@ -107,7 +113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2993974167917735690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.152439, y: -0.19197056, z: -3.430226}
+  m_LocalPosition: {x: -0.152439, y: 0.63411736, z: -3.430226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1644401278697122660}
@@ -225,7 +231,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8187409171021540820}
-  m_Mesh: {fileID: 4300000, guid: 879ee609b89618340b9528dddbd50146, type: 3}
+  m_Mesh: {fileID: -873694245249641423, guid: 879ee609b89618340b9528dddbd50146, type: 3}
 --- !u!23 &6904093039353118094
 MeshRenderer:
   m_ObjectHideFlags: 0

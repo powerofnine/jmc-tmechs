@@ -30,13 +30,13 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            grapple = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Grapple), 1);
+            grapple = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Grapple), Player.LAYER_GENERIC_1);
         }
 
         public override void OnPush()
         {
             base.OnPush();
-            
+
             velocity = Vector3.zero;
             transitionComplete = false;
 
@@ -50,18 +50,21 @@ namespace TMechs.Player.Behavior
 
             radius = target.radius;
             pullSpeed = pullSpeedMin;
-            
+
             grappleType = target.isSwing ? Types.Swing : Types.Pull;
             player.forces.enabled = false;
             player.forces.ResetGround();
-            
+
             target.OnGrapple();
             transform.LookAt(target.transform.position.Set(Player.Instance.transform.position.y, Utility.Axis.Y));
             player.movement.ResetIntendedY();
 
-            Animancer.CrossFadeFromStart(grapple);
+            Animancer.CrossFadeFromStart(grapple, .1F);
             if (player.rightArmIk)
+            {
+                player.rightArmIk.targetPosition = target.transform.position;
                 player.rightArmIk.Transition(ikTime, 1F);
+            }
         }
 
         public override void OnPop()
@@ -72,7 +75,7 @@ namespace TMechs.Player.Behavior
             player.forces.enabled = true;
             target.OnGrapple();
             
-            Animancer.GetLayer(1).StartFade(0F);
+            Animancer.GetLayer(Player.LAYER_GENERIC_1).StartFade(0F);
             
             if(player.rightArmIk)
                 player.rightArmIk.Transition(ikTime, 0F);

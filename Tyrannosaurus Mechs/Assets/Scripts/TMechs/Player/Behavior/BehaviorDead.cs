@@ -1,4 +1,6 @@
+using System.Collections;
 using TMechs.UI;
+using UnityEngine;
 
 namespace TMechs.Player.Behavior
 {
@@ -8,7 +10,8 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
-            Animancer.CrossFadeFromStart(player.GetClip(Player.PlayerAnim.Death), 0.25F, 3).OnEnd = OnAnimEnd;
+            Animancer.GetLayer(Player.LAYER_TOP).Stop();
+            Animancer.CrossFadeFromStart(player.GetClip(Player.PlayerAnim.Death), 0.025F, Player.LAYER_TOP).OnEnd = OnAnimEnd;
 
             if (!player.vfx.death)
                 return;
@@ -24,6 +27,12 @@ namespace TMechs.Player.Behavior
         {
             // Disable animancer here to prevent this function from being called multiple times
             Animancer.enabled = false;
+            player.StartCoroutine(Die());
+        }
+
+        private IEnumerator Die()
+        {
+            yield return new WaitForSeconds(2F);
             SceneTransition.LoadScene(0);
         }
     }

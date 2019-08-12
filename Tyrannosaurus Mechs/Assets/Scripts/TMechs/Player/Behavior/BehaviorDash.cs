@@ -23,7 +23,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnInit();
 
-            dash = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Dash), 1);
+            dash = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Dash), Player.LAYER_GENERIC_1);
         }
 
         public override void OnPush()
@@ -35,11 +35,11 @@ namespace TMechs.Player.Behavior
             
             player.combat.SetHitbox("charge", chargeHitDamage, onHit: SetStagger);
 
-            Animancer.CrossFadeFromStart(dash).OnEnd = () =>
+            Animancer.CrossFadeFromStart(dash, .1F).OnEnd = () =>
             {
                 dash.OnEnd = null;
                 player.PopBehavior();
-                Animancer.GetLayer(1).StartFade(0F);
+                Animancer.GetLayer(Player.LAYER_GENERIC_1).StartFade(0F);
             };
             
             forward = transform.forward;
@@ -98,7 +98,7 @@ namespace TMechs.Player.Behavior
         {
             dash.OnEnd = null;
             player.combat.SetHitbox(null, 0F);
-            Animancer.GetLayer(1).StartFade(0F); // TODO stagger animation
+            Animancer.GetLayer(Player.LAYER_GENERIC_1).StartFade(0F); // TODO stagger animation?
             player.forces.motion = dashSpeed * 4F * -forward;
             isStaggered = true;
         }

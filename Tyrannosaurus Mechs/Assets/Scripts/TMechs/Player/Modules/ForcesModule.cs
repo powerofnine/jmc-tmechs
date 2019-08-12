@@ -1,4 +1,5 @@
 using System;
+using Animancer;
 using UnityEngine;
 
 namespace TMechs.Player.Modules
@@ -25,12 +26,18 @@ namespace TMechs.Player.Modules
         private int groundedFrames;
         [NonSerialized]
         public bool canRun = true;
+
+        private AnimancerState fall;
+        private AnimancerState land;
         
         public override void OnRegistered()
         {
             base.OnRegistered();
 
             controller = GetComponent<CharacterController>();
+
+            fall = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Fall), Player.LAYER_FALL);
+            land = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Land), Player.LAYER_FALL);
         }
 
         public override void OnLateUpdate()
@@ -50,10 +57,12 @@ namespace TMechs.Player.Modules
             if (controller.isGrounded)
                 velocity = Vector3.zero;
             motion = Vector3.zero;
-            
-            if(groundedFrames > 0)
+
+            if (groundedFrames > 0)
                 groundedFrames--;
-            
+            else if (!fall.IsPlaying && player.Behavior != player.jump)
+                    Animancer.CrossFadeFromStart(fall, .25F);
+
             GroundedCheck();
         }
 
@@ -91,6 +100,12 @@ namespace TMechs.Player.Modules
 
             if (!sliding)
             {
+                if (groundedFrames == 0)
+                {
+                    fall.StartFade(0F, 0F);
+                    Animancer.CrossFadeFromStart(land, 0F).OnEnd = () => land.StartFade(0F, .1F);
+                }
+
                 groundedFrames = 2;                
                 return;
             }

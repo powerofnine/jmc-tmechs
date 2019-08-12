@@ -10,8 +10,8 @@ namespace TMechs.Player.Behavior
     [Serializable]
     public class BehaviorJump : PlayerBehavior
     {
-        private const int LAYER = 1;
-        
+        private const int LAYER = Player.LAYER_GENERIC_1;
+
         public int maxAirJumps = 1;
         public float jumpForce = 25F;
 
@@ -19,22 +19,17 @@ namespace TMechs.Player.Behavior
         public float aoeRange = 10F;
         [MinMax]
         public Vector2 aoeDamage = new Vector2(5F, 10F);
-        
+
         private AnimancerState jump;
         private AnimancerState airJump;
 
         private bool isAirJump;
-        
+
         public override void OnInit()
         {
             base.OnInit();
 
-            AnimancerLayer layer = Animancer.GetLayer(LAYER);
-            layer.SetName("Jump Layer");
-
             jump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Jump), LAYER);
-            jump.Speed = 2F;
-            
             airJump = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.AirJump), LAYER);
         }
 
@@ -42,14 +37,20 @@ namespace TMechs.Player.Behavior
         {
             base.OnPush();
 
-            Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump).OnEnd = OnAnimEnd;
+            AnimancerState state = Animancer.CrossFadeFromStart(player.forces.IsGrounded ? jump : airJump, .025F);
+            state.OnEnd = () =>
+            {
+                state.OnEnd = null;
+                state.StartFade(0F, .1F);
+            };
+
             isAirJump = !player.forces.IsGrounded;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-            
+
             GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Jump, "Jump");
         }
 
@@ -67,17 +68,16 @@ namespace TMechs.Player.Behavior
                     }
 
                     player.forces.velocity.y = jumpForce;
-                    player.PopBehavior();
                     break;
                 case "JumpDamage":
                     player.combat.DealAoe(aoeRange, aoeDamage.x, aoeDamage.y);
                     break;
+                case "JumpPop":
+                    player.PopBehavior();
+                    break;
             }
         }
 
-        private void OnAnimEnd()
-        {
-            Animancer.GetLayer(LAYER).StartFade(0F);
-        }
+        public override bool OverridesLegs() => true;
     }
 }
