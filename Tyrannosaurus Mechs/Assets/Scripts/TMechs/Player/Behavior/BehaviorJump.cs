@@ -50,7 +50,7 @@ namespace TMechs.Player.Behavior
         {
             base.OnUpdate();
             
-            GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow1, "Jump");
+            GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Jump, "Jump");
         }
 
         public override void OnAnimationEvent(AnimationEvent e)

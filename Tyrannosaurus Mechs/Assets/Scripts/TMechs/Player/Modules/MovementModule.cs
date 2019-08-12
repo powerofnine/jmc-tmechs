@@ -106,8 +106,6 @@ namespace TMechs.Player.Modules
 
                 if (player.forces.canRun && player.Behavior.CanRun())
                 {
-                    GamepadLabels.AddLabel(IconMap.IconGeneric.L3, isSprinting ? "Stop Sprinting" : "Sprint", -100);
-
                     if (Input.GetButtonDown(SPRINT))
                         isSprinting = !isSprinting;
                 }

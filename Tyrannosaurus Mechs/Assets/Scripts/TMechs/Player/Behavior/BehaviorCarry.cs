@@ -123,7 +123,6 @@ namespace TMechs.Player.Behavior
             if (!hasPickedUp || isThrowing || isPummeling)
                 return;
 
-            GamepadLabels.AddLabel(IconMap.Icon.R2, "Throw");
             if (Input.GetButtonDown(Controls.Action.RIGHT_ARM))
             {
                 isThrowing = true;
@@ -132,7 +131,7 @@ namespace TMechs.Player.Behavior
                 return;
             }
 
-            GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Pummel");
+            GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Attack, "Pummel");
             if (Input.GetButtonDown(Controls.Action.ATTACK))
             {
                 isPummeling = true;

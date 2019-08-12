@@ -40,11 +40,6 @@ namespace TMechs.Player.Modules
         {
             base.OnUpdate();
             
-            EnemyTarget enemyTarget = TargetController.Instance.GetTarget<EnemyTarget>();
-
-            if (enemyTarget)
-                GamepadLabels.AddLabel(IconMap.Icon.L1, TargetController.Instance.GetLock() ? "Unlock" : "Lock-on");
-            
             if (Input.GetButtonDown(LOCK_ON))
             {
                 if (TargetController.Instance.GetLock())

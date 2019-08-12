@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using TMechs.Environment.Targets;
+using TMechs.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,43 +8,40 @@ namespace TMechs.UI
 {
     public class MainUiController : MonoBehaviour
     {
-        public HealthBarCollection health;
-        public RectTransform charge;
-        public Image chargeGlow;
+        public UiPath health;
+//        public HealthBarCollection health;
+
+        [Space]
+        public CanvasGroup rocketFistReadyFade;
+        public Image rocketFistCharge;
+        public float rocketFistMinAlpha = .25F;
+        public float rocketFistMaxAlpha = 1F;
 
         public float fadeTime = .5F;
 
         private bool isEnabled = true;
         
         private CanvasGroup group;
+
+        private float rocketFistAlphaVelocity;
         
         private void Awake()
         {
             group = GetComponent<CanvasGroup>();
-            
-            if(chargeGlow)
-                chargeGlow.canvasRenderer.SetAlpha(0F);
         }
 
         private void Update()
         {
             Player.Player player = Player.Player.Instance;
-            health.FillAmount = player.Health.Health;
+            health.Value = player.Health.Health;
+
+            rocketFistCharge.fillAmount = player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime;
             
-            charge.localEulerAngles = charge.localEulerAngles.Set(Mathf.Lerp(0F, -180F, player.rocketFist.rocketFistCharge / player.rocketFist.maxChargeTime), Utility.Axis.Z);
+            EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
+            bool rocketFistAvailable = player.rocketFist.IsCharging || enemy && player.rocketFist.rocketFistCharge <= Mathf.Epsilon;
 
-            if (chargeGlow && player.rocketFist.damageColors != null && player.rocketFist.damageColors.Length > 0)
-            {
-                int stage = player.rocketFist.ChargeStage;
-                
-                Color c = player.rocketFist.damageColors[stage];
-                
-                if (player.Behavior != player.rocketFist)
-                    c.a = 0F;
-                
-                chargeGlow.CrossFadeColor(c, .5F, false, true);
-            }
-
+            rocketFistReadyFade.alpha = Mathf.SmoothDamp(rocketFistReadyFade.alpha, rocketFistAvailable ? rocketFistMaxAlpha : rocketFistMinAlpha, ref rocketFistAlphaVelocity, .1F);
+            
             bool shouldBeEnabled = Time.timeScale > float.Epsilon;
 
             if (shouldBeEnabled != isEnabled)

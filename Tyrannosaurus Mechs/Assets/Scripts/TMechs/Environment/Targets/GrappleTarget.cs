@@ -34,7 +34,7 @@ namespace TMechs.Environment.Targets
             {
                 label.switcher.icon = IconMap.Icon.R2;
                 label.switcher.isGeneric = false;
-                label.label.text = isSwing ? "HOLD" : "";
+                label.LabelText = isSwing ? "HOLD" : "";
             }
         }
 

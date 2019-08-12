@@ -79,7 +79,7 @@ namespace TMechs.Player.Behavior
             if (queueDash)
                 return;
             
-            GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
+            GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Attack, "Attack");
             if (Input.GetButtonDown(Controls.Action.ATTACK))
                 attackPresses++;
             else if (Input.GetButtonDown(Controls.Action.DASH))

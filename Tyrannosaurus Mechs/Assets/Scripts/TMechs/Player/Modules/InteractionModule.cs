@@ -22,7 +22,7 @@ namespace TMechs.Player.Modules
             if (interactables.Count <= 0)
                 return;
             
-            GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow2, interactables[0].displayText);
+            GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Action, interactables[0].displayText);
 
             if (Player.Input.GetButtonDown(Controls.Action.INTERACT))
             {

@@ -21,14 +21,6 @@ namespace TMechs.Player.Behavior
                 50F,
                 75F
         };
-        public Color[] damageColors =
-        {
-            Color.red,
-            new Color(1F, .5F, 0), 
-            Color.yellow,
-            Color.cyan,
-            Color.blue
-        };
         
         public float maxChargeTime = 5F;
         public float rechargeSpeed = 2F;
@@ -52,8 +44,9 @@ namespace TMechs.Player.Behavior
         private AnimancerState comeBack;
 
         private AnimancerState current;
-        
-        private bool charging;
+
+        public bool IsCharging { get; private set; }
+
         private bool fired;
         private float returnTimer;
         [NonSerialized]
@@ -71,9 +64,6 @@ namespace TMechs.Player.Behavior
             buckle = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketBuckle), ATTACK_LAYER);
             fire = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketRecover), ATTACK_LAYER);
             comeBack = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.RocketReturn), ATTACK_LAYER);
-            
-            if(damageColors.Length != damageStages.Length)
-                Debug.LogWarning("Damage colors list is different length to damage stage list");
         }
 
         public override void OnPush()
@@ -81,7 +71,7 @@ namespace TMechs.Player.Behavior
             base.OnPush();
 
             prevStage = 0;
-            charging = false;
+            IsCharging = false;
             fired = false;
             rocketReturned = false;
             returnTimer = 0F;
@@ -90,7 +80,7 @@ namespace TMechs.Player.Behavior
             {
                 intro.OnEnd = null;
 
-                charging = true;
+                IsCharging = true;
                 current = Animancer.CrossFadeFromStart(charge, .1F);
 
                 current.OnEnd = () =>
@@ -112,7 +102,7 @@ namespace TMechs.Player.Behavior
             base.OnUpdate();
 
             int stage = ChargeStage;
-            if (charging)
+            if (IsCharging)
             {
                 rocketFistCharge += Time.deltaTime;
                 stage = ChargeStage;
@@ -165,7 +155,6 @@ namespace TMechs.Player.Behavior
             
             if (!fired)
             {
-                GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
                 EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
                 
                 if(enemy)
@@ -173,12 +162,12 @@ namespace TMechs.Player.Behavior
                 player.movement.ResetIntendedY();
             }
             
-            if (charging && !Input.GetButton(Controls.Action.LEFT_ARM))
+            if (IsCharging && !Input.GetButton(Controls.Action.LEFT_ARM))
             {
                 intro.OnEnd = null;
                 charge.OnEnd = null;
 
-                charging = false;
+                IsCharging = false;
                 
                 EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
                 if (!enemy)

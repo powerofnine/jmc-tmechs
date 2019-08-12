@@ -54,8 +54,6 @@ namespace TMechs.Player.Behavior
 
             if (player.forces.IsGrounded)
             {
-                GamepadLabels.AddLabel(IconMap.Icon.R1, "Dash");
-
                 if (Input.GetButtonDown(DASH))
                 {
                     player.PushBehavior(player.dash);
@@ -65,7 +63,7 @@ namespace TMechs.Player.Behavior
             
             if (jumps < player.jump.maxAirJumps)
             {
-                GamepadLabels.AddLabel(IconMap.Icon.ActionBottomRow1, "Jump");
+                GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Jump, "Jump");
                 
                 if (Input.GetButtonDown(JUMP))
                 {
@@ -76,7 +74,7 @@ namespace TMechs.Player.Behavior
                 }
             }
 
-            GamepadLabels.AddLabel(IconMap.Icon.ActionTopRow1, "Attack");
+            GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Attack, "Attack");
             if (Input.GetButtonDown(ATTACK))
             {
                 player.PushBehavior(player.attack);
@@ -100,7 +98,6 @@ namespace TMechs.Player.Behavior
             {
                 if (player.rocketFist.rocketFistCharge <= Mathf.Epsilon)
                 {
-                    GamepadLabels.AddLabel(IconMap.Icon.L2, "Rocket Fist");
                     if (Input.GetButtonDown(LEFT_ARM))
                     {
                         player.PushBehavior(player.rocketFist);
@@ -110,7 +107,6 @@ namespace TMechs.Player.Behavior
 
                 if (enemy.pickup != EnemyTarget.PickupType.Prohibit && Vector3.Distance(transform.position, enemy.transform.position) <= player.carry.grabRange)
                 {
-                    GamepadLabels.AddLabel(IconMap.Icon.R2, "Grab");
                     if (Input.GetButtonDown(RIGHT_ARM))
                     {
                         player.PushBehavior(player.carry);

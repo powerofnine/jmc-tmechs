@@ -17,8 +17,8 @@ namespace TMechs.Environment.Targets
         private float alphaVelocity;
         
         public override int GetPriority() => 100;
-        public override Color GetHardLockColor() => Color.red;
-        public override Color GetColor() => Color.yellow;
+        public override Color GetHardLockColor() => Color.white;
+        public override Color GetColor() => Color.white;
 
         protected override void Awake()
         {
