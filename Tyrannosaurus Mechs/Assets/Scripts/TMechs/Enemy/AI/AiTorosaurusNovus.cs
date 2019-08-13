@@ -4,9 +4,11 @@ using Animancer;
 using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
+using TMechs.Player.Behavior;
 using TMechs.Types;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.VFX;
 using Random = UnityEngine.Random;
 
 namespace TMechs.Enemy.AI
@@ -22,15 +24,22 @@ namespace TMechs.Enemy.AI
 
         public EntityHealth.DamageSource damageSource;
 
+        [Header("VFX")]
+        public VisualEffect[] vfxChargeIntro = { };
+        public VisualEffect[] vfxCharging = { };
+        public VisualEffect[] vfxChargeCooldown = { };
+        public VisualEffect vfxChargeFoot;
+        public VisualEffect vfxHornTaser;
+
         private Vector3 unitPosition;
 
         private AnimancerState hurt;
         private bool isDead;
         private bool lazyMode;
-        
+
         private void Start()
         {
-            ToroShared shared = new ToroShared()
+            ToroShared shared = new ToroShared
             {
                     parent = this,
                     animancer = GetComponentInChildren<EventfulAnimancerComponent>(),
@@ -65,7 +74,12 @@ namespace TMechs.Enemy.AI
             stateMachine.RegisterState(new Standby(), "Standby");
             stateMachine.RegisterState(new Thrash(), "Thrash");
 
-            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.rangeStopFollow)), machine => StartCoroutine(FadeNightrider(false)));
+            stateMachine.RegisterTransition(AiStateMachine.ANY_STATE, "Idle", machine => machine.HorizontalDistanceToTarget > machine.Get<Radius>(nameof(ToroProperties.rangeStopFollow)), machine =>
+            {
+                StartCoroutine(FadeNightrider(false)); 
+                if(vfxHornTaser)
+                    vfxHornTaser.Stop();
+            });
             stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)));
 
             stateMachine.RegisterTransition("Chasing", "Charge", machine => machine.GetAddSet<float>("ChargeTimer", -Time.deltaTime) <= 0F, machine => machine.Set("ChargeTimer", machine.Get<float>(nameof(ToroProperties.chargeCooldown))));
@@ -226,6 +240,11 @@ namespace TMechs.Enemy.AI
                 };
 
                 shared.parent.StartCoroutine(shared.parent.FadeNightrider(true));
+                if (shared.parent.vfxHornTaser)
+                {
+                    shared.parent.vfxHornTaser.gameObject.SetActive(true);
+                    shared.parent.vfxHornTaser.Play();
+                }
             }
 
             public override void OnExit()
@@ -324,7 +343,21 @@ namespace TMechs.Enemy.AI
                     Animancer.Play(chargeLoop).Time = 0F;
 
                     isCharging = true;
+
+                    foreach (VisualEffect vfx in shared.parent.vfxChargeIntro)
+                        vfx.Stop();
+                    foreach (VisualEffect vfx in shared.parent.vfxCharging)
+                    {
+                        vfx.gameObject.SetActive(true);
+                        vfx.Play();
+                    }
                 };
+
+                foreach (VisualEffect vfx in shared.parent.vfxChargeIntro)
+                {
+                    vfx.gameObject.SetActive(true);
+                    vfx.Play();
+                }
             }
 
             public override void OnExit()
@@ -335,6 +368,14 @@ namespace TMechs.Enemy.AI
 
                 chargeIntro.Stop();
                 chargeLoop.Stop();
+
+                foreach (VisualEffect vfx in shared.parent.vfxCharging)
+                    vfx.Stop();
+                foreach (VisualEffect vfx in shared.parent.vfxChargeCooldown)
+                {
+                    vfx.gameObject.SetActive(true);
+                    vfx.Play();
+                }
             }
 
             public override void OnTick()
@@ -372,8 +413,23 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEvent(type, id);
 
-                if (type == AiStateMachine.EventType.Animation && "charge".Equals(id))
-                    isCharging = true;
+                if (type != AiStateMachine.EventType.Animation)
+                    return;
+
+                switch (id)
+                {
+                    case "charge":
+                        isCharging = true;
+                        break;
+                    case "footFx":
+                        if (shared.parent.vfxChargeFoot)
+                        {
+                            shared.parent.vfxChargeFoot.gameObject.SetActive(true);
+                            shared.parent.vfxChargeFoot.Play();
+                        }
+
+                        break;
+                }
             }
         }
 
@@ -438,9 +494,15 @@ namespace TMechs.Enemy.AI
         private void Update()
         {
             lazyMode = stateMachine.DistanceToTarget >= 200F;
-            
+
             if (!lazyMode && !isDead)
+            {
                 stateMachine.Tick();
+
+                if (stateMachine.HasValue("ChargeTimer") && stateMachine.Get<float>("ChargeTimer") <= 0F)
+                    foreach (VisualEffect vfx in vfxChargeCooldown)
+                        vfx.Stop();
+            }
         }
 
         private void LateUpdate()
@@ -473,7 +535,7 @@ namespace TMechs.Enemy.AI
         {
             if (isDead)
                 return;
-            
+
             customDestroy = true;
             isDead = true;
 
@@ -486,6 +548,8 @@ namespace TMechs.Enemy.AI
             Destroy(shared.controller);
             Destroy(GetComponent<EnemyTarget>());
 
+            if(vfxHornTaser)
+                vfxHornTaser.Stop();
             StartCoroutine(FadeNightrider(Color.black));
             AnimancerState state = shared.animancer.CrossFadeFromStart(animations.GetClip(ToroAnimation.Death), .1F, 3);
             state.OnEnd = () =>

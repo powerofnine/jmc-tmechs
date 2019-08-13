@@ -205,9 +205,10 @@ namespace TMechs.Enemy.AI
             properties[name] = value;
         }
 
+        
         public T Get<T>(string name)
         {
-            if (!properties.ContainsKey(name))
+            if (!HasValue(name))
             {
                 Debug.LogWarning($"[Missing Property] Property {name} does not exist");
                 return default;
@@ -224,7 +225,7 @@ namespace TMechs.Enemy.AI
 
         public T Get<T>(string name, T def)
         {
-            if (!properties.ContainsKey(name))
+            if (!HasValue(name))
                 return def;
 
             if (!(properties[name] is T))
