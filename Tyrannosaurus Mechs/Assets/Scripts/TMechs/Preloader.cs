@@ -11,9 +11,12 @@ namespace TMechs
         private static void PreInitialize()
         {
             GameObject input = Resources.Load<GameObject>("Input");
-
             if (input)
                 Instantiate(input);
+
+            GameObject ansel = Resources.Load<GameObject>("Ansel");
+            if (ansel)
+                Instantiate(ansel);
         }
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

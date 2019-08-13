@@ -208,6 +208,16 @@ namespace TMechs
         {
             return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
         }
+
+        public static float[] Split(this Vector3 vector)
+        {
+            return new[] {vector.x, vector.y, vector.z};
+        }
+
+        public static float[] Split(this Quaternion quat)
+        {
+            return new[] {quat.x, quat.y, quat.z, quat.w};
+        }
         
         private static float GetComponent(this Vector3 source, Axis component)
         {
