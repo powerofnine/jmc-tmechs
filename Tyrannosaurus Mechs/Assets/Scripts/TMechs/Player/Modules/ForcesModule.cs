@@ -60,8 +60,11 @@ namespace TMechs.Player.Modules
 
             if (groundedFrames > 0)
                 groundedFrames--;
-            else if (!fall.IsPlaying && player.Behavior != player.jump)
+            
+            if (!IsGrounded && ControllerVelocity.y < -.25F && !fall.IsPlaying && player.Behavior != player.jump)
                     Animancer.CrossFadeFromStart(fall, .25F);
+            else if(fall.IsPlaying)
+                fall.StartFade(0F, 0F);
 
             GroundedCheck();
         }
@@ -102,11 +105,10 @@ namespace TMechs.Player.Modules
             {
                 if (groundedFrames == 0)
                 {
-                    fall.StartFade(0F, 0F);
                     Animancer.CrossFadeFromStart(land, 0F).OnEnd = () => land.StartFade(0F, .1F);
                 }
 
-                groundedFrames = 2;                
+                groundedFrames = 2;
                 return;
             }
 

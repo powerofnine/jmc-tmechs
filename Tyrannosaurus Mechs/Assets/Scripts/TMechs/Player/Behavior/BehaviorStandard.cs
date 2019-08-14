@@ -44,10 +44,11 @@ namespace TMechs.Player.Behavior
 
             if (idleTimer > 4F && !extendedIdle.IsPlaying)
             {
+                idleTimer = 0F;
                 Animancer.CrossFadeFromStart(extendedIdle, .1F).OnEnd = () =>
                 {
                     idleTimer = 0F;
-                    Animancer.GetLayer(Player.LAYER_GENERIC_2).StartFade(0F);
+                    extendedIdle.StartFade(0F, .1F);
                 };
             }
             

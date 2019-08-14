@@ -9,6 +9,7 @@ namespace TMechs.Environment.Interactables
         public GameObject display;
         
         private int inRange;
+        private int available;
 
         protected virtual void Update()
         {
@@ -17,14 +18,14 @@ namespace TMechs.Environment.Interactables
                 inRange--;
                 Player.Player.Instance.interaction.AddInteraction(this);
             }
-
+            
             if (display)
             {
-                bool shouldShow = inRange > 0;
+                bool shouldShow = inRange > 0 && available > 0;
                 
                 if(display.activeSelf != shouldShow)
                     display.SetActive(shouldShow);
-            }
+            }     
         }
 
         private void OnTriggerStay(Collider other)
@@ -41,6 +42,11 @@ namespace TMechs.Environment.Interactables
             return Vector3.Angle(direction, Player.Player.Instance.transform.forward) < 90F;
         }
 
+        public void OnInteractAvailable()
+        {
+            available = 3;
+        }
+        
         public virtual bool IsInteractable() => true;
         public abstract void OnInteract();
         public virtual PlayerBehavior GetPushBehavior() => null;

@@ -23,6 +23,7 @@ namespace TMechs.Player.Modules
                 return;
             
             GamepadLabels.EnableLabel(GamepadLabels.ButtonLabel.Action, interactables[0].displayText);
+            interactables[0].OnInteractAvailable();
 
             if (Player.Input.GetButtonDown(Controls.Action.INTERACT))
             {
