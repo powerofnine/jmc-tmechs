@@ -197,6 +197,7 @@ namespace TMechs.Player.Behavior
 
         public override float GetSpeed() => base.GetSpeed() * .2F;
         public override bool CanRun() => false;
+        public override bool CanAnimateTakeDamage() => false;
 
         private void OnAnimEnd()
         {

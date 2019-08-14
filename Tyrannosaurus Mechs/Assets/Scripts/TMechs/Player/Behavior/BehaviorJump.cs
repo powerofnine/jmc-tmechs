@@ -79,5 +79,6 @@ namespace TMechs.Player.Behavior
         }
 
         public override bool OverridesLegs() => true;
+        public override bool CanAnimateTakeDamage() => false;
     }
 }

@@ -22,6 +22,7 @@ namespace TMechs.Player.Behavior
 
         public override bool CanMove() => false;
         public override float GetSpeed() => 0F;
+        public override bool CanAnimateTakeDamage() => false;
 
         private void OnAnimEnd()
         {

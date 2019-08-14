@@ -167,6 +167,7 @@ namespace TMechs.Player.Behavior
         }
 
         public override bool CanMove() => false;
+        public override bool CanAnimateTakeDamage() => false;
 
         private Vector3 ClampPosition(Vector3 anchorPos, Vector3 newPos)
         {

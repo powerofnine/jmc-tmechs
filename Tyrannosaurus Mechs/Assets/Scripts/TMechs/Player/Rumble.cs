@@ -30,14 +30,17 @@ namespace TMechs.Player
 
             foreach (Channel c in channels.Values)
             {
-                float rumble = c.strength;
-                rumble = Mathf.Lerp(0F, rumble, (c.startTime - c.time) / c.fade);
-                rumble = Mathf.Lerp(rumble, 0F, c.time / c.fade);
+                if (c.time > 0F)
+                {
+                    float rumble = c.strength;
+                    rumble = Mathf.Lerp(0F, rumble, (c.startTime - c.time) / c.fade);
+                    rumble = Mathf.Lerp(rumble, 0F, c.time / c.fade);
 
-                if (rumble > output)
-                    output = rumble;
+                    if (rumble > output)
+                        output = rumble;
 
-                c.time -= Time.deltaTime;
+                    c.time -= Time.deltaTime;
+                }
             }
             
             foreach(MotorSet set in motors)

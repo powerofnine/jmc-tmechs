@@ -263,11 +263,15 @@ namespace TMechs.Player
                 cancel = true;
             
             Rumble.SetRumble(Rumble.CHANNEL_DAMAGED, .5F, .25F, .05F);
-            Animancer.CrossFadeFromStart(takeDamage, .025F).OnEnd = () =>
+
+            if (Behavior.CanAnimateTakeDamage() && !takeDamage.IsPlaying)
             {
-                takeDamage.OnEnd = null;
-                takeDamage.StartFade(0F, .025F);
-            };
+                Animancer.Play(takeDamage).OnEnd = () =>
+                {
+                    takeDamage.OnEnd = null;
+                    takeDamage.StartFade(0F, .025F);
+                };
+            }
         }
         
         [AnimationCollection.Enum("Player Animations")]
