@@ -333,7 +333,6 @@ namespace TMechs.Enemy.AI
                 gravity = 0F;
 
                 transform.forward = HorizontalDirectionToTarget;
-                targetPoint = target.transform.position.Remove(Utility.Axis.Y);
 
                 lockoutTimer = 0F;
 
@@ -343,6 +342,7 @@ namespace TMechs.Enemy.AI
                     Animancer.Play(chargeLoop).Time = 0F;
 
                     isCharging = true;
+                    targetPoint = target.transform.position.Remove(Utility.Axis.Y);
 
                     foreach (VisualEffect vfx in shared.parent.vfxChargeIntro)
                         vfx.Stop();
