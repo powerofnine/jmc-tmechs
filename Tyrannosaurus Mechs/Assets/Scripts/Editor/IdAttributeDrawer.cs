@@ -18,7 +18,8 @@ public class IdAttributeDrawer : PropertyDrawer
         if (GUI.Button(buttonPos, "↻"))
             property.stringValue = Guid.NewGuid().ToString();
 
-        GUI.enabled = false;
+        EditorGUI.BeginDisabledGroup(true);
         EditorGUI.PropertyField(position, property, new GUIContent((attribute as IdAttribute)?.displayName));
+        EditorGUI.EndDisabledGroup();
     }
 }
