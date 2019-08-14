@@ -169,5 +169,14 @@ namespace TMechs.Environment
             [Pure]
             public bool IsActive(string id) => IsRegistered(id) && id.Equals(activeCheckpoint);
         }
+
+        private void OnDrawGizmos()
+        {
+            BoxCollider col = GetComponent<BoxCollider>();
+
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.color = new Color(.4F, 1F, .5F, .2F);
+            Gizmos.DrawCube(col.center, col.size);
+        }
     }
 }
