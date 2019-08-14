@@ -77,6 +77,7 @@ namespace TMechs.Player.Behavior
         public virtual bool CanMove() => true;
         public virtual bool CanRun() => true;
         public virtual bool OverridesLegs() => false;
+        public virtual bool CanAnimateTakeDamage() => true;
 
         public T GetComponent<T>()
             => player.GetComponent<T>();

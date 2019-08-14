@@ -236,5 +236,6 @@ namespace TMechs.Player.Behavior
         public override bool CanMove() => hasPickedUp && !isThrowing && !isPummeling;
         public override bool CanRun() => false;
         public override float GetSpeed() => base.GetSpeed() * .6F;
+        public override bool CanAnimateTakeDamage() => !isPummeling && !isThrowing;
     }
 }

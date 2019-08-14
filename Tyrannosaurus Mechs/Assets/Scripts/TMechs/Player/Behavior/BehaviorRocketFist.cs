@@ -214,6 +214,7 @@ namespace TMechs.Player.Behavior
                 player.vfx.rocketOvercharge.Stop();
         }
 
+        public override bool CanAnimateTakeDamage() => fired;
         public override float GetSpeed() => base.GetSpeed() * (fired ? .8F : .4F);
         public override bool CanRun() => false;
     }
