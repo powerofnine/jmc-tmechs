@@ -1,5 +1,6 @@
 using System;
 using Animancer;
+using Rewired;
 using UnityEngine;
 
 namespace TMechs.Player.Modules
@@ -61,10 +62,8 @@ namespace TMechs.Player.Modules
             if (groundedFrames > 0)
                 groundedFrames--;
             
-            if (!IsGrounded && ControllerVelocity.y < -.25F && !fall.IsPlaying && player.Behavior != player.jump)
+            if (!IsGrounded && ControllerVelocity.y < -5F && !fall.IsPlaying && player.Behavior != player.jump)
                     Animancer.CrossFadeFromStart(fall, .25F);
-            else if(fall.IsPlaying)
-                fall.StartFade(0F, 0F);
 
             GroundedCheck();
         }
