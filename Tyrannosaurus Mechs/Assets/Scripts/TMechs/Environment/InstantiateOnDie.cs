@@ -7,6 +7,8 @@ namespace TMechs.Environment
     public class InstantiateOnDie : MonoBehaviour, EntityHealth.IDeath
     {
         public GameObject template;
+        [InspectorGadgets.Attributes.Toolbar("Enable", "Instantiate")]
+        public bool instantiate = true;
 
         public bool explode;
         [ConditionalHide("explode", true)]
@@ -18,7 +20,15 @@ namespace TMechs.Environment
 
         public void OnDying(ref bool customDestroy)
         {
-            GameObject go = Instantiate(template, transform.position, transform.rotation);
+            GameObject go;
+
+            if (instantiate)
+                go = Instantiate(template, transform.position, transform.rotation);
+            else
+            {
+                go = template;
+                go.SetActive(true);
+            }
 
             if (!explode)
                 return;
