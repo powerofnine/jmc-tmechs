@@ -296,9 +296,9 @@ VisualEffectResource:
       /*inout */velocity,  /*inout */seed, float3(-5,0.1,-5), float3(5,2,5));\n        }\n
       \       {\n            SetAttribute_F01429A3( /*inout */lifetime,  /*inout */seed,
       (float)0, (float)4);\n        }\n        {\n            PositionCone_2661C(
-      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,0), (float)1.48,
-      (float)7.580344, (float)67.6, (float)6.283185, (float)0, (float)84.00038, float2(0.08987656,0.9959529));\n
-      \       }\n        {\n            SetAttribute_CEEAF35C( /*inout */alpha, (float)0.05);\n
+      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,0), (float)10.19,
+      (float)25.79817, (float)67.6, (float)6.283185, (float)0, (float)111.7336, float2(0.2249713,0.9743654));\n
+      \       }\n        {\n            SetAttribute_CEEAF35C( /*inout */alpha, (float)0.1);\n
       \       }\n        \n\n\n#if VFX_USE_ALIVE_CURRENT\n        if (alive)\n        {\n\t\t\tuint
       deadIndex = deadListIn.DecrementCounter();\n            uint index = deadListIn[deadIndex];\n
       \           attributeBuffer.Store3((index * 0x4 + 0x0) << 2,asuint(velocity));\n
@@ -482,25 +482,25 @@ VisualEffectResource:
       m_Float:
         m_Array:
         - m_ExpressionIndex: 4
-          m_Value: 84.00038
+          m_Value: 111.73355
         - m_ExpressionIndex: 5
           m_Value: 6.283185
         - m_ExpressionIndex: 6
           m_Value: 67.6
         - m_ExpressionIndex: 7
-          m_Value: 7.580344
+          m_Value: 25.79817
         - m_ExpressionIndex: 8
-          m_Value: 1.48
+          m_Value: 10.19
         - m_ExpressionIndex: 10
           m_Value: 4
         - m_ExpressionIndex: 11
           m_Value: 0
         - m_ExpressionIndex: 21
-          m_Value: 0.05
+          m_Value: 0.1
       m_Vector2f:
         m_Array:
         - m_ExpressionIndex: 3
-          m_Value: {x: 0.08987656, y: 0.9959529}
+          m_Value: {x: 0.22497132, y: 0.9743654}
         - m_ExpressionIndex: 18
           m_Value: {x: 1, y: 1}
         - m_ExpressionIndex: 19
@@ -557,7 +557,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 1
           m_Value:
             serializedVersion: 2
-            key0: {r: 1, g: 1, b: 1, a: 0.11372549}
+            key0: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0.11372549}
             key1: {r: 0.6792453, g: 0.66322535, b: 0.66322535, a: 0.047058824}
             key2: {r: 0, g: 0, b: 0, a: 0.60784316}
             key3: {r: 0, g: 0, b: 0, a: 0.70980394}
@@ -1109,7 +1109,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":0.6792452931404114,"g":0.6632253527641296,"b":0.6632253527641296,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.11372549086809159,"time":0.0},{"alpha":0.0470588244497776,"time":0.13530175387859345},{"alpha":0.6078431606292725,"time":0.2235294133424759},{"alpha":0.7098039388656616,"time":0.29411765933036806},{"alpha":0.6117647290229797,"time":0.37059587240219118},{"alpha":0.40392157435417178,"time":0.43529412150382998},{"alpha":0.0,"time":0.9970549941062927}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.37735849618911745,"g":0.37735849618911745,"b":0.37735849618911745,"a":1.0},"time":0.0},{"color":{"r":0.6792452931404114,"g":0.6632253527641296,"b":0.6632253527641296,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.11372549086809159,"time":0.0},{"alpha":0.0470588244497776,"time":0.13530175387859345},{"alpha":0.6078431606292725,"time":0.2235294133424759},{"alpha":0.7098039388656616,"time":0.29411765933036806},{"alpha":0.6117647290229797,"time":0.37059587240219118},{"alpha":0.40392157435417178,"time":0.43529412150382998},{"alpha":0.0,"time":0.9970549941062927}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
@@ -1948,7 +1948,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.ArcCone, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"radius0":1.4800000190734864,"radius1":7.580344200134277,"height":67.5999984741211,"arc":6.283185005187988}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"radius0":10.1899995803833,"radius1":25.79817008972168,"height":67.5999984741211,"arc":6.283185005187988}'
     m_Space: 0
   m_Property:
     name: Cone
@@ -2323,7 +2323,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.05
+      m_SerializableObject: 0.1
     m_Space: 2147483647
   m_Property:
     name: Alpha
