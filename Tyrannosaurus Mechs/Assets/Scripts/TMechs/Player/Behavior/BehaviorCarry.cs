@@ -143,7 +143,7 @@ namespace TMechs.Player.Behavior
                 {
                     pummel.OnEnd = null;
                     isPummeling = false;
-                    Animancer.GetLayer(2).StartFade(0F);
+                    Animancer.GetLayer(Player.LAYER_GENERIC_2).StartFade(0F);
                 };
             }
         }
@@ -155,13 +155,12 @@ namespace TMechs.Player.Behavior
             if (!target)
                 return;
 
-            if (!player.rightArmIk)
+            if (Vector3.Distance(transform.position, target.transform.position) <= 20F || !player.rightArmIk)
             {
                 Grab_PostIk();
                 return;
             }
 
-            dontUpdateIkTarget = true;
             player.rightArmIk.targetPosition = target.transform.position;
             player.rightArmIk.Transition(ikTime, 1F, Grab_PostIk);
         }
@@ -177,12 +176,16 @@ namespace TMechs.Player.Behavior
             go.transform.localPosition = Vector3.zero;
             pickedUp = container;
 
-            if (!player.rightArmIk)
+            if (Vector3.Distance(transform.position, target.transform.position) <= 20F || !player.rightArmIk)
             {
+                if (player.rightArmIk)
+                    player.rightArmIk.Transition(ikTime, 0F);
+                
                 hasPickedUp = true;
                 return;
             }
 
+            dontUpdateIkTarget = true;
             player.rightArmIk.Transition(ikTime, 0F, () => hasPickedUp = true);
         }
 
