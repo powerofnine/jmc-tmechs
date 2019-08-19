@@ -27,6 +27,8 @@ namespace TMechs.Player.Behavior
         public EntityHealth.DamageSource pummelDamageSource;
 
         private AnimancerState grab;
+        private AnimancerState longGrab;
+        private AnimancerState longGrabReturn;
         private AnimancerState yeet; // Throw is a reserved keyword
         private AnimancerState pummel;
 
@@ -36,6 +38,8 @@ namespace TMechs.Player.Behavior
         private bool isThrowing;
         private bool isPummeling;
 
+        private bool isLongGrab;
+        
         private bool dontUpdateIkTarget;
 
         public override void OnInit()
@@ -43,6 +47,8 @@ namespace TMechs.Player.Behavior
             base.OnInit();
 
             grab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.GrabObject), Player.LAYER_GENERIC_1);
+            longGrab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.LongDistanceGrab), Player.LAYER_GENERIC_1);
+            longGrabReturn = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.LongDistanceGrabReturn), Player.LAYER_GENERIC_1);
             yeet = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.ThrowObject), Player.LAYER_GENERIC_1);
             pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), Player.LAYER_GENERIC_2);
         }
@@ -63,13 +69,15 @@ namespace TMechs.Player.Behavior
             isPummeling = false;
             dontUpdateIkTarget = false;
 
+            isLongGrab = Vector3.Distance(transform.position, target.transform.position) > 20F;
+            
             if (!target)
             {
                 player.PopBehavior();
                 return;
             }
 
-            Animancer.CrossFadeFromStart(grab, .1F).OnEnd = Grab;
+            Animancer.CrossFadeFromStart(isLongGrab ? longGrab : grab, .1F).OnEnd = Grab;
         }
 
         public override void OnPop()
@@ -151,11 +159,12 @@ namespace TMechs.Player.Behavior
         private void Grab()
         {
             grab.OnEnd = null;
+            longGrab.OnEnd = null;
 
             if (!target)
                 return;
 
-            if (Vector3.Distance(transform.position, target.transform.position) <= 20F || !player.rightArmIk)
+            if (!isLongGrab || !player.rightArmIk)
             {
                 Grab_PostIk();
                 return;
@@ -176,7 +185,7 @@ namespace TMechs.Player.Behavior
             go.transform.localPosition = Vector3.zero;
             pickedUp = container;
 
-            if (Vector3.Distance(transform.position, target.transform.position) <= 20F || !player.rightArmIk)
+            if (!isLongGrab || !player.rightArmIk)
             {
                 if (player.rightArmIk)
                     player.rightArmIk.Transition(ikTime, 0F);
@@ -186,7 +195,15 @@ namespace TMechs.Player.Behavior
             }
 
             dontUpdateIkTarget = true;
-            player.rightArmIk.Transition(ikTime, 0F, () => hasPickedUp = true);
+            player.rightArmIk.Transition(ikTime, 0F, () =>
+            {
+                hasPickedUp = true;
+                Animancer.CrossFadeFromStart(longGrabReturn, 0F).OnEnd = () =>
+                {
+                    longGrabReturn.OnEnd = null;
+                    longGrabReturn.Stop();
+                };
+            });
         }
 
         private void Throw()

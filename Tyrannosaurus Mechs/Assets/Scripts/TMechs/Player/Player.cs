@@ -299,6 +299,8 @@ namespace TMechs.Player
             
             [Header("Grapple")]
             GrabObject,
+            LongDistanceGrab,
+            LongDistanceGrabReturn,
             ThrowObject,
             Grapple,
         
