@@ -34,7 +34,7 @@ namespace TMechs.Player.Behavior
         private IEnumerator Die()
         {
             yield return new WaitForSeconds(2F);
-            SceneTransition.LoadScene(0);
+            SceneTransition.LoadScene(MenuActions.MAIN_MENU);
         }
     }
 }

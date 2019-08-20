@@ -6,6 +6,7 @@ namespace TMechs.UI.FX
     public class UiFade : MonoBehaviour
     {
         public float fadeTime = 0.5F;
+        public float delay = 0F;
 
         private CanvasRenderer[] renderers;
 
@@ -20,6 +21,14 @@ namespace TMechs.UI.FX
         {
             float time = 0F;
 
+            while (time < delay)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            time = 0F;
+            
             while (time < fadeTime)
             {
                 time += Time.deltaTime;
