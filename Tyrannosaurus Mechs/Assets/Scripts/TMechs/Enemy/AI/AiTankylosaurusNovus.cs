@@ -30,6 +30,7 @@ namespace TMechs.Enemy.AI
 
         [Header("Anchors")]
         public Transform shellBone;
+        public Transform shotgunOrigin;
 
         [Header("VFX")]
         public VisualEffect moveVfx;
@@ -215,6 +216,8 @@ namespace TMechs.Enemy.AI
             private LinearMixerState leftTread;
             private LinearMixerState rightTread;
 
+            private Vector3 shellVelocity;
+            
             public override void OnInit()
             {
                 base.OnInit();
@@ -479,7 +482,11 @@ namespace TMechs.Enemy.AI
                         vfx.Play();
                     }
 
-                    if (DistanceToTarget <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && AngleToTarget <= 50F)
+                    Transform origin = shared.parent.shotgunOrigin ? shared.parent.shotgunOrigin : transform;
+                    float distance = Vector3.Distance(origin.position, target.position);
+                    float angle = Vector3.Angle((target.position - origin.position).Remove(Utility.Axis.Y).normalized, transform.forward.Remove(Utility.Axis.Y).normalized);
+                    
+                    if (distance <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && angle <= 50F)
                     {
                         Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)), shared.parent.damageSource.GetWithSource(transform));
                         Player.Player.Instance.forces.frictionedVelocity = HorizontalDirectionToTarget * Machine.Get<float>(nameof(TankyloProperties.shotgunKnockback));
@@ -504,6 +511,8 @@ namespace TMechs.Enemy.AI
                 {
                     box.gameObject.SetActive(false);
                     box.damage = 0F;
+
+                    box.callback = () => SetBoxes(false);
                 }
             }
 
@@ -553,14 +562,28 @@ namespace TMechs.Enemy.AI
                 if (type != AiStateMachine.EventType.Animation)
                     return;
 
+                switch (id)
+                {
+                    case "WhipActive":
+                        SetBoxes(true);
+
+                        break;
+                    case "WhipInactive":
+                        SetBoxes(false);
+
+                        break;
+                }
+            }
+
+            private void SetBoxes(bool active)
+            {
                 float damage = Machine.Get<float>(nameof(TankyloProperties.tailWhipDamage));
                 
-                if("WhipActive".Equals(id))
-                    foreach (EnemyHitBox box in colliders)
-                    {
-                        box.gameObject.SetActive(true);
-                        box.damage = damage;
-                    }
+                foreach (EnemyHitBox box in colliders)
+                {
+                    box.gameObject.SetActive(active);
+                    box.damage = active ? damage : 0F; 
+                }
             }
         }
 

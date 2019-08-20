@@ -12,6 +12,7 @@ namespace TMechs.Enemy
         public float damage;
 
         public EntityHealth.DamageSource damageSource;
+        public Action callback;
 
         private void Awake()
         {
