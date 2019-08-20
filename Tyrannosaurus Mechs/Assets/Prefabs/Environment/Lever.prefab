@@ -57,7 +57,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 10, z: 10}
+  m_Size: {x: 10, y: 10, z: 12.802073}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7417840829952718177
 MonoBehaviour:
@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: Single Use
+  display: {fileID: 0}
   isOn: 0
   onToggle:
     _PersistentCalls: []
@@ -150,12 +151,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -1504981713932161579, guid: d3ba543a6e8785144a953fc14aeeab32,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
-    - target: {fileID: 8498549730845195872, guid: d3ba543a6e8785144a953fc14aeeab32,
+    - target: {fileID: -5854355002792063080, guid: d3ba543a6e8785144a953fc14aeeab32,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -165,7 +161,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
-    - target: {fileID: -5854355002792063080, guid: d3ba543a6e8785144a953fc14aeeab32,
+    - target: {fileID: -1504981713932161579, guid: d3ba543a6e8785144a953fc14aeeab32,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d65e81d3ceccd140a220d15ec23b18e, type: 2}
+    - target: {fileID: 8498549730845195872, guid: d3ba543a6e8785144a953fc14aeeab32,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
