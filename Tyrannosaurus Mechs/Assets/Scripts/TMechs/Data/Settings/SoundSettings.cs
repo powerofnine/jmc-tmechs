@@ -9,11 +9,12 @@ namespace TMechs.Data.Settings
     {
         public Dictionary<Channel, int> volume = Enum.GetValues(typeof(Channel)).Cast<Channel>().ToDictionary(x => x, x => 100);
 
-        public enum Channel
+        public enum Channel : uint
         {
             Music,
+            Environment,
             Sfx,
-            Master = -9999
+            Master = uint.MaxValue
         }
     }
 }

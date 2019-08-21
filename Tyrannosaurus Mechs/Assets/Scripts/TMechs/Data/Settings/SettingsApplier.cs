@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 
@@ -13,7 +15,9 @@ namespace TMechs.Data.Settings
         private ColorAdjustments colorAdjustments;
         private LiftGammaGain gammaAdjustments;
 
-        private float deltaTime;
+        private AudioMixer mixer;
+
+        private float frameDelta;
 
         private void Awake()
         {
@@ -29,6 +33,10 @@ namespace TMechs.Data.Settings
 
             colorAdjustments.postExposure.overrideState = true;
             gammaAdjustments.gamma.overrideState = true;
+
+            mixer = Resources.Load<AudioMixer>("Mixer");
+            if(!mixer)
+                Debug.LogError("Audio mixer not found");
         }
 
         private void Update()
@@ -46,7 +54,19 @@ namespace TMechs.Data.Settings
                 QualitySettings.vSyncCount = display.vsync ? 1 : 0;
             }
 
-            deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1F;
+            SoundSettings sound = SettingsData.Get<SoundSettings>();
+            
+            if (sound != null)
+            {
+                foreach (KeyValuePair<SoundSettings.Channel, int> channel in sound.volume)
+                {
+                    // Formula for percentage to audio scaling: Log10(percentage) * 20 where percentage > 0
+                    // Source: https://johnleonardfrench.com/articles/the-right-way-to-make-a-volume-slider-in-unity-using-logarithmic-conversion/
+                    mixer.SetFloat($"Volume{channel.Key}", Mathf.Log10(Mathf.Max(0.0001F, channel.Value / 100F)) * 20F);
+                }
+            }
+            
+            frameDelta += (Time.unscaledDeltaTime - frameDelta) * 0.1F;
         }
 
         private void OnDestroy()
@@ -96,8 +116,8 @@ namespace TMechs.Data.Settings
 
             style.normal.textColor = Color.yellow;
 
-            float msec = deltaTime * 1000F;
-            float fps = 1F / deltaTime;
+            float msec = frameDelta * 1000F;
+            float fps = 1F / frameDelta;
 
             string text = $"{msec:0.0} ms ({fps:0.} fps)";
             GUI.Label(rect, text, style);

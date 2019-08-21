@@ -8,6 +8,7 @@ namespace TMechs.UI.Controllers
     {
         public UiSlider masterSlider;
         public UiSlider musicSlider;
+        public UiSlider environmentSlider;
         public UiSlider sfxSlider;
 
         private void Awake()
@@ -24,6 +25,12 @@ namespace TMechs.UI.Controllers
             {
                 musicSlider.SetInstant(settings.volume[SoundSettings.Channel.Music]);
                 musicSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Music] = Mathf.RoundToInt(musicSlider.Value));
+            }
+
+            if (environmentSlider)
+            {
+                environmentSlider.SetInstant(settings.volume[SoundSettings.Channel.Environment]);
+                environmentSlider.onValueChange.AddListener(ob => settings.volume[SoundSettings.Channel.Environment] = Mathf.RoundToInt(environmentSlider.Value));
             }
 
             if (sfxSlider)

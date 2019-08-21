@@ -91,9 +91,13 @@ namespace NVIDIA
 
         private void Initialize()
         {
-            if (initialized || !Application.isFocused || !IsAvailable)
+            if (initialized)
+                return;
+            
+            if (!Application.isFocused || !IsAvailable)
             {
-                Debug.Log($"[ANSEL] Not initializing - already init: {initialized}, not in focus: {!Application.isFocused}, not available {!IsAvailable}");
+                string reason = !Application.isFocused ? "Application window not in focus" : !IsAvailable ? "Ansel is unavailable" : "Unknown reason";
+                Debug.Log($"[ANSEL] Not initializing - {reason}");
                 return;
             }
             Debug.Log("[ANSEL] Initializing...");
