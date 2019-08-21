@@ -314,6 +314,7 @@ namespace TMechs.Player
             LongDistanceGrabReturn,
             ThrowObject,
             Grapple,
+            Pummel,
         
             [Header("Rocket Fist")]
             RocketChargeIntro,

@@ -50,7 +50,7 @@ namespace TMechs.Player.Behavior
             longGrab = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.LongDistanceGrab), Player.LAYER_GENERIC_1);
             longGrabReturn = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.LongDistanceGrabReturn), Player.LAYER_GENERIC_1);
             yeet = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.ThrowObject), Player.LAYER_GENERIC_1);
-            pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Attack1), Player.LAYER_GENERIC_2);
+            pummel = Animancer.GetOrCreateState(player.GetClip(Player.PlayerAnim.Pummel), Player.LAYER_GENERIC_2);
         }
 
         public override void OnPush()
