@@ -19,7 +19,6 @@ namespace TMechs.Player.Modules
 
         [Space]
         public AvatarMask legs;
-        public AvatarMask arms;
         
         [NonSerialized]
         public float intendedY;
@@ -47,7 +46,6 @@ namespace TMechs.Player.Modules
             ResetIntendedY();
 
             AnimancerLayer armsLayer = Animancer.GetLayer(Player.LAYER_ARMS);
-            armsLayer.SetMask(arms);
             legsLayer = Animancer.GetLayer(Player.LAYER_LEGS);
             legsLayer.SetMask(legs);
             

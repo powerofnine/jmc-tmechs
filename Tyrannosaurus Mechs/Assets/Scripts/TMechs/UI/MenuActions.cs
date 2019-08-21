@@ -13,6 +13,8 @@ namespace TMechs.UI
 {
     public class MenuActions : MonoBehaviour
     {
+        public const int MAIN_MENU = 1;
+        
         public static bool pauseLocked;
         public const string FIRST_SCENE = "Assets/Scenes/Level1.unity";
 
@@ -67,7 +69,7 @@ namespace TMechs.UI
 
         public void MainMenu(bool bypassConfirm = false)
         {
-            StartCoroutine(Confirm(() => SceneTransition.LoadScene(0), bypassConfirm, "return to main menu"));
+            StartCoroutine(Confirm(() => SceneTransition.LoadScene(MenuActions.MAIN_MENU), bypassConfirm, "return to main menu"));
         }
 
         public IEnumerator Confirm(Action action, bool bypass, string message)
