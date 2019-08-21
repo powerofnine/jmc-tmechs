@@ -78,7 +78,7 @@ namespace TMechs.Player
         private bool displayCursor;
 
         private AnimancerState takeDamage;
-
+        
         #region Events
         private void Awake()
         {
@@ -116,6 +116,12 @@ namespace TMechs.Player
             Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = displayCursor;
 #endif
+            // Pauses audio when the game is paused,
+            // all menu related audio should ignore the pause state
+            bool shouldPauseAudio = Time.timeScale <= Mathf.Epsilon;
+            if (shouldPauseAudio != AudioListener.pause)
+                AudioListener.pause = shouldPauseAudio;
+            
             if (Time.timeScale <= Mathf.Epsilon)
                 return;
             if (Behavior is BehaviorDead)
