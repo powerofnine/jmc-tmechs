@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using fuj1n.MinimalDebugConsole;
 using Rewired;
 using TMechs.Data;
@@ -22,6 +23,11 @@ namespace TMechs.UI
             LoadGame(null);
         }
 
+        public void LoadLatest()
+        {
+            LoadGame(SaveSystem.GetLexicon().FirstOrDefault());
+        }
+        
         public void LoadGame(SaveSystem.LexiconEntry save)
         {
             if (SceneTransition.alreadyLoading)

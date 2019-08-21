@@ -18,7 +18,7 @@ namespace TMechs.Environment
         [ConditionalHide("explode", true)]
         public float explosionRadius;
 
-        public void OnDying(ref bool customDestroy)
+        public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
             GameObject go;
 

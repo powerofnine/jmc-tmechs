@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UIEventDelegate;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace TMechs.UI
         public GameObject menuPause;
         public GameObject menuSettings;
         public GameObject menuLoad;
+        public GameObject menuDeath;
 
         public Menu startingMenu;
         public bool canClose = true;
@@ -33,7 +35,10 @@ namespace TMechs.UI
                 if (menu)
                     menu.SetActive(false);
             }
+        }
 
+        private void Start()
+        {
             Open(startingMenu);
         }
 
@@ -105,6 +110,8 @@ namespace TMechs.UI
                     return menuSettings;
                 case Menu.LoadGame:
                     return menuLoad;
+                case Menu.Death:
+                    return menuDeath;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(menu), menu, null);
             }
@@ -120,7 +127,8 @@ namespace TMechs.UI
             MainMenu,
             PauseMenu,
             Settings,
-            LoadGame
+            LoadGame,
+            Death
         }
 
         public interface IMenuCallback

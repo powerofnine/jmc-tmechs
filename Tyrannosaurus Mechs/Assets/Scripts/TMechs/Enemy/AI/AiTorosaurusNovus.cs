@@ -531,7 +531,7 @@ namespace TMechs.Enemy.AI
             };
         }
 
-        public void OnDying(ref bool customDestroy)
+        public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
             if (isDead)
                 return;

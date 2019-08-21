@@ -69,6 +69,9 @@ namespace TMechs.Player
         [Header("Visual")]
         public InverseKinematics rightArmIk;
 
+        [Space]
+        public GameObject deathScreenTemplate;
+
         [Header("Debug")]
         public GameObject tankyloIntro;
         
@@ -114,6 +117,8 @@ namespace TMechs.Player
             Cursor.visible = displayCursor;
 #endif
             if (Time.timeScale <= Mathf.Epsilon)
+                return;
+            if (Behavior is BehaviorDead)
                 return;
             
             if (Input.GetButtonDown(Controls.Action.MENU) && !MenuController.Instance)
@@ -242,8 +247,14 @@ namespace TMechs.Player
         }
 
         // ReSharper disable once RedundantAssignment
-        public void OnDying(ref bool customDestroy)
+        public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
+            if (source.Source)
+            {
+                transform.LookAt(source.Source.transform.position.Set(transform.position.y, Utility.Axis.Y));
+                movement.ResetIntendedY();
+            }
+            
             customDestroy = true;
             PushBehavior(new BehaviorDead());
         }

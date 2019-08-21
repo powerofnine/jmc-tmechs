@@ -56,7 +56,7 @@ namespace TMechs.Environment.Targets
 
         private void LateUpdate()
         {
-            bool shouldShow = lastPing > 0;
+            bool shouldShow = lastPing > 0 && Time.timeScale > 0F;
             if (shouldShow != targetRoot.gameObject.activeSelf)
                 targetRoot.gameObject.SetActive(shouldShow);
             targetImage.color = hardLock ? GetHardLockColor() : GetColor();

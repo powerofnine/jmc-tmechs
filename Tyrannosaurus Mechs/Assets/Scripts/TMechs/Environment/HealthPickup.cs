@@ -16,7 +16,7 @@ namespace TMechs.Environment
         [ConditionalHide("restorePercentage", true, true)]
         public float healthRestoreAbsolute = 25;
 
-        public void OnDying(ref bool customDestroy)
+        public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
             if (restorePercentage)
                 Player.Player.Instance.Health.Heal(healthRestorePercent, healSource.GetWithSource(transform), true);

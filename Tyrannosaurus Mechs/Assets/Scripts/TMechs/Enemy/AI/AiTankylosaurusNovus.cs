@@ -608,7 +608,7 @@ namespace TMechs.Enemy.AI
             stateMachine.LateTick();
         }
 
-        public void OnDying(ref bool customDestroy)
+        public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
             customDestroy = true;
             

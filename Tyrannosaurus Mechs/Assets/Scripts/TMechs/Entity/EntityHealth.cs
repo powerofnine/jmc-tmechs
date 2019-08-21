@@ -32,6 +32,7 @@ namespace TMechs.Entity
 
         private float health = 1F;
         private bool isDead;
+        private DamageSource last;
 
         private void Start()
         {
@@ -50,7 +51,7 @@ namespace TMechs.Entity
                 bool customDestroy = false;
                 
                 foreach (IDeath evt in GetComponentsInChildren<IDeath>(true))
-                    evt.OnDying(ref customDestroy);
+                    evt.OnDying(last, ref customDestroy);
                 
                 if(!customDestroy)
                     Destroy(gameObject);
@@ -60,7 +61,8 @@ namespace TMechs.Entity
         public void Damage(float damage, DamageSource source, bool percent = false)
         {
             bool cancel = false;
-
+            last = source;
+            
             if (damage > 0F)
             {
                 foreach (IDamage evt in GetComponentsInChildren<IDamage>(true))
@@ -139,7 +141,7 @@ namespace TMechs.Entity
 
         public interface IDeath
         {
-            void OnDying(ref bool customDestroy);
+            void OnDying(DamageSource source, ref bool customDestroy);
         }
         
         [Serializable]
