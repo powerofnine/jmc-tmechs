@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Animancer;
 using TMechs.Animation;
 using TMechs.Attributes;
@@ -19,9 +20,10 @@ namespace TMechs.Enemy.AI
     {
         public AiStateMachine stateMachine;
         public TankyloProperties properties = new TankyloProperties();
+        public TankyloAudio audio;
 
         public EntityHealth.DamageSource damageSource;
-        
+
         [Header("Animations")]
         [AnimationCollection.ValidateAttribute(typeof(TankyloAnimation))]
         public AnimationCollection animations;
@@ -45,7 +47,7 @@ namespace TMechs.Enemy.AI
         [Header("Enrage")]
         public GameObject enrageAnimationPreset;
         public SetShaderProperty enrageLights;
-        
+
         private CharacterController controller;
         private Vector3 motion;
         private float yVelocity;
@@ -60,7 +62,7 @@ namespace TMechs.Enemy.AI
         {
             startPosition = transform.position;
             startOrientation = transform.rotation;
-            
+
             controller = GetComponent<CharacterController>();
 
             TankyloShared shared = new TankyloShared()
@@ -124,6 +126,7 @@ namespace TMechs.Enemy.AI
         {
             protected TankyloShared shared;
             protected AnimancerComponent Animancer => shared.animancer;
+            protected TankyloAudio Audio => shared.parent.audio;
 
             public override void OnInit()
             {
@@ -164,7 +167,7 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEnter();
 
-                if(!shared.parent.enrageAnimationPreset)
+                if (!shared.parent.enrageAnimationPreset)
                 {
                     Machine.SetTrigger("RageDone");
                     return;
@@ -176,12 +179,12 @@ namespace TMechs.Enemy.AI
                     utils.onIntroDone = () => Machine.SetTrigger("RageDone");
 
                 SetShaderProperty ssp = go.GetComponent<SetShaderProperty>();
-                if(ssp)
+                if (ssp)
                     ssp.Signal();
-                
-                if(shared.parent.enrageLights)
+
+                if (shared.parent.enrageLights)
                     shared.parent.enrageLights.Signal();
-                
+
                 MenuActions.SetPause(true, false);
                 MenuActions.pauseLocked = true;
 
@@ -203,7 +206,7 @@ namespace TMechs.Enemy.AI
             public override void OnExit()
             {
                 base.OnExit();
-                
+
                 if (shared.parent.attackTrail)
                     shared.parent.attackTrail.Stop();
             }
@@ -217,7 +220,7 @@ namespace TMechs.Enemy.AI
             private LinearMixerState rightTread;
 
             private Vector3 shellVelocity;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
@@ -244,12 +247,23 @@ namespace TMechs.Enemy.AI
                 rightTread.Play();
             }
 
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                if (Audio.moving)
+                    Audio.moving.Play();
+            }
+
             public override void OnExit()
             {
                 base.OnExit();
 
                 leftTread.Parameter = 0F;
                 rightTread.Parameter = 0F;
+
+                if (Audio.moving)
+                    Audio.moving.Stop();
             }
 
             public override void OnTick()
@@ -355,9 +369,12 @@ namespace TMechs.Enemy.AI
 
                 Animancer.Play(rockThrow);
 
+                if (Audio.dig)
+                    Audio.dig.Play();
+
                 rockThrow.OnEnd = () =>
                 {
-                    rockThrow.Stop();
+                    rockThrow.StartFade(0F, .25F);
                     Machine.SetTrigger("RockThrowDone");
                 };
             }
@@ -365,7 +382,7 @@ namespace TMechs.Enemy.AI
             public override void OnExit()
             {
                 base.OnExit();
-                
+
                 if (shared.parent.attackTrail)
                     shared.parent.attackTrail.Stop();
             }
@@ -399,7 +416,10 @@ namespace TMechs.Enemy.AI
                             shared.parent.attackTrail.gameObject.SetActive(true);
                             shared.parent.attackTrail.Play();
                         }
-                        
+
+                        if (Audio.dig)
+                            shared.parent.StartCoroutine(Audio.FadeOut(Audio.dig));
+
                         break;
                     case "RockThrow":
                         if (!rock)
@@ -410,6 +430,11 @@ namespace TMechs.Enemy.AI
                         if (shared.parent.attackTrail)
                             shared.parent.attackTrail.Stop();
                         
+                        if (Audio.dig)
+                            Audio.dig.Stop();
+                        if (Audio.yeet)
+                            Audio.yeet.Play();
+
                         // Very naive trajectory projection, but it works surprisingly well
                         rock.Throw(target.position + Player.Player.Instance.forces.ControllerVelocity * .75F, Machine.Get<float>(nameof(TankyloProperties.rockInAngle)), Machine.Get<float>(nameof(TankyloProperties.rockOutAngle)), Machine.Get<float>(nameof(TankyloProperties.rockSpeed)));
 
@@ -435,6 +460,9 @@ namespace TMechs.Enemy.AI
             {
                 base.OnEnter();
 
+                if (Audio.shotgunCharge)
+                    Audio.shotgunCharge.Play();
+
                 Animancer.CrossFadeFromStart(shotgun, .1F).OnEnd = () =>
                 {
                     shotgun.Stop();
@@ -446,7 +474,7 @@ namespace TMechs.Enemy.AI
                     vfx.gameObject.SetActive(true);
                     vfx.Play();
                 }
-                
+
                 shellDirection = -HorizontalDirectionToTarget;
             }
 
@@ -460,6 +488,9 @@ namespace TMechs.Enemy.AI
             public override void OnExit()
             {
                 base.OnExit();
+
+                if (Audio.shotgunCharge)
+                    Audio.shotgunCharge.Stop();
 
                 foreach (VisualEffect vfx in shared.parent.shotgunVfx)
                     vfx.Stop();
@@ -485,12 +516,17 @@ namespace TMechs.Enemy.AI
                     Transform origin = shared.parent.shotgunOrigin ? shared.parent.shotgunOrigin : transform;
                     float distance = Vector3.Distance(origin.position, target.position);
                     float angle = Vector3.Angle((target.position - origin.position).Remove(Utility.Axis.Y).normalized, transform.forward.Remove(Utility.Axis.Y).normalized);
-                    
+
                     if (distance <= Machine.Get<Radius>(nameof(TankyloProperties.midRange)) && angle <= 50F)
                     {
                         Player.Player.Instance.Health.Damage(Machine.Get<float>(nameof(TankyloProperties.shotgunDamage)), shared.parent.damageSource.GetWithSource(transform));
                         Player.Player.Instance.forces.frictionedVelocity = HorizontalDirectionToTarget * Machine.Get<float>(nameof(TankyloProperties.shotgunKnockback));
                     }
+
+                    if (Audio.shotgunCharge)
+                        Audio.shotgunCharge.Stop();
+                    if (Audio.shotgunShot)
+                        Audio.shotgunShot.Play();
                 }
             }
         }
@@ -500,7 +536,7 @@ namespace TMechs.Enemy.AI
             private AnimancerState tailWhip;
 
             private EnemyHitBox[] colliders;
-            
+
             public override void OnInit()
             {
                 base.OnInit();
@@ -525,7 +561,7 @@ namespace TMechs.Enemy.AI
                     tailWhip.Stop();
                     Machine.SetTrigger("TailWhipDone");
                 };
-                
+
                 if (shared.parent.attackTrail)
                 {
                     shared.parent.attackTrail.gameObject.SetActive(true);
@@ -550,7 +586,7 @@ namespace TMechs.Enemy.AI
                     box.gameObject.SetActive(false);
                     box.damage = 0F;
                 }
-                
+
                 if (shared.parent.attackTrail)
                     shared.parent.attackTrail.Stop();
             }
@@ -567,6 +603,9 @@ namespace TMechs.Enemy.AI
                     case "WhipActive":
                         SetBoxes(true);
 
+                        if (Audio.tailWhip)
+                            Audio.tailWhip.Play();
+                        
                         break;
                     case "WhipInactive":
                         SetBoxes(false);
@@ -578,19 +617,19 @@ namespace TMechs.Enemy.AI
             private void SetBoxes(bool active)
             {
                 float damage = Machine.Get<float>(nameof(TankyloProperties.tailWhipDamage));
-                
+
                 foreach (EnemyHitBox box in colliders)
                 {
                     box.gameObject.SetActive(active);
-                    box.damage = active ? damage : 0F; 
+                    box.damage = active ? damage : 0F;
                 }
             }
         }
 
-    private void Update()
+        private void Update()
         {
             stateMachine.Tick();
-            
+
             yVelocity += Utility.GRAVITY * Time.deltaTime;
             controller.Move((motion + Vector3.down * yVelocity) * Time.deltaTime);
             motion = Vector3.zero;
@@ -611,7 +650,12 @@ namespace TMechs.Enemy.AI
         public void OnDying(EntityHealth.DamageSource source, ref bool customDestroy)
         {
             customDestroy = true;
-            
+
+            if (audio.death)
+                audio.death.Play();
+            if (audio.idle)
+                audio.idle.Stop();
+
             stateMachine.Exit();
 
             Destroy(((TankyloShared) stateMachine.shared).health);
@@ -662,8 +706,41 @@ namespace TMechs.Enemy.AI
             public float shotgunKnockback = 10F;
 
             [Header("Tail Whip")]
-            public EnemyHitBox[] tailWhipColliders = {};
+            public EnemyHitBox[] tailWhipColliders = { };
             public float tailWhipDamage = 10F;
+        }
+
+        [Serializable]
+        public struct TankyloAudio
+        {
+            public AudioSource idle;
+            public AudioSource moving;
+            public AudioSource tailWhip;
+            public AudioSource dig;
+            public AudioSource yeet;
+            public AudioSource death;
+            public AudioSource shotgunCharge;
+            public AudioSource shotgunShot;
+
+            public IEnumerator FadeOut(AudioSource effect)
+            {
+                float time = 0F;
+                const float FADE_TIME = 1F;
+
+                float start = effect.volume;
+                
+                while (time <= FADE_TIME)
+                {
+                    time += Time.deltaTime;
+                    
+                    effect.volume = Mathf.Lerp(start, 0F, time / FADE_TIME);
+
+                    yield return null;
+                }
+                
+                effect.Stop();
+                effect.volume = start;
+            }
         }
 
         [AnimationCollection.EnumAttribute("Tankylosaurus Animations")]
