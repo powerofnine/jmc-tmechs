@@ -23,7 +23,7 @@ namespace TMechs.UI.FX
 
             while (time < delay)
             {
-                time += Time.deltaTime;
+                time += Time.unscaledDeltaTime;
                 yield return null;
             }
 
@@ -31,7 +31,7 @@ namespace TMechs.UI.FX
             
             while (time < fadeTime)
             {
-                time += Time.deltaTime;
+                time += Time.unscaledDeltaTime;
 
                 foreach (CanvasRenderer renderer in renderers)
                     renderer.SetAlpha(Mathf.Lerp(startAlpha, endAlpha, time / fadeTime));

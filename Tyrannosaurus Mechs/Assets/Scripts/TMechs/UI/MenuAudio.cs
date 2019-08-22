@@ -9,6 +9,7 @@ namespace TMechs.UI
         [Header("Audio")]
         public AudioSource accept;
         public AudioSource back;
+        public AudioSource scroll;
 
         private void Awake()
         {
@@ -23,13 +24,18 @@ namespace TMechs.UI
                 accept.ignoreListenerPause = true;
             if (back)
                 back.ignoreListenerPause = true;
+            if (scroll)
+                scroll.ignoreListenerPause = true;
         }
 
         public static void Accept()
             => instance.Play(instance.accept);
 
         public static void Back()
-            => instance.Play(instance.back);
+            => instance.Play(instance.back);   
+        
+        public static void Scroll()
+            => instance.Play(instance.scroll);
 
         private void Play(AudioSource source)
         {

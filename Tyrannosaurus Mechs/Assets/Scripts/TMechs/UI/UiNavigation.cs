@@ -89,7 +89,7 @@ namespace TMechs.UI
                 }
             }
 
-            SetTab(0);
+            SetTab(0, false);
         }
 
         private void Update()
@@ -118,7 +118,7 @@ namespace TMechs.UI
 
             if (tab != currentTab)
             {
-                SetTab(tab);
+                SetTab(tab, true);
                 return;
             }
 
@@ -184,20 +184,21 @@ namespace TMechs.UI
                 callback(UiModal.Result);
         }
 
-        private void SetTab(int id)
+        private void SetTab(int id, bool audio)
         {
             if (id < 0)
                 id = tabs.Length - 1;
             else if (id >= tabs.Length)
                 id = 0;
 
+            if(audio && id != currentTab)
+                MenuAudio.Scroll();
+            
             for (int i = 0; i < tabs.Length; i++)
             {
                 tabs[i].SetActive(id == i);
                 if (toggles[i])
-                {
                     toggles[i].isOn = id == i;
-                }
             }
 
             currentTab = id;
@@ -217,6 +218,9 @@ namespace TMechs.UI
             if (id >= active.Count)
                 id = 0;
 
+            if(!noTransition && id != currentComponent[currentTab])
+                MenuAudio.Scroll();
+            
             if (active[currentComponent[currentTab]])
                 active[currentComponent[currentTab]].OnDeselect(noTransition);
             currentComponent[currentTab] = id;
