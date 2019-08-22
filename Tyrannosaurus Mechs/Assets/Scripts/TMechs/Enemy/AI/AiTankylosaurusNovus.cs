@@ -417,9 +417,11 @@ namespace TMechs.Enemy.AI
                             shared.parent.attackTrail.Play();
                         }
 
-                        if (Audio.dig)
-                            shared.parent.StartCoroutine(Audio.FadeOut(Audio.dig));
-
+//                        if (Audio.dig)
+//                            shared.parent.StartCoroutine(Audio.FadeOut(Audio.dig));
+                        if(Audio.rockPick)
+                            Audio.rockPick.Play();
+                        
                         break;
                     case "RockThrow":
                         if (!rock)
@@ -717,6 +719,7 @@ namespace TMechs.Enemy.AI
             public AudioSource moving;
             public AudioSource tailWhip;
             public AudioSource dig;
+            public AudioSource rockPick;
             public AudioSource yeet;
             public AudioSource death;
             public AudioSource shotgunCharge;
