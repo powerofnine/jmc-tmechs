@@ -8,6 +8,9 @@ namespace TMechs.Environment.Interactables
     {
         public float fadeTime = 1F;
         public bool activateOnAwake;
+        
+        public AudioSource fadeAudio;
+        
         private bool isFading;
         
         private static readonly int MAIN_COLOR = Shader.PropertyToID("_MainColor");
@@ -42,6 +45,11 @@ namespace TMechs.Environment.Interactables
             }).ToArray();
             
             float time = 0F;
+
+            float audioStart = 0F;
+            if (fadeAudio)
+                audioStart = fadeAudio.volume;
+            
             while (time <= fadeTime)
             {
                 time += Time.deltaTime;
@@ -49,6 +57,8 @@ namespace TMechs.Environment.Interactables
                 for (int i = 0; i < ren.Length; i++)
                 {
                     ren[i].material.SetColor(MAIN_COLOR, Color.Lerp(startColor[i], endColor[i], time / fadeTime));
+                    if (fadeAudio)
+                        fadeAudio.volume = Mathf.Lerp(audioStart, 0F, time / fadeTime);
                 }
 
                 yield return null;

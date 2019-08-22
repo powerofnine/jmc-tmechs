@@ -27,6 +27,7 @@ namespace TMechs.UI.Components
         {
             base.OnSubmit();
             IsChecked = !IsChecked;
+            MenuAudio.Accept();
         }
 
         public void SetInstant(bool value)

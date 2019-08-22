@@ -15,6 +15,8 @@ namespace TMechs.UI.Components
             if (onClick != null)
                 EventDelegate.Execute(onClick.List);
             onClickNew.InvokeX();
+            
+            MenuAudio.Accept();
         }
     }
 }

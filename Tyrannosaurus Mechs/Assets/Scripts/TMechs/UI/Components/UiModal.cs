@@ -99,10 +99,17 @@ namespace TMechs.UI.Components
                 return;
 
             if (buttons[selectedButton])
+            {
                 buttons[selectedButton].OnSubmit();
+                MenuAudio.Accept();
+            }
         }
 
-        public void Cancel() => OnButton("Cancelled");
+        public void Cancel()
+        {
+            OnButton("Cancelled");
+            MenuAudio.Back();
+        }
 
         private void UpdateSelection(int newSelection)
         {

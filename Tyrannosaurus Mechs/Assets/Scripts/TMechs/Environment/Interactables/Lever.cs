@@ -24,6 +24,8 @@ namespace TMechs.Environment.Interactables
 
         public override void OnInteract()
         {
+            base.OnInteract();
+            
             used = true;
 
             isOn = !isOn;

@@ -12,11 +12,7 @@ namespace TMechs.Environment.Interactables
         public float destroyVfxTime = 2F;
 
         public bool destroy = true;
-
-        public override void OnInteract()
-        {
-        }
-
+        
         public override PlayerBehavior GetPushBehavior()
         {
             Player.Player.Instance.carry.overrideTarget = gameObject;

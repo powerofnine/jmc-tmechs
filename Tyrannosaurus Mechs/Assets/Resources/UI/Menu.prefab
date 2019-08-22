@@ -418,6 +418,7 @@ MonoBehaviour:
   menuPause: {fileID: 853695346325917181}
   menuSettings: {fileID: 3646183294914315601}
   menuLoad: {fileID: 7750408863244778157}
+  menuDeath: {fileID: 0}
   startingMenu: 2
   canClose: 1
   onMenuClose:
@@ -426,6 +427,8 @@ MonoBehaviour:
       mShowGroup: 1
       mUpdateEntryList: 0
       mEntryList:
+      - target: {fileID: 1532668931810747111}
+        name: accept
       - target: {fileID: 4744706801910707804}
         name: active
       - target: {fileID: 3634027011725909719}
@@ -438,6 +441,8 @@ MonoBehaviour:
         name: anchorMax
       - target: {fileID: 4293540914663443972}
         name: anchorMin
+      - target: {fileID: 1532668931810747111}
+        name: back
       - target: {fileID: 2457290418723782767}
         name: blockingObjects
       - target: {fileID: 1532668931810747111}
@@ -448,15 +453,15 @@ MonoBehaviour:
         name: defaultSpriteDPI
       - target: {fileID: 2656701751929934939}
         name: dynamicPixelsPerUnit
-      - target: {fileID: 2656701751929934939}
-        name: enabled
-      - target: {fileID: 2457290418723782767}
-        name: enabled
-      - target: {fileID: 582611062796153188}
-        name: enabled
       - target: {fileID: 1532668931810747111}
         name: enabled
       - target: {fileID: 3634027011725909719}
+        name: enabled
+      - target: {fileID: 582611062796153188}
+        name: enabled
+      - target: {fileID: 2656701751929934939}
+        name: enabled
+      - target: {fileID: 2457290418723782767}
         name: enabled
       - target: {fileID: 4293540914663443972}
         name: eulerAngles
@@ -468,13 +473,13 @@ MonoBehaviour:
         name: hasChanged
       - target: {fileID: 582611062796153188}
         name: hideFlags
-      - target: {fileID: 2656701751929934939}
+      - target: {fileID: 2457290418723782767}
         name: hideFlags
       - target: {fileID: 1532668931810747111}
         name: hideFlags
-      - target: {fileID: 3634027011725909719}
+      - target: {fileID: 2656701751929934939}
         name: hideFlags
-      - target: {fileID: 2457290418723782767}
+      - target: {fileID: 3634027011725909719}
         name: hideFlags
       - target: {fileID: 4744706801910707804}
         name: hideFlags
@@ -499,6 +504,8 @@ MonoBehaviour:
       - target: {fileID: 2656701751929934939}
         name: matchWidthOrHeight
       - target: {fileID: 1532668931810747111}
+        name: menuDeath
+      - target: {fileID: 1532668931810747111}
         name: menuLoad
       - target: {fileID: 1532668931810747111}
         name: menuMain
@@ -506,19 +513,19 @@ MonoBehaviour:
         name: menuPause
       - target: {fileID: 1532668931810747111}
         name: menuSettings
-      - target: {fileID: 582611062796153188}
-        name: name
-      - target: {fileID: 2457290418723782767}
-        name: name
       - target: {fileID: 4744706801910707804}
-        name: name
-      - target: {fileID: 3634027011725909719}
-        name: name
-      - target: {fileID: 1532668931810747111}
         name: name
       - target: {fileID: 2656701751929934939}
         name: name
+      - target: {fileID: 1532668931810747111}
+        name: name
       - target: {fileID: 4293540914663443972}
+        name: name
+      - target: {fileID: 2457290418723782767}
+        name: name
+      - target: {fileID: 582611062796153188}
+        name: name
+      - target: {fileID: 3634027011725909719}
         name: name
       - target: {fileID: 3634027011725909719}
         name: normalizedSortingGridSize
@@ -556,17 +563,17 @@ MonoBehaviour:
         name: right
       - target: {fileID: 4293540914663443972}
         name: rotation
-      - target: {fileID: 2656701751929934939}
-        name: runInEditMode
       - target: {fileID: 2457290418723782767}
-        name: runInEditMode
-      - target: {fileID: 1532668931810747111}
         name: runInEditMode
       - target: {fileID: 582611062796153188}
         name: runInEditMode
+      - target: {fileID: 1532668931810747111}
+        name: runInEditMode
       - target: {fileID: 2656701751929934939}
-        name: scaleFactor
+        name: runInEditMode
       - target: {fileID: 3634027011725909719}
+        name: scaleFactor
+      - target: {fileID: 2656701751929934939}
         name: scaleFactor
       - target: {fileID: 2656701751929934939}
         name: screenMatchMode
@@ -582,19 +589,19 @@ MonoBehaviour:
         name: sortingOrder
       - target: {fileID: 1532668931810747111}
         name: startingMenu
-      - target: {fileID: 2656701751929934939}
-        name: tag
-      - target: {fileID: 4744706801910707804}
-        name: tag
-      - target: {fileID: 582611062796153188}
+      - target: {fileID: 4293540914663443972}
         name: tag
       - target: {fileID: 3634027011725909719}
         name: tag
+      - target: {fileID: 582611062796153188}
+        name: tag
+      - target: {fileID: 2656701751929934939}
+        name: tag
       - target: {fileID: 2457290418723782767}
         name: tag
-      - target: {fileID: 1532668931810747111}
+      - target: {fileID: 4744706801910707804}
         name: tag
-      - target: {fileID: 4293540914663443972}
+      - target: {fileID: 1532668931810747111}
         name: tag
       - target: {fileID: 3634027011725909719}
         name: targetDisplay
@@ -602,13 +609,13 @@ MonoBehaviour:
         name: uiScaleMode
       - target: {fileID: 4293540914663443972}
         name: up
-      - target: {fileID: 2457290418723782767}
-        name: useGUILayout
-      - target: {fileID: 1532668931810747111}
+      - target: {fileID: 582611062796153188}
         name: useGUILayout
       - target: {fileID: 2656701751929934939}
         name: useGUILayout
-      - target: {fileID: 582611062796153188}
+      - target: {fileID: 1532668931810747111}
+        name: useGUILayout
+      - target: {fileID: 2457290418723782767}
         name: useGUILayout
       - target: {fileID: 3634027011725909719}
         name: worldCamera
@@ -678,6 +685,8 @@ MonoBehaviour:
         name: IsDestroyed ()
       - target: {fileID: 582611062796153188}
         name: LoadGame (SaveSystem+LexiconEntry save)
+      - target: {fileID: 582611062796153188}
+        name: LoadLatest ()
       - target: {fileID: 582611062796153188}
         name: MainMenu (Boolean bypassConfirm)
       - target: {fileID: 1532668931810747111}
@@ -1026,16 +1035,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1253786358162642278, guid: 8fc091f994d3be74eb8a535d6fc74cbf,
-        type: 3}
-      propertyPath: closeAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1532668931810747111}
     - target: {fileID: 4433006063075635760, guid: 8fc091f994d3be74eb8a535d6fc74cbf,
         type: 3}
       propertyPath: menuActions
       value: 
       objectReference: {fileID: 582611062796153188}
+    - target: {fileID: 1253786358162642278, guid: 8fc091f994d3be74eb8a535d6fc74cbf,
+        type: 3}
+      propertyPath: closeAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1532668931810747111}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fc091f994d3be74eb8a535d6fc74cbf, type: 3}
 --- !u!1 &7750408863244778157 stripped

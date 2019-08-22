@@ -144,7 +144,10 @@ namespace TMechs.UI
             if (controller.GetButtonDown(Action.UICANCEL) && (!CurrentComponent || !CurrentComponent.OnCancel()))
             {
                 if (closeAction != null)
+                {
                     closeAction.Invoke();
+                    MenuAudio.Back();
+                }
             }
         }
 

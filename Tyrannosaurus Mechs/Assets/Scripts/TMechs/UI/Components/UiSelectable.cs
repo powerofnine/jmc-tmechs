@@ -21,6 +21,11 @@ namespace TMechs.UI.Components
             base.OnSelect();
 
             locked = !locked;
+            if(locked)
+                MenuAudio.Back();
+            else
+                MenuAudio.Accept();
+            
             UpdateState_Pre();
         }
 
@@ -29,6 +34,8 @@ namespace TMechs.UI.Components
             if (locked)
             {
                 locked = false;
+                MenuAudio.Back();
+                
                 UpdateState_Pre();
                 return true;
             }

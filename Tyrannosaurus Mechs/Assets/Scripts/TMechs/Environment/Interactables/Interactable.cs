@@ -7,6 +7,9 @@ namespace TMechs.Environment.Interactables
     {
         public string displayText;
         public GameObject display;
+
+        [Space]
+        public AudioSource interactSound;
         
         private int inRange;
         private int available;
@@ -48,7 +51,13 @@ namespace TMechs.Environment.Interactables
         }
         
         public virtual bool IsInteractable() => true;
-        public abstract void OnInteract();
+
+        public virtual void OnInteract()
+        {
+            if(interactSound)
+                interactSound.Play();
+        }
+        
         public virtual PlayerBehavior GetPushBehavior() => null;
         public virtual int GetSortPriority() => 0;
     }
