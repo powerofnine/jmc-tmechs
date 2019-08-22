@@ -26,6 +26,8 @@ namespace TMechs.Player.Behavior
 
         public EntityHealth.DamageSource pummelDamageSource;
 
+        public AudioSource throwSound;
+        
         private AnimancerState grab;
         private AnimancerState longGrab;
         private AnimancerState longGrabReturn;
@@ -139,6 +141,9 @@ namespace TMechs.Player.Behavior
                 isThrowing = true;
                 Animancer.CrossFadeFromStart(yeet, .1F);
 
+                if(throwSound)
+                    throwSound.Play();
+                
                 return;
             }
 

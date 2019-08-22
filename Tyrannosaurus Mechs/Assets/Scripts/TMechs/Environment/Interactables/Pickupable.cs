@@ -12,6 +12,8 @@ namespace TMechs.Environment.Interactables
         public float destroyVfxTime = 2F;
 
         public bool destroy = true;
+
+        public AudioSource onDie;
         
         public override PlayerBehavior GetPushBehavior()
         {
@@ -24,9 +26,22 @@ namespace TMechs.Environment.Interactables
         public void OnThrowableReleased()
         {
             VfxModule.SpawnEffect(destroyVfx, transform.position, Quaternion.identity, destroyVfxTime);
-            
-            if(destroy)
+
+            if (destroy)
+            {
                 Destroy(gameObject);
+
+                if (onDie)
+                {
+                    onDie.transform.SetParent(null, true);
+                    
+                    onDie.gameObject.SetActive(true);
+                    onDie.enabled = true;
+                    
+                    onDie.Play();
+                    Destroy(onDie, onDie.clip.length);
+                }
+            }
         }
     }
 }

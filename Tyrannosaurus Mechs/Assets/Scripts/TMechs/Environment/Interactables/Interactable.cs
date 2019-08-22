@@ -21,6 +21,9 @@ namespace TMechs.Environment.Interactables
                 inRange--;
                 Player.Player.Instance.interaction.AddInteraction(this);
             }
+
+            if (available > 0)
+                available--;
             
             if (display)
             {

@@ -25,6 +25,9 @@ namespace TMechs.Entity
         public Transform damagedEffectAnchor;
         public float damagedEffectDuration;
 
+        [Space]
+        public AudioSource deathSound;
+
         [Header("Boss Bar")]
         public bool assignBossBar;
         [ConditionalHide("assignBossBar", true)]
@@ -47,6 +50,13 @@ namespace TMechs.Entity
         {
             if (health <= 0F && !isDead)
             {
+                if (deathSound)
+                {
+                    deathSound.transform.SetParent(null, true);
+                    deathSound.Play();
+                    Destroy(deathSound.gameObject, deathSound.clip.length);
+                }
+
                 isDead = true;
                 bool customDestroy = false;
                 
