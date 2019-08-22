@@ -20,7 +20,7 @@ namespace TMechs.Enemy.AI
     {
         public AiStateMachine stateMachine;
         public TankyloProperties properties = new TankyloProperties();
-        public TankyloAudio audio;
+        public new TankyloAudio audio;
 
         public EntityHealth.DamageSource damageSource;
 

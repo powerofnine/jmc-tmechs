@@ -21,7 +21,7 @@ namespace TMechs.Enemy.AI
         public AiStateMachine stateMachine;
 
         public HarrierProperties properties = new HarrierProperties();
-        public HarrierAudio audio;
+        public new HarrierAudio audio;
 
         [AnimationCollection.ValidateAttribute(typeof(HarrierAnimations))]
         public AnimationCollection animations;
@@ -349,8 +349,11 @@ namespace TMechs.Enemy.AI
                         shots = Machine.Get<int>(nameof(HarrierProperties.burstCount));
 
                         if (Audio.shoot)
+                        {
+                            Audio.shoot.RandyPitchford();
                             Audio.shoot.Play();
-                        
+                        }
+
                         break;
                     case "ShootDone":
                         Machine.SetTrigger("ShootDone");

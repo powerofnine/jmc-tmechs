@@ -204,6 +204,12 @@ namespace TMechs
             return velocity * direction.normalized;
         }
 
+        /// Randomizes the pitch of the sound slightly to make it sound less monotone
+        public static void RandyPitchford(this AudioSource source)
+        {
+            source.pitch = UnityEngine.Random.Range(.5F, 1.5F);
+        }
+        
         public static float MathRemap(float value, float min1, float max1, float min2, float max2)
         {
             return min2 + (value - min1) * (max2 - min2) / (max1 - min1);

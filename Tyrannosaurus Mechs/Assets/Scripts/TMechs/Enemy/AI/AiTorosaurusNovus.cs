@@ -21,6 +21,7 @@ namespace TMechs.Enemy.AI
         [AnimationCollection.ValidateAttribute(typeof(ToroAnimation))]
         public AnimationCollection animations;
         public ToroProperties properties;
+        public new ToroAudio audio;
 
         public EntityHealth.DamageSource damageSource;
 
@@ -79,6 +80,8 @@ namespace TMechs.Enemy.AI
                 StartCoroutine(FadeNightrider(false)); 
                 if(vfxHornTaser)
                     vfxHornTaser.Stop();
+                if(audio.taser)
+                    audio.taser.Stop();
             });
             stateMachine.RegisterTransition("Idle", "Notice", machine => machine.HorizontalDistanceToTarget <= machine.Get<Radius>(nameof(ToroProperties.rangeStartFollow)));
 
@@ -106,6 +109,7 @@ namespace TMechs.Enemy.AI
         {
             protected ToroShared shared;
             protected AnimancerComponent Animancer => shared.animancer;
+            protected ToroAudio Audio => shared.parent.audio;
 
             private float yFaceVelocity;
 
@@ -245,6 +249,8 @@ namespace TMechs.Enemy.AI
                     shared.parent.vfxHornTaser.gameObject.SetActive(true);
                     shared.parent.vfxHornTaser.Play();
                 }
+                if(Audio.taser)
+                    Audio.taser.Play();
             }
 
             public override void OnExit()
@@ -358,6 +364,8 @@ namespace TMechs.Enemy.AI
                     vfx.gameObject.SetActive(true);
                     vfx.Play();
                 }
+                if(Audio.chargeUp)
+                    Audio.chargeUp.Play();
             }
 
             public override void OnExit()
@@ -376,6 +384,9 @@ namespace TMechs.Enemy.AI
                     vfx.gameObject.SetActive(true);
                     vfx.Play();
                 }
+                
+                if(Audio.jet)
+                    Audio.jet.Stop();
             }
 
             public override void OnTick()
@@ -420,6 +431,8 @@ namespace TMechs.Enemy.AI
                 {
                     case "charge":
                         isCharging = true;
+                        if(Audio.jet)
+                            Audio.jet.Play();
                         break;
                     case "footFx":
                         if (shared.parent.vfxChargeFoot)
@@ -513,6 +526,13 @@ namespace TMechs.Enemy.AI
 
         private void OnAnimatorEvent(AnimationEvent e)
         {
+            if ("Footstep".Equals(e.stringParameter) && audio.walk)
+            {
+                audio.walk.RandyPitchford();
+                audio.walk.Play();
+            }
+                
+            
             if (!lazyMode && !isDead)
                 stateMachine.OnEvent(AiStateMachine.EventType.Animation, e.stringParameter);
         }
@@ -539,6 +559,9 @@ namespace TMechs.Enemy.AI
             customDestroy = true;
             isDead = true;
 
+            if(audio.idle)
+                audio.idle.Stop();
+            
             stateMachine.Exit();
             StopAllCoroutines();
 
@@ -622,6 +645,16 @@ namespace TMechs.Enemy.AI
             public float nightriderFadeTime = 1F;
         }
 
+        [Serializable]
+        public struct ToroAudio
+        {
+            public AudioSource idle;
+            public AudioSource walk;
+            public AudioSource taser;
+            public AudioSource chargeUp;
+            public AudioSource jet;
+        }
+        
         [AnimationCollection.EnumAttribute("Horndriver Animations")]
         public enum ToroAnimation
         {
