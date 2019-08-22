@@ -21,6 +21,7 @@ namespace TMechs.Enemy.AI
         public AiStateMachine stateMachine;
 
         public HarrierProperties properties = new HarrierProperties();
+        public HarrierAudio audio;
 
         [AnimationCollection.ValidateAttribute(typeof(HarrierAnimations))]
         public AnimationCollection animations;
@@ -75,6 +76,7 @@ namespace TMechs.Enemy.AI
         private abstract class HarrierState : AiStateMachine.State
         {
             protected HarrierShared props;
+            protected HarrierAudio Audio => props.parent.audio;
 
             public override void OnInit()
             {
@@ -150,6 +152,9 @@ namespace TMechs.Enemy.AI
                 safetyTimer = 3.5F;
                 
                 transform.forward = DirectionToTarget;
+
+                if (Audio.primer)
+                    Audio.primer.Play();
             }
 
             public override void OnTick()
@@ -342,6 +347,10 @@ namespace TMechs.Enemy.AI
                 {
                     case "Shoot":
                         shots = Machine.Get<int>(nameof(HarrierProperties.burstCount));
+
+                        if (Audio.shoot)
+                            Audio.shoot.Play();
+                        
                         break;
                     case "ShootDone":
                         Machine.SetTrigger("ShootDone");
@@ -424,6 +433,15 @@ namespace TMechs.Enemy.AI
             public GameObject bulletTemplate;
         }
 
+        [Serializable]
+        public struct HarrierAudio
+        {
+            public AudioSource idle;
+            public AudioSource primer;
+            public AudioSource shoot;
+            public AudioSource takeDamage;
+        }
+
         private class HarrierShared
         {
             public AiHarrierNovus parent;
@@ -438,6 +456,9 @@ namespace TMechs.Enemy.AI
             if("Idle".Equals(stateMachine.CurrentStateName))
                 stateMachine.EnterState("Notice");
             
+            if(audio.takeDamage)
+                audio.takeDamage.Play();
+            
             ((HarrierShared) stateMachine.shared).animancer.CrossFadeFromStart(animations.GetClip(HarrierAnimations.TakeDamage), 0.1F, 2).OnEnd = () =>
             {
                 ((HarrierShared) stateMachine.shared).animancer.GetLayer(2).StartFade(0F);
@@ -449,6 +470,8 @@ namespace TMechs.Enemy.AI
             isDead = true;
             customDestroy = true;
             
+            if(audio.idle)
+                audio.idle.Stop();
             if(deathEffect)
                 deathEffect.gameObject.SetActive(true);
 

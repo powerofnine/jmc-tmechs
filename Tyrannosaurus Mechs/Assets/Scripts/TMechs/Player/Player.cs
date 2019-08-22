@@ -118,7 +118,7 @@ namespace TMechs.Player
 #endif
             // Pauses audio when the game is paused,
             // all menu related audio should ignore the pause state
-            bool shouldPauseAudio = Time.timeScale <= Mathf.Epsilon;
+            bool shouldPauseAudio = Time.timeScale <= Mathf.Epsilon && !(Behavior is BehaviorDead);
             if (shouldPauseAudio != AudioListener.pause)
                 AudioListener.pause = shouldPauseAudio;
             
