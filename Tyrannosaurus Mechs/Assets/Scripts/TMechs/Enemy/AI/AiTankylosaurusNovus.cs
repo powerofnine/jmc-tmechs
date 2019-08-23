@@ -58,6 +58,8 @@ namespace TMechs.Enemy.AI
         private Vector3 startPosition;
         private Quaternion startOrientation;
 
+        public GameObject ending;
+
         private void Start()
         {
             startPosition = transform.position;
@@ -665,7 +667,15 @@ namespace TMechs.Enemy.AI
             Destroy(GetComponentInChildren<EnemyTarget>());
 
             ((TankyloShared) stateMachine.shared).animancer.Stop();
-            ((TankyloShared) stateMachine.shared).animancer.Play(animations.GetClip(TankyloAnimation.Death)).Time = 0;
+            AnimancerState state = ((TankyloShared) stateMachine.shared).animancer.Play(animations.GetClip(TankyloAnimation.Death));
+            state.Time = 0;
+            state.OnEnd = () =>
+            {
+                state.OnEnd = null;
+
+                if (ending)
+                    Instantiate(ending);
+            };
 
             if (deathLights)
                 deathLights.Signal();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UIEventDelegate;
+using UltEvents;
 using UnityEngine;
 
 namespace TMechs.Environment
@@ -8,6 +9,7 @@ namespace TMechs.Environment
     {
         public List<GameObject> trackedObjects = new List<GameObject>();
         public ReorderableEventList onAllDead;
+        public UltEvent onAllDeadNew;
 
         private void Update()
         {
@@ -17,6 +19,7 @@ namespace TMechs.Environment
             {
                 if(onAllDead != null)
                     EventDelegate.Execute(onAllDead.List);
+                onAllDeadNew.InvokeX();
             
                 Destroy(this);
             }
