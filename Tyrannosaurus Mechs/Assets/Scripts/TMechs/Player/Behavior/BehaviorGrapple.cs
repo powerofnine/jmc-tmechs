@@ -63,8 +63,15 @@ namespace TMechs.Player.Behavior
             if (player.rightArmIk)
             {
                 player.rightArmIk.targetPosition = target.transform.position;
-                player.rightArmIk.Transition(ikTime, 1F);
+                player.rightArmIk.Transition(ikTime, 1F, () =>
+                {
+                    if(player.audio.release)
+                        player.audio.release.Play();
+                });
             }
+            
+            if(player.audio.zip)
+                player.audio.zip.Play();
         }
 
         public override void OnPop()

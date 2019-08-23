@@ -37,6 +37,9 @@ namespace TMechs.Player.Modules
 
         public virtual void OnFixedUpdate()
         {}
+        
+        public virtual void OnAnimationEvent(AnimationEvent e)
+        {}
 
         public T GetComponent<T>()
             => player.GetComponent<T>();

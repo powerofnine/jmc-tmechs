@@ -1,6 +1,5 @@
 using System;
 using Animancer;
-using TMechs.Animation;
 using TMechs.Entity;
 using TMechs.Environment.Targets;
 using TMechs.UI.GamePad;
@@ -199,6 +198,9 @@ namespace TMechs.Player.Behavior
                 return;
             }
 
+            if(player.audio.grab)
+                player.audio.grab.Play();
+            
             dontUpdateIkTarget = true;
             player.rightArmIk.Transition(ikTime, 0F, () =>
             {

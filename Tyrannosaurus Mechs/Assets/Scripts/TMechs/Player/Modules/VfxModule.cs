@@ -27,9 +27,12 @@ namespace TMechs.Player.Modules
         [Header("Spawnables")]
         public VisualEffectAsset jump;
         public VisualEffectAsset groundSlam;
+        public VisualEffectAsset waterSplash;
 
         [Header("Anchors")]
         public Transform groundSlamAnchor;
+        public Transform leftFootAnchor;
+        public Transform rightFootAnchor;
 
         private float sprintAlpha;
         private float sprintAlphaVel;
@@ -38,7 +41,7 @@ namespace TMechs.Player.Modules
         {
             base.OnUpdate();
             
-            bool shouldEnableSprint = player.movement.isSprinting && player.forces.IsGrounded && player.forces.ControllerVelocity.magnitude > player.movement.runSpeed / 2F;
+            bool shouldEnableSprint = player.movement.isSprinting && !player.IsInWater && player.forces.IsGrounded && player.forces.ControllerVelocity.magnitude > player.movement.runSpeed / 2F;
 
             sprintAlpha = Mathf.SmoothDamp(sprintAlpha, shouldEnableSprint ? 1F : 0F, ref sprintAlphaVel, .15F);
             sprint.SetFloat("Alpha", sprintAlpha);

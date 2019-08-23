@@ -71,6 +71,10 @@ namespace TMechs.Player.Behavior
                     break;
                 case "JumpDamage":
                     player.combat.DealAoe(aoeRange, aoeDamage.x, aoeDamage.y);
+                    
+                    if(player.audio.jump)
+                        player.audio.jump.Play();
+                    
                     break;
                 case "JumpPop":
                     player.PopBehavior();

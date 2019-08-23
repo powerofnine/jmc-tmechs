@@ -143,6 +143,44 @@ namespace TMechs.Player.Modules
             }
         }
 
+        public override void OnAnimationEvent(AnimationEvent e)
+        {
+            base.OnAnimationEvent(e);
+
+            if (e.animatorClipInfo.weight <= .1F)
+                return;
+                
+            if (!"StepLeft".Equals(e.stringParameter) && !"StepRight".Equals(e.stringParameter))
+                return;
+
+            AudioSource src = player.audio.GetPooledStep(player.IsInWater ? Player.PlayerAudio.StepType.Water : Player.PlayerAudio.StepType.Standard);
+            if (src)
+            {
+                src.RandyPitchford();
+                src.Play();
+            }
+
+            if (!player.IsInWater)
+                return;
+
+            Transform anchor = null;
+
+            switch (e.stringParameter)
+            {
+                case "StepLeft":
+                    anchor = player.vfx.leftFootAnchor;
+                    break;
+                case "StepRight":
+                    anchor = player.vfx.rightFootAnchor;
+                    break;
+            }
+
+            if (anchor != null)
+            {
+                VfxModule.SpawnEffect(player.vfx.waterSplash, anchor.position, anchor.rotation, 1F);
+            }
+        }
+
         public void ResetIntendedY()
             => intendedY = transform.eulerAngles.y;
     }

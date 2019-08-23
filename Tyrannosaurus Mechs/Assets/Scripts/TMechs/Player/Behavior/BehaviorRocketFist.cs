@@ -109,6 +109,9 @@ namespace TMechs.Player.Behavior
                 
                 if (stage > prevStage)
                 {
+                    if(player.audio.click)
+                        player.audio.click.Play();
+                    
                     if (player.vfx.rocketBurst)
                     {
                         player.vfx.rocketBurst.gameObject.SetActive(true);
@@ -168,6 +171,9 @@ namespace TMechs.Player.Behavior
                 charge.OnEnd = null;
 
                 IsCharging = false;
+                
+                if(player.audio.takeOff)
+                    player.audio.takeOff.Play();
                 
                 EnemyTarget enemy = TargetController.Instance.GetTarget<EnemyTarget>();
                 if (!enemy)

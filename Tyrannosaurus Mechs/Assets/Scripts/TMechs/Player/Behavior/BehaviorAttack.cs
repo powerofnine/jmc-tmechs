@@ -179,7 +179,11 @@ namespace TMechs.Player.Behavior
                     applyForward = true;
                     break;
                 case "AttackHit":
-                    ActivateHitbox();        
+                    ActivateHitbox();     
+                    
+                    if(player.audio.punch)
+                        player.audio.punch.Play();
+                    
                     break;
             }
         }

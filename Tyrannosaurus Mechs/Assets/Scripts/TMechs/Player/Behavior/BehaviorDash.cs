@@ -59,6 +59,8 @@ namespace TMechs.Player.Behavior
                 player.vfx.dash.gameObject.SetActive(true);
                 player.vfx.dash.Play();
             }
+            if(player.audio.dash)
+                player.audio.dash.Play();
         }
         
         public override void OnPop()

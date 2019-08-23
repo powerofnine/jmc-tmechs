@@ -99,6 +99,17 @@ namespace TMechs.Entity
 
             Health -= damage / (percent ? 1F : maxHealth);
 
+            if (source.hitAudio)
+            {
+                if (source.unparentHit)
+                {
+                    source.hitAudio.transform.SetParent(null, true);
+                    Destroy(source.hitAudio.gameObject, source.hitAudio.clip.length);
+                }
+
+                source.hitAudio.Play();
+            }
+
             if (source.effect)
             {
                 Vector3 pos = transform.position;
@@ -163,6 +174,10 @@ namespace TMechs.Entity
             public float effectDuration;
             public EffectLocation location;
             public EffectOrient orient;
+
+            [Space]
+            public AudioSource hitAudio;
+            public bool unparentHit;
             
             public Transform Source { get; private set; }
             

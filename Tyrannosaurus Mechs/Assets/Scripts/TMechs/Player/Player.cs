@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Animancer;
 using fuj1n.MinimalDebugConsole;
 using JetBrains.Annotations;
@@ -48,7 +49,8 @@ namespace TMechs.Player
         public CombatModule combat = new CombatModule();
         public VfxModule vfx = new VfxModule();
         public InteractionModule interaction = new InteractionModule();
-
+        public new PlayerAudio audio;
+        
         [Header("Behavior")]
         public BehaviorStandard standard = new BehaviorStandard();
         public BehaviorDash dash = new BehaviorDash();
@@ -78,6 +80,9 @@ namespace TMechs.Player
         private bool displayCursor;
 
         private AnimancerState takeDamage;
+
+        public bool IsInWater => waterTicks > 0;
+        private int waterTicks;
         
         #region Events
         private void Awake()
@@ -116,6 +121,9 @@ namespace TMechs.Player
             Cursor.lockState = displayCursor ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = displayCursor;
 #endif
+            if (waterTicks > 0)
+                waterTicks--;
+            
             // Pauses audio when the game is paused,
             // all menu related audio should ignore the pause state
             bool shouldPauseAudio = Time.timeScale <= Mathf.Epsilon && !(Behavior is BehaviorDead);
@@ -171,18 +179,27 @@ namespace TMechs.Player
         {
             if (Time.timeScale <= Mathf.Epsilon)
                 return;
-            
-            foreach (PlayerModule module in modules)
-                if(module.enabled)
-                    module.OnFixedUpdate();
+
+            foreach (PlayerModule module in modules.Where(module => module.enabled))
+                module.OnFixedUpdate();
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Water"))
+                waterTicks = 2;
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
             => contactPoint = hit.point;
 
         private void OnAnimationEvent(AnimationEvent e)
-            => Behavior.OnAnimationEvent(e);
-        
+        {
+            foreach(PlayerModule module in modules.Where(m => m.enabled))
+                module.OnAnimationEvent(e);
+            Behavior.OnAnimationEvent(e);
+        }
+
         private void OnEnable()
         {
             DebugConsole.Instance.OnConsoleToggle += OnConsoleToggle;
@@ -280,7 +297,12 @@ namespace TMechs.Player
                 cancel = true;
             
             Rumble.SetRumble(Rumble.CHANNEL_DAMAGED, .5F, .25F, .05F);
-
+            
+            if(health.Health < .25F && audio.peril && !audio.peril.isPlaying)
+                audio.peril.Play();
+            if(health.Health < .10F && audio.crackling && !audio.crackling.isPlaying)
+                audio.crackling.Play();
+            
             if (Behavior.CanAnimateTakeDamage() && !takeDamage.IsPlaying)
             {
                 Animancer.Play(takeDamage).OnEnd = () =>
@@ -332,6 +354,61 @@ namespace TMechs.Player
             
             [Header("Interaction")]
             PullLever
+        }
+
+        [Serializable]
+        public class PlayerAudio
+        {
+            [Header("Steps")]
+            public AudioSource step;
+            public AudioSource stepWater;
+            public int stepPoolSize = 4;
+            
+            [Space]
+            public AudioSource dash;
+            public AudioSource jump;
+            public AudioSource punch;
+            public AudioSource crackling;
+            public AudioSource peril;
+            
+            [Header("Grapple")]
+            public AudioSource grab;
+            public AudioSource release;
+            public AudioSource zip;
+            
+            [Header("Rocket Fist")]
+            public AudioSource click;
+            public AudioSource takeOff;
+
+            private Dictionary<StepType, Queue<AudioSource>> stepPool;
+            
+            public AudioSource GetPooledStep(StepType type)
+            {
+                if (stepPool == null)
+                {
+                    stepPool = new Dictionary<StepType, Queue<AudioSource>>();
+
+                    foreach (StepType t in Enum.GetValues(typeof(StepType)))
+                    {
+                        AudioSource src = t == StepType.Water ? stepWater : step;
+                        
+                        stepPool.Add(t, new Queue<AudioSource>());
+                        
+                        for(int i = 0; i < stepPoolSize; i++)
+                            stepPool[t].Enqueue(i == 0 ? src : Instantiate(src, src.transform.parent));
+                    }
+                }
+
+                AudioSource audio = stepPool[type].Dequeue();
+                stepPool[type].Enqueue(audio);
+                return audio;
+            }
+
+            public enum StepType
+            {
+                Standard,
+                Water
+            }
         }
         
         #region Debug

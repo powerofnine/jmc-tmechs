@@ -25,6 +25,10 @@ namespace TMechs.Player.Behavior
             MenuActions.SetPause(true, false);
             Animancer.UpdateMode = AnimatorUpdateMode.UnscaledTime;
             
+            // Disable all audio
+            if(player.audio.step)
+                player.audio.step.transform.parent.gameObject.SetActive(false);
+            
             if (!player.vfx.death)
                 return;
             
