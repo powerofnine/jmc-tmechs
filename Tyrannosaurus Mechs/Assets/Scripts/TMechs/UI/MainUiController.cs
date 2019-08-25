@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMechs.Environment.Targets;
+using TMechs.MechsDebug;
 using TMechs.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,7 +43,7 @@ namespace TMechs.UI
 
             rocketFistReadyFade.alpha = Mathf.SmoothDamp(rocketFistReadyFade.alpha, rocketFistAvailable ? rocketFistMaxAlpha : rocketFistMinAlpha, ref rocketFistAlphaVelocity, .1F);
             
-            bool shouldBeEnabled = Time.timeScale > float.Epsilon;
+            bool shouldBeEnabled = Time.timeScale > float.Epsilon && !Freecam.HideUi;
 
             if (shouldBeEnabled != isEnabled)
             {

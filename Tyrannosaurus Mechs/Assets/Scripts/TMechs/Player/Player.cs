@@ -8,6 +8,7 @@ using Rewired;
 using TMechs.Animation;
 using TMechs.Data;
 using TMechs.Entity;
+using TMechs.MechsDebug;
 using TMechs.Player.Behavior;
 using TMechs.Player.Modules;
 using TMechs.UI;
@@ -130,6 +131,8 @@ namespace TMechs.Player
             if (shouldPauseAudio != AudioListener.pause)
                 AudioListener.pause = shouldPauseAudio;
             
+            if (Freecam.IsFreecam)
+                return;
             if (Time.timeScale <= Mathf.Epsilon)
                 return;
             if (Behavior is BehaviorDead)
@@ -156,9 +159,8 @@ namespace TMechs.Player
                 i--;
             }
             
-            foreach (PlayerModule module in modules)
-                if(module.enabled)
-                    module.OnUpdate();
+            foreach (PlayerModule module in modules.Where(module => module.enabled))
+                module.OnUpdate();
             
             Behavior.OnUpdate();
         }

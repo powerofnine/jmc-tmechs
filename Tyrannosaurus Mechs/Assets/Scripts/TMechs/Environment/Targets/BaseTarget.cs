@@ -1,4 +1,5 @@
-﻿using TMechs.Player;
+﻿using TMechs.MechsDebug;
+using TMechs.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,7 +57,7 @@ namespace TMechs.Environment.Targets
 
         private void LateUpdate()
         {
-            bool shouldShow = lastPing > 0 && Time.timeScale > 0F;
+            bool shouldShow = lastPing > 0 && Time.timeScale > 0F && !Freecam.HideUi;
             if (shouldShow != targetRoot.gameObject.activeSelf)
                 targetRoot.gameObject.SetActive(shouldShow);
             targetImage.color = hardLock ? GetHardLockColor() : GetColor();
