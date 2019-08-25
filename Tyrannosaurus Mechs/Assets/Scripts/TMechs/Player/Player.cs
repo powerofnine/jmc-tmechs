@@ -131,7 +131,7 @@ namespace TMechs.Player
             if (shouldPauseAudio != AudioListener.pause)
                 AudioListener.pause = shouldPauseAudio;
             
-            if (Freecam.IsFreecam)
+            if (Freecam.IsFreecamControl)
                 return;
             if (Time.timeScale <= Mathf.Epsilon)
                 return;

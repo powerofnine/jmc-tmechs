@@ -7,11 +7,13 @@ namespace TMechs.MechsDebug
 {
     public class Freecam : MonoBehaviour
     {
+        public static bool IsFreecamControl => IsFreecam && camControl;
         public static bool IsFreecam => freecam != null;
-        public static bool HideUi => IsFreecam || hideUi;
+        public static bool HideUi => IsFreecamControl || hideUi;
         
         private static Freecam freecam;
-        
+
+        private static bool camControl = true;
         private static float speed = 25F;
         private static float sensitivity = 15F;
         private static bool hideUi;
@@ -26,6 +28,9 @@ namespace TMechs.MechsDebug
         private void Update()
         {
             Freecam.speed += Input.mouseScrollDelta.y * Time.deltaTime * 20F;
+
+            if (!camControl)
+                return;
             
             Vector3 control = transform.rotation * input.GetAxis2D(MOVE_HORIZONTAL, MOVE_VERTICAL).RemapXZ();
             Vector3 cam = input.GetAxis2D(CAMERA_VERTICAL, CAMERA_HORIZONTAL);
@@ -38,6 +43,13 @@ namespace TMechs.MechsDebug
             transform.eulerAngles += Time.deltaTime * sensitivity * cam;
         }
 
+        [DebugConsoleCommand("freecam")]
+        private static void ToggleProperty(string property)
+        {
+            if("control".Equals(property))
+                camControl = !camControl;
+        }
+        
         [DebugConsoleCommand("freecam")]
         private static void SetProperty(string property, float value)
         {
